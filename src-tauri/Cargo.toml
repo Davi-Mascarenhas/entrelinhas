@@ -1,6 +1,6 @@
 [package]
 name = "entrelinhas"
-version = "1.1.2"
+version = "1.2.0-rc.1"
 description = "Um espaço tranquilo para escrever"
 authors = ["Bit-Devy"]
 edition = "2021"

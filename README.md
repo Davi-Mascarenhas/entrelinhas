@@ -2,7 +2,7 @@
 
 **Um espaço tranquilo para escrever.**
 
-Entrelinhas é um editor **desktop de verdade**, feito com Tauri 2, React e TypeScript para Ubuntu. Ao começar a digitar, a interface desaparece. Restam o texto, o fundo e o cursor. Esc traz os controles de volta, sem deslocar o texto.
+Entrelinhas é um editor **desktop de verdade**, feito com Tauri 2, React e TypeScript para Ubuntu, com uma prévia do instalador para Windows. Ao começar a digitar, a interface desaparece. Restam o texto, o fundo e o cursor. Esc traz os controles de volta, sem deslocar o texto.
 
 ![Entrelinhas — Sépia Noturno](docs/screenshots/sepia.png)
 
@@ -70,6 +70,29 @@ As capturas abaixo são da janela Tauri real, executada no Ubuntu 26.10 com Wayl
 Os menus de seleção e as dicas usam as cores do tema do aplicativo. Os seletores de opções permitem navegar com setas, Home/End, digitar o início do nome e confirmar com Enter; Esc cancela a seleção sem fechar as configurações. Os diálogos do sistema para abrir e salvar arquivos acompanham o modo claro ou escuro; Sépia Noturno usa a variante escura do GTK.
 
 O cursor em bloco usa as coordenadas reais da seleção do ProseMirror e a largura do próximo grafema. Durante composição IME, a camada visual cede ao cursor nativo. Preferências de movimento reduzido são respeitadas.
+
+## Instalação no Windows — prévia
+
+O instalador **Entrelinhas 1.2.0-rc.1 para Windows x64** usa NSIS, com logo, artes em sépia e textos em português brasileiro. Está disponível na [release de prévia](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v1.2.0-rc.1), junto com o SHA-256 e o relatório dos testes. A versão Linux estável continua em 1.1.2.
+
+- Instalação por usuário, sem exigir administrador para instalar o aplicativo; pasta de destino selecionável, atalho no menu Iniciar e opção de abrir ao concluir.
+- O instalador verifica o WebView2 e baixa o bootstrapper oficial quando necessário. Nesse caso, a primeira instalação precisa de internet.
+- `.md`, `.markdown` e `.txt` aparecem em **Abrir com**. Os padrões atuais são preservados. No app, **Configurações → Arquivos → Abrir configurações do Windows** encaminha a escolha ao próprio sistema; abrir essa tela não é anunciado como confirmação.
+- A primeira abertura apresenta boas-vindas, tema e escolha opcional de aplicativo padrão.
+- Atualização e desinstalação preservam documentos pessoais; o desinstalador oferece uma opção explícita para apagar dados do aplicativo (preferências e referências), desmarcada por padrão.
+
+Esta prévia não tem assinatura digital. A [rotina Windows](https://github.com/Davi-Mascarenhas/entrelinhas/actions/workflows/windows.yml) compila em Windows Server 2025 e testa o wizard e o aplicativo instalado em WebView2. A aprovação manual em Windows 11 segue o [roteiro de validação](docs/windows-validation.md); o resultado no runner não substitui essa aprovação.
+
+Para compilar no Windows, instale Node.js 24, Rust estável, as ferramentas C++ do Visual Studio e o WebView2. Depois:
+
+```powershell
+npm ci
+npm run package:windows
+```
+
+O `.exe` fica em `src-tauri/target/release/bundle/nsis/`. A configuração `src-tauri/tauri.windows.conf.json` é combinada automaticamente pelo Tauri com a configuração principal; o pacote Linux permanece `.deb`.
+
+As artes vetoriais ficam em `src-tauri/windows/branding/`. Para regenerar os BMPs versionados, instale CairoSVG 2.8.2 e Pillow em um ambiente Python e execute `python scripts/render-installer-branding.py`. O build normal utiliza os BMPs já incluídos e não exige essas ferramentas.
 
 ## Instalação no Ubuntu
 

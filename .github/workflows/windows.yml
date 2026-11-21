@@ -1,0 +1,94 @@
+name: Windows installer
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'src-tauri/**'
+      - 'package*.json'
+      - 'vite.config.ts'
+      - 'tsconfig.json'
+      - 'scripts/test-windows*'
+      - 'scripts/test-desktop.py'
+      - '.github/workflows/windows.yml'
+permissions:
+  contents: read
+concurrency:
+  group: windows-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build-test:
+    runs-on: windows-2025
+    timeout-minutes: 45
+    env:
+      CARGO_BUILD_JOBS: 2
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            src-tauri/target
+          key: windows-cargo-${{ hashFiles('src-tauri/Cargo.lock') }}
+          restore-keys: windows-cargo-
+      - name: Prepare Rust
+        run: |
+          rustup update stable --no-self-update
+          rustup default stable
+          rustup component add clippy rustfmt
+      - run: npm ci
+      - name: Frontend checks
+        run: |
+          npm run check
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm run format:check
+      - name: Rust checks on Windows
+        run: |
+          cargo test --manifest-path src-tauri/Cargo.toml --lib --locked
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cargo clippy --manifest-path src-tauri/Cargo.toml --lib --locked -- -D warnings
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cargo fmt --manifest-path src-tauri/Cargo.toml -- --check
+      - name: Build NSIS installer
+        run: npm run package:windows
+      - name: Validate wizard and installed application
+        run: |
+          $installer = Get-ChildItem src-tauri/target/release/bundle/nsis/*-setup.exe | Select-Object -First 1
+          if (-not $installer) { throw 'Instalador não encontrado.' }
+          python scripts/test-windows.py --installer $installer.FullName
+      - name: Prepare downloadable installer and checksum
+        run: |
+          $version = (Get-Content package.json -Raw | ConvertFrom-Json).version
+          $installer = Get-ChildItem src-tauri/target/release/bundle/nsis/*-setup.exe | Select-Object -First 1
+          New-Item -ItemType Directory artifacts/windows-release -Force | Out-Null
+          $name = "Entrelinhas_${version}_x64-setup.exe"
+          Copy-Item $installer.FullName "artifacts/windows-release/$name"
+          $digest = (Get-FileHash "artifacts/windows-release/$name" -Algorithm SHA256).Hash.ToLowerInvariant()
+          "$digest  $name" | Set-Content artifacts/windows-release/SHA256SUMS -Encoding utf8NoBOM
+          Copy-Item artifacts/windows/results.json artifacts/windows-release/validation.json
+          "Built from ${{ github.sha }} on ${{ runner.os }}" | Set-Content artifacts/windows-release/build.txt
+      - name: Upload validated installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: entrelinhas-windows-x64
+          path: artifacts/windows-release
+          if-no-files-found: error
+      - name: Upload test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-test-evidence
+          path: |
+            artifacts/windows
+            src-tauri/target/release/nsis
+          if-no-files-found: warn
