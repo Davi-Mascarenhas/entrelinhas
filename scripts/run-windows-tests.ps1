@@ -3,75 +3,76 @@ param(
   [string]$OutputDirectory = (Join-Path $PWD 'artifacts/windows')
 )
 $ErrorActionPreference = 'Stop'
+if ($env:GITHUB_ACTIONS -ne 'true') { throw 'Execute apenas no runner descartável do GitHub.' }
 New-Item -ItemType Directory $OutputDirectory -Force | Out-Null
-# O WebView2 ignora os argumentos de depuração de hosts administrativos.
-# Usa um token normal do MESMO usuário, sem mudar políticas do sistema.
+# O runner usa um administrador com UAC desativado. Uma conta temporária comum
+# permite testar o WebView2 sem alterar políticas de depuração do Windows.
 Add-Type @'
 using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
+using System.Security.AccessControl;
 using System.Security.Principal;
-using System.Text;
-public static class LimitedTestProcess {
-  [StructLayout(LayoutKind.Sequential)] struct SecurityAttributes { public int Length; public IntPtr Descriptor; [MarshalAs(UnmanagedType.Bool)] public bool Inherit; }
-  [StructLayout(LayoutKind.Sequential)] struct SidAttributes { public IntPtr Sid; public uint Attributes; }
-  [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Unicode)] struct StartupInfo {
-    public int cb; public string Reserved, Desktop, Title; public uint X,Y,Width,Height,XChars,YChars,Fill,Flags; public short Show,Reserved2; public IntPtr ReservedPtr,Input,Output,Error;
-  }
-  [StructLayout(LayoutKind.Sequential)] struct ProcessInfo { public IntPtr Process,Thread; public uint ProcessId,ThreadId; }
-  [DllImport("advapi32.dll", SetLastError=true)] static extern bool SaferCreateLevel(uint scope,uint level,uint flags,out IntPtr handle,IntPtr reserved);
-  [DllImport("advapi32.dll", SetLastError=true)] static extern bool SaferComputeTokenFromLevel(IntPtr level,IntPtr original,out IntPtr token,uint flags,IntPtr reserved);
-  [DllImport("advapi32.dll")] static extern bool SaferCloseLevel(IntPtr level);
-  [DllImport("advapi32.dll", SetLastError=true)] static extern bool GetTokenInformation(IntPtr token,int kind,out int value,int size,out int needed);
-  [DllImport("advapi32.dll", SetLastError=true)] static extern bool SetTokenInformation(IntPtr token,int kind,IntPtr value,int size);
-  [DllImport("advapi32.dll", CharSet=CharSet.Unicode, SetLastError=true)] static extern bool CreateProcessAsUserW(IntPtr token,string application,StringBuilder command,IntPtr processAttributes,IntPtr threadAttributes,bool inherit,uint flags,IntPtr environment,string directory,ref StartupInfo startup,out ProcessInfo process);
-  [DllImport("kernel32.dll", CharSet=CharSet.Unicode, SetLastError=true)] static extern IntPtr CreateFileW(string name,uint access,uint share,ref SecurityAttributes attributes,uint creation,uint flags,IntPtr template);
-  [DllImport("kernel32.dll")] static extern uint WaitForSingleObject(IntPtr handle,uint milliseconds);
-  [DllImport("kernel32.dll", SetLastError=true)] static extern bool GetExitCodeProcess(IntPtr process,out uint code);
-  [DllImport("kernel32.dll")] static extern bool TerminateProcess(IntPtr process,uint code);
-  [DllImport("kernel32.dll")] static extern bool CloseHandle(IntPtr handle);
-  static void Check(bool result) { if(!result) throw new Win32Exception(Marshal.GetLastWin32Error()); }
-  public static int Run(string executable,string arguments,string directory,string logfile) {
-    IntPtr level=IntPtr.Zero, token=IntPtr.Zero, file=IntPtr.Zero;
-    ProcessInfo process=new ProcessInfo();
-    try {
-      Check(SaferCreateLevel(1,0x20000,1,out level,IntPtr.Zero));
-      Check(SaferComputeTokenFromLevel(level,IntPtr.Zero,out token,0,IntPtr.Zero));
-      // Reduz a integridade para o nível normal usado por aplicativos do usuário.
-      var sid=new SecurityIdentifier("S-1-16-8192"); var bytes=new byte[sid.BinaryLength]; sid.GetBinaryForm(bytes,0);
-      int labelSize=Marshal.SizeOf<SidAttributes>(); IntPtr label=Marshal.AllocHGlobal(labelSize+bytes.Length);
-      try {
-        IntPtr sidPtr=IntPtr.Add(label,labelSize); Marshal.Copy(bytes,0,sidPtr,bytes.Length);
-        Marshal.StructureToPtr(new SidAttributes { Sid=sidPtr, Attributes=0x20 },label,false);
-        Check(SetTokenInformation(token,25,label,labelSize+bytes.Length));
-      } finally { Marshal.FreeHGlobal(label); }
-      int elevated,needed; Check(GetTokenInformation(token,20,out elevated,4,out needed));
-      if(elevated!=0) throw new InvalidOperationException("O token de teste ainda está elevado.");
-      var security=new SecurityAttributes { Length=Marshal.SizeOf<SecurityAttributes>(), Inherit=true };
-      file=CreateFileW(logfile,0x40000000,3,ref security,2,0x80,IntPtr.Zero);
-      if(file==new IntPtr(-1)) throw new Win32Exception(Marshal.GetLastWin32Error());
-      var startup=new StartupInfo { cb=Marshal.SizeOf<StartupInfo>(), Desktop="winsta0\\default", Flags=0x100, Output=file, Error=file };
-      Check(CreateProcessAsUserW(token,executable,new StringBuilder("\""+executable+"\" "+arguments),IntPtr.Zero,IntPtr.Zero,true,0,IntPtr.Zero,directory,ref startup,out process));
-      if(WaitForSingleObject(process.Process,20*60*1000)!=0) { TerminateProcess(process.Process,1); throw new TimeoutException("Testes Windows excederam 20 minutos."); }
-      uint code; Check(GetExitCodeProcess(process.Process,out code)); return (int)code;
-    } finally {
-      if(process.Thread!=IntPtr.Zero) CloseHandle(process.Thread);
-      if(process.Process!=IntPtr.Zero) CloseHandle(process.Process);
-      if(file!=IntPtr.Zero && file!=new IntPtr(-1)) CloseHandle(file);
-      if(token!=IntPtr.Zero) CloseHandle(token);
-      if(level!=IntPtr.Zero) SaferCloseLevel(level);
+public static class TestDesktopAccess {
+  [DllImport("user32.dll")] public static extern IntPtr GetProcessWindowStation();
+  [DllImport("user32.dll")] public static extern IntPtr GetThreadDesktop(uint id);
+  [DllImport("kernel32.dll")] public static extern uint GetCurrentThreadId();
+  [DllImport("user32.dll", SetLastError=true)] static extern bool GetUserObjectSecurity(IntPtr handle,ref uint info,byte[] data,uint size,out uint needed);
+  [DllImport("user32.dll", SetLastError=true)] static extern bool SetUserObjectSecurity(IntPtr handle,ref uint info,byte[] data);
+  public static byte[] Grant(IntPtr handle, SecurityIdentifier user) {
+    uint info=4, needed;
+    GetUserObjectSecurity(handle,ref info,null,0,out needed);
+    var original=new byte[needed];
+    if(!GetUserObjectSecurity(handle,ref info,original,needed,out needed)) throw new Win32Exception(Marshal.GetLastWin32Error());
+    var descriptor=new RawSecurityDescriptor(original,0);
+    if(descriptor.DiscretionaryAcl!=null) {
+      descriptor.DiscretionaryAcl.InsertAce(0,new CommonAce(AceFlags.None,AceQualifier.AccessAllowed,0x10000000,user,false,null));
+      var modified=new byte[descriptor.BinaryLength]; descriptor.GetBinaryForm(modified,0);
+      if(!SetUserObjectSecurity(handle,ref info,modified)) throw new Win32Exception(Marshal.GetLastWin32Error());
     }
+    return original;
+  }
+  public static void Restore(IntPtr handle,byte[] original) {
+    uint info=4;
+    if(!SetUserObjectSecurity(handle,ref info,original)) throw new Win32Exception(Marshal.GetLastWin32Error());
   }
 }
 '@
-$python = (Get-Command python).Source
-$script = Join-Path $PWD 'scripts/test-windows.py'
-$consoleLog = Join-Path $OutputDirectory 'test-console.log'
-$env:PYTHONIOENCODING = 'utf-8'
-$arguments = '-u "{0}" --installer "{1}" --output "{2}"' -f $script,$Installer,$OutputDirectory
+$testUserName = 'EntreTest' + [Guid]::NewGuid().ToString('N').Substring(0,8)
+$temporaryPassword = ConvertTo-SecureString ('Aa1!' + [Guid]::NewGuid().ToString('N')) -AsPlainText -Force
+$testUser = New-LocalUser -Name $testUserName -Password $temporaryPassword -Description 'Conta descartável de testes do Entrelinhas'
+Add-LocalGroupMember -SID 'S-1-5-32-545' -Member $testUser
+$station = [TestDesktopAccess]::GetProcessWindowStation()
+$desktop = [TestDesktopAccess]::GetThreadDesktop([TestDesktopAccess]::GetCurrentThreadId())
+$originalStation = $null; $originalDesktop = $null
 try {
-  $testCode = [LimitedTestProcess]::Run($python,$arguments,$PWD.ProviderPath,$consoleLog)
+  $originalStation = [TestDesktopAccess]::Grant($station,$testUser.SID)
+  $originalDesktop = [TestDesktopAccess]::Grant($desktop,$testUser.SID)
+  & icacls $OutputDirectory /grant "${testUserName}:(OI)(CI)F" /T | Out-Null
+  if ($LASTEXITCODE -ne 0) { throw 'Não foi possível preparar a pasta de evidências.' }
+  $profilePath = Join-Path "$env:SystemDrive\Users" $testUserName
+  $testEnvironment = @{
+    USERNAME=$testUserName; USERDOMAIN=$env:COMPUTERNAME; USERPROFILE=$profilePath
+    APPDATA=(Join-Path $profilePath 'AppData\Roaming')
+    LOCALAPPDATA=(Join-Path $profilePath 'AppData\Local')
+    TEMP=(Join-Path $profilePath 'AppData\Local\Temp')
+    TMP=(Join-Path $profilePath 'AppData\Local\Temp')
+    HOMEDRIVE=$env:SystemDrive; HOMEPATH="\Users\$testUserName"
+    PYTHONIOENCODING='utf-8'; GITHUB_ACTIONS='true'
+  }
+  $credential = [PSCredential]::new("$env:COMPUTERNAME\$testUserName",$temporaryPassword)
+  $python = (Get-Command python).Source
+  $script = Join-Path $PWD 'scripts/test-windows.py'
+  $consoleLog = Join-Path $OutputDirectory 'test-console.log'
+  $errorLog = Join-Path $OutputDirectory 'test-error.log'
+  $arguments = '-u "{0}" --installer "{1}" --output "{2}"' -f $script,$Installer,$OutputDirectory
+  $testProcess = Start-Process -FilePath $python -ArgumentList $arguments -Credential $credential -LoadUserProfile -Environment $testEnvironment -WorkingDirectory $PWD.ProviderPath -PassThru -RedirectStandardOutput $consoleLog -RedirectStandardError $errorLog
+  if (-not $testProcess.WaitForExit(1200000)) { Stop-Process -Id $testProcess.Id -Force; throw 'Tempo excedido nos testes Windows.' }
+  Get-Content $consoleLog -Encoding utf8
+  Get-Content $errorLog -Encoding utf8
+  if ($testProcess.ExitCode -ne 0) { throw "Os testes Windows retornaram $($testProcess.ExitCode)." }
 } finally {
-  if (Test-Path $consoleLog) { Get-Content $consoleLog -Encoding utf8 }
+  if ($originalDesktop) { [TestDesktopAccess]::Restore($desktop,$originalDesktop) }
+  if ($originalStation) { [TestDesktopAccess]::Restore($station,$originalStation) }
+  Remove-LocalUser -SID $testUser.SID
 }
-if ($testCode -ne 0) { throw "Os testes Windows retornaram $testCode." }

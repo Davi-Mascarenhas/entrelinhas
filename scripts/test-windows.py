@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Valida instalador e WebView2 no runner Windows descartável, sem alterar padrões."""
 import argparse
+import ctypes
 import hashlib
 import importlib.util
 import json
@@ -110,6 +111,8 @@ def main():
     parser.add_argument('--output', type=Path, default=ROOT / 'artifacts/windows')
     args = parser.parse_args()
     assert platform.system() == 'Windows'
+    assert not ctypes.windll.shell32.IsUserAnAdmin(), 'A validação precisa executar como usuário comum.'
+    Path(os.environ['TEMP']).mkdir(parents=True, exist_ok=True)
     assert os.environ.get('GITHUB_ACTIONS') == 'true', 'Este roteiro só pode rodar no runner descartável do GitHub Actions.'
     assert read_registry('Software\\RegisteredApplications', 'Entrelinhas') is None, 'Não execute sobre uma instalação existente.'
     assert not (Path(os.environ['APPDATA']) / 'io.github.bitdevy.entrelinhas/library.sqlite3').exists(), 'O perfil de teste precisa estar vazio.'
