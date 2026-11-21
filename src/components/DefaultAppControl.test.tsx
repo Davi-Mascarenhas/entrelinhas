@@ -2,7 +2,13 @@ import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/re
 import { backend } from '../native/api'
 import { DefaultAppControl } from './DefaultAppControl'
 
-const available = { supported: true, registered: true, markdown: false, text: false }
+const available = {
+  supported: true,
+  registered: true,
+  markdown: false,
+  text: false,
+  requiresSettings: false,
+}
 beforeEach(() => {
   vi.spyOn(backend, 'defaultAppStatus').mockResolvedValue(available)
   vi.spyOn(backend, 'setDefaultApp').mockResolvedValue({ ...available, markdown: true, text: true })
@@ -55,4 +61,21 @@ it('explica quando a instalação ainda não está registrada no sistema', async
   expect(await screen.findByRole('button', { name: 'Usar como padrão' })).toBeDisabled()
   expect(screen.getByText(/Instale ou atualize/)).toBeInTheDocument()
   expect(backend.setDefaultApp).not.toHaveBeenCalled()
+})
+
+it('abre a escolha do Windows sem anunciar sucesso nem concluir a apresentação', async () => {
+  const windows = { ...available, requiresSettings: true }
+  vi.mocked(backend.defaultAppStatus).mockResolvedValue(windows)
+  vi.mocked(backend.setDefaultApp).mockResolvedValue(windows)
+  const done = vi.fn()
+  render(<DefaultAppControl onComplete={done} />)
+  fireEvent.click(await screen.findByRole('button', { name: 'Abrir configurações do Windows' }))
+  expect(await screen.findByRole('status')).toHaveTextContent('Nas configurações do Windows')
+  expect(screen.queryByRole('alert')).not.toBeInTheDocument()
+  expect(done).not.toHaveBeenCalled()
+  vi.mocked(backend.defaultAppStatus).mockResolvedValue({ ...windows, markdown: true, text: true })
+  fireEvent.focus(window)
+  fireEvent.click(await screen.findByRole('button', { name: 'Começar a escrever' }))
+  expect(done).toHaveBeenCalledOnce()
+  expect(backend.setDefaultApp).toHaveBeenCalledOnce()
 })

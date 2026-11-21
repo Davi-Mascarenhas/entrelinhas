@@ -18,6 +18,7 @@ export interface DefaultAppStatus {
   registered: boolean
   markdown: boolean
   text: boolean
+  requiresSettings: boolean
 }
 export function errorMessage(error: unknown): string {
   if (error && typeof error === 'object' && 'message' in error) return String(error.message)

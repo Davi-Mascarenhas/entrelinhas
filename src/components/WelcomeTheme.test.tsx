@@ -10,12 +10,14 @@ beforeEach(() => {
     registered: true,
     markdown: false,
     text: false,
+    requiresSettings: false,
   })
   vi.spyOn(backend, 'setDefaultApp').mockResolvedValue({
     supported: true,
     registered: true,
     markdown: true,
     text: true,
+    requiresSettings: false,
   })
 })
 afterEach(() => {

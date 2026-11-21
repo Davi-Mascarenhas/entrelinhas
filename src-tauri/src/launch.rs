@@ -24,6 +24,10 @@ fn request(value: OsString, cwd: &Path) -> OpenRequest {
         match tauri::Url::parse(&value)
             .ok()
             .filter(|url| url.scheme() == "file")
+            .filter(|url| {
+                url.host_str()
+                    .is_none_or(|host| host.is_empty() || host == "localhost")
+            })
             .and_then(|url| url.to_file_path().ok())
         {
             Some(path) => path,
@@ -87,6 +91,7 @@ impl IncomingFiles {
 }
 
 // Perfis de dados separados (incluindo os testes) não compartilham a mesma janela.
+#[cfg(target_os = "linux")]
 pub fn instance_id() -> String {
     let config = std::env::var_os("XDG_CONFIG_HOME")
         .filter(|value| !value.is_empty())
@@ -105,23 +110,28 @@ mod tests {
     #[test]
     fn receives_multiple_paths_with_spaces_unicode_and_relative_names() {
         let queue = IncomingFiles::default();
+        let directory = tempfile::tempdir().unwrap();
+        let absolute = directory.path().join("Texto com 'aspas'.txt");
         queue.enqueue(
             [
-                "--",
-                "Nota com espaços 日本語.MD",
-                "/tmp/Texto com 'aspas'.txt",
-            ]
-            .map(OsString::from),
-            Path::new("/home/teste"),
+                OsString::from("--"),
+                OsString::from("Nota com espaços 日本語.MD"),
+                absolute.clone().into_os_string(),
+            ],
+            directory.path(),
         );
         assert_eq!(
             queue.take().unwrap(),
             vec![
                 OpenRequest::File {
-                    path: "/home/teste/Nota com espaços 日本語.MD".into()
+                    path: directory
+                        .path()
+                        .join("Nota com espaços 日本語.MD")
+                        .to_string_lossy()
+                        .into()
                 },
                 OpenRequest::File {
-                    path: "/tmp/Texto com 'aspas'.txt".into()
+                    path: absolute.to_string_lossy().into()
                 },
             ]
         );
@@ -131,8 +141,8 @@ mod tests {
     #[test]
     fn decodes_local_file_uris_and_rejects_remote_or_unsupported_inputs() {
         let queue = IncomingFiles::default();
-        let path = Path::new("/tmp/ideias e ação.markdown");
-        let uri = tauri::Url::from_file_path(path).unwrap();
+        let path = std::env::temp_dir().join("ideias e ação.markdown");
+        let uri = tauri::Url::from_file_path(&path).unwrap();
         queue.enqueue(
             [
                 uri.as_str(),
@@ -141,7 +151,7 @@ mod tests {
                 "file://servidor/nota.md",
             ]
             .map(OsString::from),
-            Path::new("/tmp"),
+            &std::env::temp_dir(),
         );
         let requests = queue.take().unwrap();
         assert_eq!(
@@ -158,18 +168,19 @@ mod tests {
     #[test]
     fn keeps_requests_arriving_after_the_first_batch() {
         let queue = IncomingFiles::default();
-        queue.enqueue([OsString::from("primeiro.md")], Path::new("/tmp"));
+        let root = std::env::temp_dir();
+        queue.enqueue([OsString::from("primeiro.md")], &root);
         assert_eq!(queue.take().unwrap().len(), 1);
         let sender = queue.clone();
         std::thread::spawn(move || {
-            sender.enqueue([OsString::from("segundo.txt")], Path::new("/tmp"))
+            sender.enqueue([OsString::from("segundo.txt")], &std::env::temp_dir())
         })
         .join()
         .unwrap();
         assert_eq!(
             queue.take().unwrap(),
             vec![OpenRequest::File {
-                path: "/tmp/segundo.txt".into()
+                path: root.join("segundo.txt").to_string_lossy().into()
             }]
         );
     }

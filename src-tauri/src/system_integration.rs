@@ -8,6 +8,7 @@ pub struct DefaultAppStatus {
     pub registered: bool,
     pub markdown: bool,
     pub text: bool,
+    pub requires_settings: bool,
 }
 
 #[cfg(target_os = "linux")]
@@ -34,6 +35,7 @@ mod platform {
             registered: application().is_some(),
             markdown: is_default(TYPES[0]) && is_default(TYPES[1]),
             text: is_default(TYPES[2]),
+            requires_settings: false,
         })
     }
 
@@ -63,7 +65,11 @@ mod platform {
     }
 }
 
-#[cfg(not(target_os = "linux"))]
+#[cfg(windows)]
+#[path = "windows_integration.rs"]
+mod platform;
+
+#[cfg(not(any(target_os = "linux", windows)))]
 mod platform {
     use super::*;
 
@@ -73,6 +79,7 @@ mod platform {
             registered: false,
             markdown: false,
             text: false,
+            requires_settings: false,
         })
     }
 

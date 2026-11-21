@@ -6,6 +6,7 @@ export function DefaultAppControl({ onComplete }: { onComplete?: () => void }) {
   const [status, setStatus] = useState<DefaultAppStatus | null>(null)
   const [busy, setBusy] = useState(true)
   const [error, setError] = useState('')
+  const [instructions, setInstructions] = useState('')
   useEffect(() => {
     let active = true
     backend.defaultAppStatus().then(
@@ -30,6 +31,23 @@ export function DefaultAppControl({ onComplete }: { onComplete?: () => void }) {
       active = false
     }
   }, [])
+  useEffect(() => {
+    if (!status?.requiresSettings) return
+    let active = true
+    const refresh = () => {
+      void backend
+        .defaultAppStatus()
+        .then((value) => {
+          if (active) setStatus(value)
+        })
+        .catch(() => {})
+    }
+    window.addEventListener('focus', refresh)
+    return () => {
+      active = false
+      window.removeEventListener('focus', refresh)
+    }
+  }, [status?.requiresSettings])
 
   const complete = !!status?.markdown && !!status.text
   const apply = async () => {
@@ -39,10 +57,15 @@ export function DefaultAppControl({ onComplete }: { onComplete?: () => void }) {
     }
     setBusy(true)
     setError('')
+    setInstructions('')
     try {
       const result = await backend.setDefaultApp()
       setStatus(result)
       if (result.markdown && result.text) onComplete?.()
+      else if (result.requiresSettings)
+        setInstructions(
+          'Nas configurações do Windows, escolha o Entrelinhas para .md, .markdown e .txt. Depois, volte para esta janela.',
+        )
       else setError('O sistema ainda não confirmou a alteração. Tente novamente.')
     } catch (reason) {
       setError(errorMessage(reason))
@@ -99,6 +122,11 @@ export function DefaultAppControl({ onComplete }: { onComplete?: () => void }) {
           {error}
         </p>
       )}
+      {instructions && (
+        <p className="muted small" role="status">
+          {instructions}
+        </p>
+      )}
       <div className="default-app-actions">
         <button
           type="button"
@@ -112,7 +140,9 @@ export function DefaultAppControl({ onComplete }: { onComplete?: () => void }) {
               ? onComplete
                 ? 'Começar a escrever'
                 : 'Já é o padrão'
-              : 'Usar como padrão'}
+              : status?.requiresSettings
+                ? 'Abrir configurações do Windows'
+                : 'Usar como padrão'}
         </button>
       </div>
       <p className="muted small">

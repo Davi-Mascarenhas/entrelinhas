@@ -39,7 +39,26 @@ fn move_without_overwrite(source: &Path, target: &Path) -> AppResult<()> {
         rustix::fs::RenameFlags::NOREPLACE,
     )
     .map_err(std::io::Error::from);
-    #[cfg(not(target_os = "linux"))]
+    #[cfg(windows)]
+    let result = {
+        use std::os::windows::ffi::OsStrExt;
+        let source: Vec<u16> = source.as_os_str().encode_wide().chain(Some(0)).collect();
+        let target: Vec<u16> = target.as_os_str().encode_wide().chain(Some(0)).collect();
+        // Sem MOVEFILE_REPLACE_EXISTING: preserva outro arquivo e funciona sem hard links.
+        if unsafe {
+            windows_sys::Win32::Storage::FileSystem::MoveFileExW(
+                source.as_ptr(),
+                target.as_ptr(),
+                0,
+            )
+        } == 0
+        {
+            Err(std::io::Error::last_os_error())
+        } else {
+            Ok(())
+        }
+    };
+    #[cfg(not(any(target_os = "linux", windows)))]
     let result = std::fs::hard_link(source, target).and_then(|()| {
         std::fs::remove_file(source).inspect_err(|_| {
             let _ = std::fs::remove_file(target);
