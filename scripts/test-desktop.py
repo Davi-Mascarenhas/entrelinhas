@@ -139,6 +139,10 @@ class Desktop:
         element = self.element(css)
         self.call('/actions', {'actions': [{'type': 'pointer', 'id': 'mouse', 'parameters': {'pointerType': 'mouse'}, 'actions': [{'type': 'pause', 'duration': 400}, {'type': 'pointerMove', 'origin': {'element-6066-11e4-a52e-4f735466cecf': element}, 'x': x, 'y': 0}, {'type': 'pointerDown', 'button': 0}, {'type': 'pointerUp', 'button': 0}, {'type': 'pause', 'duration': 70}, {'type': 'pointerDown', 'button': 0}, {'type': 'pointerUp', 'button': 0}]}]})
 
+    def drag(self, css, x=0):
+        point = self.js('const r=document.querySelector(arguments[0]).getBoundingClientRect();return {x:Math.floor((r.left+r.right)/2)+arguments[1],y:Math.floor((r.top+r.bottom)/2)}', css, x)
+        self.call('/actions', {'actions': [{'type': 'pointer', 'id': 'mouse', 'parameters': {'pointerType': 'mouse'}, 'actions': [{'type': 'pause', 'duration': 400}, {'type': 'pointerMove', 'origin': 'viewport', **point}, {'type': 'pointerDown', 'button': 0}, {'type': 'pointerMove', 'origin': 'viewport', 'x': point['x']+16, 'y': point['y']+8, 'duration': 100}, {'type': 'pause', 'duration': 150}, {'type': 'pointerUp', 'button': 0}]}]})
+
     def fill(self, css, text):
         self.call('/element/' + self.element(css) + '/clear', {})
         self.keys(css, text)
@@ -320,10 +324,11 @@ def main():
             app.call('/window/rect', {'width': 1180, 'height': 780})
             wait(lambda: app.js('return [innerWidth,innerHeight]') == [1180, 780], 'restaurar janela para o restante dos testes')
             original_rect = app.call('/window/rect')
-            app.double_click('.brand span')
-            wait(lambda: app.ipc('plugin:window|is_maximized', label='main'), 'duplo clique no nome do aplicativo maximiza')
-            app.double_click('.titlebar', x=app.js('return Math.round(innerWidth/4)'))
-            wait(lambda: not app.ipc('plugin:window|is_maximized', label='main'), 'duplo clique na área livre restaura')
+            app.js('window.__gestureCommands=[];window.__gestureFetch=window.fetch;window.fetch=(input,...args)=>{const command=typeof input==="string"&&input.startsWith("ipc:")?decodeURIComponent(new URL(input).pathname.slice(1)):"";if(command==="plugin:window|start_dragging"||command==="plugin:window|toggle_maximize")window.__gestureCommands.push(command);return window.__gestureFetch(input,...args)}')
+            app.double_click('.titlebar', x=app.js('return -Math.round(innerWidth*.3)'))
+            wait(lambda: app.ipc('plugin:window|is_maximized', label='main'), 'duplo clique na região esquerda marcada maximiza')
+            app.double_click('.titlebar', x=app.js('return Math.round(innerWidth*.3)'))
+            wait(lambda: not app.ipc('plugin:window|is_maximized', label='main'), 'duplo clique na região direita marcada restaura')
             assert not app.ipc('plugin:window|is_minimized', label='main')
             passed('duplo clique na barra maximiza e restaura sem minimizar')
             control_gap = app.js('const group=document.querySelector(".window-controls"), first=group.children[0].getBoundingClientRect(), second=group.children[1].getBoundingClientRect(), rect=group.getBoundingClientRect();return Math.round((first.right+second.left)/2)-Math.floor((rect.left+rect.right)/2)')
@@ -332,6 +337,12 @@ def main():
             app.double_click('.brand span')
             wait(lambda: not app.ipc('plugin:window|is_maximized', label='main'), 'restaurar pelo nome do aplicativo')
             passed('áreas livres entre controles também maximizam e restauram a janela')
+            assert app.js('return window.__gestureCommands.filter(command=>command==="plugin:window|toggle_maximize").length') == 4
+            assert app.js('return !window.__gestureCommands.includes("plugin:window|start_dragging")'), 'Cliques parados não podem iniciar arrastes nativos.'
+            app.drag('.titlebar', x=app.js('return -Math.round(innerWidth*.3)'))
+            wait(lambda: app.js('return window.__gestureCommands.filter(command=>command==="plugin:window|start_dragging").length') == 1, 'arrastar somente depois de mover o mouse pressionado')
+            app.js('window.fetch=window.__gestureFetch;delete window.__gestureFetch;delete window.__gestureCommands')
+            passed('duplo clique nas regiões esquerda e direita não inicia arraste; movimento pressionado inicia um único arraste')
             app.double_click('.window-title')
             wait(lambda: app.js('return !!document.querySelector(arguments[0])', '[role=dialog][aria-label="Editar título"]'), 'editar título com duplo clique')
             assert not app.ipc('plugin:window|is_maximized', label='main')

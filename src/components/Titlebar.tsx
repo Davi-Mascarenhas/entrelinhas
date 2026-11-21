@@ -1,6 +1,7 @@
 import { isTauri } from '@tauri-apps/api/core'
 import { getCurrentWindow } from '@tauri-apps/api/window'
 import { Minus, Square, X } from 'lucide-react'
+import { useEffect, useRef } from 'react'
 import type { Note } from '../core/types'
 import { IconButton } from './ui'
 
@@ -13,6 +14,11 @@ export function Titlebar({
   onRename: () => void
   onError: (message: string) => void
 }) {
+  const cancelDrag = useRef(() => {})
+  useEffect(() => () => cancelDrag.current(), [])
+  const isControl = (target: EventTarget) =>
+    target instanceof Element &&
+    target.closest('button, a, input, select, textarea, [role="button"]')
   const run = (action: 'minimize' | 'toggleMaximize' | 'close' | 'startDragging') => {
     if (isTauri())
       void getCurrentWindow()
@@ -24,17 +30,38 @@ export function Titlebar({
       className="titlebar chrome"
       data-tauri-drag-region="false"
       onMouseDown={(event) => {
-        if (
-          event.button !== 0 ||
-          (event.target instanceof Element &&
-            event.target.closest('button, a, input, select, textarea, [role="button"]')) ||
-          ![1, 2].includes(event.detail)
-        )
-          return
+        cancelDrag.current()
+        if (event.button !== 0 || isControl(event.target)) return
         event.preventDefault()
         event.stopPropagation()
-        // O segundo pressionamento trata o duplo clique sem disputar o arraste nativo.
-        run(event.detail === 2 ? 'toggleMaximize' : 'startDragging')
+        const { clientX, clientY } = event
+        const stop = () => {
+          window.removeEventListener('mousemove', move)
+          window.removeEventListener('mouseup', stop)
+          window.removeEventListener('blur', stop)
+          cancelDrag.current = () => {}
+        }
+        const move = (mouse: MouseEvent) => {
+          if (!(mouse.buttons & 1)) {
+            stop()
+            return
+          }
+          // Só inicia o arraste com movimento, preservando cliques e duplo clique.
+          if (Math.hypot(mouse.clientX - clientX, mouse.clientY - clientY) < 6) return
+          stop()
+          run('startDragging')
+        }
+        cancelDrag.current = stop
+        window.addEventListener('mousemove', move)
+        window.addEventListener('mouseup', stop)
+        window.addEventListener('blur', stop)
+      }}
+      onDoubleClick={(event) => {
+        if (event.button !== 0 || isControl(event.target)) return
+        event.preventDefault()
+        event.stopPropagation()
+        cancelDrag.current()
+        run('toggleMaximize')
       }}
     >
       <div className="brand">
