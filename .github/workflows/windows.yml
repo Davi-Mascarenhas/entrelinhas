@@ -89,6 +89,8 @@ jobs:
         with:
           name: windows-test-evidence
           path: |
-            artifacts/windows
+            artifacts/windows/*.png
+            artifacts/windows/*.log
+            artifacts/windows/results.json
             src-tauri/target/release/nsis
           if-no-files-found: warn

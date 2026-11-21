@@ -33,8 +33,8 @@ try {
     Start-Sleep -Milliseconds 700
     $rect = New-Object WizardWindow+Rect
     [WizardWindow]::GetWindowRect($handle, [ref]$rect) | Out-Null
-    if (($rect.Right-$rect.Left) -lt 300) { throw 'Tamanho inválido do wizard.' }
-    $bitmap = New-Object System.Drawing.Bitmap ($rect.Right-$rect.Left),($rect.Bottom-$rect.Top)
+    if (($rect.Right - $rect.Left) -lt 300) { throw 'Tamanho inválido do wizard.' }
+    $bitmap = New-Object System.Drawing.Bitmap ($rect.Right - $rect.Left),($rect.Bottom - $rect.Top)
     $graphics = [System.Drawing.Graphics]::FromImage($bitmap)
     $dc = $graphics.GetHdc()
     try { $printed = [WizardWindow]::PrintWindow($handle, $dc, 2) }

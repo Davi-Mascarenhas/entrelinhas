@@ -723,7 +723,10 @@ def main():
             before_editors = app.js('return document.querySelectorAll(".tiptap").length')
             launched = subprocess.run(['gio', 'open', str(external_md), str(external_txt)], env=environment, capture_output=True, text=True, timeout=15)
             assert launched.returncode == 0, launched.stderr
-            wait(lambda: app.editor('return editor.getText({blockSeparator:String.fromCharCode(10)})') == external_txt.read_text(), 'abrir TXT enviado pelo explorador na janela existente')
+            wait(lambda: app.js('return [...document.querySelectorAll(".tiptap")].some(node=>node.editor.getText({blockSeparator:String.fromCharCode(10)})===arguments[0])', external_txt.read_text()), 'abrir TXT enviado pelo explorador na janela existente')
+            # O explorador pode iniciar processos em ordens diferentes para cada tipo MIME.
+            app.js('return [...document.querySelectorAll("[role=tab]")].find(tab=>tab.innerText.includes(arguments[0])).click()', external_txt.name)
+            wait(lambda: app.editor('return editor.getText({blockSeparator:String.fromCharCode(10)})') == external_txt.read_text(), 'ativar TXT recebido')
             assert app.js('return document.querySelectorAll(".tiptap").length') == before_editors + 2
             assert app.js('return [...document.querySelectorAll(".tiptap")].some(node=>node.editor?.getText().endsWith(" FIM"))'), 'Abrir pelo sistema deve preservar o rascunho em memória.'
             subprocess.run(['gio', 'launch', str(desktop_entry), str(external_md)], check=True, env=environment, capture_output=True, timeout=15)
