@@ -73,6 +73,8 @@ class Desktop:
         if needs_welcome:
             wait(lambda: self.js('return !!document.querySelector(".welcome-modal")'), 'apresentação inicial')
             if choose_theme:
+                if self.js('return !!document.querySelector(".welcome-modal .language-options")'):
+                    self.click('.welcome-actions .primary')
                 self.click('.welcome-actions .primary')
                 self.click('[aria-label="Usar tema Claro"]')
                 self.click('.welcome-actions .primary')
@@ -257,9 +259,12 @@ def main():
             native_version = app.ipc('plugin:app|version')
             assert native_version == json.loads((root / 'package.json').read_text())['version']
             development_server = app.js('return location.origin === "http://127.0.0.1:1420"')
-            assert app.js('return document.querySelectorAll(".welcome-steps li").length') == 3
-            assert 'Etapa 1 de 3' in app.js('return document.querySelector(".welcome-modal").innerText')
+            assert app.js('return document.querySelectorAll(".welcome-steps li").length') == 4
+            assert 'Etapa 1 de 4' in app.js('return document.querySelector(".welcome-modal").innerText')
             assert not app.ipc('load_library')['preferences'], 'O tema padrão não deve ser persistido antes da escolha.'
+            app.screenshot(output / 'welcome-language.png')
+            app.click('.welcome-actions .primary')
+            assert 'Etapa 2 de 4' in app.js('return document.querySelector(".welcome-modal").innerText')
             app.screenshot(output / 'welcome.png')
             app.click('.welcome-actions .primary')
             assert app.js('return document.querySelectorAll(".welcome-modal .theme-choice").length') == 3
@@ -271,8 +276,8 @@ def main():
             app.click('.welcome-actions .primary')
             wait(lambda: app.js('return document.querySelector(".default-app").getAttribute("aria-busy")') == 'false', 'verificar padrão na apresentação')
             app.screenshot(output / 'welcome-default.png')
-            assert 'Etapa 3 de 3' in app.js('return document.querySelector(".welcome-modal").innerText')
-            passed('primeira abertura apresenta boas-vindas, escolha de tema e padrão em três páginas')
+            assert 'Etapa 4 de 4' in app.js('return document.querySelector(".welcome-modal").innerText')
+            passed('primeira abertura apresenta idioma, boas-vindas, tema e padrão em quatro páginas')
             app.click('.welcome-actions button:last-child')
             wait(lambda: app.ipc('load_library')['preferences'].get('onboardingCompleted'), 'lembrar conclusão após recusar o padrão')
             assert not (config_home / 'mimeapps.list').exists(), 'Agora não deve preservar os padrões do usuário.'
@@ -280,6 +285,8 @@ def main():
             wait(lambda: app.editor('return editor.getText().startsWith("Primeiro documento")'), 'abrir arquivo que aguardava a apresentação')
             assert app.js('return document.querySelectorAll(".tiptap").length') == 1
             passed('arquivo recebido na primeira execução aguarda o fim da apresentação')
+            from language_checks import exercise as check_languages
+            check_languages(app, output, wait, passed)
             app.ipc('forget_document', path=str(first_file))
             app.click('[aria-label="Fechar aplicativo"]')
             time.sleep(.3)
@@ -519,6 +526,7 @@ def main():
             app.call('/window/rect', original_rect)
             wait(lambda: app.js('return innerWidth') == original_rect['width'], 'restaurar janela após testar ferramentas')
             passed('formatação inferior sem moldura e seletores preservam a seleção')
+            assert app.editor('editor.chain().focus().selectAll().run();return !editor.state.selection.empty'), 'O teste de cor precisa começar com texto selecionado.'
             app.click('[aria-label="Cor do texto"]')
             app.click('[aria-label="Usar cor #6f94b5"]')
             app.click('[role="dialog"][aria-label="Cor do texto"] .primary')

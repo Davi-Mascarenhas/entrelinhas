@@ -1,6 +1,10 @@
 import type { Preferences } from './types'
+import { isLanguage } from '../i18n'
+import { isAssignableShortcut } from './shortcuts'
 
 export const defaultPreferences: Preferences = {
+  language: 'pt-BR',
+  languageChosen: false,
   theme: 'light',
   themeChosen: false,
   onboardingCompleted: false,
@@ -20,6 +24,7 @@ export const defaultPreferences: Preferences = {
   spellcheck: false,
   selectionTools: true,
   shortcuts: {
+    settings: 'Ctrl+,',
     new: 'Ctrl+N',
     open: 'Ctrl+O',
     save: 'Ctrl+S',
@@ -75,14 +80,34 @@ export function readPreferences(value: unknown): Preferences {
   // Uma escolha de tema durante o novo fluxo ainda não conclui as três etapas.
   result.onboardingCompleted =
     typeof input.onboardingCompleted === 'boolean' ? input.onboardingCompleted : result.themeChosen
+  if (isLanguage(input.language)) result.language = input.language
+  result.languageChosen =
+    typeof input.languageChosen === 'boolean'
+      ? input.languageChosen
+      : result.onboardingCompleted || isLanguage(input.language)
   if (input.shortcuts && typeof input.shortcuts === 'object') {
-    for (const key of Object.keys(result.shortcuts) as (keyof Preferences['shortcuts'])[]) {
-      const shortcut = (input.shortcuts as Record<string, unknown>)[key]
-      if (
-        typeof shortcut === 'string' &&
-        /^(Ctrl\+(Shift\+)?(Alt\+)?[A-Z0-9]|F[1-9][0-2]?)$/.test(shortcut)
-      )
-        result.shortcuts[key] = shortcut
+    const custom = input.shortcuts as Record<string, unknown>
+    const keys = Object.keys(result.shortcuts) as (keyof Preferences['shortcuts'])[]
+    const candidate = { ...result.shortcuts }
+    for (const key of keys) {
+      const shortcut = custom[key]
+      if (typeof shortcut === 'string' && (isAssignableShortcut(shortcut) || shortcut === 'Ctrl+T'))
+        candidate[key] = shortcut
+    }
+    // Duplicatas nunca devem bloquear ações; preserva uma atribuição e usa o padrão disponível.
+    const used = new Set<string>()
+    for (const key of keys) {
+      if (!used.has(candidate[key])) {
+        result.shortcuts[key] = candidate[key]
+        used.add(candidate[key])
+      } else {
+        const fallback = [
+          defaultPreferences.shortcuts[key],
+          ...Array.from({ length: 24 }, (_, i) => `Ctrl+Alt+F${i + 1}`),
+        ].find((value) => !used.has(value) && isAssignableShortcut(value))!
+        result.shortcuts[key] = fallback
+        used.add(fallback)
+      }
     }
   }
   return result

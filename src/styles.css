@@ -1,3 +1,25 @@
+@font-face {
+  font-family: 'Entrelinhas UI JP';
+  src: url('/fonts/entrelinhas-ui-jp.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Entrelinhas UI SC';
+  src: url('/fonts/entrelinhas-ui-sc.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+:root:lang(ja),
+.language-choice:lang(ja) {
+  font-family: 'Entrelinhas UI JP', 'Noto Sans JP', sans-serif;
+}
+:root:lang(zh-CN),
+.language-choice:lang(zh-CN) {
+  font-family: 'Entrelinhas UI SC', 'Noto Sans SC', sans-serif;
+}
 :root {
   font-family: 'Ubuntu', 'Cantarell', 'Noto Sans', sans-serif;
   font-synthesis: none;
@@ -2182,4 +2204,68 @@ body,
 .update-control progress {
   width: 100%;
   accent-color: var(--accent);
+}
+
+/* Escolha de idioma e captura de atalhos compartilham o tema do aplicativo. */
+.language-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 24px 0;
+}
+.language-choice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 48px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  text-align: start;
+  background: var(--bg);
+  color: var(--text);
+}
+.language-choice[aria-pressed='true'] {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--text);
+}
+.shortcut-capture {
+  display: grid;
+  place-items: center;
+  min-height: 112px;
+  margin: 24px 0 12px;
+  border: 1px dashed var(--accent);
+  border-radius: 12px;
+  background: var(--bg);
+}
+.shortcut-capture kbd {
+  font-size: 24px;
+  color: var(--text);
+}
+.shortcut-input {
+  min-width: 140px;
+  padding: 9px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  text-align: center;
+}
+.welcome-steps {
+  flex-wrap: wrap;
+}
+@media (max-width: 540px) {
+  .language-options {
+    grid-template-columns: 1fr;
+  }
+}
+
+:root:lang(ja) :is(.settings-content h3, .welcome-body h3, .welcome-note > span) {
+  font-family: 'Entrelinhas UI JP', sans-serif;
+  letter-spacing: 0;
+}
+:root:lang(zh-CN) :is(.settings-content h3, .welcome-body h3, .welcome-note > span) {
+  font-family: 'Entrelinhas UI SC', sans-serif;
+  letter-spacing: 0;
 }

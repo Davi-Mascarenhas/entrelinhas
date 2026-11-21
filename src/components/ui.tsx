@@ -1,26 +1,27 @@
+import { tr } from '../i18n'
 import { useEffect, useRef, type ButtonHTMLAttributes, type ReactNode } from 'react'
 import { X } from 'lucide-react'
 import { createPortal } from 'react-dom'
-
 export function IconButton({
   label,
   children,
   title,
   ...props
-}: ButtonHTMLAttributes<HTMLButtonElement> & { label: string }) {
+}: ButtonHTMLAttributes<HTMLButtonElement> & {
+  label: string
+}) {
   return (
     <button
       type="button"
       className="icon-button"
-      aria-label={label}
-      data-tooltip={title ?? label}
+      aria-label={tr(label)}
+      data-tooltip={tr(title ?? label)}
       {...props}
     >
       {children}
     </button>
   )
 }
-
 export function Modal({
   title,
   children,
@@ -46,7 +47,9 @@ export function Modal({
       node.querySelector<HTMLElement>('[autofocus]') ??
       node.querySelector<HTMLElement>('input, [role="combobox"], textarea') ??
       node.querySelector<HTMLElement>('button')
-    first?.focus({ preventScroll: true })
+    first?.focus({
+      preventScroll: true,
+    })
     const handle = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         if ((event.target as HTMLElement).closest('[role="combobox"][aria-expanded="true"]')) return
@@ -89,12 +92,12 @@ export function Modal({
         className={`modal ${wide ? 'wide' : ''} ${className}`}
         role="dialog"
         aria-modal="true"
-        aria-label={title}
+        aria-label={tr(title)}
       >
         <header className="modal-header">
-          <h2>{title}</h2>
+          <h2>{tr(title)}</h2>
           {dismissible && (
-            <IconButton label="Fechar painel" onClick={onClose}>
+            <IconButton label={tr('Fechar painel')} onClick={onClose}>
               <X size={18} />
             </IconButton>
           )}

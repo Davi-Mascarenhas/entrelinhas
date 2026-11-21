@@ -1,5 +1,6 @@
 mod database;
 mod files;
+mod language;
 mod launch;
 mod models;
 mod rename;
@@ -211,6 +212,7 @@ pub fn run() {
         })
         .invoke_handler(tauri::generate_handler![
             load_library,
+            language::language_bootstrap,
             take_open_requests,
             default_app_status,
             set_default_app,

@@ -1,11 +1,14 @@
 import type { JSONContent } from '@tiptap/core'
+import type { Language } from '../i18n'
 
 export type DocumentFormat = 'md' | 'txt'
 export type Theme = 'light' | 'dark' | 'sepia'
 export type ShortcutAction =
-  'new' | 'open' | 'save' | 'saveAs' | 'close' | 'find' | 'replace' | 'immersive'
+  'new' | 'open' | 'save' | 'saveAs' | 'close' | 'find' | 'replace' | 'immersive' | 'settings'
 
 export interface Preferences {
+  language: Language
+  languageChosen: boolean
   theme: Theme
   themeChosen: boolean
   onboardingCompleted: boolean
@@ -30,6 +33,7 @@ export interface Preferences {
 export interface Note {
   id: string
   title: string
+  titleIsDefault?: boolean
   path: string | null
   format: DocumentFormat
   content: JSONContent

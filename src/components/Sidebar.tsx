@@ -1,3 +1,4 @@
+import { tr } from '../i18n'
 import { useRef, useState, type CSSProperties } from 'react'
 import {
   Plus,
@@ -26,7 +27,6 @@ import type { AskDialog } from './useDialog'
 import { ColorPicker } from './ColorPicker'
 import { ProjectAssignment } from './ProjectAssignment'
 import { IconButton, Modal } from './ui'
-
 interface Props {
   preferences: Preferences
   projects: Project[]
@@ -44,7 +44,6 @@ interface Props {
   onDeletedProject: (id: string) => void
   onAssociate: (path: string, projectId: string | null) => void
 }
-
 export function Sidebar(p: Props) {
   const [expanded, setExpanded] = useState<Set<string>>(new Set())
   const [editing, setEditing] = useState<Project | null>(null)
@@ -80,12 +79,22 @@ export function Sidebar(p: Props) {
   const remove = async (project: Project) => {
     setContext(null)
     const choice = await p.ask({
-      title: `Excluir “${project.name}”?`,
-      message:
+      title: tr('Excluir “{0}”?', {
+        0: project.name,
+      }),
+      message: tr(
         'O projeto será removido da organização. Todos os documentos e suas imagens permanecerão nos locais originais.',
+      ),
       choices: [
-        { id: 'cancel', label: 'Cancelar' },
-        { id: 'delete', label: 'Excluir projeto', danger: true },
+        {
+          id: 'cancel',
+          label: tr('Cancelar'),
+        },
+        {
+          id: 'delete',
+          label: tr('Excluir projeto'),
+          danger: true,
+        },
       ],
     })
     if (choice === 'delete')
@@ -98,9 +107,16 @@ export function Sidebar(p: Props) {
     setContext(null)
     try {
       const files = await open({
-        title: `Associar a ${project.name}`,
+        title: tr('Associar a {0}', {
+          0: project.name,
+        }),
         multiple: true,
-        filters: [{ name: 'Documentos', extensions: ['md', 'markdown', 'txt'] }],
+        filters: [
+          {
+            name: tr('Documentos'),
+            extensions: ['md', 'markdown', 'txt'],
+          },
+        ],
       })
       for (const path of Array.isArray(files) ? files : files ? [files] : []) {
         const read = await backend.read(path)
@@ -117,13 +133,20 @@ export function Sidebar(p: Props) {
     setDocumentMenu(null)
     try {
       const path = await open({
-        title: `Localizar novamente: ${document.title}`,
-        filters: [{ name: 'Documentos', extensions: ['md', 'markdown', 'txt'] }],
+        title: tr('Localizar novamente: {0}', {
+          0: document.title,
+        }),
+        filters: [
+          {
+            name: tr('Documentos'),
+            extensions: ['md', 'markdown', 'txt'],
+          },
+        ],
       })
       if (typeof path === 'string') {
         await backend.relocate(document.path, path)
         await p.refresh()
-        p.notify('Caminho atualizado. Abra o documento para continuar.')
+        p.notify(tr('Caminho atualizado. Abra o documento para continuar.'))
       }
     } catch (error) {
       p.notify(errorMessage(error))
@@ -149,7 +172,9 @@ export function Sidebar(p: Props) {
         <span>{document.title}</span>
       </button>
       <IconButton
-        label={`Opções de ${document.title}`}
+        label={tr('Opções de {0}', {
+          0: document.title,
+        })}
         onClick={() =>
           setDocumentMenu((current) => (current === document.path ? null : document.path))
         }
@@ -159,7 +184,9 @@ export function Sidebar(p: Props) {
       {documentMenu === document.path && (
         <div className="tree-menu">
           <ProjectAssignment
-            label={`Projeto de ${document.title}`}
+            label={tr('Projeto de {0}', {
+              0: document.title,
+            })}
             projects={p.projects}
             value={document.projectId}
             onChange={async (projectId) => {
@@ -171,7 +198,7 @@ export function Sidebar(p: Props) {
           />
           <button onClick={() => void relocate(document)}>
             <MapPin size={13} />
-            Localizar novamente
+            {tr('Localizar novamente')}
           </button>
           <button
             onClick={() => {
@@ -183,42 +210,45 @@ export function Sidebar(p: Props) {
             }}
           >
             <Unlink size={13} />
-            Remover da biblioteca
+            {tr('Remover da biblioteca')}
           </button>
-          <small>O arquivo no disco será preservado.</small>
+          <small>{tr('O arquivo no disco será preservado.')}</small>
         </div>
       )}
     </div>
   )
-
   return (
-    <aside className="sidebar chrome" aria-label="Navegação">
+    <aside className="sidebar chrome" aria-label={tr('Navegação')}>
       <div className="sidebar-heading">
-        <span>SEU ESPAÇO</span>
+        <span>{tr('SEU ESPAÇO')}</span>
         <IconButton
-          label="Ocultar navegação"
-          onClick={() => p.changePreferences({ sidebarVisible: false })}
+          label={tr('Ocultar navegação')}
+          onClick={() =>
+            p.changePreferences({
+              sidebarVisible: false,
+            })
+          }
         >
           <PanelLeftClose size={16} />
         </IconButton>
       </div>
       <button className="nav-button primary-nav" onClick={() => p.newNote()}>
         <Plus size={17} />
-        <span>Nova nota</span>
+        <span>{tr('Nova nota')}</span>
         <kbd>{p.preferences.shortcuts.new}</kbd>
       </button>
       <button className="nav-button" onClick={p.openDocument}>
         <FolderOpen size={16} />
-        <span>Abrir documento</span>
+        <span>{tr('Abrir documento')}</span>
         <kbd>{p.preferences.shortcuts.open}</kbd>
       </button>
       <button className="nav-button" onClick={p.search}>
         <Search size={16} />
-        <span>Buscar documentos</span>
+        <span>{tr('Buscar documentos')}</span>
       </button>
       <div className="section-heading">
-        <span>PROJETOS</span>
-        <IconButton label="Criar projeto" onClick={() => edit()}>
+        <span>{tr('PROJETOS')}</span>
+        <IconButton label={tr('Criar projeto')} onClick={() => edit()}>
           <Plus size={14} />
         </IconButton>
       </div>
@@ -227,9 +257,9 @@ export function Sidebar(p: Props) {
           <button className="empty-projects create-first-project" onClick={() => edit()}>
             <BookOpen size={23} strokeWidth={1.3} />
             <p>
-              Ideias ganham espaço.
+              {tr('Ideias ganham espaço.')}
               <br />
-              <span>Crie seu primeiro projeto.</span>
+              <span>{tr('Crie seu primeiro projeto.')}</span>
             </p>
           </button>
         )}
@@ -269,7 +299,11 @@ export function Sidebar(p: Props) {
                 <ChevronRight className={expanded.has(project.id) ? 'expanded' : ''} size={12} />
                 <span
                   className="project-icon"
-                  style={{ '--project-color': project.color } as CSSProperties}
+                  style={
+                    {
+                      '--project-color': project.color,
+                    } as CSSProperties
+                  }
                 >
                   {project.icon || <Folder size={15} />}
                 </span>
@@ -279,7 +313,9 @@ export function Sidebar(p: Props) {
                 </span>
               </button>
               <IconButton
-                label={`Opções do projeto ${project.name}`}
+                label={tr('Opções do projeto {0}', {
+                  0: project.name,
+                })}
                 onClick={() =>
                   setContext((current) => (current === project.id ? null : project.id))
                 }
@@ -296,27 +332,27 @@ export function Sidebar(p: Props) {
                   }}
                 >
                   <Plus size={13} />
-                  Nova nota neste projeto
+                  {tr('Nova nota neste projeto')}
                 </button>
                 <button onClick={() => void attach(project)}>
                   <Link2 size={13} />
-                  Associar arquivo existente
+                  {tr('Associar arquivo existente')}
                 </button>
                 <button onClick={() => edit(project)}>
                   <Pencil size={13} />
-                  Editar projeto
+                  {tr('Editar projeto')}
                 </button>
                 <button onClick={() => reorder(project.id, -1)}>
                   <ArrowUp size={13} />
-                  Mover para cima
+                  {tr('Mover para cima')}
                 </button>
                 <button onClick={() => reorder(project.id, 1)}>
                   <ArrowDown size={13} />
-                  Mover para baixo
+                  {tr('Mover para baixo')}
                 </button>
                 <button className="danger" onClick={() => void remove(project)}>
                   <Trash2 size={13} />
-                  Excluir projeto
+                  {tr('Excluir projeto')}
                 </button>
               </div>
             )}
@@ -327,7 +363,7 @@ export function Sidebar(p: Props) {
                   .map(documentItem)}
                 <button className="new-project-note" onClick={() => p.newNote(project.id)}>
                   <Plus size={12} />
-                  Nova nota
+                  {tr('Nova nota')}
                 </button>
               </div>
             )}
@@ -337,17 +373,22 @@ export function Sidebar(p: Props) {
       <div className="sidebar-bottom">
         <div className="local-indicator">
           <span />
-          Seu espaço é local.
+          {tr('Seu espaço é local.')}
         </div>
-        <button className="nav-button" aria-label="Configurações" onClick={p.settings}>
+        <button
+          className="nav-button"
+          aria-label={tr('Configurações')}
+          data-shortcut={p.preferences.shortcuts.settings}
+          onClick={p.settings}
+        >
           <Gear size={17} />
-          <span>Configurações</span>
+          <span>{tr('Configurações')}</span>
         </button>
       </div>
       <div
         className="sidebar-resizer"
         role="separator"
-        aria-label="Largura da navegação"
+        aria-label={tr('Largura da navegação')}
         aria-orientation="vertical"
         tabIndex={0}
         onKeyDown={(event) => {
@@ -389,8 +430,8 @@ export function Sidebar(p: Props) {
         <Modal
           title={
             p.projects.some((project) => project.id === editing.id)
-              ? 'Editar projeto'
-              : 'Novo projeto'
+              ? tr('Editar projeto')
+              : tr('Novo projeto')
           }
           onClose={() => setEditing(null)}
         >
@@ -417,44 +458,44 @@ export function Sidebar(p: Props) {
             }}
           >
             <label>
-              Nome
+              {tr('Nome')}
               <input
                 autoFocus
                 required
                 maxLength={120}
                 value={projectName}
                 onChange={(event) => setProjectName(event.target.value)}
-                placeholder="Um novo espaço de ideias"
+                placeholder={tr('Um novo espaço de ideias')}
               />
             </label>
             <div className="project-customization">
               <label>
-                Cor
+                {tr('Cor')}
                 <ColorPicker
-                  label="Cor do projeto"
+                  label={tr('Cor do projeto')}
                   value={projectColor}
                   onChange={setProjectColor}
                 />
               </label>
               <label>
-                Ícone opcional
+                {tr('Ícone opcional')}
                 <input
-                  aria-label="Ícone do projeto"
+                  aria-label={tr('Ícone do projeto')}
                   value={projectIcon}
                   onChange={(event) => setProjectIcon([...event.target.value].slice(0, 4).join(''))}
-                  placeholder="Ex.: 📖"
+                  placeholder={tr('Ex.: 📖')}
                 />
               </label>
             </div>
             <p className="muted small">
-              Projetos organizam referências. Seus documentos podem ficar em qualquer pasta.
+              {tr('Projetos organizam referências. Seus documentos podem ficar em qualquer pasta.')}
             </p>
             <div className="modal-actions">
               <button type="button" onClick={() => setEditing(null)}>
-                Cancelar
+                {tr('Cancelar')}
               </button>
               <button type="submit" className="primary" disabled={busy || !projectName.trim()}>
-                {busy ? 'Salvando…' : 'Salvar projeto'}
+                {busy ? tr('Salvando…') : tr('Salvar projeto')}
               </button>
             </div>
           </form>

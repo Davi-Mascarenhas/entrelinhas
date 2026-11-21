@@ -1,3 +1,4 @@
+import { tr, useLanguage } from '../i18n'
 import { useEffect, useRef } from 'react'
 import { EditorContent, useEditor } from '@tiptap/react'
 import type { Editor } from '@tiptap/core'
@@ -18,6 +19,7 @@ interface Props {
 }
 
 export function EditorPane(props: Props) {
+  const language = useLanguage()
   const current = useRef(props)
   current.current = props
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -30,7 +32,7 @@ export function EditorPane(props: Props) {
         role: 'textbox',
         'aria-label': 'Área de escrita',
         'aria-multiline': 'true',
-        lang: 'pt-BR',
+        lang: props.preferences.language,
       },
       handleDOMEvents: {
         beforeinput: () => {
@@ -101,6 +103,14 @@ export function EditorPane(props: Props) {
   useEffect(() => {
     editor?.view.dom.setAttribute('spellcheck', String(props.preferences.spellcheck))
   }, [editor, props.preferences.spellcheck])
+  useEffect(() => {
+    if (!editor) return
+    editor.view.dom.setAttribute('lang', language)
+    editor.view.dom.setAttribute('aria-label', tr('Área de escrita'))
+    editor.view.dispatch(
+      editor.state.tr.setMeta('language', language).setMeta('addToHistory', false),
+    )
+  }, [editor, language])
   return (
     <div
       className={`editor-scroll ${props.active ? '' : 'inactive'}`}

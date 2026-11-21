@@ -18,7 +18,7 @@ import {
   Focus,
   Check,
 } from 'lucide-react'
-import { createNote, countText, moveItem, updateNote } from './core/notes'
+import { createNote, countText, moveItem, updateNote, noteTitle } from './core/notes'
 import { getWritingLayout } from './core/layout'
 import { defaultPreferences, readPreferences } from './core/preferences'
 import { shortcutAction } from './core/shortcuts'
@@ -42,8 +42,10 @@ import { TooltipLayer } from './components/TooltipLayer'
 import { Titlebar } from './components/Titlebar'
 import { RenameDocument } from './components/RenameDocument'
 import { IconButton, Modal } from './components/ui'
-
+import { tr, setLanguage, useLanguage, isLanguage, formatShortcut, formatCount } from './i18n'
 export default function App() {
+  const language = useLanguage()
+  const [platform, setPlatform] = useState('linux')
   const [preferences, setPreferences] = useState<Preferences>(() =>
     structuredClone(defaultPreferences),
   )
@@ -78,7 +80,10 @@ export default function App() {
   const [toolbar, setToolbar] = useState(false),
     [menu, setMenu] = useState(false)
   const [find, setFind] = useState<'find' | 'replace' | null>(null)
-  const [stats, setStats] = useState({ words: 0, characters: 0 })
+  const [stats, setStats] = useState({
+    words: 0,
+    characters: 0,
+  })
   const [editorVersion, setEditorVersion] = useState(0)
   const [link, setLink] = useState<string | null>(null)
   const [selectionRect, setSelectionRect] = useState<DOMRect | null>(null)
@@ -132,7 +137,11 @@ export default function App() {
       setDocuments(library.documents)
       setProjects(library.projects)
     } catch (error) {
-      notify(`Biblioteca indisponível: ${errorMessage(error)}`)
+      notify(
+        tr('Biblioteca indisponível: {0}', {
+          0: errorMessage(error),
+        }),
+      )
     }
   }, [notify])
   const fileOps = useDocuments({
@@ -202,45 +211,74 @@ export default function App() {
   useEffect(() => {
     if (!isTauri()) return
     let cancelled = false
-    void backend
-      .library()
-      .then((library) => {
+    void Promise.all([backend.library(), backend.languageBootstrap()])
+      .then(([library, bootstrap]) => {
         if (cancelled) return
         const loaded = readPreferences(library.preferences)
+        if (
+          !isLanguage((library.preferences as Record<string, unknown>)?.language) &&
+          isLanguage(bootstrap.installerLanguage)
+        ) {
+          loaded.language = bootstrap.installerLanguage
+          loaded.languageChosen = true
+        }
+        setPlatform(bootstrap.platform)
+        setLanguage(loaded.language)
         setPreferences(loaded)
         setProjects(library.projects)
         setDocuments(library.documents)
         setNotes((current) =>
           current.map((note) =>
-            !note.path && !note.dirty ? { ...note, format: loaded.defaultFormat } : note,
+            !note.path && !note.dirty
+              ? {
+                  ...note,
+                  format: loaded.defaultFormat,
+                }
+              : note,
           ),
         )
         setPreferencesLoaded(true)
       })
-      .catch((error) => notify(`Não foi possível ler as preferências: ${errorMessage(error)}`))
+      .catch((error) =>
+        notify(
+          tr('Não foi possível ler as preferências: {0}', {
+            0: errorMessage(error),
+          }),
+        ),
+      )
     return () => {
       cancelled = true
     }
   }, [notify])
   useEffect(() => {
-    if (!preferencesLoaded || !preferences.themeChosen) return
+    if (!preferencesLoaded || (!preferences.themeChosen && !preferences.languageChosen)) return
     preferencesQueue.current = preferencesQueue.current
       .catch(() => {})
       .then(() => backend.preferences(preferences))
-      .catch((error) => notify(`Não foi possível guardar as preferências: ${errorMessage(error)}`))
+      .catch((error) =>
+        notify(
+          tr('Não foi possível guardar as preferências: {0}', {
+            0: errorMessage(error),
+          }),
+        ),
+      )
   }, [preferences, preferencesLoaded, notify])
   const lifecycle = useRef({
     notes,
     mayDiscard: fileOps.mayDiscard,
     waitForSaves: fileOps.waitForSaves,
   })
-  lifecycle.current = { notes, mayDiscard: fileOps.mayDiscard, waitForSaves: fileOps.waitForSaves }
+  lifecycle.current = {
+    notes,
+    mayDiscard: fileOps.mayDiscard,
+    waitForSaves: fileOps.waitForSaves,
+  }
   useEffect(() => {
     if (!isTauri()) return
     let closing = false
     const unsubscribe = getCurrentWindow().onCloseRequested(async (event) => {
       event.preventDefault()
-      if (updateLock.current) return
+      if (updateLock.current || document.querySelector('[data-shortcut-capture]')) return
       if (closing) return
       closing = true
       try {
@@ -266,10 +304,13 @@ export default function App() {
     if (!editor) return
     try {
       const selected = await openNative({
-        title: 'Inserir imagem',
+        title: tr('Inserir imagem'),
         multiple: true,
         filters: [
-          { name: 'Imagens', extensions: ['png', 'jpg', 'jpeg', 'gif', 'webp', 'avif', 'bmp'] },
+          {
+            name: tr('Imagens'),
+            extensions: ['png', 'jpg', 'jpeg', 'gif', 'webp', 'avif', 'bmp'],
+          },
         ],
       })
       for (const path of Array.isArray(selected) ? selected : selected ? [selected] : []) {
@@ -277,7 +318,10 @@ export default function App() {
         editor
           .chain()
           .focus()
-          .setImage({ src, alt: path.split('/').pop() ?? '' })
+          .setImage({
+            src,
+            alt: path.split('/').pop() ?? '',
+          })
           .run()
       }
     } catch (error) {
@@ -297,11 +341,11 @@ export default function App() {
             'image/bmp',
           ].includes(file.type)
         ) {
-          notify('Use uma imagem PNG, JPEG, GIF, WebP, AVIF ou BMP.')
+          notify(tr('Use uma imagem PNG, JPEG, GIF, WebP, AVIF ou BMP.'))
           continue
         }
         if (file.size > 20 * 1024 * 1024) {
-          notify('A imagem excede o limite de 20 MB.')
+          notify(tr('A imagem excede o limite de 20 MB.'))
           continue
         }
         const reader = new FileReader()
@@ -310,10 +354,13 @@ export default function App() {
             editor
               .chain()
               .focus()
-              .setImage({ src: String(reader.result), alt: file.name })
+              .setImage({
+                src: String(reader.result),
+                alt: file.name,
+              })
               .run()
         }
-        reader.onerror = () => notify('Não foi possível ler a imagem.')
+        reader.onerror = () => notify(tr('Não foi possível ler a imagem.'))
         reader.readAsDataURL(file)
       }
     },
@@ -325,7 +372,9 @@ export default function App() {
       setNotes((current) =>
         current.find((note) => note.id === id)?.dirty
           ? current
-          : updateNote(current, id, { dirty: true }),
+          : updateNote(current, id, {
+              dirty: true,
+            }),
       ),
     [],
   )
@@ -353,6 +402,9 @@ export default function App() {
     librarySearch,
   ])
   useEffect(() => {
+    document.documentElement.lang = language
+  }, [language])
+  useEffect(() => {
     document.documentElement.dataset.theme = preferences.theme
     document.documentElement.style.colorScheme = preferences.theme === 'light' ? 'light' : 'dark'
     if (isTauri())
@@ -371,12 +423,28 @@ export default function App() {
         setSelectionRect(null)
         return
       }
+      if (document.querySelector('[data-shortcut-capture]')) return
       if (event.key === 'F11') {
         event.preventDefault()
         if (isTauri())
           void getCurrentWindow()
             .isFullscreen()
             .then((full) => getCurrentWindow().setFullscreen(!full))
+        return
+      }
+      const action = shortcutAction(event, preferences)
+      if (
+        action === 'settings' &&
+        preferences.onboardingCompleted &&
+        !dialog.visible &&
+        !librarySearch &&
+        link === null &&
+        !renameId
+      ) {
+        event.preventDefault()
+        setSettings(true)
+        setImmersive(false)
+        setMenu(false)
         return
       }
       if (
@@ -411,7 +479,6 @@ export default function App() {
         }))
         return
       }
-      const action = shortcutAction(event, preferences)
       if (!action) return
       event.preventDefault()
       if (action === 'new') newNote()
@@ -445,6 +512,7 @@ export default function App() {
     link,
     newNote,
     closeNote,
+    renameId,
     fileOps.openDocument,
     fileOps.saveNote,
   ])
@@ -473,7 +541,6 @@ export default function App() {
       edgeTimer.current = null
     }
   }, [immersive, preferences.sidebarSide])
-
   const selectionToolsVisible = Boolean(
     selectionRect &&
     preferences.selectionTools &&
@@ -535,24 +602,43 @@ export default function App() {
           setLibrarySearch(true)
           setImmersive(false)
         }}
-        changePreferences={(change) => setPreferences((current) => ({ ...current, ...change }))}
+        changePreferences={(change) =>
+          setPreferences((current) => ({
+            ...current,
+            ...change,
+          }))
+        }
         refresh={refresh}
         notify={notify}
         ask={dialog.ask}
         onDeletedProject={(id) =>
           setNotes((current) =>
-            current.map((note) => (note.projectId === id ? { ...note, projectId: null } : note)),
+            current.map((note) =>
+              note.projectId === id
+                ? {
+                    ...note,
+                    projectId: null,
+                  }
+                : note,
+            ),
           )
         }
         onAssociate={(path, projectId) =>
           setNotes((current) =>
-            current.map((note) => (note.path === path ? { ...note, projectId } : note)),
+            current.map((note) =>
+              note.path === path
+                ? {
+                    ...note,
+                    projectId,
+                  }
+                : note,
+            ),
           )
         }
       />
       <section className="workspace">
         {tabsVisible && (
-          <div className="tabs chrome" role="tablist" aria-label="Documentos abertos">
+          <div className="tabs chrome" role="tablist" aria-label={tr('Documentos abertos')}>
             {notes.map((note) => (
               <div
                 key={note.id}
@@ -585,10 +671,14 @@ export default function App() {
                 }}
               >
                 <FileText size={14} />
-                <span>{note.title}</span>
-                {note.dirty && <i className="dirty-dot" data-tooltip="Alterações não salvas" />}
+                <span>{noteTitle(note)}</span>
+                {note.dirty && (
+                  <i className="dirty-dot" data-tooltip={tr('Alterações não salvas')} />
+                )}
                 <IconButton
-                  label={`Fechar ${note.title}`}
+                  label={tr('Fechar {0}', {
+                    0: noteTitle(note),
+                  })}
                   onClick={(event) => {
                     event.stopPropagation()
                     closeNote(note.id)
@@ -598,7 +688,12 @@ export default function App() {
                 </IconButton>
               </div>
             ))}
-            <IconButton label={`Nova guia (${newTabShortcut})`} onClick={() => newNote()}>
+            <IconButton
+              label={tr('Nova guia ({0})', {
+                0: newTabShortcut,
+              })}
+              onClick={() => newNote()}
+            >
               <Plus size={16} />
             </IconButton>
           </div>
@@ -608,9 +703,12 @@ export default function App() {
             <div className="document-navigation">
               {!preferences.sidebarVisible && (
                 <IconButton
-                  label="Mostrar navegação"
+                  label={tr('Mostrar navegação')}
                   onClick={() =>
-                    setPreferences((current) => ({ ...current, sidebarVisible: true }))
+                    setPreferences((current) => ({
+                      ...current,
+                      sidebarVisible: true,
+                    }))
                   }
                 >
                   <PanelLeftOpen size={17} />
@@ -619,12 +717,12 @@ export default function App() {
               <div className="document-menu-wrapper">
                 <button
                   className="document-menu"
-                  aria-label="Opções do documento"
+                  aria-label={tr('Opções do documento')}
                   aria-expanded={menu}
                   onClick={() => setMenu((value) => !value)}
                 >
                   <FileText size={15} />
-                  <span>{activeNote.path ? activeNote.title : 'Rascunho'}</span>
+                  <span>{activeNote.path ? activeNote.title : tr('Rascunho')}</span>
                   <ChevronDown size={13} />
                 </button>
                 {menu && (
@@ -659,7 +757,8 @@ export default function App() {
                       }}
                     >
                       <Plus size={15} />
-                      Nova nota<kbd>Ctrl N</kbd>
+                      {tr('Nova nota')}
+                      <kbd>{formatShortcut(preferences.shortcuts.new)}</kbd>
                     </button>
                     <button
                       role="menuitem"
@@ -669,7 +768,8 @@ export default function App() {
                       }}
                     >
                       <FolderOpen size={15} />
-                      Abrir documento<kbd>Ctrl O</kbd>
+                      {tr('Abrir documento')}
+                      <kbd>{formatShortcut(preferences.shortcuts.open)}</kbd>
                     </button>
                     <button
                       role="menuitem"
@@ -679,7 +779,8 @@ export default function App() {
                       }}
                     >
                       <Save size={15} />
-                      Salvar<kbd>Ctrl S</kbd>
+                      {tr('Salvar')}
+                      <kbd>{formatShortcut(preferences.shortcuts.save)}</kbd>
                     </button>
                     <button
                       role="menuitem"
@@ -689,7 +790,8 @@ export default function App() {
                       }}
                     >
                       <Save size={15} />
-                      Salvar como<kbd>Ctrl Shift S</kbd>
+                      {tr('Salvar como')}
+                      <kbd>{formatShortcut(preferences.shortcuts.saveAs)}</kbd>
                     </button>
                     <button
                       role="menuitem"
@@ -699,7 +801,8 @@ export default function App() {
                       }}
                     >
                       <Search size={15} />
-                      Pesquisar<kbd>Ctrl F</kbd>
+                      {tr('Pesquisar')}
+                      <kbd>{formatShortcut(preferences.shortcuts.find)}</kbd>
                     </button>
                     <button
                       role="menuitem"
@@ -709,7 +812,8 @@ export default function App() {
                       }}
                     >
                       <Settings2 size={15} />
-                      Configurações
+                      {tr('Configurações')}
+                      <kbd>{formatShortcut(preferences.shortcuts.settings)}</kbd>
                     </button>
                   </div>
                 )}
@@ -717,7 +821,12 @@ export default function App() {
             </div>
             <div className="document-actions">
               {!tabsVisible && (
-                <IconButton label={`Nova guia (${newTabShortcut})`} onClick={() => newNote()}>
+                <IconButton
+                  label={tr('Nova guia ({0})', {
+                    0: newTabShortcut,
+                  })}
+                  onClick={() => newNote()}
+                >
                   <Plus size={16} />
                 </IconButton>
               )}
@@ -726,7 +835,11 @@ export default function App() {
                 value={activeNote.projectId}
                 onChange={async (projectId) => {
                   if (activeNote.path) await backend.associate(activeNote.path, projectId)
-                  setNotes((current) => updateNote(current, activeId, { projectId }))
+                  setNotes((current) =>
+                    updateNote(current, activeId, {
+                      projectId,
+                    }),
+                  )
                   if (activeNote.path) await refresh()
                 }}
                 onDone={() => {
@@ -734,26 +847,29 @@ export default function App() {
                 }}
               />
               <IconButton
-                label="Salvar documento"
+                label={tr('Salvar documento')}
                 data-shortcut={preferences.shortcuts.save}
                 onClick={() => void fileOps.saveNote(activeId)}
               >
                 <Save size={16} />
               </IconButton>
               <IconButton
-                label="Ferramentas de formatação"
-                data-tooltip={toolbar ? 'Ocultar formatação' : 'Mostrar formatação'}
+                label={tr('Ferramentas de formatação')}
+                data-tooltip={toolbar ? tr('Ocultar formatação') : tr('Mostrar formatação')}
                 aria-pressed={toolbar}
                 onMouseDown={(event) => event.preventDefault()}
                 onClick={() => {
                   setToolbar((value) => !value)
-                  activeEditor?.commands.focus(undefined, { scrollIntoView: false })
+                  activeEditor?.commands.focus(undefined, {
+                    scrollIntoView: false,
+                  })
                 }}
               >
                 <SlidersHorizontal size={17} />
               </IconButton>
               <IconButton
-                label="Modo imersivo (Ctrl+Shift+F)"
+                label={tr('Modo Zen')}
+                data-shortcut={formatShortcut(preferences.shortcuts.immersive)}
                 onClick={() => {
                   setImmersive(true)
                   activeEditor?.commands.focus()
@@ -803,18 +919,19 @@ export default function App() {
               {activeNote.dirty ? (
                 <>
                   <span className="unsaved-dot" />
-                  Não salvo
+                  {tr('Não salvo')}
                 </>
               ) : (
                 <>
                   <Check size={13} />
-                  {activeNote.path ? 'Salvo' : 'Pronto para escrever'}
+                  {activeNote.path ? tr('Salvo') : tr('Pronto para escrever')}
                 </>
               )}
             </span>
             <span className="word-count">
-              {stats.words.toLocaleString('pt-BR')} palavras<span className="status-dot">·</span>
-              {stats.characters.toLocaleString('pt-BR')} caracteres
+              {formatCount(stats.words, 'words')}
+              <span className="status-dot">·</span>
+              {formatCount(stats.characters, 'characters')}
             </span>
             <div className="status-right">
               <button
@@ -824,8 +941,8 @@ export default function App() {
                     zoom: current.zoom >= 150 ? 100 : current.zoom + 10,
                   }))
                 }
-                aria-label="Alterar zoom"
-                data-tooltip="Zoom"
+                aria-label={tr('Alterar zoom')}
+                data-tooltip={tr('Zoom')}
                 data-shortcut="Ctrl+ / Ctrl−"
               >
                 {preferences.zoom}%
@@ -837,7 +954,7 @@ export default function App() {
           {!activeNote.dirty && !activeNote.path && !formattingVisible && (
             <div className="writing-hint chrome">
               <Keyboard size={13} />
-              <span>Comece a escrever. O resto desaparece.</span>
+              <span>{tr('Comece a escrever. O resto desaparece.')}</span>
             </div>
           )}
         </div>
@@ -845,11 +962,30 @@ export default function App() {
       {preferencesLoaded && !preferences.onboardingCompleted && (
         <WelcomeTheme
           theme={preferences.theme}
+          language={preferences.language}
+          chooseLanguage={platform !== 'windows'}
+          onLanguageChange={(language) => {
+            setLanguage(language)
+            setPreferences((current) => ({
+              ...current,
+              language,
+              languageChosen: true,
+            }))
+          }}
           onThemeChange={(theme) => {
-            setPreferences((current) => ({ ...current, theme, themeChosen: true }))
+            setPreferences((current) => ({
+              ...current,
+              theme,
+              themeChosen: true,
+            }))
           }}
           onComplete={() => {
-            setPreferences((current) => ({ ...current, onboardingCompleted: true }))
+            setPreferences((current) => ({
+              ...current,
+              onboardingCompleted: true,
+              themeChosen: true,
+              languageChosen: true,
+            }))
             requestAnimationFrame(() => editors.current.get(activeId)?.commands.focus())
           }}
         />
@@ -861,28 +997,41 @@ export default function App() {
         <Settings
           updates={updates}
           preferences={preferences}
-          onChange={(change) => setPreferences((current) => ({ ...current, ...change }))}
+          onChange={(change) => {
+            if (change.language) setLanguage(change.language)
+            setPreferences((current) => ({
+              ...current,
+              ...change,
+            }))
+          }}
           onClose={closeSettings}
         />
       )}
       {link !== null && (
-        <Modal title="Inserir link" onClose={() => setLink(null)}>
+        <Modal title={tr('Inserir link')} onClose={() => setLink(null)}>
           <form
             className="modal-body"
             onSubmit={(event) => {
               event.preventDefault()
               if (link && !/^(https?:\/\/|mailto:)/i.test(link)) {
-                notify('Use um endereço https://, http:// ou mailto:.')
+                notify(tr('Use um endereço https://, http:// ou mailto:.'))
                 return
               }
               if (link)
-                activeEditor?.chain().focus().extendMarkRange('link').setLink({ href: link }).run()
+                activeEditor
+                  ?.chain()
+                  .focus()
+                  .extendMarkRange('link')
+                  .setLink({
+                    href: link,
+                  })
+                  .run()
               else activeEditor?.chain().focus().unsetLink().run()
               setLink(null)
             }}
           >
             <label>
-              Endereço
+              {tr('Endereço')}
               <input
                 autoFocus
                 type="text"
@@ -893,10 +1042,10 @@ export default function App() {
             </label>
             <div className="modal-actions">
               <button type="button" onClick={() => setLink(null)}>
-                Cancelar
+                {tr('Cancelar')}
               </button>
               <button className="primary" type="submit">
-                Aplicar
+                {tr('Aplicar')}
               </button>
             </div>
           </form>
@@ -914,8 +1063,8 @@ export default function App() {
       <TooltipLayer hidden={immersive} />
       {notice && (
         <div className="toast chrome" role="status">
-          {notice}
-          <button aria-label="Dispensar aviso" onClick={() => setNotice('')}>
+          {tr(notice)}
+          <button aria-label={tr('Dispensar aviso')} onClick={() => setNotice('')}>
             <X size={14} />
           </button>
         </div>

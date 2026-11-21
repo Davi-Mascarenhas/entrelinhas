@@ -8,6 +8,7 @@ import {
   Keyboard,
   SlidersHorizontal,
   Info,
+  Languages,
 } from 'lucide-react'
 import { ThemeChoices } from './ThemeChoices'
 import { AppIcon } from './AppIcon'
@@ -16,19 +17,52 @@ import { UpdateControl } from './UpdateControl'
 import type { UpdatesController } from '../native/useUpdates'
 import { Modal } from './ui'
 import { Select } from './Select'
-import { eventShortcut } from '../core/shortcuts'
+import { ShortcutCapture, shortcutLabels } from './ShortcutCapture'
+import { LanguageChoices } from './LanguageChoices'
+import { formatShortcut, tr } from '../i18n'
 import type { Preferences, ShortcutAction } from '../core/types'
-
 const sections = [
-  { id: 'appearance', label: 'Aparência', icon: Paintbrush },
-  { id: 'editor', label: 'Editor', icon: Type },
-  { id: 'cursor', label: 'Cursor', icon: MousePointer2 },
-  { id: 'files', label: 'Arquivos', icon: FileText },
-  { id: 'shortcuts', label: 'Atalhos', icon: Keyboard },
-  { id: 'behavior', label: 'Comportamento', icon: SlidersHorizontal },
-  { id: 'about', label: 'Sobre', icon: Info },
+  {
+    id: 'appearance',
+    label: 'Aparência',
+    icon: Paintbrush,
+  },
+  {
+    id: 'editor',
+    label: 'Editor',
+    icon: Type,
+  },
+  {
+    id: 'cursor',
+    label: 'Cursor',
+    icon: MousePointer2,
+  },
+  {
+    id: 'files',
+    label: 'Arquivos',
+    icon: FileText,
+  },
+  {
+    id: 'shortcuts',
+    label: 'Atalhos',
+    icon: Keyboard,
+  },
+  {
+    id: 'behavior',
+    label: 'Comportamento',
+    icon: SlidersHorizontal,
+  },
+  {
+    id: 'language',
+    label: 'Linguagem',
+    icon: Languages,
+  },
+  {
+    id: 'about',
+    label: 'Sobre',
+    icon: Info,
+  },
 ]
-
 export function Settings({
   preferences: p,
   onChange,
@@ -41,7 +75,7 @@ export function Settings({
   updates: UpdatesController
 }) {
   const [section, setSection] = useState('appearance'),
-    [shortcutError, setShortcutError] = useState('')
+    [capturing, setCapturing] = useState<ShortcutAction | null>(null)
   const toggle = (
     key: 'autoImmersive' | 'askBeforeDiscard' | 'spellcheck' | 'selectionTools',
     title: string,
@@ -49,182 +83,261 @@ export function Settings({
   ) => (
     <label className="setting-row">
       <span>
-        <strong>{title}</strong>
-        <small>{description}</small>
+        <strong>{tr(title)}</strong>
+        <small>{tr(description)}</small>
       </span>
       <input
         className="switch"
         type="checkbox"
         checked={p[key]}
-        onChange={(event) => onChange({ [key]: event.target.checked })}
+        onChange={(event) =>
+          onChange({
+            [key]: event.target.checked,
+          })
+        }
       />
     </label>
   )
   return (
-    <Modal title="Configurações" onClose={onClose} wide>
+    <Modal title={tr('Configurações')} onClose={onClose} wide>
       <div className="settings-layout">
-        <nav className="settings-nav" aria-label="Categorias de configurações">
+        <nav className="settings-nav" aria-label={tr('Categorias de configurações')}>
           {sections.map((item) => (
             <button
               key={item.id}
+              data-section={item.id}
               className={section === item.id ? 'selected' : ''}
               onClick={() => setSection(item.id)}
             >
               <item.icon size={16} />
-              {item.label}
+              {tr(item.label)}
             </button>
           ))}
         </nav>
         <div className="settings-content">
           {section === 'appearance' && (
             <>
-              <h3>Seu espaço, sua luz.</h3>
-              <p className="muted">Escolha a atmosfera que acompanha sua escrita.</p>
+              <h3>{tr('Seu espaço, sua luz.')}</h3>
+              <p className="muted">{tr('Escolha a atmosfera que acompanha sua escrita.')}</p>
               <ThemeChoices
                 value={p.theme}
-                onChange={(theme) => onChange({ theme, themeChosen: true })}
+                onChange={(theme) =>
+                  onChange({
+                    theme,
+                    themeChosen: true,
+                  })
+                }
               />
-              <h4>Layout</h4>
+              <h4>{tr('Layout')}</h4>
               <label className="setting-row">
-                <span>Posição da navegação</span>
+                <span>{tr('Posição da navegação')}</span>
                 <Select
-                  label="Posição da navegação"
+                  label={tr('Posição da navegação')}
                   value={p.sidebarSide}
                   options={[
-                    { value: 'left', label: 'Esquerda' },
-                    { value: 'right', label: 'Direita' },
+                    {
+                      value: 'left',
+                      label: tr('Esquerda'),
+                    },
+                    {
+                      value: 'right',
+                      label: tr('Direita'),
+                    },
                   ]}
                   onChange={(value) =>
-                    onChange({ sidebarSide: value as Preferences['sidebarSide'] })
+                    onChange({
+                      sidebarSide: value as Preferences['sidebarSide'],
+                    })
                   }
                 />
               </label>
               <label className="setting-row">
-                <span>Posição das abas</span>
+                <span>{tr('Posição das abas')}</span>
                 <Select
-                  label="Posição das abas"
+                  label={tr('Posição das abas')}
                   value={p.tabsPosition}
                   options={[
-                    { value: 'top', label: 'Superior' },
-                    { value: 'left', label: 'Lateral esquerda' },
-                    { value: 'right', label: 'Lateral direita' },
+                    {
+                      value: 'top',
+                      label: tr('Superior'),
+                    },
+                    {
+                      value: 'left',
+                      label: tr('Lateral esquerda'),
+                    },
+                    {
+                      value: 'right',
+                      label: tr('Lateral direita'),
+                    },
                   ]}
                   onChange={(value) =>
-                    onChange({ tabsPosition: value as Preferences['tabsPosition'] })
+                    onChange({
+                      tabsPosition: value as Preferences['tabsPosition'],
+                    })
                   }
                 />
               </label>
               <p className="muted small">
-                Em janelas estreitas, as abas laterais voltam ao topo para preservar o espaço de
-                escrita.
+                {tr(
+                  'Em janelas estreitas, as abas laterais voltam ao topo para preservar o espaço de escrita.',
+                )}
               </p>
             </>
           )}
           {section === 'editor' && (
             <>
-              <h3>Um ritmo confortável.</h3>
+              <h3>{tr('Um ritmo confortável.')}</h3>
               <label className="setting-row">
-                <span>Fonte da escrita</span>
+                <span>{tr('Fonte da escrita')}</span>
                 <Select
-                  label="Fonte da escrita"
+                  label={tr('Fonte da escrita')}
                   value={p.fontFamily}
                   options={[
-                    { value: 'serif', label: 'Serifada · Noto Serif' },
-                    { value: 'sans', label: 'Sem serifa · Ubuntu' },
-                    { value: 'mono', label: 'Monoespaçada' },
+                    {
+                      value: 'serif',
+                      label: tr('Serifada · Noto Serif'),
+                    },
+                    {
+                      value: 'sans',
+                      label: tr('Sem serifa · Ubuntu'),
+                    },
+                    {
+                      value: 'mono',
+                      label: tr('Monoespaçada'),
+                    },
                   ]}
-                  onChange={(value) => onChange({ fontFamily: value as Preferences['fontFamily'] })}
+                  onChange={(value) =>
+                    onChange({
+                      fontFamily: value as Preferences['fontFamily'],
+                    })
+                  }
                 />
               </label>
               <label className="setting-row">
                 <span>
-                  Tamanho da fonte <small>{p.fontSize} px</small>
+                  {tr('Tamanho da fonte')}
+                  <small>{p.fontSize} px</small>
                 </span>
                 <input
-                  aria-label="Tamanho da fonte"
+                  aria-label={tr('Tamanho da fonte')}
                   type="range"
                   min="12"
                   max="40"
                   value={p.fontSize}
-                  onChange={(event) => onChange({ fontSize: Number(event.target.value) })}
+                  onChange={(event) =>
+                    onChange({
+                      fontSize: Number(event.target.value),
+                    })
+                  }
                 />
               </label>
               <label className="setting-row">
                 <span>
-                  Espaçamento entre linhas <small>{p.lineHeight.toFixed(2)}</small>
+                  {tr('Espaçamento entre linhas')}
+                  <small>{p.lineHeight.toFixed(2)}</small>
                 </span>
                 <input
-                  aria-label="Espaçamento entre linhas"
+                  aria-label={tr('Espaçamento entre linhas')}
                   type="range"
                   min="1.2"
                   max="2.5"
                   step="0.05"
                   value={p.lineHeight}
-                  onChange={(event) => onChange({ lineHeight: Number(event.target.value) })}
+                  onChange={(event) =>
+                    onChange({
+                      lineHeight: Number(event.target.value),
+                    })
+                  }
                 />
               </label>
               <label className="setting-row">
                 <span>
-                  Largura da escrita <small>{p.editorWidth} px</small>
+                  {tr('Largura da escrita')}
+                  <small>{p.editorWidth} px</small>
                 </span>
                 <input
-                  aria-label="Largura da escrita"
+                  aria-label={tr('Largura da escrita')}
                   type="range"
                   min="440"
                   max="1100"
                   step="20"
                   value={p.editorWidth}
-                  onChange={(event) => onChange({ editorWidth: Number(event.target.value) })}
+                  onChange={(event) =>
+                    onChange({
+                      editorWidth: Number(event.target.value),
+                    })
+                  }
                 />
               </label>
               <label className="setting-row">
                 <span>
-                  Zoom <small>{p.zoom}%</small>
+                  {tr('Zoom')}
+                  <small>{p.zoom}%</small>
                 </span>
                 <input
-                  aria-label="Zoom"
+                  aria-label={tr('Zoom')}
                   type="range"
                   min="50"
                   max="200"
                   step="10"
                   value={p.zoom}
-                  onChange={(event) => onChange({ zoom: Number(event.target.value) })}
+                  onChange={(event) =>
+                    onChange({
+                      zoom: Number(event.target.value),
+                    })
+                  }
                 />
               </label>
               {toggle(
                 'spellcheck',
-                'Verificação ortográfica',
-                'Usa os idiomas disponíveis no sistema.',
+                tr('Verificação ortográfica'),
+                tr('Usa os idiomas disponíveis no sistema.'),
               )}
               {toggle(
                 'selectionTools',
-                'Ferramentas ao selecionar',
-                'Revela os botões de formatação na parte de baixo.',
+                tr('Ferramentas ao selecionar'),
+                tr('Revela os botões de formatação na parte de baixo.'),
               )}
             </>
           )}
           {section === 'cursor' && (
             <>
-              <h3>O ponto de partida.</h3>
-              <p className="muted">O cursor acompanha a posição real da escrita.</p>
+              <h3>{tr('O ponto de partida.')}</h3>
+              <p className="muted">{tr('O cursor acompanha a posição real da escrita.')}</p>
               <div className="cursor-options">
                 {[
-                  { id: 'block', label: 'Em bloco', text: 'O padrão do Entrelinhas.' },
-                  { id: 'thin', label: 'Fino', text: 'Uma linha discreta.' },
-                  { id: 'hidden', label: 'Invisível', text: 'Apenas suas palavras.' },
+                  {
+                    id: 'block',
+                    label: tr('Em bloco'),
+                    text: tr('O padrão do Entrelinhas.'),
+                  },
+                  {
+                    id: 'thin',
+                    label: tr('Fino'),
+                    text: tr('Uma linha discreta.'),
+                  },
+                  {
+                    id: 'hidden',
+                    label: tr('Invisível'),
+                    text: tr('Apenas suas palavras.'),
+                  },
                 ].map((cursor) => (
                   <button
                     key={cursor.id}
                     className={`cursor-choice ${p.cursor === cursor.id ? 'selected' : ''}`}
                     aria-pressed={p.cursor === cursor.id}
-                    onClick={() => onChange({ cursor: cursor.id as Preferences['cursor'] })}
+                    onClick={() =>
+                      onChange({
+                        cursor: cursor.id as Preferences['cursor'],
+                      })
+                    }
                   >
                     <span className={`cursor-sample ${cursor.id}`}>
                       Entre <i />
                       linhas
                     </span>
-                    <strong>{cursor.label}</strong>
-                    <small>{cursor.text}</small>
+                    <strong>{tr(cursor.label)}</strong>
+                    <small>{tr(cursor.text)}</small>
                   </button>
                 ))}
               </div>
@@ -232,150 +345,151 @@ export function Settings({
           )}
           {section === 'files' && (
             <>
-              <h3>Suas palavras continuam suas.</h3>
+              <h3>{tr('Suas palavras continuam suas.')}</h3>
               <p className="muted">
-                Documentos são arquivos comuns. Você escolhe quando e onde salvar.
+                {tr('Documentos são arquivos comuns. Você escolhe quando e onde salvar.')}
               </p>
               <label className="setting-row">
-                <span>Formato de novas notas</span>
+                <span>{tr('Formato de novas notas')}</span>
                 <Select
-                  label="Formato de novas notas"
+                  label={tr('Formato de novas notas')}
                   value={p.defaultFormat}
                   options={[
-                    { value: 'md', label: 'Markdown (.md)' },
-                    { value: 'txt', label: 'Texto simples (.txt)' },
+                    {
+                      value: 'md',
+                      label: tr('Markdown (.md)'),
+                    },
+                    {
+                      value: 'txt',
+                      label: tr('Texto simples (.txt)'),
+                    },
                   ]}
                   onChange={(value) =>
-                    onChange({ defaultFormat: value as Preferences['defaultFormat'] })
+                    onChange({
+                      defaultFormat: value as Preferences['defaultFormat'],
+                    })
                   }
                 />
               </label>
               <DefaultAppControl />
               <div className="info-card">
-                Imagens ficam em memória até o salvamento. Ao salvar em Markdown, os recursos vão
-                para uma pasta ao lado do documento.
+                {tr(
+                  'Imagens ficam em memória até o salvamento. Ao salvar em Markdown, os recursos vão para uma pasta ao lado do documento.',
+                )}
               </div>
             </>
           )}
           {section === 'shortcuts' && (
             <>
-              <h3>Ao alcance das mãos.</h3>
-              <p className="muted">Clique em um atalho e pressione a nova combinação com Ctrl.</p>
-              {(
-                Object.entries({
-                  new: 'Nova nota',
-                  open: 'Abrir documento',
-                  save: 'Salvar',
-                  saveAs: 'Salvar como',
-                  close: 'Fechar aba',
-                  find: 'Pesquisar',
-                  replace: 'Substituir',
-                  immersive: 'Modo imersivo',
-                }) as [ShortcutAction, string][]
-              ).map(([action, label]) => (
-                <label key={action} className="setting-row">
-                  <span>{label}</span>
-                  <input
-                    className="shortcut-input"
-                    aria-label={`Atalho: ${label}`}
-                    readOnly
-                    value={p.shortcuts[action]}
-                    onKeyDown={(event) => {
-                      if (event.key === 'Tab' || event.key === 'Escape') return
-                      event.preventDefault()
-                      event.stopPropagation()
-                      const shortcut = eventShortcut(event.nativeEvent)
-                      if (!shortcut) return
-                      const reserved = [
-                        'Ctrl+B',
-                        'Ctrl+I',
-                        'Ctrl+U',
-                        'Ctrl+Z',
-                        'Ctrl+Shift+Z',
-                        'Ctrl+C',
-                        'Ctrl+V',
-                        'Ctrl+X',
-                        'Ctrl+A',
-                        'Ctrl+T',
-                        'Ctrl+TAB',
-                        'Ctrl+Shift+TAB',
-                        'Ctrl+Q',
-                        'Ctrl+L',
-                        'Ctrl+R',
-                        'Ctrl+P',
-                      ]
-                      if (
-                        !/^Ctrl\+(Shift\+)?(Alt\+)?[A-Z0-9]$/.test(shortcut) ||
-                        reserved.includes(shortcut) ||
-                        Object.entries(p.shortcuts).some(
-                          ([key, value]) => key !== action && value === shortcut,
-                        )
-                      ) {
-                        setShortcutError(
-                          'Escolha uma combinação com Ctrl que ainda esteja disponível.',
-                        )
-                        return
-                      }
-                      setShortcutError('')
-                      onChange({ shortcuts: { ...p.shortcuts, [action]: shortcut } })
-                    }}
-                  />
-                </label>
-              ))}
-              {shortcutError && (
-                <p role="alert" className="error-text">
-                  {shortcutError}
-                </p>
+              <h3>{tr('Ao alcance das mãos.')}</h3>
+              <p className="muted">
+                {tr('Clique em um atalho para escolher uma nova combinação.')}
+              </p>
+              {(Object.entries(shortcutLabels) as [ShortcutAction, string][]).map(
+                ([action, label]) => (
+                  <div key={action} className="setting-row">
+                    <span>{tr(label)}</span>
+                    <button
+                      type="button"
+                      className="shortcut-input"
+                      data-action={action}
+                      aria-label={`${tr('Atalho: {0}', {
+                        0: tr(label),
+                      })}`}
+                      onClick={() => setCapturing(action)}
+                    >
+                      <kbd>{formatShortcut(p.shortcuts[action])}</kbd>
+                    </button>
+                  </div>
+                ),
               )}
               <p className="muted small">
-                F11 · tela cheia &nbsp; Esc · revelar controles
+                {tr('F11 · tela cheia · Esc · revelar controles')}
                 <br />
-                Ctrl+Tab · próxima aba &nbsp; Ctrl+Shift+Tab · aba anterior
+                {tr('Ctrl+Tab · próxima aba · Ctrl+Shift+Tab · aba anterior')}
                 <br />
-                Ctrl+T · nova guia · As guias aparecem a partir da segunda nota.
+                {tr('Ctrl+T · nova guia · As guias aparecem a partir da segunda nota.')}
               </p>
             </>
           )}
           {section === 'behavior' && (
             <>
-              <h3>A interface sabe a hora.</h3>
+              <h3>{tr('A interface sabe a hora.')}</h3>
               {toggle(
                 'autoImmersive',
-                'Imersão automática',
-                'Oculta os controles assim que você começa a escrever.',
+                tr('Modo Zen automático'),
+                tr('Oculta os controles assim que você começa a escrever.'),
               )}
               {toggle(
                 'askBeforeDiscard',
-                'Perguntar antes de descartar',
-                'Ao fechar uma aba ou o aplicativo com alterações não salvas.',
+                tr('Perguntar antes de descartar'),
+                tr('Ao fechar uma aba ou o aplicativo com alterações não salvas.'),
               )}
               <div className="info-card">
-                Esc revela os controles. Para acessá-los com o mouse, mantenha o ponteiro junto à
-                borda superior ou à borda da navegação por um instante.
+                {tr(
+                  'Esc revela os controles. Para acessá-los com o mouse, mantenha o ponteiro junto à borda superior ou à borda da navegação por um instante.',
+                )}
               </div>
               <p className="muted small">
-                O aplicativo sempre começa com uma nota vazia. Rascunhos descartados não são
-                gravados nem recuperados.
+                {tr(
+                  'O aplicativo sempre começa com uma nota vazia. Rascunhos descartados não são gravados nem recuperados.',
+                )}
               </p>
+            </>
+          )}
+          {section === 'language' && (
+            <>
+              <h3>{tr('Escolha seu idioma.')}</h3>
+              <p className="muted">
+                {tr('A interface muda imediatamente. Seus documentos continuam como estão.')}
+              </p>
+              <LanguageChoices
+                value={p.language}
+                onChange={(language) =>
+                  onChange({
+                    language,
+                    languageChosen: true,
+                  })
+                }
+              />
             </>
           )}
           {section === 'about' && (
             <div className="about">
               <AppIcon />
               <h3>Entrelinhas</h3>
-              <p>Um espaço tranquilo para escrever.</p>
-              <span className="version-pill">Versão {version}</span>
+              <p>{tr('Um espaço tranquilo para escrever.')}</p>
+              <span className="version-pill">
+                {tr('Versão {version}', {
+                  version,
+                })}
+              </span>
               <p className="muted">
-                Feito com Tauri, React e cuidado.
+                {tr('Feito com Tauri, React e cuidado.')}
                 <br />
-                Local, offline e com salvamento manual.
+                {tr('Local, offline e com salvamento manual.')}
               </p>
-              <p className="small muted">Por Bit-Devy · Licença MIT</p>
+              <p className="small muted">{tr('Por Davi Mascarenhas · Licença MIT')}</p>
               <UpdateControl updates={updates} />
             </div>
           )}
         </div>
       </div>
+      {capturing && (
+        <ShortcutCapture
+          action={capturing}
+          shortcuts={p.shortcuts}
+          onClose={() => setCapturing(null)}
+          onSave={(value) =>
+            onChange({
+              shortcuts: {
+                ...p.shortcuts,
+                [capturing]: value,
+              },
+            })
+          }
+        />
+      )}
     </Modal>
   )
 }

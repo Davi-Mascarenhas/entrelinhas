@@ -1,3 +1,4 @@
+import { tr } from '../i18n'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { listen } from '@tauri-apps/api/event'
 import { downloadDir, join } from '@tauri-apps/api/path'
@@ -91,12 +92,12 @@ export function useUpdates(
         if (previous.info.mode === 'package') {
           setState({ ...previous, phase: 'choosing', message: '', progress: null })
           path = await save({
-            title: 'Salvar atualização do Entrelinhas',
+            title: tr('Salvar atualização do Entrelinhas'),
             defaultPath: await join(
               await downloadDir(),
               `Entrelinhas_${previous.info.version}_amd64.deb`,
             ),
-            filters: [{ name: 'Pacote Debian', extensions: ['deb'] }],
+            filters: [{ name: tr('Pacote Debian'), extensions: ['deb'] }],
           })
           if (!path) {
             setState(previous)

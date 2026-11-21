@@ -1,3 +1,4 @@
+import { tr } from '../i18n'
 import { useEffect, useState } from 'react'
 import type { Editor } from '@tiptap/core'
 import {
@@ -24,7 +25,6 @@ import {
 import { ColorPicker } from './ColorPicker'
 import { IconButton } from './ui'
 import { Select } from './Select'
-
 export function Formatting({
   editor,
   insertImage,
@@ -46,41 +46,48 @@ export function Formatting({
   }, [editor])
   const tools = [
     {
-      label: 'Negrito (Ctrl+B)',
+      label: tr('Negrito (Ctrl+B)'),
       icon: Bold,
       active: editor.isActive('bold'),
       run: () => editor.chain().focus().toggleBold().run(),
     },
     {
-      label: 'Itálico (Ctrl+I)',
+      label: tr('Itálico (Ctrl+I)'),
       icon: Italic,
       active: editor.isActive('italic'),
       run: () => editor.chain().focus().toggleItalic().run(),
     },
     {
-      label: 'Sublinhado (Ctrl+U)',
+      label: tr('Sublinhado (Ctrl+U)'),
       icon: Underline,
       active: editor.isActive('underline'),
       run: () => editor.chain().focus().toggleUnderline().run(),
     },
     {
-      label: 'Tachado',
+      label: tr('Tachado'),
       icon: Strikethrough,
       active: editor.isActive('strike'),
       run: () => editor.chain().focus().toggleStrike().run(),
     },
     {
-      label: 'Destaque',
+      label: tr('Destaque'),
       icon: Highlighter,
       active: editor.isActive('highlight'),
-      run: () => editor.chain().focus().toggleHighlight({ color: '#d4b66a66' }).run(),
+      run: () =>
+        editor
+          .chain()
+          .focus()
+          .toggleHighlight({
+            color: '#d4b66a66',
+          })
+          .run(),
     },
   ]
   return (
     <div
       className={`formatting ${compact ? 'compact' : ''}`}
       role="toolbar"
-      aria-label="Formatação"
+      aria-label={tr('Formatação')}
       onMouseDown={(event) => {
         if (
           event.currentTarget.contains(event.target as Node) &&
@@ -90,26 +97,51 @@ export function Formatting({
       }}
     >
       <Select
-        label="Estilo do parágrafo"
+        label={tr('Estilo do parágrafo')}
         value={
-          editor.isActive('heading', { level: 1 })
+          editor.isActive('heading', {
+            level: 1,
+          })
             ? '1'
-            : editor.isActive('heading', { level: 2 })
+            : editor.isActive('heading', {
+                  level: 2,
+                })
               ? '2'
-              : editor.isActive('heading', { level: 3 })
+              : editor.isActive('heading', {
+                    level: 3,
+                  })
                 ? '3'
                 : 'p'
         }
         onChange={(value) => {
           const level = Number(value) as 1 | 2 | 3
           if (value === 'p') editor.chain().focus().setParagraph().run()
-          else editor.chain().focus().toggleHeading({ level }).run()
+          else
+            editor
+              .chain()
+              .focus()
+              .toggleHeading({
+                level,
+              })
+              .run()
         }}
         options={[
-          { value: 'p', label: 'Texto' },
-          { value: '1', label: 'Título 1' },
-          { value: '2', label: 'Título 2' },
-          { value: '3', label: 'Título 3' },
+          {
+            value: 'p',
+            label: tr('Texto'),
+          },
+          {
+            value: '1',
+            label: tr('Título 1'),
+          },
+          {
+            value: '2',
+            label: tr('Título 2'),
+          },
+          {
+            value: '3',
+            label: tr('Título 3'),
+          },
         ]}
       />
       <span className="tool-divider" />
@@ -126,7 +158,7 @@ export function Formatting({
       {!compact && (
         <>
           <ColorPicker
-            label="Cor do texto"
+            label={tr('Cor do texto')}
             value={editor.getAttributes('textStyle').color || '#61755b'}
             textTool
             onChange={(color) => {
@@ -140,7 +172,7 @@ export function Formatting({
             }}
           />
           <Select
-            label="Tamanho do texto selecionado"
+            label={tr('Tamanho do texto selecionado')}
             value={editor.getAttributes('textStyle').fontSize || ''}
             onChange={(value) =>
               value
@@ -148,7 +180,10 @@ export function Formatting({
                 : editor.chain().focus().unsetFontSize().run()
             }
             options={[
-              { value: '', label: 'Tamanho' },
+              {
+                value: '',
+                label: tr('Tamanho'),
+              },
               ...[12, 14, 16, 18, 20, 24, 28, 32, 40, 48].map((size) => ({
                 value: `${size}px`,
                 label: String(size),
@@ -157,85 +192,93 @@ export function Formatting({
           />
           <span className="tool-divider" />
           <IconButton
-            label="Lista com marcadores"
+            label={tr('Lista com marcadores')}
             aria-pressed={editor.isActive('bulletList')}
             onClick={() => editor.chain().focus().toggleBulletList().run()}
           >
             <List size={16} />
           </IconButton>
           <IconButton
-            label="Lista numerada"
+            label={tr('Lista numerada')}
             aria-pressed={editor.isActive('orderedList')}
             onClick={() => editor.chain().focus().toggleOrderedList().run()}
           >
             <ListOrdered size={16} />
           </IconButton>
           <IconButton
-            label="Checklist"
+            label={tr('Checklist')}
             aria-pressed={editor.isActive('taskList')}
             onClick={() => editor.chain().focus().toggleTaskList().run()}
           >
             <ListTodo size={16} />
           </IconButton>
           <IconButton
-            label="Citação"
+            label={tr('Citação')}
             aria-pressed={editor.isActive('blockquote')}
             onClick={() => editor.chain().focus().toggleBlockquote().run()}
           >
             <Quote size={16} />
           </IconButton>
           <IconButton
-            label="Bloco de código"
+            label={tr('Bloco de código')}
             aria-pressed={editor.isActive('codeBlock')}
             onClick={() => editor.chain().focus().toggleCodeBlock().run()}
           >
             <Code2 size={16} />
           </IconButton>
           <IconButton
-            label="Alinhar à esquerda"
+            label={tr('Alinhar à esquerda')}
             onClick={() => editor.chain().focus().setTextAlign('left').run()}
           >
             <AlignLeft size={16} />
           </IconButton>
           <IconButton
-            label="Centralizar"
+            label={tr('Centralizar')}
             onClick={() => editor.chain().focus().setTextAlign('center').run()}
           >
             <AlignCenter size={16} />
           </IconButton>
           <IconButton
-            label="Alinhar à direita"
+            label={tr('Alinhar à direita')}
             onClick={() => editor.chain().focus().setTextAlign('right').run()}
           >
             <AlignRight size={16} />
           </IconButton>
           <IconButton
-            label="Inserir separador"
+            label={tr('Inserir separador')}
             onClick={() => editor.chain().focus().setHorizontalRule().run()}
           >
             <Minus size={16} />
           </IconButton>
         </>
       )}
-      <IconButton label="Inserir link" onClick={insertLink}>
+      <IconButton label={tr('Inserir link')} onClick={insertLink}>
         <Link size={16} />
       </IconButton>
       {!compact && (
         <>
-          <IconButton label="Inserir imagem" onClick={insertImage}>
+          <IconButton label={tr('Inserir imagem')} onClick={insertImage}>
             <ImagePlus size={16} />
           </IconButton>
           <IconButton
-            label="Inserir tabela"
+            label={tr('Inserir tabela')}
             onClick={() =>
-              editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()
+              editor
+                .chain()
+                .focus()
+                .insertTable({
+                  rows: 3,
+                  cols: 3,
+                  withHeaderRow: true,
+                })
+                .run()
             }
           >
             <Table2 size={16} />
           </IconButton>
           {editor.isActive('table') && (
             <Select
-              label="Editar tabela"
+              label={tr('Editar tabela')}
               value=""
               onChange={(value) => {
                 const commands = editor.chain().focus()
@@ -246,21 +289,42 @@ export function Formatting({
                 if (value === 'delete') commands.deleteTable().run()
               }}
               options={[
-                { value: '', label: 'Tabela' },
-                { value: 'row', label: 'Adicionar linha' },
-                { value: 'column', label: 'Adicionar coluna' },
-                { value: 'delete-row', label: 'Remover linha' },
-                { value: 'delete-column', label: 'Remover coluna' },
-                { value: 'delete', label: 'Remover tabela' },
+                {
+                  value: '',
+                  label: tr('Tabela'),
+                },
+                {
+                  value: 'row',
+                  label: tr('Adicionar linha'),
+                },
+                {
+                  value: 'column',
+                  label: tr('Adicionar coluna'),
+                },
+                {
+                  value: 'delete-row',
+                  label: tr('Remover linha'),
+                },
+                {
+                  value: 'delete-column',
+                  label: tr('Remover coluna'),
+                },
+                {
+                  value: 'delete',
+                  label: tr('Remover tabela'),
+                },
               ]}
             />
           )}
           <span className="tool-divider" />
-          <IconButton label="Desfazer (Ctrl+Z)" onClick={() => editor.chain().focus().undo().run()}>
+          <IconButton
+            label={tr('Desfazer (Ctrl+Z)')}
+            onClick={() => editor.chain().focus().undo().run()}
+          >
             <Undo2 size={16} />
           </IconButton>
           <IconButton
-            label="Refazer (Ctrl+Shift+Z)"
+            label={tr('Refazer (Ctrl+Shift+Z)')}
             onClick={() => editor.chain().focus().redo().run()}
           >
             <Redo2 size={16} />

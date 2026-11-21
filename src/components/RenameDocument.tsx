@@ -1,9 +1,10 @@
+import { tr } from '../i18n'
 import { useState } from 'react'
 import type { Note } from '../core/types'
+import { noteTitle } from '../core/notes'
 import { documentTitle, editableTitle } from '../core/titles'
 import { errorMessage } from '../native/api'
 import { Modal } from './ui'
-
 export function RenameDocument({
   note,
   onRename,
@@ -13,11 +14,11 @@ export function RenameDocument({
   onRename: (title: string) => Promise<void>
   onClose: () => void
 }) {
-  const [title, setTitle] = useState(() => editableTitle(note.title))
+  const [title, setTitle] = useState(() => editableTitle(noteTitle(note)))
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   return (
-    <Modal title="Editar título" onClose={onClose} dismissible={!busy}>
+    <Modal title={tr('Editar título')} onClose={onClose} dismissible={!busy}>
       <form
         className="modal-body"
         onSubmit={async (event) => {
@@ -36,10 +37,10 @@ export function RenameDocument({
         }}
       >
         <label>
-          Título do documento
+          {tr('Título do documento')}
           <input
             autoFocus
-            aria-label="Título do documento"
+            aria-label={tr('Título do documento')}
             value={title}
             maxLength={120}
             onFocus={(event) => event.target.select()}
@@ -49,20 +50,20 @@ export function RenameDocument({
         </label>
         <p className="muted small">
           {note.path
-            ? 'O arquivo será renomeado na mesma pasta, mantendo a extensão e o conteúdo salvo.'
-            : 'Este será o nome sugerido quando você salvar a nota.'}
+            ? tr('O arquivo será renomeado na mesma pasta, mantendo a extensão e o conteúdo salvo.')
+            : tr('Este será o nome sugerido quando você salvar a nota.')}
         </p>
         {error && (
           <p role="alert" className="error-text">
-            {error}
+            {tr(error)}
           </p>
         )}
         <div className="modal-actions">
           <button type="button" onClick={onClose} disabled={busy}>
-            Cancelar
+            {tr('Cancelar')}
           </button>
           <button type="submit" className="primary" disabled={busy || !title.trim()}>
-            {busy ? 'Aplicando…' : note.path ? 'Renomear arquivo' : 'Usar título'}
+            {busy ? tr('Aplicando…') : note.path ? tr('Renomear arquivo') : tr('Usar título')}
           </button>
         </div>
       </form>

@@ -1,3 +1,4 @@
+import { formatShortcut, useLanguage } from '../i18n'
 import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
@@ -19,7 +20,7 @@ function describe(target: HTMLElement): Tip | null {
     ''
   ).trim()
   if (!raw) return null
-  const match = raw.match(/^(.*?)\s+\((Ctrl\+[^)]+)\)$/)
+  const match = raw.match(/^(.*?)\s*[(（]((?:Ctrl|Strg)\+[^)）]+)[)）]$/)
   return {
     target,
     label: match?.[1] ?? raw,
@@ -29,6 +30,7 @@ function describe(target: HTMLElement): Tip | null {
 }
 
 export function TooltipLayer({ hidden = false }: { hidden?: boolean }) {
+  const language = useLanguage()
   const id = useId()
   const popup = useRef<HTMLDivElement>(null)
   const [tip, setTip] = useState<Tip | null>(null)
@@ -111,7 +113,7 @@ export function TooltipLayer({ hidden = false }: { hidden?: boolean }) {
       window.removeEventListener('resize', hide)
       window.removeEventListener('blur', hide)
     }
-  }, [hidden])
+  }, [hidden, language])
 
   useLayoutEffect(() => {
     if (!tip || !popup.current) return
@@ -139,7 +141,7 @@ export function TooltipLayer({ hidden = false }: { hidden?: boolean }) {
     ? createPortal(
         <div ref={popup} id={id} className="app-tooltip" role="tooltip" style={position}>
           <span>{tip.label}</span>
-          {tip.shortcut && <kbd>{tip.shortcut}</kbd>}
+          {tip.shortcut && <kbd>{formatShortcut(tip.shortcut)}</kbd>}
         </div>,
         document.body,
       )

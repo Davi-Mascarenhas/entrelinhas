@@ -1,8 +1,8 @@
 [package]
 name = "entrelinhas"
-version = "2.0.0"
+version = "2.1.0-rc.1"
 description = "Um espaço tranquilo para escrever"
-authors = ["Bit-Devy"]
+authors = ["Davi Mascarenhas"]
 edition = "2021"
 rust-version = "1.90"
 license = "MIT"

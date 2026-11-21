@@ -1,3 +1,4 @@
+import { tr } from '../i18n'
 import type { Note } from './types'
 
 export function editableTitle(title: string): string {
@@ -15,6 +16,6 @@ export function documentTitle(value: string): string {
   return title
 }
 
-export function suggestedFilename(note: Pick<Note, 'title' | 'format'>): string {
-  return `${documentTitle(note.title)}.${note.format}`
+export function suggestedFilename(note: Pick<Note, 'title' | 'format' | 'titleIsDefault'>): string {
+  return `${documentTitle(note.titleIsDefault ? tr('Sem título') : note.title)}.${note.format}`
 }

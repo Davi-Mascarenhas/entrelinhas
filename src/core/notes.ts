@@ -1,10 +1,15 @@
 import type { JSONContent } from '@tiptap/core'
 import type { DocumentFormat, Note } from './types'
+import { tr } from '../i18n'
+
+export const noteTitle = (note: Note) =>
+  note.titleIsDefault && note.title === 'Sem título' && !note.path ? tr('Sem título') : note.title
 
 export function createNote(format: DocumentFormat = 'md', projectId: string | null = null): Note {
   return {
     id: crypto.randomUUID(),
     title: 'Sem título',
+    titleIsDefault: true,
     path: null,
     format,
     content: { type: 'doc', content: [{ type: 'paragraph' }] },

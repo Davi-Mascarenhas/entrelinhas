@@ -1,3 +1,4 @@
+import { tr } from '../i18n'
 import { useCallback, useRef, useState } from 'react'
 import { Modal } from './ui'
 
@@ -31,7 +32,7 @@ export function useDialog() {
     element: options && (
       <Modal title={options.title} onClose={() => finish('cancel')}>
         <div className="modal-body">
-          <p className="dialog-message">{options.message}</p>
+          <p className="dialog-message">{tr(options.message)}</p>
           <div className="modal-actions">
             {options.choices.map((choice) => (
               <button
@@ -39,7 +40,7 @@ export function useDialog() {
                 className={choice.primary ? 'primary' : choice.danger ? 'danger' : ''}
                 onClick={() => finish(choice.id)}
               >
-                {choice.label}
+                {tr(choice.label)}
               </button>
             ))}
           </div>

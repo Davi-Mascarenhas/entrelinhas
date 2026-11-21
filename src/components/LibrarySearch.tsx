@@ -1,9 +1,9 @@
+import { tr } from '../i18n'
 import { useEffect, useState } from 'react'
 import { Search, FileText, AlertCircle, ArrowUpRight } from 'lucide-react'
 import { backend, errorMessage } from '../native/api'
 import type { SearchResult } from '../core/types'
 import { Modal } from './ui'
-
 export function LibrarySearch({
   onClose,
   onOpen,
@@ -40,33 +40,37 @@ export function LibrarySearch({
     }
   }, [query])
   return (
-    <Modal title="Buscar documentos" onClose={onClose} wide>
+    <Modal title={tr('Buscar documentos')} onClose={onClose} wide>
       <div className="library-search">
         <label className="global-search-input">
           <Search size={19} />
           <input
             autoFocus
-            aria-label="Buscar documentos salvos"
-            placeholder="Um nome, uma palavra, uma ideia…"
+            aria-label={tr('Buscar documentos salvos')}
+            placeholder={tr('Um nome, uma palavra, uma ideia…')}
             value={query}
             maxLength={512}
             onChange={(event) => setQuery(event.target.value)}
           />
         </label>
         <p className="muted small">
-          {busy ? 'Buscando nos arquivos…' : `${results.length} resultado(s)`} · Somente documentos
-          salvos da biblioteca.
+          {busy
+            ? tr('Buscando nos arquivos…')
+            : tr('{0} resultado(s)', {
+                0: results.length,
+              })}
+          {tr('· Somente documentos salvos da biblioteca.')}
         </p>
         <div className="search-results">
           {error && (
             <p role="alert" className="error-text">
-              {error}
+              {tr(error)}
             </p>
           )}
           {!busy && !error && !results.length && (
             <div className="empty-search">
               <Search size={28} strokeWidth={1.3} />
-              <p>Nenhum documento encontrado.</p>
+              <p>{tr('Nenhum documento encontrado.')}</p>
             </div>
           )}
           {results.map((result) => (
@@ -82,7 +86,11 @@ export function LibrarySearch({
               <span>
                 <strong>{result.title}</strong>
                 <small>
-                  {result.error ? `Indisponível · ${result.error}` : result.excerpt || result.path}
+                  {result.error
+                    ? tr('Indisponível · {0}', {
+                        0: result.error,
+                      })
+                    : result.excerpt || result.path}
                 </small>
                 <em>{result.path}</em>
               </span>

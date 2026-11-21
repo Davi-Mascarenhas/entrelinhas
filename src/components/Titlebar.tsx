@@ -1,10 +1,11 @@
+import { tr } from '../i18n'
 import { isTauri } from '@tauri-apps/api/core'
 import { getCurrentWindow } from '@tauri-apps/api/window'
 import { Minus, Square, X } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 import type { Note } from '../core/types'
+import { noteTitle } from '../core/notes'
 import { IconButton } from './ui'
-
 export function Titlebar({
   note,
   onRename,
@@ -70,9 +71,9 @@ export function Titlebar({
       <button
         type="button"
         className="window-title"
-        aria-label="Editar título do documento"
-        data-tooltip="Editar título"
-        data-shortcut="Duplo clique"
+        aria-label={tr('Editar título do documento')}
+        data-tooltip={tr('Editar título')}
+        data-shortcut={tr('Duplo clique')}
         onDoubleClick={(event) => {
           event.stopPropagation()
           onRename()
@@ -81,17 +82,17 @@ export function Titlebar({
           if (event.detail === 0) onRename()
         }}
       >
-        {note.title}
+        {noteTitle(note)}
         <span> · {note.format.toUpperCase()}</span>
       </button>
       <div className="window-controls">
-        <IconButton label="Minimizar" onClick={() => run('minimize')}>
+        <IconButton label={tr('Minimizar')} onClick={() => run('minimize')}>
           <Minus size={14} />
         </IconButton>
-        <IconButton label="Maximizar ou restaurar" onClick={() => run('toggleMaximize')}>
+        <IconButton label={tr('Maximizar ou restaurar')} onClick={() => run('toggleMaximize')}>
           <Square size={11} />
         </IconButton>
-        <IconButton label="Fechar aplicativo" onClick={() => run('close')}>
+        <IconButton label={tr('Fechar aplicativo')} onClick={() => run('close')}>
           <X size={16} />
         </IconButton>
       </div>

@@ -3,6 +3,8 @@ import type { Editor, JSONContent } from '@tiptap/core'
 import { open, save } from '@tauri-apps/plugin-dialog'
 import { documentDir, join } from '@tauri-apps/api/path'
 import { createNote, hasFormatting, textFromDocument, updateNote } from '../core/notes'
+import { tr } from '../i18n'
+import { noteTitle } from '../core/notes'
 import { documentTitle, suggestedFilename } from '../core/titles'
 import type { Note, Preferences, RegisteredDocument } from '../core/types'
 import { backend, errorCode, errorMessage } from '../native/api'
@@ -102,8 +104,8 @@ export function useDocuments(options: Options) {
         if (choice === 'locate') {
           try {
             const selected = await open({
-              title: 'Localizar documento',
-              filters: [{ name: 'Documentos', extensions: ['md', 'markdown', 'txt'] }],
+              title: tr('Localizar documento'),
+              filters: [{ name: tr('Documentos'), extensions: ['md', 'markdown', 'txt'] }],
             })
             if (typeof selected === 'string') {
               await backend.relocate(path, selected)
@@ -124,10 +126,10 @@ export function useDocuments(options: Options) {
   const openDocument = useCallback(async () => {
     try {
       const selected = await open({
-        title: 'Abrir documento',
+        title: tr('Abrir documento'),
         multiple: true,
         defaultPath: await documentDir().catch(() => undefined),
-        filters: [{ name: 'Documentos', extensions: ['md', 'markdown', 'txt'] }],
+        filters: [{ name: tr('Documentos'), extensions: ['md', 'markdown', 'txt'] }],
       })
       for (const path of Array.isArray(selected) ? selected : selected ? [selected] : [])
         await openPath(path)
@@ -162,7 +164,7 @@ export function useDocuments(options: Options) {
           { name: 'Texto simples (.txt)', extensions: ['txt'] },
         ]
         path = await save({
-          title: 'Salvar como',
+          title: tr('Salvar como'),
           defaultPath,
           filters: note.format === 'txt' ? [...filters].reverse() : filters,
         })
@@ -244,6 +246,7 @@ export function useDocuments(options: Options) {
         updateNote(existing, id, {
           path: result.path,
           title: result.title,
+          titleIsDefault: false,
           version: result.version,
           format,
           dirty: !editor.state.doc.eq(snapshot),
@@ -278,7 +281,7 @@ export function useDocuments(options: Options) {
       if ((!preferences.askBeforeDiscard && !forUpdate) || !note.dirty) return true
       const choice = await ask({
         title: forUpdate ? 'Salvar antes de atualizar?' : 'Salvar antes de fechar?',
-        message: `“${note.title}” tem alterações não salvas. Ao descartar, o texto não poderá ser recuperado.`,
+        message: `“${noteTitle(note)}” tem alterações não salvas. Ao descartar, o texto não poderá ser recuperado.`,
         choices: [
           { id: 'cancel', label: 'Cancelar' },
           { id: 'discard', label: forUpdate ? 'Descartar e continuar' : 'Descartar', danger: true },
@@ -300,12 +303,14 @@ export function useDocuments(options: Options) {
       const note = notes.find((note) => note.id === id)
       if (!note) return
       if (!note.path) {
-        setNotes((existing) => updateNote(existing, id, { title, dirty: true }))
+        setNotes((existing) =>
+          updateNote(existing, id, { title, titleIsDefault: false, dirty: true }),
+        )
         return
       }
       const renamed = await backend.rename(note.path, title)
       // Renomear não grava o editor nem altera a versão usada para detectar conflitos.
-      setNotes((existing) => updateNote(existing, id, renamed))
+      setNotes((existing) => updateNote(existing, id, { ...renamed, titleIsDefault: false }))
       await refresh()
     },
     [waitForSaves],

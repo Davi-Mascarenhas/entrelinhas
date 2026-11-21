@@ -1,9 +1,9 @@
+import { tr } from '../i18n'
 import { useState, type CSSProperties } from 'react'
 import { Check, ChevronDown, Folder, FolderOpen, Search } from 'lucide-react'
 import type { Project } from '../core/types'
 import { errorMessage } from '../native/api'
 import { Modal } from './ui'
-
 interface Props {
   projects: Project[]
   value: string | null
@@ -11,12 +11,11 @@ interface Props {
   label?: string
   onDone?: () => void
 }
-
 export function ProjectAssignment({
   projects,
   value,
   onChange,
-  label = 'Projeto do documento atual',
+  label = tr('Projeto do documento atual'),
   onDone,
 }: Props) {
   const [open, setOpen] = useState(false)
@@ -57,13 +56,17 @@ export function ProjectAssignment({
     >
       <span
         className="project-choice-icon"
-        style={{ '--project-color': project?.color ?? 'var(--muted)' } as CSSProperties}
+        style={
+          {
+            '--project-color': project?.color ?? 'var(--muted)',
+          } as CSSProperties
+        }
       >
         {project?.icon || (project ? <Folder size={19} /> : <FolderOpen size={19} />)}
       </span>
       <span>
-        <strong>{project?.name ?? 'Sem projeto'}</strong>
-        <small>{project ? 'Organizar nesta coleção' : 'Sem atalho na lateral'}</small>
+        <strong>{project?.name ?? tr('Sem projeto')}</strong>
+        <small>{project ? tr('Organizar nesta coleção') : tr('Sem atalho na lateral')}</small>
       </span>
       {(project ? value === project.id : !value) && <Check size={17} className="chosen-check" />}
     </button>
@@ -86,23 +89,28 @@ export function ProjectAssignment({
         }}
       >
         {selected ? (
-          <span className="project-color-dot" style={{ backgroundColor: selected.color }} />
+          <span
+            className="project-color-dot"
+            style={{
+              backgroundColor: selected.color,
+            }}
+          />
         ) : (
           <Folder size={13} />
         )}
-        <span>{selected?.name ?? 'Sem projeto'}</span>
+        <span>{selected?.name ?? tr('Sem projeto')}</span>
         <ChevronDown size={12} />
       </button>
       {open && (
-        <Modal title="Organizar documento" onClose={close}>
+        <Modal title={tr('Organizar documento')} onClose={close}>
           <div className="project-picker-body">
-            <p className="muted">Escolha onde esta página aparece.</p>
+            <p className="muted">{tr('Escolha onde esta página aparece.')}</p>
             <label className="project-filter">
               <Search size={16} />
               <input
                 autoFocus
-                aria-label="Filtrar projetos"
-                placeholder="Encontrar um projeto…"
+                aria-label={tr('Filtrar projetos')}
+                placeholder={tr('Encontrar um projeto…')}
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 onKeyDown={(event) => {
@@ -119,7 +127,7 @@ export function ProjectAssignment({
             <div
               className="project-choices"
               role="listbox"
-              aria-label="Projetos disponíveis"
+              aria-label={tr('Projetos disponíveis')}
               aria-busy={busy}
               onKeyDown={(event) => {
                 if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) return
@@ -146,13 +154,13 @@ export function ProjectAssignment({
             {!filtered.length && (
               <p className="project-picker-empty">
                 {projects.length
-                  ? 'Nenhum projeto com esse nome.'
-                  : 'Crie seu primeiro projeto na navegação.'}
+                  ? tr('Nenhum projeto com esse nome.')
+                  : tr('Crie seu primeiro projeto na navegação.')}
               </p>
             )}
             {error && (
               <p className="error-text" role="alert">
-                {error}
+                {tr(error)}
               </p>
             )}
           </div>

@@ -1,3 +1,4 @@
+import { tr, type Language } from '../i18n'
 import { invoke, isTauri } from '@tauri-apps/api/core'
 import type {
   Library,
@@ -26,7 +27,7 @@ export interface UpdateInfo {
   mode: 'install' | 'package'
 }
 export function errorMessage(error: unknown): string {
-  if (error && typeof error === 'object' && 'message' in error) return String(error.message)
+  if (error && typeof error === 'object' && 'message' in error) return tr(String(error.message))
   return String(error)
 }
 export function errorCode(error: unknown): string {
@@ -41,6 +42,8 @@ export function native<T>(command: string, args?: Record<string, unknown>): Prom
   return invoke<T>(command, args)
 }
 export const backend = {
+  languageBootstrap: () =>
+    native<{ platform: string; installerLanguage: Language | null }>('language_bootstrap'),
   checkUpdate: () => native<UpdateInfo | null>('check_update'),
   downloadUpdate: (path: string | null) => native<string | null>('download_update', { path }),
   installUpdate: () => native<void>('install_update'),

@@ -1,3 +1,4 @@
+import { tr } from '../i18n'
 import { Sun, Moon, Coffee } from 'lucide-react'
 import type { Theme } from '../core/types'
 
@@ -28,7 +29,9 @@ export function ThemeChoices({
           key={theme.id}
           className={`theme-choice ${value === theme.id ? 'selected' : ''}`}
           aria-pressed={value === theme.id}
-          aria-label={welcome ? `Usar tema ${theme.label}` : theme.label}
+          aria-label={
+            welcome ? tr('Usar tema {theme}', { theme: tr(theme.label) }) : tr(theme.label)
+          }
           onClick={() => onChange(theme.id)}
         >
           <span className={`theme-preview ${theme.id}`} aria-hidden="true">
@@ -39,9 +42,9 @@ export function ThemeChoices({
           </span>
           <span className="theme-choice-label">
             <theme.icon size={14} />
-            {theme.label}
+            {tr(theme.label)}
           </span>
-          {welcome && <small>{theme.description}</small>}
+          {welcome && <small>{tr(theme.description)}</small>}
         </button>
       ))}
     </div>

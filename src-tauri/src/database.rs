@@ -69,6 +69,8 @@ fn documents(connection: &Connection) -> AppResult<Vec<RegisteredDocument>> {
 pub fn preferences(path: &Path, value: serde_json::Value) -> AppResult<()> {
     // Apenas opções conhecidas podem entrar no banco; nunca recebemos abas ou texto.
     let allowed = [
+        "language",
+        "languageChosen",
         "theme",
         "themeChosen",
         "onboardingCompleted",

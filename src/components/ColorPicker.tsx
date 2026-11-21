@@ -1,8 +1,8 @@
+import { tr } from '../i18n'
 import { useState, type PointerEvent } from 'react'
 import { Check, Palette } from 'lucide-react'
 import { hexToHsv, hsvToHex, normalizeColor, type HsvColor } from '../core/colors'
 import { Modal } from './ui'
-
 const palette = [
   '#768c66',
   '#be9a69',
@@ -21,7 +21,6 @@ const palette = [
   '#55595e',
   '#242424',
 ]
-
 interface Props {
   label: string
   value: string
@@ -30,7 +29,6 @@ interface Props {
   onDone?: () => void
   textTool?: boolean
 }
-
 export function ColorPicker({ label, value, onChange, onClear, onDone, textTool = false }: Props) {
   const [open, setOpen] = useState(false)
   const [hsv, setHsv] = useState(() => hexToHsv(value))
@@ -69,7 +67,11 @@ export function ColorPicker({ label, value, onChange, onClear, onDone, textTool 
         aria-expanded={open}
         data-tooltip={label}
         style={
-          textTool ? { borderBottomColor: normalizeColor(value) ?? 'var(--accent)' } : undefined
+          textTool
+            ? {
+                borderBottomColor: normalizeColor(value) ?? 'var(--accent)',
+              }
+            : undefined
         }
         onClick={() => {
           choose(normalizeColor(value) ?? '#768c66')
@@ -82,7 +84,9 @@ export function ColorPicker({ label, value, onChange, onClear, onDone, textTool 
           <>
             <span
               className="color-preview-dot"
-              style={{ backgroundColor: normalizeColor(value) ?? '#768c66' }}
+              style={{
+                backgroundColor: normalizeColor(value) ?? '#768c66',
+              }}
             />
             <span>{(normalizeColor(value) ?? '#768c66').toUpperCase()}</span>
             <Palette size={14} />
@@ -95,8 +99,10 @@ export function ColorPicker({ label, value, onChange, onClear, onDone, textTool 
             <button
               type="button"
               className="color-plane"
-              aria-label="Saturação e brilho: use as setas para ajustar"
-              style={{ backgroundColor: `hsl(${hsv.h}, 100%, 50%)` }}
+              aria-label={tr('Saturação e brilho: use as setas para ajustar')}
+              style={{
+                backgroundColor: `hsl(${hsv.h}, 100%, 50%)`,
+              }}
               onPointerDown={(event) => {
                 event.currentTarget.setPointerCapture(event.pointerId)
                 point(event)
@@ -135,28 +141,40 @@ export function ColorPicker({ label, value, onChange, onClear, onDone, textTool 
             >
               <span
                 className="color-plane-marker"
-                style={{ left: `${hsv.s * 100}%`, top: `${(1 - hsv.v) * 100}%` }}
+                style={{
+                  left: `${hsv.s * 100}%`,
+                  top: `${(1 - hsv.v) * 100}%`,
+                }}
               />
             </button>
             <label className="color-hue">
-              <span>Matiz</span>
+              <span>{tr('Matiz')}</span>
               <input
                 type="range"
-                aria-label="Matiz da cor"
+                aria-label={tr('Matiz da cor')}
                 min="0"
                 max="359"
                 value={Math.round(hsv.h)}
-                onChange={(event) => update({ ...hsv, h: Number(event.target.value) })}
+                onChange={(event) =>
+                  update({
+                    ...hsv,
+                    h: Number(event.target.value),
+                  })
+                }
               />
             </label>
-            <div className="color-swatches" role="group" aria-label="Paleta de cores">
+            <div className="color-swatches" role="group" aria-label={tr('Paleta de cores')}>
               {palette.map((color) => (
                 <button
                   key={color}
                   type="button"
-                  aria-label={`Usar cor ${color}`}
+                  aria-label={tr('Usar cor {0}', {
+                    0: color,
+                  })}
                   aria-pressed={selected === color}
-                  style={{ backgroundColor: color }}
+                  style={{
+                    backgroundColor: color,
+                  }}
                   onClick={() => choose(color)}
                 >
                   {selected === color && (
@@ -168,14 +186,16 @@ export function ColorPicker({ label, value, onChange, onClear, onDone, textTool 
             <label className="color-hex-field">
               <span
                 className="color-preview"
-                style={{ backgroundColor: selected ?? hsvToHex(hsv) }}
+                style={{
+                  backgroundColor: selected ?? hsvToHex(hsv),
+                }}
               />
               <span>
                 <small>HEX</small>
                 <input
                   autoFocus
                   type="text"
-                  aria-label="Cor em hexadecimal"
+                  aria-label={tr('Cor em hexadecimal')}
                   spellCheck={false}
                   value={hex}
                   aria-invalid={!selected}
@@ -197,7 +217,7 @@ export function ColorPicker({ label, value, onChange, onClear, onDone, textTool 
             </label>
             {!selected && (
               <p className="error-text" role="status">
-                Use um código como #768C66.
+                {tr('Use um código como #768C66.')}
               </p>
             )}
             <div className="modal-actions">
@@ -210,11 +230,11 @@ export function ColorPicker({ label, value, onChange, onClear, onDone, textTool 
                     close()
                   }}
                 >
-                  Cor do tema
+                  {tr('Cor do tema')}
                 </button>
               )}
               <button type="button" onClick={close}>
-                Cancelar
+                {tr('Cancelar')}
               </button>
               <button
                 type="button"
@@ -227,7 +247,7 @@ export function ColorPicker({ label, value, onChange, onClear, onDone, textTool 
                   }
                 }}
               >
-                Aplicar cor
+                {tr('Aplicar cor')}
               </button>
             </div>
           </div>

@@ -1,3 +1,4 @@
+import { tr } from '../i18n'
 import StarterKit from '@tiptap/starter-kit'
 import Image from '@tiptap/extension-image'
 import { TableKit } from '@tiptap/extension-table'
@@ -32,13 +33,16 @@ export function editorExtensions(placeholder = true) {
     TaskItem.configure({
       nested: true,
       HTMLAttributes: { 'data-type': 'taskItem' },
-      a11y: { checkboxLabel: (node) => `Marcar tarefa: ${node.textContent || 'sem texto'}` },
+      a11y: {
+        checkboxLabel: (node) =>
+          tr('Marcar tarefa: {text}', { text: node.textContent || tr('sem texto') }),
+      },
     }),
     SearchExtension,
     ...(placeholder
       ? [
           Placeholder.configure({
-            placeholder: 'Comece a escrever…',
+            placeholder: () => tr('Comece a escrever…'),
             emptyEditorClass: 'is-editor-empty',
           }),
         ]

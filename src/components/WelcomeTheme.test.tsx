@@ -29,6 +29,7 @@ function Welcome({ complete = vi.fn(), preview = vi.fn() }) {
   const [theme, setTheme] = useState<Theme>('light')
   return (
     <WelcomeTheme
+      chooseLanguage={false}
       theme={theme}
       onThemeChange={(next) => {
         setTheme(next)
@@ -80,4 +81,29 @@ it('permite voltar sem perder a escolha de tema e não conclui com Esc', () => {
   fireEvent.keyDown(screen.getByRole('dialog'), { key: 'Escape' })
   expect(complete).not.toHaveBeenCalled()
   expect(screen.getByRole('dialog')).toBeInTheDocument()
+})
+
+it('apresenta quatro telas no Linux com idioma primeiro e permite voltar à escolha', () => {
+  const language = vi.fn()
+  render(
+    <WelcomeTheme
+      theme="dark"
+      language="zh-CN"
+      onLanguageChange={language}
+      onThemeChange={vi.fn()}
+      onComplete={vi.fn()}
+    />,
+  )
+  expect(screen.getByText('Etapa 1 de 4')).toBeInTheDocument()
+  expect(screen.getByRole('button', { name: '简体中文' })).toHaveAttribute('aria-pressed', 'true')
+  fireEvent.click(screen.getByRole('button', { name: '日本語' }))
+  expect(language).toHaveBeenCalledWith('ja')
+  fireEvent.click(screen.getByRole('button', { name: 'Continuar' }))
+  expect(screen.getByRole('heading', { name: 'Um espaço para suas palavras.' })).toBeInTheDocument()
+  expect(screen.getByText('Etapa 2 de 4')).toBeInTheDocument()
+  fireEvent.click(screen.getByRole('button', { name: 'Continuar' }))
+  expect(screen.getByText('Etapa 3 de 4')).toBeInTheDocument()
+  fireEvent.click(screen.getByRole('button', { name: 'Voltar' }))
+  fireEvent.click(screen.getByRole('button', { name: 'Voltar' }))
+  expect(screen.getByText('Etapa 1 de 4')).toBeInTheDocument()
 })
