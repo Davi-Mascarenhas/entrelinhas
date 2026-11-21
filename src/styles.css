@@ -1333,11 +1333,22 @@ p {
 }
 .about {
   text-align: center;
-  padding: 24px 0;
+  padding: 0;
+}
+.about .app-icon {
+  width: 44px;
+  height: 44px;
+}
+.about h3 {
+  margin: 10px 0 4px;
 }
 .about > p {
   font-size: 12px;
   line-height: 1.8;
+  margin: 6px 0;
+}
+.about .version-pill {
+  margin: 5px 0 8px;
 }
 .version-pill {
   display: inline-block;
@@ -2129,8 +2140,8 @@ body,
 }
 
 .update-control {
-  margin-top: 24px;
-  padding-top: 24px;
+  margin-top: 16px;
+  padding-top: 16px;
   border-top: 1px solid var(--border);
   text-align: left;
   width: 100%;
@@ -2142,6 +2153,11 @@ body,
 }
 .update-control p {
   overflow-wrap: anywhere;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.update-control p.small {
+  font-size: 11px;
 }
 .update-control .update-version {
   font-weight: 600;

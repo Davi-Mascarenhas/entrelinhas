@@ -125,7 +125,7 @@ class Desktop:
     def paint(self):
         # TipTap restaura o foco em requestAnimationFrame; aguarda também a
         # pintura antes de iniciar a próxima interação ou capturar a janela.
-        self.call('/execute/async', {'script': 'const done=arguments[arguments.length-1];requestAnimationFrame(()=>requestAnimationFrame(()=>done(true)));', 'args': []})
+        self.call('/execute/async', {'script': 'const done=arguments[arguments.length-1];let finished=false;const finish=()=>{if(!finished){finished=true;done(true)}};setTimeout(finish,300);requestAnimationFrame(()=>requestAnimationFrame(finish));', 'args': []})
 
     def screenshot(self, path):
         self.paint()

@@ -9,6 +9,7 @@ type Phase =
   | 'idle'
   | 'checking'
   | 'available'
+  | 'choosing'
   | 'downloading'
   | 'ready'
   | 'installing'
@@ -88,6 +89,7 @@ export function useUpdates(
       if (previous.phase !== 'ready') {
         let path: string | null = null
         if (previous.info.mode === 'package') {
+          setState({ ...previous, phase: 'choosing', message: '', progress: null })
           path = await save({
             title: 'Salvar atualização do Entrelinhas',
             defaultPath: await join(
@@ -96,7 +98,10 @@ export function useUpdates(
             ),
             filters: [{ name: 'Pacote Debian', extensions: ['deb'] }],
           })
-          if (!path) return
+          if (!path) {
+            setState(previous)
+            return
+          }
         }
         setState({ ...previous, phase: 'downloading', message: '', progress: null })
         const savedPath = await backend.downloadUpdate(path)

@@ -56,14 +56,26 @@ def about(app):
 
 
 def search(app, wait, allow=True):
+    wait(lambda: app.js('return !!document.querySelector(".update-actions button:first-child:not(:disabled)")'), 'habilitar nova consulta')
+    app.js('document.querySelector(".update-actions button:first-child").scrollIntoView({block:"center"})')
+    app.paint()
     app.click('.update-actions button:first-child')
     wait(lambda: app.js('return [...document.querySelectorAll("[role=dialog]")].some(n=>n.getAttribute("aria-label")==="Permitir acesso à internet para procurar atualizações?")'), 'consentimento de rede')
     button(app, 'Permitir consulta' if allow else 'Cancelar')
 
 
+def apply_update(app, wait):
+    wait(lambda: app.js('return !!document.querySelector(".update-actions .primary:not(:disabled)")'), 'habilitar download/instalação')
+    app.js('document.querySelector(".update-actions .primary").scrollIntoView({block:"center"})')
+    app.paint()
+    app.click('.update-actions .primary')
+
+
 def common(app, feed, wait, passed):
     about(app)
     assert feed.requests == [], 'A abertura do painel não pode consultar a internet.'
+    if hasattr(app, 'output'):
+        app.screenshot(app.output / 'updates-idle.png')
     search(app, wait, False)
     assert feed.requests == [], 'Recusar precisa preservar ausência de tráfego.'
     passed('nenhuma consulta ao abrir o app/painel nem após recusar acesso à internet')

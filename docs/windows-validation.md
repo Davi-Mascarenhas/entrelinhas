@@ -17,7 +17,8 @@ Antes de promover a prévia a versão estável, registrar edição/build do Wind
 - [ ] Instalar por usuário sem elevação do aplicativo; conferir wizard em português, logo e artes em escala de 100%, 150% e 200%.
 - [ ] Cancelar antes de instalar e confirmar que o aplicativo não foi registrado.
 - [ ] Testar instalação com WebView2 presente e em máquina limpa sem WebView2, com internet.
-- [ ] Abrir o aplicativo pelo menu Iniciar, escolher cada tema e recusar a alteração do padrão.
+- [ ] Abrir o aplicativo pelo menu Iniciar e pelo explorador sem surgir console; confirmar que não depende de um terminal aberto. Escolher cada tema e recusar a alteração do padrão.
+- [ ] Em Sobre, recusar e autorizar a consulta. Conferir que não consulta automaticamente nem baixa antes do clique. Testar atualização da nova prévia para outra versão assinada de teste, salvamento/cancelamento dos rascunhos e preservação de projetos/preferências.
 - [ ] Conferir o Entrelinhas em “Abrir com” para MD, Markdown e TXT; abrir arquivos com espaços, acentos e caracteres japoneses com o app aberto e fechado.
 - [ ] Usar “Abrir configurações do Windows”, selecionar os formatos na tela do sistema e voltar ao app; conferir que o status só indica padrão após a escolha.
 - [ ] Abrir/salvar pelo explorador, salvar novamente, salvar como, renomear sem substituir outro arquivo, inserir imagem e reabrir Markdown com sua pasta de recursos.
@@ -26,3 +27,5 @@ Antes de promover a prévia a versão estável, registrar edição/build do Wind
 - [ ] Desinstalar sem apagar dados; confirmar remoção de atalhos/registro e preservação da biblioteca e dos arquivos pessoais, inclusive um arquivo salvo na pasta de instalação.
 
 Assinatura Authenticode e testes com políticas empresariais ficam para a distribuição estável. Não adicionar uma exceção permanente de segurança para executar testes.
+
+A suíte também inspeciona o subsistema gráfico do PE e confirma que o processo não possui console. Dois instaladores exclusivos de teste validam a atualização real e o reinício; pacotes adulterados, chave desconhecida e versão adulterada são rejeitados. Os builds de teste nunca são publicados.

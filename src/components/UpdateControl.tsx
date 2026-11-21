@@ -2,7 +2,8 @@ import { Download, RefreshCw } from 'lucide-react'
 import type { UpdatesController } from '../native/useUpdates'
 
 export function UpdateControl({ updates: u }: { updates: UpdatesController }) {
-  const busy = u.requesting || ['checking', 'downloading', 'installing'].includes(u.phase)
+  const busy =
+    u.requesting || ['checking', 'choosing', 'downloading', 'installing'].includes(u.phase)
   const progress = u.progress?.total
     ? Math.min(100, Math.round((u.progress.received / u.progress.total) * 100))
     : null
@@ -12,6 +13,7 @@ export function UpdateControl({ updates: u }: { updates: UpdatesController }) {
       <p className="muted small">Você escolhe quando procurar. Sem consultas automáticas.</p>
       <div role="status" aria-live="polite">
         {u.phase === 'checking' && <p>Procurando atualização…</p>}
+        {u.phase === 'choosing' && <p>Escolha onde salvar o pacote.</p>}
         {u.phase === 'current' && <p>Você está com a versão mais recente deste canal.</p>}
         {u.info && <p className="update-version">Versão {u.info.version} disponível</p>}
         {u.info?.notes && <p className="update-notes">{u.info.notes}</p>}

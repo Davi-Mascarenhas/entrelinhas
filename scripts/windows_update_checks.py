@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 import stat
 import time
-from update_checks import Feed, common, search, button
+from update_checks import Feed, common, search, button, apply_update
 
 
 def exercise(app, folder, destination, fixtures, install, wait, passed):
@@ -28,7 +28,7 @@ def exercise(app, folder, destination, fixtures, install, wait, passed):
             feed.tampered, feed.signature, feed.version = tampered, signature, version
             search(app, wait)
             wait(lambda: app.js('return !!document.querySelector(".update-actions .primary:not(:disabled)")'), label)
-            app.click('.update-actions .primary')
+            apply_update(app, wait)
             wait(lambda: app.js('return !!document.querySelector(".update-control [role=alert]")'), 'rejeitar ' + label)
             assert app.ipc('plugin:app|version') == data['1']['version']
             assert document.read_bytes() == original
@@ -43,7 +43,7 @@ def exercise(app, folder, destination, fixtures, install, wait, passed):
         from update_checks import about
         about(app)
         app.screenshot(app.output / 'update-available.png')
-        app.click('.update-actions .primary')
+        apply_update(app, wait)
         wait(lambda: app.js('return !!document.querySelector("[aria-label=\"Salvar antes de atualizar?\"]")'), 'decisão sobre o rascunho')
         button(app, 'Cancelar')
         assert document.read_bytes() == original
@@ -51,7 +51,7 @@ def exercise(app, folder, destination, fixtures, install, wait, passed):
         passed('cancelar atualização preserva rascunho, mesmo com confirmação comum desativada')
         document.chmod(stat.S_IREAD)
         try:
-            app.click('.update-actions .primary')
+            apply_update(app, wait)
             wait(lambda: app.js('return !!document.querySelector("[aria-label=\"Salvar antes de atualizar?\"]")'), 'decisão de salvar')
             button(app, 'Salvar e continuar')
             wait(lambda: app.js('return document.body.innerText.includes("somente leitura")'), 'falha de salvamento')
@@ -61,7 +61,7 @@ def exercise(app, folder, destination, fixtures, install, wait, passed):
         finally:
             document.chmod(stat.S_IREAD | stat.S_IWRITE)
         before = app.ipc('load_library')
-        app.click('.update-actions .primary')
+        apply_update(app, wait)
         wait(lambda: app.js('return !!document.querySelector("[aria-label=\"Salvar antes de atualizar?\"]")'), 'salvar para atualizar')
         button(app, 'Salvar e continuar')
         wait(lambda: app.application_process.poll() is not None, 'instalador assumir atualização', 45)

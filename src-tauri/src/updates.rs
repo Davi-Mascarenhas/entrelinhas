@@ -99,9 +99,10 @@ pub async fn check_update(
         })
         .build()
         .map_err(failure)?;
-    let Some(update) = updater.check().await.map_err(failure)? else {
+    let Some(mut update) = updater.check().await.map_err(failure)? else {
         return Ok(None);
     };
+    update.timeout = Some(Duration::from_secs(180));
     if update.download_url.scheme() != "https" {
         #[cfg(not(any(debug_assertions, feature = "updater-test")))]
         return Err(AppError::new(

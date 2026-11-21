@@ -26,6 +26,7 @@ Entrelinhas é um editor **desktop de verdade**, feito com Tauri 2, React e Type
 - Navegação à esquerda ou à direita, redimensionável; abas superiores ou laterais. Em janelas estreitas, as abas voltam ao topo para manter uma coluna confortável.
 - Busca e substituição no documento; busca por nome e conteúdo nos arquivos salvos registrados.
 - Funcionamento local e offline, sem conta, servidor ou sincronização obrigatória.
+- Atualizações manuais em **Configurações → Sobre**, com autorização de rede a cada consulta. No Windows, baixa, verifica e instala; no Linux, salva o `.deb` verificado para instalação pelo sistema. Sem consultas na inicialização ou avisos automáticos.
 
 ## Salvamento e privacidade
 
@@ -73,7 +74,7 @@ O cursor em bloco usa as coordenadas reais da seleção do ProseMirror e a largu
 
 ## Instalação no Windows — prévia
 
-O instalador **Entrelinhas 1.2.0-rc.1 para Windows x64** usa NSIS, com logo, artes em sépia e textos em português brasileiro. Está disponível na [release de prévia](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v1.2.0-rc.1), junto com o SHA-256 e o relatório dos testes. A versão Linux estável continua em 1.1.2.
+O instalador **Entrelinhas 1.2.0-rc.2 para Windows x64** usa NSIS, com logo, artes em sépia e textos em português brasileiro. Está disponível na [release de prévia](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v1.2.0-rc.2), junto com o SHA-256 e o relatório dos testes. A versão Linux estável continua em 1.1.2.
 
 - Instalação por usuário, sem exigir administrador para instalar o aplicativo; pasta de destino selecionável, atalho no menu Iniciar e opção de abrir ao concluir.
 - O instalador verifica o WebView2 e baixa o bootstrapper oficial quando necessário. Nesse caso, a primeira instalação precisa de internet.
@@ -81,7 +82,7 @@ O instalador **Entrelinhas 1.2.0-rc.1 para Windows x64** usa NSIS, com logo, art
 - A primeira abertura apresenta boas-vindas, tema e escolha opcional de aplicativo padrão.
 - Atualização e desinstalação preservam documentos pessoais; o desinstalador oferece uma opção explícita para apagar dados do aplicativo (preferências e referências), desmarcada por padrão.
 
-Esta prévia não tem assinatura digital. A [rotina Windows](https://github.com/Davi-Mascarenhas/entrelinhas/actions/workflows/windows.yml) compila em Windows Server 2025 e testa o wizard e o aplicativo instalado em WebView2. A aprovação manual em Windows 11 segue o [roteiro de validação](docs/windows-validation.md); o resultado no runner não substitui essa aprovação.
+Esta prévia não tem assinatura Authenticode. As atualizações possuem assinatura criptográfica própria para verificar o pacote e sua versão; ela não remove o aviso do Windows. A [rotina Windows](https://github.com/Davi-Mascarenhas/entrelinhas/actions/workflows/windows.yml) compila em Windows Server 2025 e testa o wizard e o aplicativo instalado em WebView2. A aprovação manual em Windows 11 segue o [roteiro de validação](docs/windows-validation.md); o resultado no runner não substitui essa aprovação.
 
 [Boas-vindas do instalador](docs/screenshots/windows-welcome.png) · [Escolha da pasta](docs/screenshots/windows-folder.png). As capturas são do wizard real em Windows Server 2025.
 
@@ -95,6 +96,14 @@ npm run package:windows
 O `.exe` fica em `src-tauri/target/release/bundle/nsis/`. A configuração `src-tauri/tauri.windows.conf.json` é combinada automaticamente pelo Tauri com a configuração principal; o pacote Linux permanece `.deb`.
 
 As artes vetoriais ficam em `src-tauri/windows/branding/`. Para regenerar os BMPs versionados, instale CairoSVG 2.8.2 e Pillow em um ambiente Python e execute `python scripts/render-installer-branding.py`. O build normal utiliza os BMPs já incluídos e não exige essas ferramentas.
+
+## Atualizações e Code signing policy
+
+**Configurações → Sobre → Procurar atualização** pede autorização para consultar o GitHub. Nenhum documento é enviado. Uma versão encontrada aparece antes do download; você escolhe quando continuar. O Windows resolve alterações não salvas antes de reiniciar; no Linux, o pacote `.deb` é salvo no destino escolhido, sem instalação automática.
+
+A versão 1.2.0-rc.1 precisa de instalação manual da nova prévia uma vez para receber esse recurso. [Funcionamento, chaves e publicação dos manifestos](docs/updates.md).
+
+A candidatura à assinatura gratuita pela SignPath Foundation está **preparada, não enviada nem aprovada**. Os instaladores atuais continuam sem Authenticode. [Code signing policy](docs/code-signing-policy.md) · [Candidatura pronta para revisão pelo titular](docs/signpath-application.md). Não há garantia de remoção imediata do SmartScreen após uma eventual assinatura.
 
 ## Instalação no Ubuntu
 
@@ -197,8 +206,8 @@ python3 scripts/test-desktop.py --binary src-tauri/target/release/entrelinhas
 
 Os números abaixo descrevem a suíte Linux. A validação Windows tem relatório próprio nos artefatos da rotina Windows e na release de prévia.
 
-- **86 testes TypeScript:** notas, abas, descarte, preferências, atalhos, Markdown, formatação, TXT, Unicode, busca, imagens, gravação explícita, conflitos, espera de gravações, centralização com diferentes painéis, seletores próprios por mouse e teclado, dicas, guias sob demanda, abertura sem perder texto, apresentação em três páginas, recusa do padrão, tratamento de falhas de associação, migração de preferências, fila de arquivos externos, edição de títulos, nome sugerido ao salvar e gestos da barra superior com exclusão dos botões e seus ícones, cliques sem arraste e cancelamento de gestos pendentes.
-- **15 testes Rust:** gravação atômica, conflitos, UTF-8, nomes internacionais, imagens relativas, arquivos somente leitura, recursos inválidos, projetos em Downloads, exclusão sem apagar documentos, localização, busca, renomeação sem sobrescrever, preservação de imagens e projeto, reversão em caso de falha no registro, argumentos do explorador e associações MIME em perfis isolados para as instalações local e Debian.
+- **95 testes TypeScript:** notas, abas, descarte, preferências, atalhos, Markdown, formatação, TXT, Unicode, busca, imagens, gravação explícita, conflitos, espera de gravações, centralização com diferentes painéis, seletores próprios por mouse e teclado, dicas, guias sob demanda, abertura sem perder texto, apresentação em três páginas, recusa do padrão, tratamento de falhas de associação, migração de preferências, fila de arquivos externos, edição de títulos, nome sugerido ao salvar e gestos da barra superior com exclusão dos botões e seus ícones, cliques sem arraste e cancelamento de gestos pendentes.
+- **17 testes Rust:** gravação atômica, conflitos, UTF-8, nomes internacionais, imagens relativas, arquivos somente leitura, recursos inválidos, projetos em Downloads, exclusão sem apagar documentos, localização, busca, renomeação sem sobrescrever, preservação de imagens e projeto, reversão em caso de falha no registro, argumentos do explorador e associações MIME em perfis isolados para as instalações local e Debian.
 - **38 verificações desktop:** inicialização, ocultação sem deslocamento, Esc, descarte após reiniciar, Ctrl+S com seletor GNOME, associação externa, abas, busca/substituição, colagem de imagens, temas, cursores, persistência, layout, F11, conflitos, busca global, confirmação opcional, TXT, paleta de cores nos três temas, primeira abertura, centralização ao redimensionar, formatação inferior sem moldura, menus de tabela, dicas nos três temas, tamanho da janela após reiniciar, duplo clique nas áreas livres dos dois lados da barra e entre os controles, arraste apenas ao mover o mouse pressionado, títulos, espaçamento dos campos, abertura/salvamento pelo Nautilus, registro em Abrir com, abertura pelo sistema com a janela aberta ou fechada, aceitação e recusa do padrão, apresentação na menor janela e atalhos na lateral apenas para arquivos vinculados a projetos.
 - O roteiro desktop também passou no **executável otimizado de produção, com o Vite desligado**.
 - Documento de **280 mil caracteres** carregado e editado no roteiro desktop. O tempo medido inclui definir o conteúdo e inserir texto; não representa um benchmark de latência por tecla.
