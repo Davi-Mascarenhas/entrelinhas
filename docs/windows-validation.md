@@ -4,6 +4,8 @@ A prévia inicial é x64 e não assinada. O workflow `Windows installer` executa
 
 ## Teste automatizado
 
+O wrapper da CI cria uma conta temporária comum, executa os testes nessa conta e a remove ao final. O acesso ao desktop de teste é restaurado ao terminar. Isso permite testar o WebView2 recente sem elevação e sem modificar políticas de depuração do Windows. O roteiro recusa execução sobre uma instalação ou biblioteca existente.
+
 O roteiro abre o wizard, captura boas-vindas e seleção de pasta e confirma o cancelamento. Em seguida instala silenciosamente em uma pasta com espaços e acentos e verifica o registro de “Abrir com”, o atalho e a preservação dos padrões anteriores.
 
 O aplicativo instalado é operado pelo Microsoft Edge WebDriver na versão correspondente ao WebView2. São verificados: primeira abertura, Markdown/TXT, UTF-8 e nomes internacionais, salvamento manual, renomeação, rascunhos preservados na janela e descartados ao fechar, instância única, guias sem duplicação, temas, preferências e duplo clique na barra. O roteiro também testa reinstalação e desinstalação, preservando biblioteca e documentos. A tela de padrões do Windows não é automatizada para forçar uma associação.
