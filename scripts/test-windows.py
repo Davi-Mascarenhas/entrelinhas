@@ -94,6 +94,9 @@ def main():
     parser.add_argument('--output', type=Path, default=ROOT / 'artifacts/windows')
     args = parser.parse_args()
     assert platform.system() == 'Windows'
+    assert os.environ.get('GITHUB_ACTIONS') == 'true', 'Este roteiro só pode rodar no runner descartável do GitHub Actions.'
+    assert read_registry('Software\\RegisteredApplications', 'Entrelinhas') is None, 'Não execute sobre uma instalação existente.'
+    assert not (Path(os.environ['APPDATA']) / 'io.github.bitdevy.entrelinhas/library.sqlite3').exists(), 'O perfil de teste precisa estar vazio.'
     output = args.output.resolve(); output.mkdir(parents=True, exist_ok=True)
     installer = args.installer.resolve()
     version = json.loads((ROOT / 'package.json').read_text(encoding='utf-8'))['version']
@@ -111,7 +114,7 @@ def main():
     assert executable.exists()
     personal_in_install = destination / 'Meu texto pessoal.txt'
     personal_in_install.write_text('Documento preservado.', encoding='utf-8')
-    assert read_registry('Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Entrelinhas', 'InstallLocation').rstrip('\\') == str(destination)
+    assert read_registry('Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Entrelinhas', 'InstallLocation').strip('"').rstrip('\\') == str(destination)
     assert read_registry('Software\\RegisteredApplications', 'Entrelinhas') == 'Software\\Entrelinhas\\Capabilities'
     for ext in ('.md', '.markdown', '.txt'):
         progid = 'Entrelinhas.Text' if ext == '.txt' else 'Entrelinhas.Markdown'
@@ -196,6 +199,7 @@ def main():
             passed('reinstalação/atualização preserva biblioteca, preferências, documentos e padrões')
             installer_run(destination / 'uninstall.exe', uninstall=True)
             wait(lambda: not executable.exists(), 'desinstalar executável', 30)
+            wait(lambda: read_registry('Software\\RegisteredApplications', 'Entrelinhas') is None and not shortcut.exists(), 'remover registro e atalhos', 30)
             assert read_registry('Software\\RegisteredApplications', 'Entrelinhas') is None
             assert shortcut.exists() is False
             assert database.exists() and hashlib.sha256(database.read_bytes()).hexdigest() == library_hash

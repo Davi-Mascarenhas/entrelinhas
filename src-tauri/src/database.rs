@@ -179,7 +179,7 @@ pub fn relocate(path: &Path, old_path: &str, new_path: &str) -> AppResult<()> {
             "Este caminho já está registrado. Remova a associação antiga ou escolha outro arquivo.",
         ));
     }
-    transaction.execute(
+    let changed = transaction.execute(
         "UPDATE documents SET path=?1,title=?2 WHERE path=?3",
         params![
             new_path.to_string_lossy(),
@@ -187,6 +187,12 @@ pub fn relocate(path: &Path, old_path: &str, new_path: &str) -> AppResult<()> {
             old_path
         ],
     )?;
+    if changed == 0 {
+        return Err(AppError::new(
+            "missing",
+            "Esta referência não está mais na biblioteca. Abra o arquivo pelo seu novo local.",
+        ));
+    }
     transaction.commit()?;
     Ok(())
 }
@@ -277,7 +283,10 @@ mod tests {
         .unwrap();
         let reopened = library(&db).unwrap();
         assert_eq!(reopened.projects.len(), 1);
-        assert_eq!(reopened.documents[0].path, note.to_string_lossy());
+        assert_eq!(
+            reopened.documents[0].path,
+            note.canonicalize().unwrap().to_string_lossy()
+        );
         assert_eq!(reopened.documents[0].project_id.as_deref(), Some("escola"));
         assert_eq!(reopened.preferences["theme"], "sepia");
         assert_eq!(reopened.preferences["themeChosen"], true);
@@ -286,8 +295,9 @@ mod tests {
         delete_project(&db, "escola").unwrap();
         assert!(note.exists());
         assert!(library(&db).unwrap().documents[0].project_id.is_none());
-        forget(&db, &note.to_string_lossy()).unwrap();
+        forget(&db, &reopened.documents[0].path).unwrap();
         assert!(note.exists());
+        assert!(library(&db).unwrap().documents.is_empty());
     }
     #[test]
     fn relocation_and_search_use_real_files() {
@@ -297,10 +307,27 @@ mod tests {
         let new = dir.path().join("novo.md");
         std::fs::write(&old, "uma palavra rara: jabuticaba").unwrap();
         register(&db, &old, None, false).unwrap();
+        let registered = library(&db).unwrap().documents[0].path.clone();
         std::fs::rename(&old, &new).unwrap();
         assert!(search(&db, "antigo").unwrap()[0].missing);
-        relocate(&db, &old.to_string_lossy(), &new.to_string_lossy()).unwrap();
+        relocate(&db, &registered, &new.to_string_lossy()).unwrap();
         assert_eq!(search(&db, "jabuticaba").unwrap().len(), 1);
         assert!(new.exists());
+    }
+
+    #[test]
+    fn relocating_a_stale_reference_does_not_report_success() {
+        let dir = tempfile::tempdir().unwrap();
+        let db = dir.path().join("library.sqlite3");
+        let new = dir.path().join("novo.md");
+        std::fs::write(&new, "preservado").unwrap();
+        assert_eq!(
+            relocate(&db, "referência ausente.md", &new.to_string_lossy())
+                .unwrap_err()
+                .code,
+            "missing"
+        );
+        assert!(library(&db).unwrap().documents.is_empty());
+        assert_eq!(std::fs::read_to_string(&new).unwrap(), "preservado");
     }
 }
