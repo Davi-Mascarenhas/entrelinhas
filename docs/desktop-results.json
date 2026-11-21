@@ -1,5 +1,5 @@
 {
-  "passed": 37,
+  "passed": 38,
   "checks": [
     "primeira abertura apresenta boas-vindas, escolha de tema e padrão em três páginas",
     "recusar o padrão conclui a apresentação sem alterar associações",
@@ -10,6 +10,7 @@
     "tamanho e maximização preservados após fechar e reabrir",
     "duplo clique na barra maximiza e restaura sem minimizar",
     "áreas livres entre controles também maximizam e restauram a janela",
+    "duplo clique nas regiões esquerda e direita não inicia arraste; movimento pressionado inicia um único arraste",
     "duplo clique no título edita o nome do rascunho",
     "coluna centralizada em janelas estreitas e largas",
     "imersão, cursor em bloco, posição estável e Esc",
@@ -32,7 +33,7 @@
     "confirmação de descarte opcional respeita cancelar e descartar",
     "formato padrão TXT e salvamento textual real",
     "lateral mostra apenas documentos de projetos; associar e desvincular preserva arquivo e editor",
-    "composição preserva atalhos; documento longo (280000 caracteres) em 0.43s",
+    "composição preserva atalhos; documento longo (280000 caracteres) em 0.77s",
     "registro MIME torna o Entrelinhas disponível em Abrir com para Markdown e TXT",
     "configurações definem o padrão somente por escolha explícita e confirmam Markdown e TXT no sistema",
     "Abrir com recebe múltiplos arquivos na mesma janela, preserva rascunhos e evita duplicatas",
@@ -41,10 +42,10 @@
   ],
   "engine": "Tauri 2 / WebKitGTK",
   "platform": "Ubuntu 26.10 / Wayland",
-  "version": "1.1.1",
-  "binary": "artifacts/release-1.1.1/extracted/usr/bin/entrelinhas",
-  "sha256": "700c607def1bf244263087fa01ab0455197805ef7bba6612d665be8b79513616",
+  "version": "1.1.2",
+  "binary": "artifacts/release-1.1.2/extracted/usr/bin/entrelinhas",
+  "sha256": "59264f8b7fab7d87250410af0d9d2aeb943f0c0795d9535d6ea55daf9e694aa7",
   "developmentServer": false,
   "fileChooser": "org.gnome.Nautilus",
-  "packageSha256": "493facb27f99b4c3ac445515f1c971b7b8a414b9da8ec4829521640740a66126"
+  "packageSha256": "fce9ebff63f4cbe2bcc37fe928a162a530b4482fa052fe611ceabafa754bc3fe"
 }
