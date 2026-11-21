@@ -39,7 +39,8 @@ def exercise(app, folder, destination, fixtures, install, wait, passed):
         app.click('[aria-label="Fechar painel"]')
         app.editor('editor.commands.insertContent(" ATUALIZACAO SALVA");return true')
         app.ipc('upsert_project', project={'id': 'upgrade-test', 'name': 'Projeto preservado', 'color': '#7b9275', 'icon': '', 'position': 0})
-        app.ipc('associate_document', path=str(document.resolve()), projectId='upgrade-test')
+        registered = next(item['path'] for item in app.ipc('load_library')['documents'] if item['path'].endswith(document.name))
+        app.ipc('associate_document', path=registered, projectId='upgrade-test')
         from update_checks import about
         about(app)
         app.screenshot(app.output / 'update-available.png')
