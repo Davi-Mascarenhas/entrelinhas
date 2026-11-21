@@ -13,6 +13,8 @@ on:
       - 'scripts/test-windows*'
       - 'scripts/run-windows-tests.ps1'
       - 'scripts/test-desktop.py'
+      - 'scripts/*update*.py'
+      - 'scripts/check-windows-subsystem.py'
       - '.github/workflows/windows.yml'
 permissions:
   contents: read
@@ -78,15 +80,18 @@ jobs:
             ~/.cargo/git
             src-tauri/target
           key: windows-cargo-${{ hashFiles('src-tauri/Cargo.lock') }}
+      - name: Build isolated updater test installers
+        run: python scripts/build-update-fixtures.py
       - name: Validate wizard and installed application
         run: |
-          $installer = Get-ChildItem src-tauri/target/release/bundle/nsis/*-setup.exe | Select-Object -First 1
+          $version = (Get-Content package.json -Raw | ConvertFrom-Json).version
+          $installer = Get-Item "src-tauri/target/release/bundle/nsis/Entrelinhas_${version}_x64-setup.exe"
           if (-not $installer) { throw 'Instalador não encontrado.' }
           ./scripts/run-windows-tests.ps1 -Installer $installer.FullName
       - name: Prepare downloadable installer and checksum
         run: |
           $version = (Get-Content package.json -Raw | ConvertFrom-Json).version
-          $installer = Get-ChildItem src-tauri/target/release/bundle/nsis/*-setup.exe | Select-Object -First 1
+          $installer = Get-Item "src-tauri/target/release/bundle/nsis/Entrelinhas_${version}_x64-setup.exe"
           New-Item -ItemType Directory artifacts/windows-release -Force | Out-Null
           $name = "Entrelinhas_${version}_x64-setup.exe"
           Copy-Item $installer.FullName "artifacts/windows-release/$name"
@@ -110,5 +115,6 @@ jobs:
             artifacts/windows/*.png
             artifacts/windows/*.log
             artifacts/windows/*.json
+            artifacts/update-fixtures/build-*.log
             src-tauri/target/release/nsis
           if-no-files-found: warn

@@ -25,19 +25,13 @@ wait = desktop_tests.wait
 class WindowsDesktop(desktop_tests.Desktop):
     def start(self, launch_args=None):
         debug_port = desktop_tests.free_port()
+        self.debug_port = debug_port
         self.application_log = (self.output / 'application.log').open('a', encoding='utf-8')
         self.application_process = subprocess.Popen([str(self.application), *(launch_args or [])], env={
             **os.environ, 'TAURI_WEBVIEW_AUTOMATION': 'true',
             'WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS': f'--remote-debugging-port={debug_port}',
         }, stdout=self.application_log, stderr=self.application_log)
-        wait(lambda: urllib.request.urlopen(f'http://127.0.0.1:{debug_port}/json/version', timeout=1).status == 200, 'WebView2 do aplicativo instalado', 60)
-        options = {'debuggerAddress': f'127.0.0.1:{debug_port}'}
-        result = self.request('/session', {'capabilities': {'alwaysMatch': {
-            'browserName': 'webview2', 'ms:edgeChromium': True, 'ms:edgeOptions': options,
-        }}}, timeout=120)
-        self.session = result['sessionId']
-        self.call('/timeouts', {'implicit': 3000})
-        wait(lambda: self.js('return !!document.querySelector(".tiptap")?.editor'), 'editor WebView2', 40)
+        self.attach(debug_port)
         preferences = self.ipc('load_library')['preferences']
         if not preferences.get('onboardingCompleted', preferences.get('themeChosen', False)):
             wait(lambda: self.js('return !!document.querySelector(".welcome-modal")'), 'boas-vindas')
@@ -48,6 +42,16 @@ class WindowsDesktop(desktop_tests.Desktop):
             assert 'Abrir configurações do Windows' in self.js('return document.querySelector(".default-app").innerText')
             self.click('.welcome-actions button:last-child')
             wait(lambda: self.ipc('load_library')['preferences'].get('onboardingCompleted'), 'concluir apresentação')
+
+    def attach(self, debug_port):
+        wait(lambda: urllib.request.urlopen(f'http://127.0.0.1:{debug_port}/json/version', timeout=1).status == 200, 'WebView2 do aplicativo instalado', 60)
+        options = {'debuggerAddress': f'127.0.0.1:{debug_port}'}
+        result = self.request('/session', {'capabilities': {'alwaysMatch': {
+            'browserName': 'webview2', 'ms:edgeChromium': True, 'ms:edgeOptions': options,
+        }}}, timeout=120)
+        self.session = result['sessionId']
+        self.call('/timeouts', {'implicit': 3000})
+        wait(lambda: self.js('return !!document.querySelector(".tiptap")?.editor'), 'editor WebView2', 40)
 
     def click(self, css):
         self.call('/element/' + self.element(css) + '/click', {})
@@ -131,6 +135,8 @@ def main():
     installer_run(installer, destination)
     executable = destination / 'entrelinhas.exe'
     assert executable.exists()
+    import sys
+    subprocess.run([sys.executable, str(ROOT / 'scripts/check-windows-subsystem.py'), str(executable)], check=True)
     personal_in_install = destination / 'Meu texto pessoal.txt'
     personal_in_install.write_text('Documento preservado.', encoding='utf-8')
     assert read_registry('Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Entrelinhas', 'InstallLocation').strip('"').rstrip('\\') == str(destination)
@@ -158,6 +164,9 @@ def main():
         try:
             wait(lambda: urllib.request.urlopen(f'http://127.0.0.1:{port}/status', timeout=1).status == 200, 'Edge WebDriver')
             app.start(launch_args=[str(md)])
+            import sys
+            subprocess.run([sys.executable, '-c', 'import ctypes,sys; k=ctypes.WinDLL("kernel32",use_last_error=True);k.FreeConsole(); attached=k.AttachConsole(int(sys.argv[1]));assert not attached and ctypes.get_last_error()==6,"O aplicativo herdou/criou um console."', str(app.application_process.pid)], check=True)
+            passed('executável gráfico inicia sem criar nem herdar um console')
             assert app.ipc('plugin:app|version') == version
             assert not app.js('return location.origin.includes("1420")')
             wait(lambda: app.editor('return editor.getText().startsWith("Olá Windows")'), 'abrir Markdown recebido ao iniciar')
@@ -226,6 +235,8 @@ def main():
             assert renamed.read_bytes() == saved and txt.exists() and personal_in_install.read_text(encoding='utf-8') == 'Documento preservado.'
             assert defaults_snapshot() == baseline
             passed('desinstalação remove integração e atalhos e preserva biblioteca e arquivos pessoais')
+            from windows_update_checks import exercise
+            exercise(app, folder, destination, ROOT / 'artifacts/update-fixtures', installer_run, wait, passed)
         except Exception:
             if app.session:
                 try:

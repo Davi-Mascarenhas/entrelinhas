@@ -31,9 +31,7 @@
   },
   "bundle": {
     "active": true,
-    "targets": [
-      "deb"
-    ],
+    "targets": ["deb"],
     "category": "Productivity",
     "shortDescription": "Um espaço tranquilo para escrever",
     "longDescription": "Editor de texto com escrita imersiva, Markdown e projetos locais.",
@@ -47,12 +45,8 @@
     "linux": {
       "deb": {
         "desktopTemplate": "resources/entrelinhas.desktop",
-        "conflicts": [
-          "entre-linhas"
-        ],
-        "replaces": [
-          "entre-linhas"
-        ],
+        "conflicts": ["entre-linhas"],
+        "replaces": ["entre-linhas"],
         "depends": [
           "xdg-desktop-portal",
           "xdg-desktop-portal-gnome | xdg-desktop-portal-gtk",
