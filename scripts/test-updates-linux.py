@@ -19,7 +19,8 @@ wait = desktop.wait
 
 def main():
     output = ROOT / 'artifacts/linux-update-tests'; output.mkdir(parents=True, exist_ok=True)
-    package = ROOT / 'src-tauri/target/release/bundle/deb/Entrelinhas_1.2.0-rc.2_amd64.deb'
+    app_version = json.loads((ROOT / 'package.json').read_text())['version']
+    package = ROOT / f'src-tauri/target/release/bundle/deb/Entrelinhas_{app_version}_amd64.deb'
     cli = ['node', str(ROOT / 'node_modules/@tauri-apps/cli/tauri.js')]
     checks = []
     def passed(label):
@@ -32,7 +33,8 @@ def main():
         for name in ('test', 'other'):
             subprocess.run([*cli, 'signer', 'generate', '--ci', '-w', str(directory / f'{name}.key'), '-p', ''], check=True, capture_output=True)
         fixture = directory / 'package.deb'; shutil.copy2(package, fixture)
-        version = '1.2.0-rc.3.test.1'
+        parts = app_version.split('-')[0].split('.')
+        version = f'{parts[0]}.{parts[1]}.{int(parts[2]) + 1}'
         def sign(name):
             subprocess.run([*cli, 'signer', 'sign', '-f', str(directory / f'{name}.key'), '-p', '', '--app-version', version, str(fixture)], check=True, capture_output=True)
             return Path(str(fixture) + '.sig').read_text().strip()
@@ -54,7 +56,7 @@ def main():
                 for label, tampered, sig, announced in (
                     ('pacote adulterado', True, signature, version),
                     ('chave desconhecida', False, wrong, version),
-                    ('versão adulterada', False, signature, '1.2.0-rc.3.test.2'),
+                    ('versão adulterada', False, signature, f'{parts[0]}.{parts[1]}.{int(parts[2]) + 2}'),
                 ):
                     feed.tampered, feed.signature, feed.version = tampered, sig, announced
                     search(app, wait)
@@ -104,7 +106,7 @@ def main():
                 raise
             finally:
                 app.stop(); driver.terminate(); driver.wait(timeout=10); log.close()
-    (output / 'results.json').write_text(json.dumps({'passed': len(checks), 'checks': checks, 'platform': 'Ubuntu 26.10 / WebKitGTK', 'version': '1.2.0-rc.2', 'packageSha256': hashlib.sha256(package.read_bytes()).hexdigest()}, ensure_ascii=False, indent=2))
+    (output / 'results.json').write_text(json.dumps({'passed': len(checks), 'checks': checks, 'platform': 'Ubuntu 26.10 / WebKitGTK', 'version': app_version, 'packageSha256': hashlib.sha256(package.read_bytes()).hexdigest()}, ensure_ascii=False, indent=2))
     print(f'{len(checks)} verificações de atualizações Linux passaram.', flush=True)
 
 
