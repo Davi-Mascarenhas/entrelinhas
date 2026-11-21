@@ -2,7 +2,7 @@
 
 Em **Configurações → Sobre**, **Procurar atualização** pede autorização para acessar o GitHub. Recusar não faz requisições. Cada nova consulta exige outra autorização; abrir o app ou as configurações não procura versões automaticamente.
 
-Uma versão disponível é apresentada antes de baixar. No Windows, **Baixar e instalar** verifica o pacote, resolve alterações não salvas e inicia a atualização NSIS. O app é fechado e reaberto. Cancelar a decisão sobre um rascunho mantém o pacote verificado em memória para tentar novamente, sem perder o texto. Nenhum rascunho é escrito em uma recuperação automática.
+Uma versão disponível é apresentada antes de baixar. No Windows, **Baixar e instalar** verifica o pacote, resolve alterações não salvas e inicia a atualização NSIS. O app é fechado e reaberto em uma nota vazia. O reinício não reapassa os argumentos dos documentos da abertura original ao instalador. Cancelar a decisão sobre um rascunho mantém o pacote verificado em memória para tentar novamente, sem perder o texto. Nenhum rascunho é escrito em uma recuperação automática.
 
 No Linux, **Baixar pacote .deb** solicita o destino, verifica a assinatura e salva o pacote atomicamente. O sistema continua responsável pela instalação; o aplicativo não executa sudo nem substitui um binário em execução. Quem usa a instalação local pelo script deve seguir o mesmo método de instalação para evitar atalhos duplicados.
 
