@@ -4,6 +4,7 @@ mod launch;
 mod models;
 mod rename;
 mod system_integration;
+mod updates;
 
 use models::*;
 use std::path::PathBuf;
@@ -184,6 +185,7 @@ pub fn run() {
     let single_instance = single_instance.dbus_id(launch::instance_id());
     tauri::Builder::default()
         .manage(incoming)
+        .manage(updates::UpdateState::default())
         .plugin(single_instance.build())
         .plugin(
             tauri_plugin_window_state::Builder::default()
@@ -195,6 +197,7 @@ pub fn run() {
                 .build(),
         )
         .plugin(tauri_plugin_dialog::init())
+        .plugin(tauri_plugin_updater::Builder::new().build())
         .setup(|app| {
             let data = app.path().app_data_dir()?;
             app.manage(AppState {
@@ -208,6 +211,9 @@ pub fn run() {
             take_open_requests,
             default_app_status,
             set_default_app,
+            updates::check_update,
+            updates::download_update,
+            updates::install_update,
             save_preferences,
             read_document,
             save_document,

@@ -20,6 +20,11 @@ export interface DefaultAppStatus {
   text: boolean
   requiresSettings: boolean
 }
+export interface UpdateInfo {
+  version: string
+  notes: string
+  mode: 'install' | 'package'
+}
 export function errorMessage(error: unknown): string {
   if (error && typeof error === 'object' && 'message' in error) return String(error.message)
   return String(error)
@@ -36,6 +41,9 @@ export function native<T>(command: string, args?: Record<string, unknown>): Prom
   return invoke<T>(command, args)
 }
 export const backend = {
+  checkUpdate: () => native<UpdateInfo | null>('check_update'),
+  downloadUpdate: (path: string | null) => native<string | null>('download_update', { path }),
+  installUpdate: () => native<void>('install_update'),
   defaultAppStatus: () => native<DefaultAppStatus>('default_app_status'),
   setDefaultApp: () => native<DefaultAppStatus>('set_default_app'),
   takeOpenRequests: () =>

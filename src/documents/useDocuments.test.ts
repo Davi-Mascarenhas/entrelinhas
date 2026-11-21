@@ -46,6 +46,31 @@ function setup(format: 'md' | 'txt' = 'md') {
 
 beforeEach(() => vi.clearAllMocks())
 
+it('uma atualização sempre pergunta sobre alterações, mesmo com a confirmação comum desativada', async () => {
+  const { note, editor, options, hook } = setup()
+  note.dirty = true
+  options.preferences.askBeforeDiscard = false
+  options.ask.mockResolvedValue('cancel')
+  await act(async () => {
+    expect(await hook.result.current.mayDiscard(note)).toBe(true)
+    expect(await hook.result.current.mayDiscard(note, true)).toBe(false)
+  })
+  expect(options.ask).toHaveBeenCalledWith(
+    expect.objectContaining({ title: 'Salvar antes de atualizar?' }),
+  )
+  options.ask.mockResolvedValue('discard')
+  await act(async () => {
+    expect(await hook.result.current.mayDiscard(note, true)).toBe(true)
+  })
+  options.ask.mockResolvedValue('save')
+  vi.mocked(backend.save).mockRejectedValueOnce({ message: 'Sem permissão para salvar.' })
+  await act(async () => {
+    expect(await hook.result.current.mayDiscard(note, true)).toBe(false)
+  })
+  hook.unmount()
+  editor.destroy()
+})
+
 it('permite salvar quando a pasta Documentos não está configurada', async () => {
   const { note, editor, hook } = setup()
   vi.mocked(documentDir).mockRejectedValueOnce(new Error('Sem pasta Documentos'))

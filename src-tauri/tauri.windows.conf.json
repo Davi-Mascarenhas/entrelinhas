@@ -21,6 +21,7 @@
       }
     },
     "publisher": "Bit-Devy",
-    "copyright": "Copyright © 2026 Bit-Devy"
+    "copyright": "Copyright © 2026 Bit-Devy",
+    "createUpdaterArtifacts": true
   }
 }

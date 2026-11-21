@@ -2127,3 +2127,43 @@ body,
   border-color: var(--accent);
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 14%, transparent);
 }
+
+.update-control {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  text-align: left;
+  width: 100%;
+  min-width: 0;
+}
+.update-control h4 {
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+.update-control p {
+  overflow-wrap: anywhere;
+}
+.update-control .update-version {
+  font-weight: 600;
+}
+.update-notes {
+  white-space: pre-wrap;
+  max-height: 130px;
+  overflow-y: auto;
+  font-size: 13px;
+}
+.update-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+.update-actions button {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+.update-control progress {
+  width: 100%;
+  accent-color: var(--accent);
+}

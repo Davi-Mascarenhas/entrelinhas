@@ -1,11 +1,15 @@
 [package]
 name = "entrelinhas"
-version = "1.2.0-rc.1"
+version = "1.2.0-rc.2"
 description = "Um espaço tranquilo para escrever"
 authors = ["Bit-Devy"]
 edition = "2021"
 rust-version = "1.90"
 license = "MIT"
+
+[features]
+# Apenas builds isolados de integração; nunca habilitar nos pacotes publicados.
+updater-test = []
 
 [lib]
 name = "entrelinhas_lib"
@@ -25,6 +29,8 @@ base64 = "0.22"
 tempfile = "3"
 tauri-plugin-window-state = "2.5.0"
 tauri-plugin-single-instance = "2.5.5"
+tauri-plugin-updater = "=2.14.1"
+semver = "1"
 
 [profile.dev]
 debug = 0

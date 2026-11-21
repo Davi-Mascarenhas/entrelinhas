@@ -63,6 +63,9 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           cargo fmt --manifest-path src-tauri/Cargo.toml -- --check
       - name: Build NSIS installer
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         run: npm run package:windows
       - name: Check graphical Windows executable
         run: python scripts/check-windows-subsystem.py src-tauri/target/release/entrelinhas.exe
@@ -87,6 +90,7 @@ jobs:
           New-Item -ItemType Directory artifacts/windows-release -Force | Out-Null
           $name = "Entrelinhas_${version}_x64-setup.exe"
           Copy-Item $installer.FullName "artifacts/windows-release/$name"
+          Copy-Item "$($installer.FullName).sig" "artifacts/windows-release/$name.sig"
           $digest = (Get-FileHash "artifacts/windows-release/$name" -Algorithm SHA256).Hash.ToLowerInvariant()
           "$digest  $name" | Set-Content artifacts/windows-release/SHA256SUMS -Encoding utf8NoBOM
           Copy-Item artifacts/windows/results.json artifacts/windows-release/validation.json

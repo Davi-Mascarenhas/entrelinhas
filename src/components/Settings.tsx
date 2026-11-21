@@ -12,6 +12,8 @@ import {
 import { ThemeChoices } from './ThemeChoices'
 import { AppIcon } from './AppIcon'
 import { DefaultAppControl } from './DefaultAppControl'
+import { UpdateControl } from './UpdateControl'
+import type { UpdatesController } from '../native/useUpdates'
 import { Modal } from './ui'
 import { Select } from './Select'
 import { eventShortcut } from '../core/shortcuts'
@@ -31,10 +33,12 @@ export function Settings({
   preferences: p,
   onChange,
   onClose,
+  updates,
 }: {
   preferences: Preferences
   onChange: (change: Partial<Preferences>) => void
   onClose: () => void
+  updates: UpdatesController
 }) {
   const [section, setSection] = useState('appearance'),
     [shortcutError, setShortcutError] = useState('')
@@ -367,6 +371,7 @@ export function Settings({
                 Local, offline e com salvamento manual.
               </p>
               <p className="small muted">Por Bit-Devy · Licença MIT</p>
+              <UpdateControl updates={updates} />
             </div>
           )}
         </div>

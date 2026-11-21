@@ -272,17 +272,17 @@ export function useDocuments(options: Options) {
   )
 
   const mayDiscard = useCallback(
-    async (note: Note): Promise<boolean> => {
+    async (note: Note, forUpdate = false): Promise<boolean> => {
       const { preferences, ask } = current.current
       note = current.current.notes.find((currentNote) => currentNote.id === note.id) ?? note
-      if (!preferences.askBeforeDiscard || !note.dirty) return true
+      if ((!preferences.askBeforeDiscard && !forUpdate) || !note.dirty) return true
       const choice = await ask({
-        title: 'Salvar antes de fechar?',
+        title: forUpdate ? 'Salvar antes de atualizar?' : 'Salvar antes de fechar?',
         message: `“${note.title}” tem alterações não salvas. Ao descartar, o texto não poderá ser recuperado.`,
         choices: [
           { id: 'cancel', label: 'Cancelar' },
-          { id: 'discard', label: 'Descartar', danger: true },
-          { id: 'save', label: 'Salvar', primary: true },
+          { id: 'discard', label: forUpdate ? 'Descartar e continuar' : 'Descartar', danger: true },
+          { id: 'save', label: forUpdate ? 'Salvar e continuar' : 'Salvar', primary: true },
         ],
       })
       return choice === 'discard' || (choice === 'save' && (await saveNote(note.id)))

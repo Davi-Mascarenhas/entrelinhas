@@ -32,6 +32,7 @@ import { ProjectAssignment } from './components/ProjectAssignment'
 import { Formatting } from './components/Formatting'
 import { WindowResize } from './native/WindowResize'
 import { useIncomingFiles } from './native/useIncomingFiles'
+import { useUpdates } from './native/useUpdates'
 import { Sidebar } from './components/Sidebar'
 import { LibrarySearch } from './components/LibrarySearch'
 import { FindBar } from './components/FindBar'
@@ -63,6 +64,10 @@ export default function App() {
   const [documents, setDocuments] = useState<RegisteredDocument[]>([])
   const [projects, setProjects] = useState<Project[]>([])
   const [preferencesLoaded, setPreferencesLoaded] = useState(false)
+  const [updateInstalling, setUpdateInstalling] = useState(false)
+  const updateLock = useRef(false)
+  const notesRef = useRef(notes)
+  notesRef.current = notes
   const preferencesQueue = useRef<Promise<void>>(Promise.resolve())
   const dialog = useDialog()
   const [activeId, setActiveId] = useState(() => notes[0].id)
@@ -151,7 +156,31 @@ export default function App() {
     },
     [fileOps.openPath],
   )
-  useIncomingFiles(preferencesLoaded && preferences.onboardingCompleted, openIncoming, notify)
+  useIncomingFiles(
+    preferencesLoaded && preferences.onboardingCompleted && !updateInstalling,
+    openIncoming,
+    notify,
+  )
+  const updates = useUpdates(
+    dialog.ask,
+    async () => {
+      updateLock.current = true
+      setUpdateInstalling(true)
+      editors.current.forEach((editor) => editor.setEditable(false))
+      await fileOps.waitForSaves()
+      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()))
+      for (const note of notesRef.current) {
+        if (!(await fileOps.mayDiscard(note, true))) return false
+      }
+      await preferencesQueue.current
+      return true
+    },
+    () => {
+      updateLock.current = false
+      setUpdateInstalling(false)
+      editors.current.forEach((editor) => editor.setEditable(true))
+    },
+  )
   const closeNote = useCallback(
     async (id: string) => {
       await fileOps.waitForSaves()
@@ -211,6 +240,7 @@ export default function App() {
     let closing = false
     const unsubscribe = getCurrentWindow().onCloseRequested(async (event) => {
       event.preventDefault()
+      if (updateLock.current) return
       if (closing) return
       closing = true
       try {
@@ -333,6 +363,7 @@ export default function App() {
   useEffect(() => {
     const handle = (event: KeyboardEvent) => {
       if (event.isComposing) return
+      if (updateLock.current) return
       if (event.key === 'Escape') {
         setImmersive(false)
         setMenu(false)
@@ -828,6 +859,7 @@ export default function App() {
       )}
       {settings && (
         <Settings
+          updates={updates}
           preferences={preferences}
           onChange={(change) => setPreferences((current) => ({ ...current, ...change }))}
           onClose={closeSettings}
