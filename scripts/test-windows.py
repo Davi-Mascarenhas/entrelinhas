@@ -165,9 +165,9 @@ def main():
             status = app.ipc('default_app_status')
             assert status['registered'] and status['requiresSettings']
             assert defaults_snapshot() == baseline
-            app.editor('editor.commands.insertContent(" SALVO_MANUALMENTE");return true')
+            app.editor('editor.commands.insertContent(" SALVO MANUALMENTE");return true')
             app.key('s', ctrl=True)
-            wait(lambda: 'SALVO_MANUALMENTE' in md.read_text(encoding='utf-8'), 'salvamento manual no Windows')
+            wait(lambda: 'SALVO MANUALMENTE' in md.read_text(encoding='utf-8'), 'salvamento manual no Windows')
             saved = md.read_bytes()
             passed('WebView2 de produção, primeira abertura, leitura Markdown e salvamento manual UTF-8')
             app.editor('editor.commands.insertContent(" RASCUNHO_EM_MEMÓRIA");return true')
@@ -226,6 +226,17 @@ def main():
             assert renamed.read_bytes() == saved and txt.exists() and personal_in_install.read_text(encoding='utf-8') == 'Documento preservado.'
             assert defaults_snapshot() == baseline
             passed('desinstalação remove integração e atalhos e preserva biblioteca e arquivos pessoais')
+        except Exception:
+            if app.session:
+                try:
+                    app.screenshot(output / 'failure.png')
+                    (output / 'failure.json').write_text(json.dumps({
+                        'interface': app.js('return document.body.innerText'),
+                        'markdown': {p.name: p.read_text(encoding='utf-8') for p in folder.glob('*.md')},
+                    }, ensure_ascii=False, indent=2), encoding='utf-8')
+                except Exception:
+                    pass
+            raise
         finally:
             app.stop(); process.terminate(); process.wait(timeout=10); log.close()
     (output / 'results.json').write_text(json.dumps({
