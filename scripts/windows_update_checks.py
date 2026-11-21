@@ -85,6 +85,6 @@ def exercise(app, folder, destination, fixtures, install, wait, passed):
         assert app.editor('return editor.getText()') == ''
         app.screenshot(app.output / 'update-installed.png')
         passed('atualização assinada real reinicia na versão nova e preserva arquivos, projetos, referências e preferências')
-        app.reveal(); app.click('[aria-label="Fechar aplicativo"]'); time.sleep(.5); app.stop()
+        app.close()
         install(destination / 'uninstall.exe', uninstall=True)
         wait(lambda: not (destination / 'entrelinhas.exe').exists(), 'limpeza da instalação de teste', 30)

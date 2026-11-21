@@ -85,8 +85,29 @@ jobs:
             ~/.cargo/git
             src-tauri/target
           key: windows-cargo-${{ hashFiles('src-tauri/Cargo.lock') }}
+      - name: Restore isolated updater fixtures for identical app sources
+        id: updater-fixtures
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            artifacts/update-fixtures/fixture-*.exe
+            artifacts/update-fixtures/fixture-*.exe.sig
+            artifacts/update-fixtures/fixtures.json
+            artifacts/update-fixtures/test.key.pub
+          key: windows-updater-fixtures-v1-${{ hashFiles('src/**', 'public/**', 'assets/**', 'src-tauri/src/**', 'src-tauri/Cargo.*', 'src-tauri/build.rs', 'src-tauri/*.json', 'src-tauri/capabilities/**', 'src-tauri/windows/**', 'src-tauri/icons/**', 'src-tauri/resources/**', 'package*.json', 'vite.config.ts', 'tsconfig.json', 'scripts/build-update-fixtures.py') }}
       - name: Build isolated updater test installers
+        if: steps.updater-fixtures.outputs.cache-hit != 'true'
         run: python scripts/build-update-fixtures.py
+      - name: Cache disposable fixtures without private keys
+        if: steps.updater-fixtures.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            artifacts/update-fixtures/fixture-*.exe
+            artifacts/update-fixtures/fixture-*.exe.sig
+            artifacts/update-fixtures/fixtures.json
+            artifacts/update-fixtures/test.key.pub
+          key: windows-updater-fixtures-v1-${{ hashFiles('src/**', 'public/**', 'assets/**', 'src-tauri/src/**', 'src-tauri/Cargo.*', 'src-tauri/build.rs', 'src-tauri/*.json', 'src-tauri/capabilities/**', 'src-tauri/windows/**', 'src-tauri/icons/**', 'src-tauri/resources/**', 'package*.json', 'vite.config.ts', 'tsconfig.json', 'scripts/build-update-fixtures.py') }}
       - name: Validate wizard and installed application
         run: |
           $version = (Get-Content package.json -Raw | ConvertFrom-Json).version

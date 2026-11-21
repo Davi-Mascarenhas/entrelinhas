@@ -52,6 +52,24 @@ class WindowsDesktop(desktop_tests.Desktop):
         self.session = result['sessionId']
         self.call('/timeouts', {'implicit': 3000})
         wait(lambda: self.js('return !!document.querySelector(".tiptap")?.editor'), 'editor WebView2', 40)
+        stored_theme = self.ipc('load_library')['preferences'].get('theme', 'light')
+        wait(lambda: self.js('return document.documentElement.dataset.theme') == stored_theme, 'aplicar preferências carregadas')
+
+    def close(self):
+        self.reveal()
+        self.click('[aria-label="Fechar aplicativo"]')
+        if self.application_process.poll() is None:
+            wait(lambda: self.application_process.poll() is not None, 'fechamento normal com gravações concluídas', 30)
+        else:
+            # Depois de atualizar, a janela pertence ao processo reaberto pelo NSIS.
+            def disconnected():
+                try:
+                    self.js('return true')
+                    return False
+                except Exception:
+                    return True
+            wait(disconnected, 'fechar a janela reaberta pelo instalador', 30)
+        self.stop()
 
     def click(self, css):
         self.call('/element/' + self.element(css) + '/click', {})
@@ -212,12 +230,12 @@ def main():
             app.screenshot(output / 'windows-defaults.png')
             app.click('[aria-label="Fechar painel"]')
             passed('maximização pelo duplo clique, três temas e menu permanente de padrões do Windows')
-            app.click('[aria-label="Fechar aplicativo"]'); time.sleep(.5); app.stop()
+            app.close()
             app.start()
             assert app.editor('return editor.getText()') == ''
             assert app.js('return document.documentElement.dataset.theme') == 'sepia'
             passed('preferências persistem; rascunhos não são recuperados ao reabrir')
-            app.click('[aria-label="Fechar aplicativo"]'); time.sleep(.5); app.stop()
+            app.close()
             database = Path(os.environ['APPDATA']) / 'io.github.bitdevy.entrelinhas/library.sqlite3'
             assert database.exists(), database
             library_hash = hashlib.sha256(database.read_bytes()).hexdigest()
