@@ -51,7 +51,7 @@ def exercise(app, folder, destination, fixtures, install, wait, passed):
         about(app)
         app.screenshot(app.output / 'update-available.png')
         apply_update(app, wait)
-        wait(lambda: app.js('return !!document.querySelector("[aria-label=\"Salvar antes de atualizar?\"]")'), 'decisão sobre o rascunho')
+        wait(lambda: app.js('return !!document.querySelector(arguments[0])', '[aria-label="Salvar antes de atualizar?"]'), 'decisão sobre o rascunho')
         button(app, 'Cancelar')
         assert document.read_bytes() == original
         assert app.editor('return editor.getText().includes("ATUALIZACAO SALVA")')
@@ -59,7 +59,7 @@ def exercise(app, folder, destination, fixtures, install, wait, passed):
         document.chmod(stat.S_IREAD)
         try:
             apply_update(app, wait)
-            wait(lambda: app.js('return !!document.querySelector("[aria-label=\"Salvar antes de atualizar?\"]")'), 'decisão de salvar')
+            wait(lambda: app.js('return !!document.querySelector(arguments[0])', '[aria-label="Salvar antes de atualizar?"]'), 'decisão de salvar')
             button(app, 'Salvar e continuar')
             wait(lambda: app.js('return document.body.innerText.includes("somente leitura")'), 'falha de salvamento')
             assert app.ipc('plugin:app|version') == data['1']['version']
@@ -69,7 +69,7 @@ def exercise(app, folder, destination, fixtures, install, wait, passed):
             document.chmod(stat.S_IREAD | stat.S_IWRITE)
         before = app.ipc('load_library')
         apply_update(app, wait)
-        wait(lambda: app.js('return !!document.querySelector("[aria-label=\"Salvar antes de atualizar?\"]")'), 'salvar para atualizar')
+        wait(lambda: app.js('return !!document.querySelector(arguments[0])', '[aria-label="Salvar antes de atualizar?"]'), 'salvar para atualizar')
         button(app, 'Salvar e continuar')
         wait(lambda: app.application_process.poll() is not None, 'instalador assumir atualização', 45)
         app.stop()

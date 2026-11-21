@@ -17,6 +17,7 @@ on:
       - 'scripts/update_checks.py'
       - 'scripts/windows_update_checks.py'
       - 'scripts/check-windows-subsystem.py'
+      - 'scripts/check-desktop-scripts.py'
       - '.github/workflows/windows.yml'
 permissions:
   contents: read
@@ -66,6 +67,8 @@ jobs:
           cargo clippy --manifest-path src-tauri/Cargo.toml --lib --locked -- -D warnings
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           cargo fmt --manifest-path src-tauri/Cargo.toml -- --check
+      - name: Check JavaScript embedded in desktop tests
+        run: python scripts/check-desktop-scripts.py
       - name: Build NSIS installer
         env:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
