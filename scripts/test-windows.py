@@ -23,10 +23,17 @@ wait = desktop_tests.wait
 
 class WindowsDesktop(desktop_tests.Desktop):
     def start(self, launch_args=None):
-        options = {'binary': str(self.application), 'args': launch_args or []}
+        debug_port = desktop_tests.free_port()
+        self.application_log = (self.output / 'application.log').open('a', encoding='utf-8')
+        self.application_process = subprocess.Popen([str(self.application), *(launch_args or [])], env={
+            **os.environ, 'TAURI_WEBVIEW_AUTOMATION': 'true',
+            'WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS': f'--remote-debugging-port={debug_port}',
+        }, stdout=self.application_log, stderr=self.application_log)
+        wait(lambda: urllib.request.urlopen(f'http://127.0.0.1:{debug_port}/json/version', timeout=1).status == 200, 'WebView2 do aplicativo instalado', 60)
+        options = {'debuggerAddress': f'127.0.0.1:{debug_port}'}
         result = self.request('/session', {'capabilities': {'alwaysMatch': {
             'browserName': 'webview2', 'ms:edgeChromium': True, 'ms:edgeOptions': options,
-        }}})
+        }}}, timeout=120)
         self.session = result['sessionId']
         self.call('/timeouts', {'implicit': 3000})
         wait(lambda: self.js('return !!document.querySelector(".tiptap")?.editor'), 'editor WebView2', 40)
@@ -46,6 +53,15 @@ class WindowsDesktop(desktop_tests.Desktop):
 
     def key(self, key, ctrl=False, shift=False):
         self.js('window.dispatchEvent(new KeyboardEvent("keydown",{key:arguments[0],ctrlKey:arguments[1],shiftKey:arguments[2],bubbles:true,cancelable:true}))', key, ctrl, shift)
+
+    def stop(self):
+        super().stop()
+        process = getattr(self, 'application_process', None)
+        if process and process.poll() is None:
+            process.terminate()
+            process.wait(timeout=10)
+        if getattr(self, 'application_log', None):
+            self.application_log.close()
 
 
 def read_registry(path, name=''):
@@ -128,8 +144,9 @@ def main():
     port = desktop_tests.free_port()
     environment = {**os.environ, 'TAURI_WEBVIEW_AUTOMATION': 'true'}
     log = (output / 'webdriver.log').open('w', encoding='utf-8')
-    process = subprocess.Popen([str(driver), f'--port={port}', '--allowed-ips=127.0.0.1'], env=environment, stdout=log, stderr=log)
+    process = subprocess.Popen([str(driver), f'--port={port}', '--allowed-ips=127.0.0.1', '--verbose'], env=environment, stdout=log, stderr=log)
     app = WindowsDesktop(f'http://127.0.0.1:{port}', executable)
+    app.output = output
     with tempfile.TemporaryDirectory(prefix='Entrelinhas ação ') as temporary:
         folder = Path(temporary)
         md = folder / 'Ideias 日本語.md'; txt = folder / "Texto com 'aspas'.txt"

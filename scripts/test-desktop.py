@@ -40,7 +40,7 @@ class Desktop:
     def __init__(self, url, application):
         self.url, self.application, self.session = url, application, None
 
-    def request(self, path, value=None, method=None):
+    def request(self, path, value=None, method=None, timeout=35):
         data = None if value is None else json.dumps(value).encode()
         request = urllib.request.Request(self.url + path, data, {'Content-Type': 'application/json'}, method=method)
         # O proxy do tauri-driver pode reutilizar uma conexão já encerrada pelo
@@ -48,7 +48,7 @@ class Desktop:
         read_only = path.endswith('/element') or (value is None and method != 'DELETE')
         for attempt in range(3):
             try:
-                with urllib.request.urlopen(request, timeout=35) as response:
+                with urllib.request.urlopen(request, timeout=timeout) as response:
                     return json.load(response)['value']
             except urllib.error.HTTPError as error:
                 raise RuntimeError(error.read().decode()) from error

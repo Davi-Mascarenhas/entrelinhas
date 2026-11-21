@@ -11,6 +11,7 @@ on:
       - 'vite.config.ts'
       - 'tsconfig.json'
       - 'scripts/test-windows*'
+      - 'scripts/run-windows-tests.ps1'
       - 'scripts/test-desktop.py'
       - '.github/workflows/windows.yml'
 permissions:
@@ -24,6 +25,7 @@ jobs:
     timeout-minutes: 45
     env:
       CARGO_BUILD_JOBS: 2
+      PYTHONIOENCODING: utf-8
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -75,7 +77,7 @@ jobs:
         run: |
           $installer = Get-ChildItem src-tauri/target/release/bundle/nsis/*-setup.exe | Select-Object -First 1
           if (-not $installer) { throw 'Instalador não encontrado.' }
-          python scripts/test-windows.py --installer $installer.FullName
+          ./scripts/run-windows-tests.ps1 -Installer $installer.FullName
       - name: Prepare downloadable installer and checksum
         run: |
           $version = (Get-Content package.json -Raw | ConvertFrom-Json).version

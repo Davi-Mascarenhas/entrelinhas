@@ -3,7 +3,10 @@
   "bundle": {
     "targets": ["nsis"],
     "windows": {
-      "webviewInstallMode": { "type": "downloadBootstrapper", "silent": true },
+      "webviewInstallMode": {
+        "type": "downloadBootstrapper",
+        "silent": true
+      },
       "nsis": {
         "installMode": "currentUser",
         "languages": ["PortugueseBR"],
@@ -16,6 +19,8 @@
         "installerHooks": "windows/hooks.nsh",
         "compression": "lzma"
       }
-    }
+    },
+    "publisher": "Bit-Devy",
+    "copyright": "Copyright © 2026 Bit-Devy"
   }
 }

@@ -6,7 +6,6 @@
 !define MUI_WELCOMEPAGE_TEXT "Um espaço tranquilo para escrever.$\r$\n$\r$\nEste assistente prepara o Entrelinhas neste computador.$\r$\nSeus documentos continuam nos locais que você escolher.$\r$\n$\r$\nClique em Próximo para continuar."
 !define MUI_FINISHPAGE_TITLE "Tudo pronto para escrever."
 !define MUI_FINISHPAGE_TEXT "O Entrelinhas foi instalado.$\r$\n$\r$\nAo abrir, escolha o tema que acompanha sua escrita.$\r$\n$\r$\nSeus arquivos são seus. Você decide quando e onde salvar."
-BrandingText "Entrelinhas · Seu texto, seu tempo."
 
 ; Registra Abrir com e a página de padrões, sem escrever nos padrões atuais
 ; das extensões nem na chave protegida UserChoice do Windows.
