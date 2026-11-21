@@ -183,7 +183,10 @@ pub fn run() {
         });
     #[cfg(target_os = "linux")]
     let single_instance = single_instance.dbus_id(launch::instance_id());
-    tauri::Builder::default()
+    let builder = tauri::Builder::default();
+    #[cfg(windows)]
+    let builder = builder.manage(updates::restart_environment(tauri::Env::default()));
+    builder
         .manage(incoming)
         .manage(updates::UpdateState::default())
         .plugin(single_instance.build())

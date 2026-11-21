@@ -232,6 +232,15 @@ pub fn install_update(
     }
 }
 
+// Os arquivos reais são capturados em launch antes de construir o aplicativo.
+// Reinícios abrem uma nota vazia. Não repassar argumentos de documentos ao NSIS,
+// que faz outra interpretação de aspas e espaços na linha de comando.
+#[cfg(any(windows, test))]
+pub(crate) fn restart_environment(mut environment: tauri::Env) -> tauri::Env {
+    environment.args_os.truncate(1);
+    environment
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -255,5 +264,22 @@ mod tests {
         assert!(state.begin().is_err());
         drop(first);
         assert!(state.begin().is_ok());
+    }
+
+    #[test]
+    fn restart_does_not_replay_document_arguments() {
+        let mut environment = tauri::Env::default();
+        environment.args_os = [
+            "entrelinhas.exe",
+            "C:\\Textos\\Atualização com ação.md",
+            "C:\\Textos\\日本語.txt",
+        ]
+        .into_iter()
+        .map(Into::into)
+        .collect();
+        assert_eq!(
+            restart_environment(environment).args_os,
+            vec![std::ffi::OsString::from("entrelinhas.exe")]
+        );
     }
 }

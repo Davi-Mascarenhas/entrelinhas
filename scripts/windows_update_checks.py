@@ -83,6 +83,7 @@ def exercise(app, folder, destination, fixtures, install, wait, passed):
         assert references(after) == references(before)
         assert 'ATUALIZACAO SALVA' in document.read_text(encoding='utf-8')
         assert app.editor('return editor.getText()') == ''
+        assert not app.js('return !!document.querySelector("[role=dialog]")')
         app.screenshot(app.output / 'update-installed.png')
         passed('atualização assinada real reinicia na versão nova e preserva arquivos, projetos, referências e preferências')
         app.close()
