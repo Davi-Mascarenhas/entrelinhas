@@ -64,6 +64,8 @@ jobs:
           cargo fmt --manifest-path src-tauri/Cargo.toml -- --check
       - name: Build NSIS installer
         run: npm run package:windows
+      - name: Check graphical Windows executable
+        run: python scripts/check-windows-subsystem.py src-tauri/target/release/entrelinhas.exe
       - name: Cache compiled Windows dependencies before GUI tests
         uses: actions/cache/save@v4
         if: steps.rust-cache.outputs.cache-hit != 'true'
