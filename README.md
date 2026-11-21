@@ -103,6 +103,8 @@ As artes vetoriais ficam em `src-tauri/windows/branding/`. Para regenerar os BMP
 
 A versão 1.2.0-rc.1 precisa de instalação manual da nova prévia uma vez para receber esse recurso. [Funcionamento, chaves e publicação dos manifestos](docs/updates.md).
 
+[Painel de atualizações](docs/screenshots/updates.png) · [Autorização de acesso à internet](docs/screenshots/update-permission.png).
+
 A candidatura à assinatura gratuita pela SignPath Foundation está **preparada, não enviada nem aprovada**. Os instaladores atuais continuam sem Authenticode. [Code signing policy](docs/code-signing-policy.md) · [Candidatura pronta para revisão pelo titular](docs/signpath-application.md). Não há garantia de remoção imediata do SmartScreen após uma eventual assinatura.
 
 ## Instalação no Ubuntu

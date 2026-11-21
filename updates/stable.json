@@ -1,0 +1,11 @@
+{
+  "version": "1.1.2",
+  "notes": "Versão estável Linux. A versão Windows permanece disponível como prévia.",
+  "pub_date": "2026-11-21T14:56:30Z",
+  "platforms": {
+    "linux-x86_64": {
+      "url": "https://github.com/Davi-Mascarenhas/entrelinhas/releases/download/v1.1.2/entrelinhas_1.1.2_amd64.deb",
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRalJIQzJZczR4RGc0OFFoRGpqWU1oRmx0ODNjZXpZQU9xWCtYaGVtd3kzOTVFOGVYSGlJMmF0Zm4vQmxEQVJhWmY1RzFKeU1QM0JkVURURDc0VFY3SW8xNGZDdm4vWHcwPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk1MjkwMTkzCWZpbGU6ZW50cmVsaW5oYXNfMS4xLjJfYW1kNjQuZGViCXZlcnNpb246MS4xLjIKVmJjOGRsRWdDWWE2Tiszek5Ea0d1VENzcnNJMkJVMUkrclcxTHczM0RVYWQwV3ArcHNHRUJkNTY4U295Q0M2bSs0djE0RjR1VitaRkZ5R3cwRGtNQWc9PQo="
+    }
+  }
+}

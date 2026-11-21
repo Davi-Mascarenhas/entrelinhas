@@ -25,6 +25,10 @@ O Windows gera `.sig` no build. Para o `.deb`, usar `tauri signer sign --app-ver
 3. Atualizar os manifestos somente após os arquivos públicos estarem disponíveis. O gerador de manifestos deve conferir hashes, assinaturas e versão; publicar o commit incremental e verificar o endpoint remoto.
 4. Para uma prévia, atualizar apenas `preview.json`. Para uma estável, atualizar ambos; manter as entradas completas por plataforma.
 
+O gerador está em `scripts/prepare-update-manifest.py` e requer as dependências de `scripts/requirements-release.txt`. Exemplo após publicar os artefatos: `python3 scripts/prepare-update-manifest.py --version 1.2.0-rc.2 --assets artifacts/release-1.2.0-rc.2 --channel preview --notes "Atualizações manuais e correções no Windows."`. Ele verifica as assinaturas Ed25519/Minisign, a versão assinada e os hashes publicados pelo GitHub antes de escrever o manifesto.
+
+O manifesto estável inicial referencia somente o pacote Linux 1.1.2 já publicado, sem alterar os bytes ou a release existente. O Windows ainda não tem uma versão estável. A próxima promoção conjunta preencherá ambas as plataformas.
+
 ## Testes
 
 A suíte de interface testa autorização, progresso, duplicações, erros e preparação para reiniciar. Os testes nativos usam servidor loopback, chaves descartáveis, perfis isolados e pacotes de teste. Recusam bytes adulterados, chave errada e versão alterada. No Windows, duas versões próprias de teste exercitam instalação e reinício reais, além de preservação dos documentos, projetos e preferências.
