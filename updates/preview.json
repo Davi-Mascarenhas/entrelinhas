@@ -1,0 +1,15 @@
+{
+  "version": "1.2.0-rc.2",
+  "notes": "Atualizações manuais em Sobre, abertura no Windows sem terminal e reinício sem reenviar arquivos.",
+  "pub_date": "2026-11-21T20:36:13Z",
+  "platforms": {
+    "linux-x86_64": {
+      "url": "https://github.com/Davi-Mascarenhas/entrelinhas/releases/download/v1.2.0-rc.2/Entrelinhas_1.2.0-rc.2_amd64.deb",
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRalJIQzJZczR4RGovT0NtQytYYW1wWjJGcjVTM1I3b3pvSFZoZjloMUJ5czZSU01zY0x0MFduMWErQlV0UnNzUzIxUC9QQk11Wkh0YWJlT0NyTXhpRm5XWG9TYnJnWXc4PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk1MjkyODAzCWZpbGU6RW50cmVsaW5oYXNfMS4yLjAtcmMuMl9hbWQ2NC5kZWIJdmVyc2lvbjoxLjIuMC1yYy4yCjczWG5HWGdUWnFxeEZCanhveFNXUERmQzk2TUNrY1ozNEluWnhTUlRLOTlMdVRYZ3N4dkdOMG9XWG9IVnRuSzVVMThqaDFFNHo0YWRvbndadk1KL0NRPT0K"
+    },
+    "windows-x86_64": {
+      "url": "https://github.com/Davi-Mascarenhas/entrelinhas/releases/download/v1.2.0-rc.2/Entrelinhas_1.2.0-rc.2_x64-setup.exe",
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRalJIQzJZczR4RHVwMkF3OTRYMGtVVmpldDRCRkFSTm1uT3cvb3RFZU40TzVUdlR6WTVmUjlmU1NQbDFnbklJeFRnRnFJZUtpV3dpdzFPclpzSXQ5akVMNW4yUmdxQkE0PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk1MjkyOTM1CWZpbGU6RW50cmVsaW5oYXNfMS4yLjAtcmMuMl94NjQtc2V0dXAuZXhlCXZlcnNpb246MS4yLjAtcmMuMgpJZ0Eyd2dpeHJRb3JWVWpqYUxTRm5HUkppN01wZFdYUStPeXYvNFRaa1c2RVVqbU1MMFljZklybFNJL3JwWE1yZm9hRjUrcWlHVEtZcDc4MDd5VjZEZz09Cg=="
+    }
+  }
+}
