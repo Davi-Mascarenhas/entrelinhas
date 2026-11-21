@@ -49,6 +49,10 @@ def main():
     assert not release['draft'] and release['prerelease'] == (args.channel == 'preview')
     remote = {asset['name']: asset for asset in release['assets']}
     names = {'linux-x86_64': f'Entrelinhas_{args.version}_amd64.deb'}
+    if args.bootstrap_linux_stable:
+        packages = [name for name in remote if name.endswith('_amd64.deb')]
+        assert len(packages) == 1, 'Identifique o pacote estável existente antes de criar o manifesto.'
+        names['linux-x86_64'] = packages[0]
     if not args.bootstrap_linux_stable:
         names['windows-x86_64'] = f'Entrelinhas_{args.version}_x64-setup.exe'
     platforms = {}
