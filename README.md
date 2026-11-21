@@ -2,7 +2,7 @@
 
 **Um espaço tranquilo para escrever.**
 
-Entrelinhas é um editor **desktop de verdade**, feito com Tauri 2, React e TypeScript para Ubuntu, com uma prévia do instalador para Windows. Ao começar a digitar, a interface desaparece. Restam o texto, o fundo e o cursor. Esc traz os controles de volta, sem deslocar o texto.
+Entrelinhas é um editor **desktop de verdade**, feito com Tauri 2, React e TypeScript para Ubuntu e Windows. Ao começar a digitar, a interface desaparece. Restam o texto, o fundo e o cursor. Esc traz os controles de volta, sem deslocar o texto.
 
 ![Entrelinhas — Sépia Noturno](docs/screenshots/sepia.png)
 
@@ -72,9 +72,9 @@ Os menus de seleção e as dicas usam as cores do tema do aplicativo. Os seletor
 
 O cursor em bloco usa as coordenadas reais da seleção do ProseMirror e a largura do próximo grafema. Durante composição IME, a camada visual cede ao cursor nativo. Preferências de movimento reduzido são respeitadas.
 
-## Instalação no Windows — prévia
+## Instalação no Windows
 
-O instalador **Entrelinhas 1.2.0-rc.2 para Windows x64** usa NSIS, com logo, artes em sépia e textos em português brasileiro. Está disponível na [release de prévia](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v1.2.0-rc.2), junto com o SHA-256 e o relatório dos testes. A versão Linux estável continua em 1.1.2.
+O instalador **Entrelinhas 2.0.0 para Windows x64** usa NSIS, com logo, artes em sépia e textos em português brasileiro. Está disponível na [release estável](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.0.0), junto com o SHA-256 e o relatório dos testes. Windows e Linux compartilham a versão estável 2.0.0.
 
 - Instalação por usuário, sem exigir administrador para instalar o aplicativo; pasta de destino selecionável, atalho no menu Iniciar e opção de abrir ao concluir.
 - O instalador verifica o WebView2 e baixa o bootstrapper oficial quando necessário. Nesse caso, a primeira instalação precisa de internet.
@@ -82,7 +82,7 @@ O instalador **Entrelinhas 1.2.0-rc.2 para Windows x64** usa NSIS, com logo, art
 - A primeira abertura apresenta boas-vindas, tema e escolha opcional de aplicativo padrão.
 - Atualização e desinstalação preservam documentos pessoais; o desinstalador oferece uma opção explícita para apagar dados do aplicativo (preferências e referências), desmarcada por padrão.
 
-Esta prévia não tem assinatura Authenticode. As atualizações possuem assinatura criptográfica própria para verificar o pacote e sua versão; ela não remove o aviso do Windows. A [rotina Windows](https://github.com/Davi-Mascarenhas/entrelinhas/actions/workflows/windows.yml) compila em Windows Server 2025 e testa o wizard e o aplicativo instalado em WebView2. A aprovação manual em Windows 11 segue o [roteiro de validação](docs/windows-validation.md); o resultado no runner não substitui essa aprovação.
+O instalador Windows ainda não tem assinatura Authenticode. As atualizações possuem assinatura criptográfica própria para verificar o pacote e sua versão; ela não remove o aviso do Windows. A [rotina Windows](https://github.com/Davi-Mascarenhas/entrelinhas/actions/workflows/windows.yml) compila em Windows Server 2025 e testa o wizard e o aplicativo instalado em WebView2. Os testes manuais no Windows 11 seguem o [roteiro de validação](docs/windows-validation.md); o resultado no runner não substitui essa aprovação.
 
 [Boas-vindas do instalador](docs/screenshots/windows-welcome.png) · [Escolha da pasta](docs/screenshots/windows-folder.png). As capturas são do wizard real em Windows Server 2025.
 
@@ -113,12 +113,12 @@ O projeto foi compilado e verificado no **Ubuntu 26.10, x86_64, GNOME/Wayland**.
 
 ### Pacote Debian
 
-[Baixe o instalador e os checksums da versão 1.1.2](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v1.1.2).
+[Baixe o instalador e os checksums da versão 2.0.0](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.0.0).
 
 Para instalar um pacote compilado localmente:
 
 ```bash
-sudo apt install ./src-tauri/target/release/bundle/deb/Entrelinhas_1.1.2_amd64.deb
+sudo apt install ./src-tauri/target/release/bundle/deb/Entrelinhas_2.0.0_amd64.deb
 ```
 
 O aplicativo aparece no menu como **Entrelinhas**, com ícone próprio. O pacote depende do WebKitGTK 4.1 e GTK 3 do sistema. Uma compilação feita no Ubuntu 26.10 não garante compatibilidade binária com versões anteriores do Ubuntu; para elas, compile no sistema de destino.
@@ -206,7 +206,7 @@ python3 scripts/test-desktop.py --binary src-tauri/target/release/entrelinhas
 
 ### Verificações realizadas
 
-Os números abaixo descrevem a suíte Linux. A validação Windows tem relatório próprio nos artefatos da rotina Windows e na release de prévia.
+Os números abaixo descrevem a suíte Linux. A validação Windows tem relatório próprio nos artefatos da rotina Windows e na release estável.
 
 - **95 testes TypeScript:** notas, abas, descarte, preferências, atalhos, Markdown, formatação, TXT, Unicode, busca, imagens, gravação explícita, conflitos, espera de gravações, centralização com diferentes painéis, seletores próprios por mouse e teclado, dicas, guias sob demanda, abertura sem perder texto, apresentação em três páginas, recusa do padrão, tratamento de falhas de associação, migração de preferências, fila de arquivos externos, edição de títulos, nome sugerido ao salvar e gestos da barra superior com exclusão dos botões e seus ícones, cliques sem arraste e cancelamento de gestos pendentes.
 - **18 testes Rust:** gravação atômica, conflitos, UTF-8, nomes internacionais, imagens relativas, arquivos somente leitura, recursos inválidos, projetos em Downloads, exclusão sem apagar documentos, localização, busca, renomeação sem sobrescrever, preservação de imagens e projeto, reversão em caso de falha no registro, argumentos do explorador e associações MIME em perfis isolados para as instalações local e Debian.
