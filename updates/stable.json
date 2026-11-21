@@ -1,11 +1,15 @@
 {
-  "version": "1.1.2",
-  "notes": "Versão estável Linux. A versão Windows permanece disponível como prévia.",
-  "pub_date": "2026-11-21T14:56:30Z",
+  "version": "2.0.0",
+  "notes": "Entrelinhas 2.0 estável para Windows e Linux, com atualizações manuais e execução Windows sem terminal.",
+  "pub_date": "2026-11-21T21:13:19Z",
   "platforms": {
     "linux-x86_64": {
-      "url": "https://github.com/Davi-Mascarenhas/entrelinhas/releases/download/v1.1.2/entrelinhas_1.1.2_amd64.deb",
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRalJIQzJZczR4RGc0OFFoRGpqWU1oRmx0ODNjZXpZQU9xWCtYaGVtd3kzOTVFOGVYSGlJMmF0Zm4vQmxEQVJhWmY1RzFKeU1QM0JkVURURDc0VFY3SW8xNGZDdm4vWHcwPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk1MjkwMTkzCWZpbGU6ZW50cmVsaW5oYXNfMS4xLjJfYW1kNjQuZGViCXZlcnNpb246MS4xLjIKVmJjOGRsRWdDWWE2Tiszek5Ea0d1VENzcnNJMkJVMUkrclcxTHczM0RVYWQwV3ArcHNHRUJkNTY4U295Q0M2bSs0djE0RjR1VitaRkZ5R3cwRGtNQWc9PQo="
+      "url": "https://github.com/Davi-Mascarenhas/entrelinhas/releases/download/v2.0.0/Entrelinhas_2.0.0_amd64.deb",
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRalJIQzJZczR4RGk1VGJRMUVFN1NkR1RLdWNmdEhQeFM2T1c0SkJsVzZKTkF4K3BpU2RJMkNxSmZSVU5wdE9XZGxqMXdNOE5uUnljaDR5QndJMEZoYTVCNFFPVjU1Umd3PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk1Mjk1MTUxCWZpbGU6RW50cmVsaW5oYXNfMi4wLjBfYW1kNjQuZGViCXZlcnNpb246Mi4wLjAKMkkrNGNBTWxHYWJNa0xOejZURDNmaFhxcDVYQ0NUbHZYZjBJa3MyaGJaZWkrUFlNN1Ridy9pYndYT2IvQk5TUU1VYnN2eVVWSG9Tc3g0OXF4QnRNQnc9PQo="
+    },
+    "windows-x86_64": {
+      "url": "https://github.com/Davi-Mascarenhas/entrelinhas/releases/download/v2.0.0/Entrelinhas_2.0.0_x64-setup.exe",
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRalJIQzJZczR4RHRKRXUwUVErVHFSMnozZGVka1pBY2hsaXNTUDZVRTVSSHdYeGFyaUhybC9WazF6NThteXd5T2lTSW5zMFdnTDF4aEIyT0gzSk1XN0FraVd0a1l2QlFrPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk1Mjk1MDc4CWZpbGU6RW50cmVsaW5oYXNfMi4wLjBfeDY0LXNldHVwLmV4ZQl2ZXJzaW9uOjIuMC4wCjA5cTkwTGU4RWtSUWdtcUR2bVdyZTRCejl2dWFjVGhQNmNPY1hONDJLd0JMek1DcW45WDlseXRGRlRQY2V0ekJycUlVdi9IeHUwRVBUZ2p3Q0NvWURRPT0K"
     }
   }
 }
