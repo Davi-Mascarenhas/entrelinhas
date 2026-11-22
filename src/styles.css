@@ -2437,7 +2437,7 @@ body,
   padding-block: 0;
 }
 .immersive .editor-top-space {
-  flex-basis: 8px;
+  flex-basis: 28px;
 }
 .immersive .statusbar {
   flex-basis: 0;
@@ -2461,6 +2461,9 @@ body,
 }
 .formatting-dock:empty {
   display: none;
+}
+.immersive.formatting-bottom .formatting-dock:not(:empty) {
+  padding: 10px 24px 24px;
 }
 .formatting-side .formatting-dock:not(:empty) {
   position: fixed;
@@ -2504,8 +2507,14 @@ body,
   margin: 5px 0;
 }
 .immersive.formatting-side .formatting-dock {
-  top: 8px;
-  bottom: 8px;
+  top: 24px;
+  bottom: 24px;
+}
+.immersive.formatting-side.sidebar-left .formatting-dock {
+  right: 24px;
+}
+.immersive.formatting-side.sidebar-right .formatting-dock {
+  left: 24px;
 }
 .settings-nav button {
   overflow-wrap: anywhere;
