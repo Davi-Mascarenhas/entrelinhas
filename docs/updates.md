@@ -32,7 +32,7 @@ Durante a avaliação remota solicitada pelo usuário, publicar novas alteraçõ
 
 O gerador está em `scripts/prepare-update-manifest.py` e requer as dependências de `scripts/requirements-release.txt`. Exemplo após publicar os artefatos: `python3 scripts/prepare-update-manifest.py --version 2.2.0 --assets artifacts/release-2.2.0 --channel stable --notes "Comandos de escrita, edição direta e modo Zen."`. Ele verifica as assinaturas Ed25519/Minisign, a versão assinada e os hashes publicados pelo GitHub antes de escrever o manifesto.
 
-O canal estável aponta para a 2.2.0 e o canal de prévias para a 2.3.0-rc.2, ambos com Windows e Linux. Nenhuma prévia é baixada automaticamente; a rc.2 exige a escolha explícita na ação secundária. Para avaliá-la, instalar o pacote da pré-release; as próximas consultas manuais dessa instalação acompanham o canal de prévias.
+O canal estável aponta para a 2.2.0 e o canal de prévias para a 2.3.0-rc.2, ambos com Windows e Linux. Nenhuma prévia é baixada automaticamente; a rc.2 exige a escolha explícita na ação secundária. Para avaliá-la, instalar o pacote da pré-release; as próximas consultas manuais dessa instalação verificam estáveis e prévias, com prioridade para a estável.
 
 ## Testes
 
