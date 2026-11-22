@@ -29,7 +29,7 @@ export function useEditorZoom(
       gesturing = false
     }
     const apply = (next: number, x: number, y: number) => {
-      if (document.querySelector('[role=dialog], [data-live-overlay]')) return
+      if (document.querySelector('[role=dialog], [data-live-overlay]:not(.link-preview)')) return
       value = Math.min(200, Math.max(50, next))
       reported = clampZoom(value)
       if (reported === current.current.zoom) return

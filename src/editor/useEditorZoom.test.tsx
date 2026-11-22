@@ -93,3 +93,15 @@ it('acompanha Ctrl mesmo quando o WebKit omite o modificador no wheel; soltar ou
   expect(h.wheel(-120, false)).toBe(false)
   expect(h.result.current.zoom).toBe(110)
 })
+
+it('a prévia de link não bloqueia o zoom do texto, enquanto um painel de edição mantém prioridade', () => {
+  const h = setup()
+  const preview = document.body.appendChild(document.createElement('div'))
+  preview.className = 'link-preview'
+  preview.dataset.liveOverlay = ''
+  h.wheel(-120)
+  expect(h.result.current.zoom).toBe(110)
+  preview.className = 'color-palette'
+  h.wheel(-120)
+  expect(h.result.current.zoom).toBe(110)
+})
