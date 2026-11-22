@@ -2407,6 +2407,9 @@ body,
   font-size: 9px;
   color: var(--muted);
 }
+.slash-menu {
+  scroll-padding-block: 8px 42px;
+}
 .slash-menu > p {
   padding: 10px;
   font-size: 12px;

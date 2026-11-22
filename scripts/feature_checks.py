@@ -172,6 +172,7 @@ def check_blocks(app, output, wait, passed, settings, close_settings, editor_key
     blank();app.keys('.editor-scroll:not(.inactive) .tiptap','/')
     wait(lambda: app.js('return document.querySelectorAll(".slash-menu [role=option]").length') == 20, 'vinte comandos no menu')
     editor_key('ArrowUp');wait(lambda: app.js('return document.querySelector(".slash-menu [aria-selected=true]").dataset.command') == 'clear', 'navegar até o fim do menu')
+    wait(lambda: app.js('const m=document.querySelector(".slash-menu");return m.querySelector("[aria-selected=true]").getBoundingClientRect().bottom<=m.querySelector("footer").getBoundingClientRect().top+1'), 'última opção fica inteira acima do rodapé')
     app.screenshot(output/'slash-more.png')
     editor_key('ArrowDown');wait(lambda: app.js('return document.querySelector(".slash-menu [aria-selected=true]").dataset.command') == 'tasks', 'voltar ao início do menu')
     editor_key('Escape')
