@@ -89,6 +89,8 @@ pub fn preferences(path: &Path, value: serde_json::Value) -> AppResult<()> {
         "tabsPosition",
         "spellcheck",
         "selectionTools",
+        "formattingPosition",
+        "zenHideFormatting",
         "shortcuts",
     ];
     let Some(object) = value.as_object() else {
@@ -280,7 +282,7 @@ mod tests {
         register(&db, &note, Some("escola"), true).unwrap();
         preferences(
             &db,
-            serde_json::json!({"theme":"sepia","themeChosen":true,"onboardingCompleted":false,"draft":"NUNCA SALVAR ESTE TEXTO"}),
+            serde_json::json!({"theme":"sepia","themeChosen":true,"onboardingCompleted":false,"formattingPosition":"side","zenHideFormatting":true,"draft":"NUNCA SALVAR ESTE TEXTO"}),
         )
         .unwrap();
         let reopened = library(&db).unwrap();
@@ -293,6 +295,8 @@ mod tests {
         assert_eq!(reopened.preferences["theme"], "sepia");
         assert_eq!(reopened.preferences["themeChosen"], true);
         assert_eq!(reopened.preferences["onboardingCompleted"], false);
+        assert_eq!(reopened.preferences["formattingPosition"], "side");
+        assert_eq!(reopened.preferences["zenHideFormatting"], true);
         assert!(reopened.preferences.get("draft").is_none());
         delete_project(&db, "escola").unwrap();
         assert!(note.exists());

@@ -9,6 +9,7 @@ import {
   SlidersHorizontal,
   Info,
   Languages,
+  PanelBottom,
 } from 'lucide-react'
 import { ThemeChoices } from './ThemeChoices'
 import { AppIcon } from './AppIcon'
@@ -22,6 +23,7 @@ import { LanguageChoices } from './LanguageChoices'
 import { formatShortcut, tr } from '../i18n'
 import type { Preferences, ShortcutAction } from '../core/types'
 const sections = [
+  { id: 'toolbar', label: 'Barra de formatação', icon: PanelBottom },
   {
     id: 'appearance',
     label: 'Aparência',
@@ -77,7 +79,8 @@ export function Settings({
   const [section, setSection] = useState('appearance'),
     [capturing, setCapturing] = useState<ShortcutAction | null>(null)
   const toggle = (
-    key: 'autoImmersive' | 'askBeforeDiscard' | 'spellcheck' | 'selectionTools',
+    key:
+      'autoImmersive' | 'askBeforeDiscard' | 'spellcheck' | 'selectionTools' | 'zenHideFormatting',
     title: string,
     description: string,
   ) => (
@@ -88,6 +91,7 @@ export function Settings({
       </span>
       <input
         className="switch"
+        data-preference={key}
         type="checkbox"
         checked={p[key]}
         onChange={(event) =>
@@ -404,12 +408,44 @@ export function Settings({
                 ),
               )}
               <p className="muted small">
-                {tr('F11 · tela cheia · Esc · revelar controles')}
+                {tr('F11 · tela cheia · Esc · alternar modo Zen')}
                 <br />
                 {tr('Ctrl+Tab · próxima aba · Ctrl+Shift+Tab · aba anterior')}
                 <br />
                 {tr('Ctrl+T · nova guia · As guias aparecem a partir da segunda nota.')}
               </p>
+            </>
+          )}
+          {section === 'toolbar' && (
+            <>
+              <h3>{tr('Ferramentas no seu lugar.')}</h3>
+              <p className="muted">
+                {tr('Escolha onde a barra de formatação acompanha sua escrita.')}
+              </p>
+              <label className="setting-row">
+                <span>{tr('Posição da formatação')}</span>
+                <Select
+                  label={tr('Posição da formatação')}
+                  value={p.formattingPosition}
+                  onChange={(formattingPosition) =>
+                    onChange({
+                      formattingPosition: formattingPosition as Preferences['formattingPosition'],
+                    })
+                  }
+                  options={[
+                    { value: 'bottom', label: tr('Na parte de baixo') },
+                    { value: 'side', label: tr('Na lateral') },
+                  ]}
+                />
+              </label>
+              <p className="muted small">
+                {tr('Na lateral, a formatação fica do lado oposto aos projetos.')}
+              </p>
+              {toggle(
+                'zenHideFormatting',
+                'Ocultar formatação no modo Zen',
+                'Por padrão, as ferramentas continuam disponíveis no modo Zen.',
+              )}
             </>
           )}
           {section === 'behavior' && (
@@ -427,7 +463,7 @@ export function Settings({
               )}
               <div className="info-card">
                 {tr(
-                  'Esc revela os controles. Para acessá-los com o mouse, mantenha o ponteiro junto à borda superior ou à borda da navegação por um instante.',
+                  'Esc alterna o modo Zen quando há texto. Os painéis abertos têm prioridade. Para revelar os controles com o mouse, aproxime o ponteiro da borda da janela.',
                 )}
               </div>
               <p className="muted small">

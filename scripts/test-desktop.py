@@ -115,13 +115,16 @@ class Desktop:
     def key(self, key, ctrl=False, shift=False):
         if ctrl and key.lower() in ('s', 'o'):
             mark_native_dialog()
-        self.js('window.dispatchEvent(new KeyboardEvent("keydown",{key:arguments[0],ctrlKey:arguments[1],shiftKey:arguments[2],bubbles:true,cancelable:true}))', key, ctrl, shift)
+        self.js('(document.activeElement||document.body).dispatchEvent(new KeyboardEvent("keydown",{key:arguments[0],ctrlKey:arguments[1],shiftKey:arguments[2],bubbles:true,cancelable:true}))', key, ctrl, shift)
 
     def editor(self, expression, *args):
         return self.js('const editor=document.querySelector(".editor-scroll:not(.inactive) .tiptap").editor;' + expression, *args)
 
     def reveal(self):
-        self.key('Escape')
+        if self.js('return !!document.querySelector(".find-bar")'):
+            self.js('document.querySelector(".find-bar").querySelector(".icon-button:last-of-type").click()')
+        if self.js('return document.querySelector(".app").classList.contains("immersive")'):
+            self.key('Escape')
         wait(lambda: self.js('return getComputedStyle(document.querySelector(".titlebar")).opacity==="1"'), 'revelar interface')
 
     def paint(self):
@@ -287,6 +290,8 @@ def main():
             passed('arquivo recebido na primeira execução aguarda o fim da apresentação')
             from language_checks import exercise as check_languages
             check_languages(app, output, wait, passed)
+            from feature_checks import exercise as check_features
+            check_features(app, output, wait, passed)
             app.ipc('forget_document', path=str(first_file))
             app.click('[aria-label="Fechar aplicativo"]')
             time.sleep(.3)
@@ -351,11 +356,11 @@ def main():
             app.js('window.fetch=window.__gestureFetch;delete window.__gestureFetch;delete window.__gestureCommands')
             passed('duplo clique nas regiões esquerda e direita não inicia arraste; movimento pressionado inicia um único arraste')
             app.double_click('.window-title')
-            wait(lambda: app.js('return !!document.querySelector(arguments[0])', '[role=dialog][aria-label="Editar título"]'), 'editar título com duplo clique')
+            wait(lambda: app.js('return !!document.querySelector(arguments[0])', '[data-inline-rename]'), 'editar título com duplo clique')
             assert not app.ipc('plugin:window|is_maximized', label='main')
             app.fill('[aria-label="Título do documento"]', 'Nome escolhido')
             app.screenshot(output / 'rename-title.png')
-            app.click('[role=dialog] button[type=submit]')
+            app.click('[data-inline-rename] button[type=submit]')
             wait(lambda: app.js('return document.querySelector(".window-title").textContent.includes("Nome escolhido")'), 'aplicar título ao rascunho')
             passed('duplo clique no título edita o nome do rascunho')
             for width in (720, 1500):
@@ -372,7 +377,8 @@ def main():
             app.keys('.tiptap', secret)
             wait(lambda: app.js('return document.querySelector(".app").classList.contains("immersive")'), 'imersão automática')
             after = app.js('return document.querySelector(".tiptap").getBoundingClientRect().toJSON()')
-            assert before['left'] == after['left'] and before['top'] == after['top']
+            assert abs(before['left'] - after['left']) < 1
+            wait(lambda: app.js('return document.querySelector(".editor-scroll:not(.inactive)").getBoundingClientRect().top') < 20, 'liberar altura no Zen')
             assert abs(after['left'] + after['width'] / 2 - app.js('return innerWidth / 2')) < 1, 'A coluna deve ficar no centro da janela inteira.'
             wait(lambda: app.js('return getComputedStyle(document.querySelector(".titlebar")).visibility==="hidden"'), 'ocultar controles')
             assert app.js('return !!document.querySelector(".block-caret")')
@@ -380,7 +386,7 @@ def main():
             app.editor('editor.commands.insertContent("k".repeat(1000));return true')
             assert app.js('const scroll=document.querySelector(".editor-scroll:not(.inactive)");return scroll.scrollWidth<=scroll.clientWidth+1'), 'Linhas longas não devem escapar da coluna.'
             app.reveal()
-            passed('modo Zen, cursor em bloco, posição estável e Esc')
+            passed('modo Zen, cursor em bloco, coluna centralizada e altura ampliada')
             app.click('[aria-label="Fechar aplicativo"]')
             time.sleep(.3)
             app.stop()
@@ -393,11 +399,12 @@ def main():
             app.click('[aria-label="Criar projeto"]')
             app.keys('.modal input[maxlength="120"]', 'Caderno de ideias')
             app.click('[aria-label="Cor do projeto"]')
-            assert app.js('return document.querySelectorAll("[role=dialog]").length') == 2
+            assert app.js('return document.querySelectorAll("[role=dialog]").length') == 1
+            assert app.js('return !!document.querySelector(".color-palette")')
             color_input = app.element('[aria-label="Cor em hexadecimal"]')
             app.call('/element/' + color_input + '/clear', {})
             app.keys('[aria-label="Cor em hexadecimal"]', '#b37a59')
-            app.click('[role="dialog"][aria-label="Cor do projeto"] .primary')
+            app.key('Escape')
             wait(lambda: app.js('return document.querySelectorAll("[role=dialog]").length') == 1, 'voltar ao formulário do projeto')
             assert not app.ipc('load_library')['projects'], 'A cor não deve submeter o formulário do projeto.'
             app.click('.modal button[type="submit"]')
@@ -427,23 +434,23 @@ def main():
             blocked_path.write_text('preservado', encoding='utf-8')
             app.double_click('.window-title')
             app.fill('[aria-label="Título do documento"]', 'Ocupado')
-            app.click('[role=dialog] button[type=submit]')
+            app.click('[data-inline-rename] button[type=submit]')
             wait(lambda: app.js('return !!document.querySelector("[role=alert]")'), 'recusar título já existente')
             assert note_path.read_bytes() == saved_bytes and blocked_path.read_text() == 'preservado'
             app.fill('[aria-label="Título do documento"]', 'Título temporário')
-            app.click('[role=dialog] button[type=submit]')
+            app.click('[data-inline-rename] button[type=submit]')
             renamed_path = downloads / 'Título temporário.md'
             wait(renamed_path.exists, 'renomear arquivo salvo')
-            wait(lambda: app.js('return !document.querySelector("[role=dialog]")'), 'concluir renomeação')
+            wait(lambda: app.js('return !document.querySelector("[data-inline-rename]")'), 'concluir renomeação')
             assert not note_path.exists() and renamed_path.read_bytes() == saved_bytes
             assert app.editor('return editor.getText().includes("ALTERAÇÃO_NÃO_SALVA")')
             document = app.ipc('load_library')['documents'][0]
             assert document['path'] == str(renamed_path) and document['projectId'] == project_id
             app.double_click('.window-title')
             app.fill('[aria-label="Título do documento"]', 'Entre as linhas')
-            app.click('[role=dialog] button[type=submit]')
+            app.click('[data-inline-rename] button[type=submit]')
             wait(note_path.exists, 'voltar ao nome original')
-            wait(lambda: app.js('return !document.querySelector("[role=dialog]")'), 'fechar edição do título')
+            wait(lambda: app.js('return !document.querySelector("[data-inline-rename]")'), 'fechar edição do título')
             passed('renomear preserva conteúdo, alterações e projeto, sem substituir outro arquivo')
             app.keys('.editor-scroll:not(.inactive) .tiptap', ' ALTERAÇÃO_NÃO_SALVA')
             wait(lambda: app.js('return !document.querySelector(".toast") || getComputedStyle(document.querySelector(".toast")).visibility==="hidden"'), 'ocultar avisos durante a digitação')
@@ -521,7 +528,8 @@ def main():
             app.key('f', ctrl=True, shift=True)
             wait(lambda: app.js('return document.querySelector(".app").classList.contains("immersive")'), 'ocultar ferramentas inferiores')
             after_tools = app.js('return document.querySelector(".editor-scroll:not(.inactive) .tiptap").getBoundingClientRect().toJSON()')
-            assert before_tools['left'] == after_tools['left'] and before_tools['top'] == after_tools['top'] and before_tools['width'] == after_tools['width']
+            assert before_tools['left'] == after_tools['left'] and before_tools['width'] == after_tools['width']
+            assert app.js('return !!document.querySelector(".formatting")'), 'A barra deve continuar no Zen por padrão.'
             app.reveal()
             app.call('/window/rect', original_rect)
             wait(lambda: app.js('return innerWidth') == original_rect['width'], 'restaurar janela após testar ferramentas')
@@ -529,7 +537,7 @@ def main():
             assert app.editor('editor.chain().focus().selectAll().run();return !editor.state.selection.empty'), 'O teste de cor precisa começar com texto selecionado.'
             app.click('[aria-label="Cor do texto"]')
             app.click('[aria-label="Usar cor #6f94b5"]')
-            app.click('[role="dialog"][aria-label="Cor do texto"] .primary')
+            app.key('Escape')
             wait(lambda: app.editor('return JSON.stringify(editor.getJSON()).includes("#6f94b5")'), 'aplicar cor à seleção do texto')
             passed('seletores de cor próprios preservam o formulário e a seleção do texto')
             app.editor('editor.commands.focus("end");return true')
@@ -585,9 +593,9 @@ def main():
                     app.click('[aria-label="Ferramentas de formatação"]')
                 app.click('[aria-label="Cor do texto"]')
                 expected_surface = {'light':'rgb(255, 255, 255)', 'dark':'rgb(36, 38, 42)', 'sepia':'rgb(51, 46, 39)'}[theme]
-                assert app.js('return getComputedStyle(document.querySelector(".color-picker-body").closest(".modal")).backgroundColor') == expected_surface
+                assert app.js('return getComputedStyle(document.querySelector(".color-palette")).backgroundColor') == expected_surface
                 app.screenshot(output / f'color-{theme}.png')
-                app.click('[aria-label="Fechar painel"]')
+                app.key('Escape')
                 app.click('[aria-label="Ferramentas de formatação"]')
                 app.hover('[aria-label="Salvar documento"]')
                 wait(lambda: app.js('return !!document.querySelector("[role=tooltip]")'), 'dica temática de salvar')

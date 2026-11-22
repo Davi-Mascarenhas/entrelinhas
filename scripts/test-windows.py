@@ -76,7 +76,7 @@ class WindowsDesktop(desktop_tests.Desktop):
         self.call('/element/' + self.element(css) + '/click', {})
 
     def key(self, key, ctrl=False, shift=False):
-        self.js('window.dispatchEvent(new KeyboardEvent("keydown",{key:arguments[0],ctrlKey:arguments[1],shiftKey:arguments[2],bubbles:true,cancelable:true}))', key, ctrl, shift)
+        self.js('(document.activeElement||document.body).dispatchEvent(new KeyboardEvent("keydown",{key:arguments[0],ctrlKey:arguments[1],shiftKey:arguments[2],bubbles:true,cancelable:true}))', key, ctrl, shift)
 
     def stop(self):
         super().stop()
@@ -221,6 +221,8 @@ def main():
             passed('WebView2 de produção, primeira abertura, leitura Markdown e salvamento manual UTF-8')
             from language_checks import exercise as check_languages
             check_languages(app, output, wait, passed)
+            from feature_checks import exercise as check_features
+            check_features(app, output, wait, passed)
             app.editor('editor.commands.insertContent(" RASCUNHO_EM_MEMÓRIA");return true')
             subprocess.run([str(executable), str(txt)], check=True, timeout=20)
             wait(lambda: app.editor('return editor.getText()') == txt.read_text(encoding='utf-8'), 'TXT na mesma janela')
@@ -234,7 +236,7 @@ def main():
             app.reveal()
             app.double_click('.window-title')
             app.fill('[aria-label="Título do documento"]', 'Título ação 日本語')
-            app.click('[role=dialog] button[type=submit]')
+            app.click('[data-inline-rename] button[type=submit]')
             renamed = md.with_name('Título ação 日本語.md')
             wait(renamed.exists, 'renomear arquivo com Unicode')
             wait(lambda: not app.js('return !!document.querySelector(arguments[0])', '[aria-label="Título do documento"]'), 'fechar título')

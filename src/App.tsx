@@ -421,12 +421,26 @@ export default function App() {
       if (event.isComposing || event.defaultPrevented) return
       if (updateLock.current) return
       if (event.key === 'Escape') {
-        setImmersive(false)
-        setMenu(false)
-        setFind(null)
+        if (
+          document.querySelector('[role=dialog], [data-live-overlay], [data-inline-rename]') ||
+          !preferences.onboardingCompleted
+        )
+          return
+        event.preventDefault()
+        if (menu || find) {
+          setMenu(false)
+          setFind(null)
+          return
+        }
         setSelectionRect(null)
+        if (immersive) setImmersive(false)
+        else if (!editors.current.get(activeId)?.isEmpty) {
+          setImmersive(true)
+          editors.current.get(activeId)?.commands.focus()
+        }
         return
       }
+      if (renameId) return
       if (document.querySelector('[data-shortcut-capture]')) return
       if (event.key === 'F11') {
         event.preventDefault()
@@ -443,7 +457,8 @@ export default function App() {
         !dialog.visible &&
         !librarySearch &&
         link === null &&
-        !renameId
+        !renameId &&
+        (!document.querySelector('[role=dialog], [data-live-overlay]') || settings)
       ) {
         event.preventDefault()
         setSettings(true)
@@ -453,7 +468,6 @@ export default function App() {
       }
       if (
         !preferences.onboardingCompleted ||
-        renameId ||
         settings ||
         dialog.visible ||
         librarySearch ||
@@ -501,6 +515,9 @@ export default function App() {
         setFind(action)
       }
       if (action === 'immersive') {
+        setMenu(false)
+        setFind(null)
+        setSelectionRect(null)
         setImmersive((value) => !value)
         editors.current.get(activeId)?.commands.focus()
       }
@@ -518,12 +535,20 @@ export default function App() {
     newNote,
     closeNote,
     renameId,
+    immersive,
+    menu,
+    find,
     fileOps.openDocument,
     fileOps.saveNote,
   ])
   useEffect(() => {
     if (!immersive) return
     const move = (event: MouseEvent) => {
+      if (
+        document.querySelector('[data-live-overlay]') ||
+        (event.target as Element).closest?.('.formatting-dock')
+      )
+        return
       const nearEdge =
         event.clientY < 12 ||
         (preferences.sidebarSide === 'left'
@@ -556,7 +581,9 @@ export default function App() {
     !librarySearch &&
     link === null,
   )
-  const formattingVisible = toolbar || selectionToolsVisible
+  const formattingVisible =
+    (!immersive || !preferences.zenHideFormatting) &&
+    (toolbar || selectionToolsVisible || immersive)
   const tabsVisible = notes.length > 1
   const newTabShortcut = Object.entries(preferences.shortcuts).some(
     ([action, shortcut]) => action !== 'new' && shortcut === 'Ctrl+T',
@@ -580,7 +607,7 @@ export default function App() {
   } as CSSProperties
   return (
     <div
-      className={`app ${immersive ? 'immersive' : ''} sidebar-${preferences.sidebarSide} tabs-${layout.tabsPosition} ${preferences.sidebarVisible ? '' : 'sidebar-hidden'}`}
+      className={`app ${immersive ? 'immersive' : ''} formatting-${preferences.formattingPosition} sidebar-${preferences.sidebarSide} tabs-${layout.tabsPosition} ${preferences.sidebarVisible ? '' : 'sidebar-hidden'}`}
       style={style}
     >
       <Titlebar
@@ -918,11 +945,11 @@ export default function App() {
               }}
             />
           )}
-          <div className="formatting-dock chrome">
+          <div className="formatting-dock">
             {formattingVisible && activeEditor && (
               <Formatting
                 editor={activeEditor}
-                compact={!toolbar}
+                compact={!toolbar && !immersive}
                 insertImage={() => void chooseImage()}
                 insertLink={() => setLink(activeEditor.getAttributes('link').href || '')}
               />
@@ -1067,7 +1094,7 @@ export default function App() {
       )}
       {dialog.element}
       <WindowResize onError={notify} />
-      <TooltipLayer hidden={immersive} />
+      <TooltipLayer />
       {notice && (
         <div className="toast chrome" role="status">
           {tr(notice)}

@@ -108,3 +108,17 @@ describe('primeira escolha de tema', () => {
     ).toBe(true)
   })
 })
+
+it('preserva as preferências antigas e valida posição/visibilidade da formatação no Zen', () => {
+  expect(readPreferences({ theme: 'sepia' })).toMatchObject({
+    formattingPosition: 'bottom',
+    zenHideFormatting: false,
+  })
+  expect(readPreferences({ formattingPosition: 'side', zenHideFormatting: true })).toMatchObject({
+    formattingPosition: 'side',
+    zenHideFormatting: true,
+  })
+  expect(
+    readPreferences({ formattingPosition: 'diagonal', zenHideFormatting: 'yes' }),
+  ).toMatchObject({ formattingPosition: 'bottom', zenHideFormatting: false })
+})

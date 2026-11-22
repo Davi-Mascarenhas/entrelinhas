@@ -2358,11 +2358,6 @@ body,
   background: var(--surface);
   box-shadow: var(--shadow);
 }
-
-.select-choice-icon {
-  display: none;
-}
-
 .slash-menu {
   width: min(320px, calc(100vw - 24px));
   padding: 6px;
@@ -2415,4 +2410,124 @@ body,
 .slash-menu > p {
   padding: 10px;
   font-size: 12px;
+}
+
+/* O modo Zen libera a altura dos controles e suaviza o texto junto às bordas. */
+.app {
+  transition: grid-template-rows 0.2s ease;
+}
+.document-toolbar,
+.editor-top-space,
+.statusbar {
+  transition:
+    flex-basis 0.2s ease,
+    height 0.2s ease,
+    padding 0.2s ease;
+}
+.immersive {
+  grid-template-rows: 0 minmax(0, 1fr);
+}
+.immersive .titlebar {
+  min-height: 0;
+}
+.immersive .document-toolbar {
+  flex-basis: 0;
+  height: 0;
+  min-height: 0;
+  padding-block: 0;
+}
+.immersive .editor-top-space {
+  flex-basis: 8px;
+}
+.immersive .statusbar {
+  flex-basis: 0;
+  height: 0;
+  min-height: 0;
+  padding-block: 0;
+  border: 0;
+}
+.immersive:not(.tabs-left):not(.tabs-right) .tabs {
+  flex-basis: 0;
+  height: 0;
+  min-height: 0;
+  padding-block: 0;
+  border: 0;
+}
+.immersive .editor-scroll {
+  padding-bottom: 12px;
+  scroll-padding-block: 24px;
+  -webkit-mask-image: linear-gradient(transparent, #000 10px, #000 calc(100% - 12px), transparent);
+  mask-image: linear-gradient(transparent, #000 10px, #000 calc(100% - 12px), transparent);
+}
+.formatting-dock:empty {
+  display: none;
+}
+.formatting-side .formatting-dock:not(:empty) {
+  position: fixed;
+  z-index: 45;
+  top: 112px;
+  bottom: 34px;
+  width: 56px;
+  padding: 5px;
+  min-height: 0;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+}
+.formatting-side.sidebar-left .formatting-dock {
+  right: 10px;
+}
+.formatting-side.sidebar-right .formatting-dock {
+  left: 10px;
+}
+.formatting-side .formatting {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  max-height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  width: 46px;
+  padding: 3px;
+}
+.formatting-side .formatting > * {
+  flex-shrink: 0;
+}
+.formatting-side .formatting .select-trigger {
+  max-width: 40px;
+  width: 40px;
+  overflow: hidden;
+}
+.formatting-side .tool-divider {
+  width: 20px;
+  height: 1px;
+  margin: 5px 0;
+}
+.immersive.formatting-side .formatting-dock {
+  top: 8px;
+  bottom: 8px;
+}
+.settings-nav button {
+  overflow-wrap: anywhere;
+  text-align: start;
+}
+@media (prefers-reduced-motion: reduce) {
+  .app,
+  .document-toolbar,
+  .editor-top-space,
+  .statusbar,
+  .chrome {
+    transition: none;
+  }
+}
+
+.select-choice-icon {
+  display: none;
+}
+.formatting-side .formatting .select-trigger .select-label {
+  display: none;
+}
+.formatting-side .formatting .select-choice-icon {
+  display: inline-flex;
+  align-items: center;
 }

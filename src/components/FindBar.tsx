@@ -99,7 +99,7 @@ export function FindBar({
                 0: Math.min(current + 1, matches.length),
                 1: matches.length,
               })
-            : '0 resultados'}
+            : tr('{0} resultado(s)', { 0: 0 })}
         </span>
         <IconButton label={tr('Resultado anterior')} onClick={() => navigate(-1)}>
           <ArrowUp size={15} />

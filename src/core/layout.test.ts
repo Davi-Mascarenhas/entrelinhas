@@ -42,3 +42,24 @@ describe('coluna de escrita', () => {
     expect(getWritingLayout(1500, preferences, true).right).toBe(155)
   })
 })
+
+it.each([720, 900, 1180, 1920])(
+  'reserva espaço para a barra lateral de formatação em %i px e mantém o texto centralizado',
+  (width) => {
+    for (const sidebarSide of ['left', 'right'] as const)
+      for (const tabsPosition of ['top', 'left', 'right'] as const) {
+        const preferences = {
+          ...defaultPreferences,
+          sidebarSide,
+          tabsPosition,
+          formattingPosition: 'side' as const,
+        }
+        const layout = getWritingLayout(width, preferences, true)
+        const x = layout.left + layout.writingOffset
+        expect(x + layout.writingWidth / 2).toBeCloseTo(width / 2)
+        expect(layout.writingWidth).toBeGreaterThanOrEqual(320)
+        if (sidebarSide === 'right') expect(x).toBeGreaterThanOrEqual(103)
+        else expect(x + layout.writingWidth).toBeLessThanOrEqual(width - 103)
+      }
+  },
+)

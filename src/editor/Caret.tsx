@@ -91,6 +91,8 @@ export function Caret({ editor, enabled }: { editor: Editor; enabled: boolean })
     window.addEventListener('resize', update)
     const observer = new ResizeObserver(update)
     observer.observe(editor.view.dom)
+    const viewport = editor.view.dom.closest('.editor-scroll')
+    if (viewport) observer.observe(viewport)
     document.fonts?.ready.then(update)
     update()
     return () => {

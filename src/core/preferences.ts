@@ -23,6 +23,8 @@ export const defaultPreferences: Preferences = {
   tabsPosition: 'top',
   spellcheck: false,
   selectionTools: true,
+  formattingPosition: 'bottom',
+  zenHideFormatting: false,
   shortcuts: {
     settings: 'Ctrl+,',
     new: 'Ctrl+N',
@@ -50,6 +52,7 @@ export function readPreferences(value: unknown): Preferences {
     fontFamily: ['serif', 'sans', 'mono'],
     sidebarSide: ['left', 'right'],
     tabsPosition: ['top', 'left', 'right'],
+    formattingPosition: ['bottom', 'side'],
   }
   for (const [key, options] of Object.entries(choices)) {
     if (options.includes(input[key] as string)) Object.assign(result, { [key]: input[key] })
@@ -73,6 +76,7 @@ export function readPreferences(value: unknown): Preferences {
     'sidebarVisible',
     'spellcheck',
     'selectionTools',
+    'zenHideFormatting',
   ] as const) {
     if (typeof input[key] === 'boolean') result[key] = input[key]
   }

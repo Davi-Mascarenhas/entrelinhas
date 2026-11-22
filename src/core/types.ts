@@ -27,6 +27,8 @@ export interface Preferences {
   tabsPosition: 'top' | 'left' | 'right'
   spellcheck: boolean
   selectionTools: boolean
+  formattingPosition: 'bottom' | 'side'
+  zenHideFormatting: boolean
   shortcuts: Record<ShortcutAction, string>
 }
 
