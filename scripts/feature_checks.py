@@ -25,7 +25,7 @@ def exercise(app, output, wait, passed):
         current = app.js('return document.querySelector(arguments[0]).checked', f'[data-preference="{name}"]')
         if current != value: app.click(f'[data-preference="{name}"]')
     def editor_key(key):
-        app.editor('editor.view.dom.dispatchEvent(new KeyboardEvent("keydown",{key:arguments[0],bubbles:true,cancelable:true}));return true', key)
+        app.editor('editor.commands.focus();return true'); app.paint(); app.real_key(key)
     settings('behavior'); auto = app.js('return document.querySelector("[data-preference=autoImmersive]").checked'); preference('autoImmersive', False); close_settings()
     for language, tasks, table in [('pt-BR','lista','tabela'),('en','list','table'),('ja','リスト','テーブル'),('zh-CN','清单','表格'),('de','liste','tabelle')]:
         settings('language'); app.click(f'[data-language="{language}"]'); close_settings()
