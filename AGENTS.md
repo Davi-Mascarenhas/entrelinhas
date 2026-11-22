@@ -4,4 +4,5 @@
 - Ao concluir uma versão nova, compilar e executar as verificações apropriadas antes de atualizar a instalação local com `scripts/install-local.sh`. Conferir a versão instalada e o hash do executável.
 - Preservar projetos, preferências e documentos. Não encerrar ou reiniciar uma janela existente que possa conter alterações não salvas. Atualizar o executável para a próxima abertura e avisar quando uma janela aberta ainda estiver executando a versão anterior.
 - Essa preferência não autoriza consultas automáticas à internet pelo aplicativo: a busca de atualizações continua manual e depende da autorização apresentada na interface.
+- A partir da versão 2.1, publicar alterações validadas como versões estáveis. Usar prévias apenas quando houver uma validação específica que dependa do usuário.
 - Continuar com commits incrementais `uN - descrição curta` e pushes sem force. Não promover uma prévia a estável sem a validação acordada.
