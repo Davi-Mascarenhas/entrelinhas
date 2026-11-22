@@ -6,9 +6,9 @@ Entrelinhas é um editor **desktop de verdade**, feito com Tauri 2, React e Type
 
 ![Entrelinhas — Sépia Noturno](docs/screenshots/sepia.png)
 
-## Idiomas e atalhos (prévia 2.1)
+## Idiomas e atalhos (2.1 estável)
 
-A [versão 2.0](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.0.0) é a distribuição estável para Windows e Linux. A [prévia 2.1 RC1](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.1.0-rc.1) adiciona
+A [versão 2.1 estável](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.1.0) está disponível para Windows e Linux e adiciona
 português brasileiro, inglês, japonês, chinês simplificado e alemão a toda a interface.
 
 No Windows, o idioma é escolhido na primeira janela do assistente de instalação e
@@ -96,7 +96,7 @@ O cursor em bloco usa as coordenadas reais da seleção do ProseMirror e a largu
 
 ## Instalação no Windows
 
-O instalador **Entrelinhas 2.0.0 para Windows x64** usa NSIS, com logo, artes em sépia e textos em português brasileiro. Está disponível na [release estável](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.0.0), junto com o SHA-256 e o relatório dos testes. Windows e Linux compartilham a versão estável 2.0.0. Na [prévia 2.1 RC1](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.1.0-rc.1), o primeiro diálogo oferece os cinco idiomas e o aplicativo usa essa escolha na primeira abertura.
+O instalador **Entrelinhas 2.1.0 para Windows x64** usa NSIS, com logo, artes em sépia e textos em português brasileiro. Está disponível na [release estável](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.1.0), junto com o SHA-256 e o relatório dos testes. Windows e Linux compartilham a versão estável 2.1.0. Na versão 2.1, o primeiro diálogo oferece os cinco idiomas e o aplicativo usa essa escolha na primeira abertura.
 
 - Instalação por usuário, sem exigir administrador para instalar o aplicativo; pasta de destino selecionável, atalho no menu Iniciar e opção de abrir ao concluir.
 - O instalador verifica o WebView2 e baixa o bootstrapper oficial quando necessário. Nesse caso, a primeira instalação precisa de internet.
@@ -108,7 +108,7 @@ O instalador Windows ainda não tem assinatura Authenticode. As atualizações p
 
 [Boas-vindas do instalador](docs/screenshots/windows-welcome.png) · [Escolha da pasta](docs/screenshots/windows-folder.png). As capturas são do wizard real em Windows Server 2025.
 
-Prévia 2.1: [Idioma do instalador](docs/screenshots/windows-language.png) · [Chinês simplificado](docs/screenshots/windows-welcome-zh-CN.png) · [Alemão](docs/screenshots/windows-welcome-de.png) · [Aplicativo em japonês](docs/screenshots/windows-language-ja.png). Foram aprovadas **23 verificações Windows**, incluindo as cinco escolhas do instalador, a primeira abertura em cada idioma e uma atualização assinada completa com reinício. [Execução validada](https://github.com/Davi-Mascarenhas/entrelinhas/actions/runs/44972082564).
+Versão 2.1: [Idioma do instalador](docs/screenshots/windows-language.png) · [Chinês simplificado](docs/screenshots/windows-welcome-zh-CN.png) · [Alemão](docs/screenshots/windows-welcome-de.png) · [Aplicativo em japonês](docs/screenshots/windows-language-ja.png). Foram aprovadas **23 verificações Windows**, incluindo as cinco escolhas do instalador, a primeira abertura em cada idioma e uma atualização assinada completa com reinício. [Execução validada](https://github.com/Davi-Mascarenhas/entrelinhas/actions/runs/44972082564).
 
 Para compilar no Windows, instale Node.js 24, Rust estável, as ferramentas C++ do Visual Studio e o WebView2. Depois:
 
@@ -137,7 +137,7 @@ O projeto foi compilado e verificado no **Ubuntu 26.10, x86_64, GNOME/Wayland**.
 
 ### Pacote Debian
 
-[Baixe o instalador e os checksums da versão 2.0.0](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.0.0).
+[Baixe o instalador e os checksums da versão 2.0.0](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.1.0).
 
 Para instalar um pacote compilado localmente:
 

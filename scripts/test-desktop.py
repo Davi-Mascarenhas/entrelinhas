@@ -735,7 +735,7 @@ def main():
             # O explorador pode iniciar processos em ordens diferentes para cada tipo MIME.
             app.js('return [...document.querySelectorAll("[role=tab]")].find(tab=>tab.innerText.includes(arguments[0])).click()', external_txt.name)
             wait(lambda: app.editor('return editor.getText({blockSeparator:String.fromCharCode(10)})') == external_txt.read_text(), 'ativar TXT recebido')
-            assert app.js('return document.querySelectorAll(".tiptap").length') == before_editors + 2
+            wait(lambda: app.js('return document.querySelectorAll(".tiptap").length') == before_editors + 2, 'receber os dois arquivos do explorador')
             assert app.js('return [...document.querySelectorAll(".tiptap")].some(node=>node.editor?.getText().endsWith(" FIM"))'), 'Abrir pelo sistema deve preservar o rascunho em memória.'
             subprocess.run(['gio', 'launch', str(desktop_entry), str(external_md)], check=True, env=environment, capture_output=True, timeout=15)
             wait(lambda: app.editor('return editor.getText().includes("Vindo do sistema")'), 'ativar Markdown já aberto sem duplicar')
