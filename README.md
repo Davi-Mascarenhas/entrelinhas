@@ -6,6 +6,18 @@ Entrelinhas é um editor **desktop de verdade**, feito com Tauri 2, React e Type
 
 ![Entrelinhas — Sépia Noturno](docs/screenshots/sepia.png)
 
+## Prévia 2.3.0-rc.2: escolha antes de instalar uma pré-release
+
+A [rc.2](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.3.0-rc.2) inclui as melhorias da rc.1 e amplia a busca manual de atualizações. Após autorizar a consulta, o aplicativo procura uma estável mais nova primeiro. Quando a novidade é uma pré-release, mostra um aviso vermelho e pergunta antes do download.
+
+**Esperar versão estável** é o botão destacado e descarta a oferta sem baixar. **Atualizar para pré-release** é uma ação de texto secundária; só esse clique inicia o fluxo da prévia. Novas consultas continuam dependendo do seu clique e autorização. Os avisos e ações acompanham os cinco idiomas e os três temas.
+
+A mudança começa na rc.2. Clientes da 2.2 estável mantêm o comportamento anterior e precisam instalar esta prévia manualmente uma vez. A versão estável continua sendo a 2.2.0 até a aprovação dos testes em casa.
+
+Validação da rc.2: 165 testes TypeScript, 19 testes Rust Linux e 18 Windows; 48 verificações desktop Linux, 9 de atualização Linux e [31 Windows](https://github.com/Davi-Mascarenhas/entrelinhas/actions/runs/45063770486).
+
+[Exemplo do aviso no Sépia Noturno](docs/screenshots/update-preview-sepia.png) · [Tema claro](docs/screenshots/update-preview-light.png) · [Tema escuro](docs/screenshots/update-preview-dark.png). As capturas usam uma atualização fictícia de teste.
+
 ## Prévia 2.3 para avaliação
 
 A [2.3.0-rc.1](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.3.0-rc.1) é uma **pré-release** para testar em casa antes de aprovar a versão estável. A versão estável continua sendo a 2.2.0. Enquanto durar essa avaliação, novas alterações serão publicadas como prévias.

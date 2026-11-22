@@ -1,15 +1,15 @@
 {
-  "version": "2.3.0-rc.1",
-  "notes": "Prévia para avaliação: modo Zen com mais espaço e vinte comandos de escrita nos cinco idiomas. A versão estável continua sendo a 2.2.0.",
-  "pub_date": "2026-11-22T19:43:13Z",
+  "version": "2.3.0-rc.2",
+  "notes": "Prévia 2: inclui Zen e vinte comandos. A busca manual prioriza versões estáveis e oferece pré-releases com aviso vermelho, Esperar versão estável em destaque e atualização somente pela ação explícita.",
+  "pub_date": "2026-11-22T20:09:03Z",
   "platforms": {
     "linux-x86_64": {
-      "url": "https://github.com/Davi-Mascarenhas/entrelinhas/releases/download/v2.3.0-rc.1/Entrelinhas_2.3.0-rc.1_amd64.deb",
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRalJIQzJZczR4RGtZMCthalYvY29qUWpkWGVwdEpNUThtUDJWR1hJRitQeXByOG9tU0xndnZyaEE2aE53QVRZdngwa3BKemlaQlJLcXJCcTRaWWs2Tk9SbXNtRHVJU1E4PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk1Mzc2MTE0CWZpbGU6RW50cmVsaW5oYXNfMi4zLjAtcmMuMV9hbWQ2NC5kZWIJdmVyc2lvbjoyLjMuMC1yYy4xCk82MWF5d3VIMmljQkUzdkZPNGdKcElDeTVadk1Mem1hREhlR044WHovbStBbk1EN0hlUkRyRmRBYzBEandzZjljTkdYMmdPQXFhbWdDcHkwWkNWekR3PT0K"
+      "url": "https://github.com/Davi-Mascarenhas/entrelinhas/releases/download/v2.3.0-rc.2/Entrelinhas_2.3.0-rc.2_amd64.deb",
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRalJIQzJZczR4RGtvdGlmOEtKTGxvN2NGUUNxV0VkLzRzVEZVM2JISDNNL0hVMGhhcVhJNUVzb1NjSFFPNk90aFloVmJUWEYzRFRLMlhJMkk2S2k1cTRmcTNKOXk2WWdFPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk1Mzc3Nzg2CWZpbGU6RW50cmVsaW5oYXNfMi4zLjAtcmMuMl9hbWQ2NC5kZWIJdmVyc2lvbjoyLjMuMC1yYy4yCjM2YWtYMWhqVVhwYW5KVFBNZjBDUmxScWdYL1lERGR3ZjY0N1VUdnVBTTZHZ24ya3dJNjRHREpRdWZrc2RsMTFaSUx6YkpYU0VjTk1jYzg1empQcUNnPT0K"
     },
     "windows-x86_64": {
-      "url": "https://github.com/Davi-Mascarenhas/entrelinhas/releases/download/v2.3.0-rc.1/Entrelinhas_2.3.0-rc.1_x64-setup.exe",
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRalJIQzJZczR4RGg5ekd5MEljdC8yS2VVb1Q4Y2l1ZDRZMkhwRzR0TTA0bGFkcUdnYlV4UVJEcC9wdndveUZ5cThrQ0VzSktGNGdnY3dadlZDd0NwZ3dUUW1vUFpBdmc0PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk1Mzc1OTcxCWZpbGU6RW50cmVsaW5oYXNfMi4zLjAtcmMuMV94NjQtc2V0dXAuZXhlCXZlcnNpb246Mi4zLjAtcmMuMQpHT1RVK1R2c2V2ZWkzMXFFNjN6dW1XYkxSYUVoREN6Zk9FUzhqRXM3NEUvanJTeE1qbGtsQlVpeUxySEVzRjIwYjBRMGtLb2loRUhlS0xoWkRtbXJCZz09Cg=="
+      "url": "https://github.com/Davi-Mascarenhas/entrelinhas/releases/download/v2.3.0-rc.2/Entrelinhas_2.3.0-rc.2_x64-setup.exe",
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRalJIQzJZczR4RHFUVzEzc08vYjdnam9WN0NObCt6cFN0aHRhRGFCRVRDeTNMRWFEcTlwclVuNTN3UGw5cE5JUTU1RWIvQjNqVU9JWHZSTXBLQWxrd1NhdjMvYnlzb0FNPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk1Mzc3NzQ1CWZpbGU6RW50cmVsaW5oYXNfMi4zLjAtcmMuMl94NjQtc2V0dXAuZXhlCXZlcnNpb246Mi4zLjAtcmMuMgpIeG54MkdGWkI2a296eVNhV3AzVTU4NmwyaHhLTXFuSXB5MkhVeWZyeFFsUWh4T0xTcEFuUVYvL28wbEtsSXMwYlZCaDNyRnNWUHZaOVBDRjZkVFdCdz09Cg=="
     }
   }
 }

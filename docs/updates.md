@@ -1,6 +1,8 @@
 # Atualizações manuais
 
-Em **Configurações → Sobre**, **Procurar atualização** pede autorização para acessar o GitHub. Recusar não faz requisições. Cada nova consulta exige outra autorização; abrir o app ou as configurações não procura versões automaticamente.
+Em **Configurações → Sobre**, **Procurar atualização** pede autorização para consultar versões estáveis e pré-releases no GitHub. Recusar não faz requisições. Cada nova consulta exige outra autorização; abrir o app ou as configurações não procura versões automaticamente.
+
+A partir da 2.3.0-rc.2, uma atualização estável mais nova tem prioridade. Na ausência dela, uma pré-release mais nova pode ser oferecida, com aviso vermelho, pergunta explícita e **Esperar versão estável** como ação principal. **Atualizar para pré-release** aparece como uma ação de texto secundária. Esperar descarta a oferta e o pacote pendente sem fazer download; não agenda consultas.
 
 Uma versão disponível é apresentada antes de baixar. No Windows, **Baixar e instalar** verifica o pacote, resolve alterações não salvas e inicia a atualização NSIS. O app é fechado e reaberto em uma nota vazia. O reinício não reapassa os argumentos dos documentos da abertura original ao instalador. Cancelar a decisão sobre um rascunho mantém o pacote verificado em memória para tentar novamente, sem perder o texto. Nenhum rascunho é escrito em uma recuperação automática.
 
@@ -10,7 +12,7 @@ A versão 1.2.0-rc.1 ainda não possui esse mecanismo e precisa receber o instal
 
 ## Manifestos e assinatura
 
-Os arquivos `updates/preview.json` e `updates/stable.json` usam o formato estático do Tauri: versão SemVer, descrição, data e entradas `windows-x86_64` / `linux-x86_64` com URL e conteúdo da assinatura `.sig`. Builds de prévia consultam o primeiro; estáveis consultam o segundo. Uma promoção estável atualiza ambos; uma nova prévia nunca deve substituir o manifesto estável. Versões iguais ou antigas não são oferecidas. Versões estáveis rejeitam prévias.
+Os arquivos `updates/preview.json` e `updates/stable.json` usam o formato estático do Tauri: versão SemVer, descrição, data e entradas `windows-x86_64` / `linux-x86_64` com URL e conteúdo da assinatura `.sig`. A partir da rc.2, a consulta verifica o estável primeiro e consulta o canal de prévias quando não há uma estável mais nova. O canal estável aceita somente versões estáveis. Uma promoção estável atualiza ambos; uma nova prévia nunca substitui o manifesto estável. Versões iguais ou antigas não são oferecidas. Clientes até a 2.2 estável mantêm a busca apenas por estáveis e precisam instalar a rc.2 manualmente para receber essa escolha.
 
 O backend acessa exclusivamente os endpoints HTTPS do repositório oficial. URLs e metadados vêm da consulta guardada no backend, não de um caminho de instalador enviado pela interface. O pacote precisa ser verificado pela chave pública incluída no app e a assinatura precisa vincular a mesma versão anunciada. Falhas não são anunciadas como “atualizado”.
 
@@ -30,7 +32,7 @@ Durante a avaliação remota solicitada pelo usuário, publicar novas alteraçõ
 
 O gerador está em `scripts/prepare-update-manifest.py` e requer as dependências de `scripts/requirements-release.txt`. Exemplo após publicar os artefatos: `python3 scripts/prepare-update-manifest.py --version 2.2.0 --assets artifacts/release-2.2.0 --channel stable --notes "Comandos de escrita, edição direta e modo Zen."`. Ele verifica as assinaturas Ed25519/Minisign, a versão assinada e os hashes publicados pelo GitHub antes de escrever o manifesto.
 
-O canal estável aponta para a 2.2.0 e o canal de prévias para a 2.3.0-rc.1, ambos com Windows e Linux. Clientes estáveis não recebem a prévia automaticamente. Para avaliá-la, instalar o pacote da pré-release; as próximas consultas manuais dessa instalação acompanham o canal de prévias.
+O canal estável aponta para a 2.2.0 e o canal de prévias para a 2.3.0-rc.2, ambos com Windows e Linux. Nenhuma prévia é baixada automaticamente; a rc.2 exige a escolha explícita na ação secundária. Para avaliá-la, instalar o pacote da pré-release; as próximas consultas manuais dessa instalação acompanham o canal de prévias.
 
 ## Testes
 
