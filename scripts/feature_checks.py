@@ -3,6 +3,18 @@
 def exercise(app, output, wait, passed):
     original = app.editor('return editor.getJSON()')
     app.reveal()
+    before_tabs = app.js('return document.querySelectorAll(".tiptap").length')
+    app.double_click('.window-title');wait(lambda: app.js('return !!document.querySelector("[data-inline-rename]")'), 'editar na barra')
+    assert not app.js('return !!document.querySelector(".modal-backdrop")')
+    app.fill('[aria-label="Título do documento"]','Título não confirmado')
+    app.click('[aria-label^="Nova guia"]')
+    wait(lambda: app.js('return document.querySelectorAll(".tiptap").length') == before_tabs+1, 'trocar documento durante edição do título')
+    assert not app.js('return !!document.querySelector("[data-inline-rename]")')
+    app.key(',',ctrl=True);wait(lambda: app.js('return !!document.querySelector(".settings-layout")'), 'atalhos continuam funcionando depois de trocar documento')
+    app.js('document.querySelector(".settings-layout").closest(".modal").querySelector(".modal-header button").click()')
+    app.key('w',ctrl=True);wait(lambda: app.js('return document.querySelectorAll(".tiptap").length') == before_tabs, 'voltar ao documento original')
+    passed('título editado na barra, sem modal, e troca de documento cancela a edição sem bloquear os atalhos')
+
     def settings(section):
         app.reveal(); app.key(',', ctrl=True)
         wait(lambda: app.js('return !!document.querySelector(".settings-layout")'), 'configurações')

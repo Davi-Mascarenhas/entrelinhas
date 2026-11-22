@@ -27,6 +27,7 @@ export function useDocuments(options: Options) {
   const current = useRef(options)
   current.current = options
   const saving = useRef(new Set<string>())
+  const renaming = useRef(new Set<Promise<void>>())
   const saveWaiters = useRef<(() => void)[]>([])
   const opening = useRef(new Set<string>())
 
@@ -141,11 +142,17 @@ export function useDocuments(options: Options) {
   const saveNote = useCallback(async (id: string, saveAs = false): Promise<boolean> => {
     if (saving.current.has(id)) return false
     saving.current.add(id)
+    if (renaming.current.size) {
+      await Promise.allSettled([...renaming.current])
+      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()))
+    }
     const { notes, editors, setNotes, ask, notify, refresh } = current.current
     const note = notes.find((note) => note.id === id),
       editor = editors.current.get(id)
     if (!note || !editor) {
       saving.current.delete(id)
+      if (!saving.current.size && !renaming.current.size)
+        saveWaiters.current.splice(0).forEach((resolve) => resolve())
       return false
     }
     try {
@@ -261,18 +268,16 @@ export function useDocuments(options: Options) {
       return false
     } finally {
       saving.current.delete(id)
-      if (!saving.current.size) saveWaiters.current.splice(0).forEach((resolve) => resolve())
+      if (!saving.current.size && !renaming.current.size)
+        saveWaiters.current.splice(0).forEach((resolve) => resolve())
     }
   }, [])
 
   // Fechar a janela deve aguardar uma gravação manual que já foi solicitada.
-  const waitForSaves = useCallback(
-    (): Promise<void> =>
-      saving.current.size
-        ? new Promise((resolve) => saveWaiters.current.push(resolve))
-        : Promise.resolve(),
-    [],
-  )
+  const waitForSaves = useCallback(async (): Promise<void> => {
+    while (saving.current.size || renaming.current.size)
+      await new Promise<void>((resolve) => saveWaiters.current.push(resolve))
+  }, [])
 
   const mayDiscard = useCallback(
     async (note: Note, forUpdate = false): Promise<boolean> => {
@@ -295,7 +300,7 @@ export function useDocuments(options: Options) {
   const renameNote = useCallback(
     async (id: string, value: string): Promise<void> => {
       const title = documentTitle(value)
-      if (saving.current.size) {
+      if (saving.current.size || renaming.current.size) {
         await waitForSaves()
         await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()))
       }
@@ -308,10 +313,20 @@ export function useDocuments(options: Options) {
         )
         return
       }
-      const renamed = await backend.rename(note.path, title)
-      // Renomear não grava o editor nem altera a versão usada para detectar conflitos.
-      setNotes((existing) => updateNote(existing, id, { ...renamed, titleIsDefault: false }))
-      await refresh()
+      const operation = (async () => {
+        const renamed = await backend.rename(note.path!, title)
+        // Renomear não grava o editor nem altera a versão usada para detectar conflitos.
+        setNotes((existing) => updateNote(existing, id, { ...renamed, titleIsDefault: false }))
+        await refresh()
+      })()
+      renaming.current.add(operation)
+      try {
+        await operation
+      } finally {
+        renaming.current.delete(operation)
+        if (!saving.current.size && !renaming.current.size)
+          saveWaiters.current.splice(0).forEach((resolve) => resolve())
+      }
     },
     [waitForSaves],
   )

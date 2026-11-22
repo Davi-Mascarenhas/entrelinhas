@@ -276,3 +276,62 @@ it('aguarda uma gravação manual em andamento antes de permitir o fechamento', 
   hook.unmount()
   editor.destroy()
 })
+
+it('aguarda uma renomeação confirmada antes de permitir fechar e salvar usa o novo caminho', async () => {
+  const { note, editor, options, hook } = setup()
+  note.path = '/tmp/Antes.md'
+  note.title = 'Antes.md'
+  options.setNotes.mockImplementation((update) => {
+    options.notes = update(options.notes)
+    hook.rerender()
+  })
+  let finish!: (value: Awaited<ReturnType<typeof backend.rename>>) => void
+  vi.mocked(backend.rename).mockImplementation(
+    () =>
+      new Promise((resolve) => {
+        finish = resolve
+      }),
+  )
+  let changing!: Promise<void>, writing!: Promise<boolean>
+  act(() => {
+    changing = hook.result.current.renameNote(note.id, 'Depois')
+  })
+  await vi.waitFor(() => expect(backend.rename).toHaveBeenCalled())
+  let closed = false
+  const waiting = hook.result.current.waitForSaves().then(() => {
+    closed = true
+  })
+  act(() => {
+    writing = hook.result.current.saveNote(note.id)
+  })
+  await Promise.resolve()
+  expect(closed).toBe(false)
+  expect(backend.save).not.toHaveBeenCalled()
+  await act(async () => {
+    finish({ path: '/tmp/Depois.md', title: 'Depois.md' })
+    await changing
+    await writing
+    await waiting
+  })
+  expect(backend.save).toHaveBeenCalledWith(expect.objectContaining({ path: '/tmp/Depois.md' }))
+  expect(closed).toBe(true)
+  hook.unmount()
+  editor.destroy()
+})
+
+it('libera a espera após falha de renomeação e mantém o arquivo original', async () => {
+  const { note, editor, hook } = setup()
+  note.path = '/tmp/Antes.md'
+  note.title = 'Antes.md'
+  vi.mocked(backend.rename).mockRejectedValue({ message: 'Já existe um arquivo.' })
+  await act(async () => {
+    await expect(hook.result.current.renameNote(note.id, 'Depois')).rejects.toEqual({
+      message: 'Já existe um arquivo.',
+    })
+    await hook.result.current.waitForSaves()
+  })
+  expect(backend.save).not.toHaveBeenCalled()
+  expect(note.path).toBe('/tmp/Antes.md')
+  hook.unmount()
+  editor.destroy()
+})

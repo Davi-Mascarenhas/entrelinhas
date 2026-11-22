@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type SetStateAction,
+} from 'react'
 import type { Editor } from '@tiptap/core'
 import { getCurrentWindow } from '@tauri-apps/api/window'
 import { isTauri } from '@tauri-apps/api/core'
@@ -72,11 +79,15 @@ export default function App() {
   notesRef.current = notes
   const preferencesQueue = useRef<Promise<void>>(Promise.resolve())
   const dialog = useDialog()
-  const [activeId, setActiveId] = useState(() => notes[0].id)
+  const [activeId, setActiveIdState] = useState(() => notes[0].id)
   const [immersive, setImmersive] = useState(false),
     [settings, setSettings] = useState(false)
   const [librarySearch, setLibrarySearch] = useState(false)
   const [renameId, setRenameId] = useState<string | null>(null)
+  const setActiveId = useCallback((value: SetStateAction<string>) => {
+    setRenameId(null)
+    setActiveIdState(value)
+  }, [])
   const [toolbar, setToolbar] = useState(false),
     [menu, setMenu] = useState(false)
   const [find, setFind] = useState<'find' | 'replace' | null>(null)
@@ -278,11 +289,7 @@ export default function App() {
     let closing = false
     const unsubscribe = getCurrentWindow().onCloseRequested(async (event) => {
       event.preventDefault()
-      if (
-        updateLock.current ||
-        document.querySelector('[data-shortcut-capture], [data-rename-busy]')
-      )
-        return
+      if (updateLock.current || document.querySelector('[data-shortcut-capture]')) return
       if (closing) return
       closing = true
       try {
