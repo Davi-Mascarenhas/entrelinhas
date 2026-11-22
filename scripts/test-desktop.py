@@ -380,7 +380,7 @@ def main():
             app.editor('editor.commands.insertContent("k".repeat(1000));return true')
             assert app.js('const scroll=document.querySelector(".editor-scroll:not(.inactive)");return scroll.scrollWidth<=scroll.clientWidth+1'), 'Linhas longas não devem escapar da coluna.'
             app.reveal()
-            passed('imersão, cursor em bloco, posição estável e Esc')
+            passed('modo Zen, cursor em bloco, posição estável e Esc')
             app.click('[aria-label="Fechar aplicativo"]')
             time.sleep(.3)
             app.stop()
@@ -760,6 +760,7 @@ def main():
             app.start(choose_theme=False)
             assert app.js('return !!document.querySelector(".welcome-modal")')
             app.call('/window/rect', {'width': 720, 'height': 480})
+            app.click('.welcome-actions .primary')
             app.click('.welcome-actions .primary')
             assert app.js('return document.querySelector(arguments[0]).getAttribute("aria-pressed")', '[aria-label="Usar tema Sépia Noturno"]') == 'true'
             app.click('.welcome-actions .primary')

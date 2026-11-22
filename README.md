@@ -6,6 +6,26 @@ Entrelinhas é um editor **desktop de verdade**, feito com Tauri 2, React e Type
 
 ![Entrelinhas — Sépia Noturno](docs/screenshots/sepia.png)
 
+## Idiomas e atalhos (prévia 2.1)
+
+A versão 2.0 é a distribuição estável para Windows e Linux. A prévia 2.1 adiciona
+português brasileiro, inglês, japonês, chinês simplificado e alemão a toda a interface.
+
+No Windows, o idioma é escolhido na primeira janela do assistente de instalação e
+usado na primeira abertura. As três telas seguintes apresentam o aplicativo, o tema
+e a escolha opcional de aplicativo padrão. No Linux, a apresentação tem quatro telas:
+idioma, boas-vindas, tema e aplicativo padrão. Instalações existentes preservam suas
+preferências e não repetem a apresentação.
+
+O idioma pode ser alterado em **Configurações → Linguagem**. A mudança é imediata e
+não traduz nomes de projetos, arquivos ou conteúdo dos documentos. As fontes dos
+menus japoneses e chineses acompanham o aplicativo e funcionam offline.
+
+**Ctrl+,** abre as configurações, inclusive durante o modo Zen. Em
+**Configurações → Atalhos**, clique em uma combinação, pressione as novas teclas e
+clique em **Salvar**. Duplicatas e combinações reservadas são recusadas. **Esc** cancela
+a captura. As dicas e os menus passam a exibir a combinação escolhida.
+
 ## Suas palavras, no seu tempo
 
 - Inicialização normal em uma nota nova, vazia e mantida em memória. Ao abrir pelo explorador, recebe os documentos solicitados. Escrita sem o cabeçalho decorativo, começando mais acima.
@@ -17,7 +37,7 @@ Entrelinhas é um editor **desktop de verdade**, feito com Tauri 2, React e Type
 - Projetos lógicos com nome, cor, ícone opcional e referências a documentos externos.
 - [A lateral](docs/screenshots/projects-only.png) oferece acesso rápido somente aos arquivos vinculados a projetos. Arquivos avulsos podem ser abertos e salvos normalmente; vincular ou desvincular um projeto não modifica o arquivo no disco.
 - Guias ocultas com uma única nota; botão **Nova guia** e **Ctrl+T** revelam a faixa ao abrir a segunda. Guias reordenáveis, com conteúdo, seleção e histórico preservados ao alternar.
-- Interface imersiva automática, alternância manual, acesso por Esc e aproximação das bordas.
+- Modo Zen automático, alternância manual, acesso por Esc e aproximação das bordas.
 - Apresentação inicial em três páginas: boas-vindas, tema e aplicativo padrão opcional. Temas Claro, Escuro e Sépia Noturno, com prévia imediata e respeito às preferências de instalações anteriores.
 - Coluna de escrita centralizada na janela inteira, com limite de largura e posição estável ao esconder os controles.
 - Seletores próprios para projeto, cor, fonte, formato, layout e formatação, acompanhando os três temas. Painéis preservam o fundo desfocado.
@@ -66,7 +86,7 @@ As capturas abaixo são da janela Tauri real, executada no Ubuntu 26.10 com Wayl
 | ------------------------------------ | ------------------------------------ | -------------------------------------------- |
 | ![Claro](docs/screenshots/light.png) | ![Escuro](docs/screenshots/dark.png) | ![Sépia Noturno](docs/screenshots/sepia.png) |
 
-[Ver o modo imersivo](docs/screenshots/imersivo.png) · [Boas-vindas](docs/screenshots/welcome.png) · [Escolha inicial de tema](docs/screenshots/welcome-theme.png) · [Escolha de aplicativo padrão](docs/screenshots/welcome-default.png) · [Padrão nas configurações](docs/screenshots/default-app.png) · [Seletor de cores no Sépia Noturno](docs/screenshots/color-sepia.png) · [Seleção de projeto](docs/screenshots/project-picker.png) · [Menus temáticos](docs/screenshots/select-sepia.png) · [Formatação inferior](docs/screenshots/formatting-bottom.png) · [Dicas de botões](docs/screenshots/tooltip-sepia.png) · [Edição do título](docs/screenshots/rename-title.png) · [Busca com mais espaço](docs/screenshots/search-spacing.png) · [Página inicial sem cabeçalho](docs/screenshots/blank.png).
+[Ver o modo Zen](docs/screenshots/imersivo.png) · [Boas-vindas](docs/screenshots/welcome.png) · [Escolha inicial de tema](docs/screenshots/welcome-theme.png) · [Escolha de aplicativo padrão](docs/screenshots/welcome-default.png) · [Padrão nas configurações](docs/screenshots/default-app.png) · [Seletor de cores no Sépia Noturno](docs/screenshots/color-sepia.png) · [Seleção de projeto](docs/screenshots/project-picker.png) · [Menus temáticos](docs/screenshots/select-sepia.png) · [Formatação inferior](docs/screenshots/formatting-bottom.png) · [Dicas de botões](docs/screenshots/tooltip-sepia.png) · [Edição do título](docs/screenshots/rename-title.png) · [Busca com mais espaço](docs/screenshots/search-spacing.png) · [Página inicial sem cabeçalho](docs/screenshots/blank.png).
 
 Os menus de seleção e as dicas usam as cores do tema do aplicativo. Os seletores de opções permitem navegar com setas, Home/End, digitar o início do nome e confirmar com Enter; Esc cancela a seleção sem fechar as configurações. Os diálogos do sistema para abrir e salvar arquivos acompanham o modo claro ou escuro; Sépia Noturno usa a variante escura do GTK.
 
@@ -208,8 +228,8 @@ python3 scripts/test-desktop.py --binary src-tauri/target/release/entrelinhas
 
 Os números abaixo descrevem a suíte Linux. A validação Windows tem relatório próprio nos artefatos da rotina Windows e na release estável.
 
-- **95 testes TypeScript:** notas, abas, descarte, preferências, atalhos, Markdown, formatação, TXT, Unicode, busca, imagens, gravação explícita, conflitos, espera de gravações, centralização com diferentes painéis, seletores próprios por mouse e teclado, dicas, guias sob demanda, abertura sem perder texto, apresentação em três páginas, recusa do padrão, tratamento de falhas de associação, migração de preferências, fila de arquivos externos, edição de títulos, nome sugerido ao salvar e gestos da barra superior com exclusão dos botões e seus ícones, cliques sem arraste e cancelamento de gestos pendentes.
-- **18 testes Rust:** gravação atômica, conflitos, UTF-8, nomes internacionais, imagens relativas, arquivos somente leitura, recursos inválidos, projetos em Downloads, exclusão sem apagar documentos, localização, busca, renomeação sem sobrescrever, preservação de imagens e projeto, reversão em caso de falha no registro, argumentos do explorador e associações MIME em perfis isolados para as instalações local e Debian.
+- **109 testes TypeScript:** notas, abas, descarte, preferências, atalhos, Markdown, formatação, TXT, Unicode, busca, imagens, gravação explícita, conflitos, espera de gravações, centralização com diferentes painéis, seletores próprios por mouse e teclado, dicas, guias sob demanda, abertura sem perder texto, apresentação em três páginas, recusa do padrão, tratamento de falhas de associação, migração de preferências, fila de arquivos externos, edição de títulos, nome sugerido ao salvar e gestos da barra superior com exclusão dos botões e seus ícones, cliques sem arraste e cancelamento de gestos pendentes.
+- **19 testes Rust no Linux:** gravação atômica, conflitos, UTF-8, nomes internacionais, imagens relativas, arquivos somente leitura, recursos inválidos, projetos em Downloads, exclusão sem apagar documentos, localização, busca, renomeação sem sobrescrever, preservação de imagens e projeto, reversão em caso de falha no registro, argumentos do explorador e associações MIME em perfis isolados para as instalações local e Debian.
 - **38 verificações desktop:** inicialização, ocultação sem deslocamento, Esc, descarte após reiniciar, Ctrl+S com seletor GNOME, associação externa, abas, busca/substituição, colagem de imagens, temas, cursores, persistência, layout, F11, conflitos, busca global, confirmação opcional, TXT, paleta de cores nos três temas, primeira abertura, centralização ao redimensionar, formatação inferior sem moldura, menus de tabela, dicas nos três temas, tamanho da janela após reiniciar, duplo clique nas áreas livres dos dois lados da barra e entre os controles, arraste apenas ao mover o mouse pressionado, títulos, espaçamento dos campos, abertura/salvamento pelo Nautilus, registro em Abrir com, abertura pelo sistema com a janela aberta ou fechada, aceitação e recusa do padrão, apresentação na menor janela e atalhos na lateral apenas para arquivos vinculados a projetos.
 - O roteiro desktop também passou no **executável otimizado de produção, com o Vite desligado**.
 - Documento de **280 mil caracteres** carregado e editado no roteiro desktop. O tempo medido inclui definir o conteúdo e inserir texto; não representa um benchmark de latência por tecla.
@@ -236,7 +256,7 @@ Os testes verificam Unicode e o tratamento de eventos de composição. **Uma ses
 | Pesquisar / substituir              | Ctrl+F / Ctrl+H                 |
 | Negrito / itálico / sublinhado      | Ctrl+B / Ctrl+I / Ctrl+U        |
 | Desfazer / refazer                  | Ctrl+Z / Ctrl+Shift+Z           |
-| Modo imersivo                       | Ctrl+Shift+F                    |
+| Modo Zen                       | Ctrl+Shift+F                    |
 | Revelar interface                   | Esc                             |
 | Menu do documento                   | Alt+F; setas para navegar       |
 | Tela cheia                          | F11                             |
