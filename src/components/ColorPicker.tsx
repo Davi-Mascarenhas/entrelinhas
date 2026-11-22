@@ -1,8 +1,8 @@
 import { tr } from '../i18n'
-import { useState, type PointerEvent } from 'react'
+import { useRef, useState, type PointerEvent } from 'react'
 import { Check, Palette } from 'lucide-react'
 import { hexToHsv, hsvToHex, normalizeColor, type HsvColor } from '../core/colors'
-import { Modal } from './ui'
+import { AnchoredPanel } from './AnchoredPanel'
 const palette = [
   '#768c66',
   '#be9a69',
@@ -30,24 +30,29 @@ interface Props {
   textTool?: boolean
 }
 export function ColorPicker({ label, value, onChange, onClear, onDone, textTool = false }: Props) {
+  const trigger = useRef<HTMLButtonElement>(null)
   const [open, setOpen] = useState(false)
   const [hsv, setHsv] = useState(() => hexToHsv(value))
   const [hex, setHex] = useState(normalizeColor(value) ?? '#768c66')
   const selected = normalizeColor(hex)
-  const close = () => {
+  const close = (restore = false) => {
     setOpen(false)
-    if (onDone)
+    if (restore)
       requestAnimationFrame(() => {
-        if (!document.querySelector('[role=dialog]')) onDone()
+        if (onDone) onDone()
+        else trigger.current?.focus()
       })
   }
   const update = (color: HsvColor) => {
     setHsv(color)
-    setHex(hsvToHex(color))
+    const value = hsvToHex(color)
+    setHex(value)
+    onChange(value)
   }
-  const choose = (color: string) => {
+  const choose = (color: string, apply = true) => {
     setHex(color)
     setHsv(hexToHsv(color))
+    if (apply) onChange(color)
   }
   const point = (event: PointerEvent<HTMLButtonElement>) => {
     const rect = event.currentTarget.getBoundingClientRect()
@@ -60,10 +65,10 @@ export function ColorPicker({ label, value, onChange, onClear, onDone, textTool 
   return (
     <>
       <button
+        ref={trigger}
         type="button"
         className={textTool ? 'color-tool' : 'color-picker-trigger'}
         aria-label={label}
-        aria-haspopup="dialog"
         aria-expanded={open}
         data-tooltip={label}
         style={
@@ -74,7 +79,11 @@ export function ColorPicker({ label, value, onChange, onClear, onDone, textTool 
             : undefined
         }
         onClick={() => {
-          choose(normalizeColor(value) ?? '#768c66')
+          if (open) {
+            close(true)
+            return
+          }
+          choose(normalizeColor(value) ?? '#768c66', false)
           setOpen(true)
         }}
       >
@@ -94,7 +103,13 @@ export function ColorPicker({ label, value, onChange, onClear, onDone, textTool 
         )}
       </button>
       {open && (
-        <Modal title={label} onClose={close}>
+        <AnchoredPanel
+          anchor={trigger}
+          label={label}
+          className="color-palette"
+          onClose={(reason) => close(reason === 'escape')}
+        >
+          <h3>{label}</h3>
           <div className="color-picker-body">
             <button
               type="button"
@@ -202,14 +217,16 @@ export function ColorPicker({ label, value, onChange, onClear, onDone, textTool 
                   onChange={(event) => {
                     setHex(event.target.value)
                     const color = normalizeColor(event.target.value)
-                    if (color) setHsv(hexToHsv(color))
+                    if (color) {
+                      setHsv(hexToHsv(color))
+                      onChange(color)
+                    }
                   }}
                   onKeyDown={(event) => {
                     if (event.key === 'Enter' && selected) {
                       event.preventDefault()
                       event.stopPropagation()
-                      onChange(selected)
-                      close()
+                      close(true)
                     }
                   }}
                 />
@@ -220,38 +237,20 @@ export function ColorPicker({ label, value, onChange, onClear, onDone, textTool 
                 {tr('Use um código como #768C66.')}
               </p>
             )}
-            <div className="modal-actions">
-              {onClear && (
-                <button
-                  className="color-reset"
-                  type="button"
-                  onClick={() => {
-                    onClear()
-                    close()
-                  }}
-                >
-                  {tr('Cor do tema')}
-                </button>
-              )}
-              <button type="button" onClick={close}>
-                {tr('Cancelar')}
-              </button>
+            {onClear && (
               <button
+                className="color-reset"
                 type="button"
-                className="primary"
-                disabled={!selected}
                 onClick={() => {
-                  if (selected) {
-                    onChange(selected)
-                    close()
-                  }
+                  onClear()
+                  close(true)
                 }}
               >
-                {tr('Aplicar cor')}
+                {tr('Cor do tema')}
               </button>
-            </div>
+            )}
           </div>
-        </Modal>
+        </AnchoredPanel>
       )}
     </>
   )

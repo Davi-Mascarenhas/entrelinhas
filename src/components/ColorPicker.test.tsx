@@ -1,24 +1,28 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { ColorPicker } from './ColorPicker'
-
 afterEach(cleanup)
-it('escolhe uma cor no painel próprio e só aplica ao confirmar', () => {
+it('aplica a cor imediatamente em um painel junto ao botão, sem modal nem confirmação', () => {
   const change = vi.fn()
   render(<ColorPicker label="Cor do projeto" value="#768c66" onChange={change} />)
   fireEvent.click(screen.getByRole('button', { name: 'Cor do projeto' }))
-  expect(screen.getByRole('dialog', { name: 'Cor do projeto' })).toBeInTheDocument()
+  expect(screen.getByRole('region', { name: 'Cor do projeto' })).toBeInTheDocument()
+  expect(screen.queryByRole('dialog')).toBeNull()
   expect(document.querySelector('input[type=color]')).toBeNull()
+  fireEvent.click(screen.getByRole('button', { name: 'Usar cor #be9a69' }))
+  expect(change).toHaveBeenLastCalledWith('#be9a69')
   fireEvent.change(screen.getByLabelText('Cor em hexadecimal'), { target: { value: '#bc9a69' } })
-  expect(change).not.toHaveBeenCalled()
-  fireEvent.click(screen.getByRole('button', { name: 'Aplicar cor' }))
-  expect(change).toHaveBeenCalledExactlyOnceWith('#bc9a69')
+  expect(change).toHaveBeenLastCalledWith('#bc9a69')
+  expect(screen.queryByRole('button', { name: 'Aplicar cor' })).toBeNull()
 })
-it('cancelar não altera a cor e valores inválidos não podem ser aplicados', () => {
+it('ignora valores inválidos e Esc fecha só a paleta, mantendo a cor já aplicada', () => {
   const change = vi.fn()
-  render(<ColorPicker label="Cor do texto" value="rgb(12, 34, 56)" onChange={change} textTool />)
+  render(<ColorPicker label="Cor do texto" value="#768c66" onChange={change} />)
   fireEvent.click(screen.getByRole('button', { name: 'Cor do texto' }))
   fireEvent.change(screen.getByLabelText('Cor em hexadecimal'), { target: { value: '#12' } })
-  expect(screen.getByRole('button', { name: 'Aplicar cor' })).toBeDisabled()
-  fireEvent.click(screen.getByRole('button', { name: 'Cancelar' }))
   expect(change).not.toHaveBeenCalled()
+  fireEvent.change(screen.getByLabelText('Cor em hexadecimal'), { target: { value: '#123456' } })
+  expect(change).toHaveBeenLastCalledWith('#123456')
+  fireEvent.keyDown(document, { key: 'Escape' })
+  expect(screen.queryByRole('region')).toBeNull()
+  expect(change).toHaveBeenCalledTimes(1)
 })

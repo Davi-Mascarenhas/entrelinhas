@@ -2,7 +2,7 @@ import { tr } from '../i18n'
 import { isTauri } from '@tauri-apps/api/core'
 import { getCurrentWindow } from '@tauri-apps/api/window'
 import { Minus, Square, X } from 'lucide-react'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
 import type { Note } from '../core/types'
 import { noteTitle } from '../core/notes'
 import { IconButton } from './ui'
@@ -10,8 +10,10 @@ export function Titlebar({
   note,
   onRename,
   onError,
+  rename,
 }: {
   note: Note
+  rename?: ReactNode
   onRename: () => void
   onError: (message: string) => void
 }) {
@@ -68,23 +70,25 @@ export function Titlebar({
       <div className="brand">
         <span>Entrelinhas</span>
       </div>
-      <button
-        type="button"
-        className="window-title"
-        aria-label={tr('Editar título do documento')}
-        data-tooltip={tr('Editar título')}
-        data-shortcut={tr('Duplo clique')}
-        onDoubleClick={(event) => {
-          event.stopPropagation()
-          onRename()
-        }}
-        onClick={(event) => {
-          if (event.detail === 0) onRename()
-        }}
-      >
-        {noteTitle(note)}
-        <span> · {note.format.toUpperCase()}</span>
-      </button>
+      {rename ?? (
+        <button
+          type="button"
+          className="window-title"
+          aria-label={tr('Editar título do documento')}
+          data-tooltip={tr('Editar título')}
+          data-shortcut={tr('Duplo clique')}
+          onDoubleClick={(event) => {
+            event.stopPropagation()
+            onRename()
+          }}
+          onClick={(event) => {
+            if (event.detail === 0) onRename()
+          }}
+        >
+          {noteTitle(note)}
+          <span> · {note.format.toUpperCase()}</span>
+        </button>
+      )}
       <div className="window-controls">
         <IconButton label={tr('Minimizar')} onClick={() => run('minimize')}>
           <Minus size={14} />

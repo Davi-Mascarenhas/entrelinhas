@@ -1905,6 +1905,7 @@ body,
   overflow-y: auto;
 }
 .color-plane {
+  transition: none;
   width: 100%;
   height: 165px;
   padding: 0;
@@ -2268,4 +2269,96 @@ body,
 :root:lang(zh-CN) :is(.settings-content h3, .welcome-body h3, .welcome-note > span) {
   font-family: 'Entrelinhas UI SC', sans-serif;
   letter-spacing: 0;
+}
+
+/* Edição local e painéis leves, sem bloquear a janela. */
+.anchored-panel {
+  position: fixed;
+  z-index: 170;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  background: var(--surface);
+  color: var(--text);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.color-palette {
+  width: min(292px, calc(100vw - 24px));
+}
+.color-palette h3 {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 0 0 12px;
+}
+.color-palette .color-picker-body {
+  padding: 0;
+}
+.color-palette .color-plane {
+  height: 128px;
+}
+.color-palette .color-hue {
+  margin-block: 10px;
+}
+.color-palette .color-swatches {
+  gap: 5px;
+  margin: 12px 0;
+}
+.color-palette .color-swatches button {
+  width: 25px;
+  height: 25px;
+}
+.color-palette .color-hex-field {
+  margin-top: 12px;
+}
+.color-palette .color-reset {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+}
+.inline-rename {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow: visible;
+  width: min(440px, 45%);
+  padding: 2px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--accent);
+  z-index: 45;
+}
+.inline-rename input {
+  flex: 1;
+  width: 0;
+  min-width: 0;
+  padding: 5px 8px;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  font-size: 12px;
+}
+.inline-rename .icon-button {
+  flex: 0 0 25px;
+  width: 25px;
+  height: 25px;
+}
+.inline-rename .rename-error {
+  position: absolute;
+  top: calc(100% + 7px);
+  left: 0;
+  width: 100%;
+  padding: 10px 12px;
+  white-space: normal;
+  color: var(--danger);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.select-choice-icon {
+  display: none;
 }

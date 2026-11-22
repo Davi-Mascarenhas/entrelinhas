@@ -278,7 +278,11 @@ export default function App() {
     let closing = false
     const unsubscribe = getCurrentWindow().onCloseRequested(async (event) => {
       event.preventDefault()
-      if (updateLock.current || document.querySelector('[data-shortcut-capture]')) return
+      if (
+        updateLock.current ||
+        document.querySelector('[data-shortcut-capture], [data-rename-busy]')
+      )
+        return
       if (closing) return
       closing = true
       try {
@@ -449,6 +453,7 @@ export default function App() {
       }
       if (
         !preferences.onboardingCompleted ||
+        renameId ||
         settings ||
         dialog.visible ||
         librarySearch ||
@@ -580,6 +585,15 @@ export default function App() {
     >
       <Titlebar
         note={activeNote}
+        rename={
+          renameId === activeId ? (
+            <RenameDocument
+              note={activeNote}
+              onRename={(title) => fileOps.renameNote(activeId, title)}
+              onClose={() => setRenameId(null)}
+            />
+          ) : undefined
+        }
         onError={notify}
         onRename={() => {
           setRenameId(activeId)
@@ -1050,13 +1064,6 @@ export default function App() {
             </div>
           </form>
         </Modal>
-      )}
-      {renameId && notes.find((note) => note.id === renameId) && (
-        <RenameDocument
-          note={notes.find((note) => note.id === renameId)!}
-          onRename={(title) => fileOps.renameNote(renameId, title)}
-          onClose={() => setRenameId(null)}
-        />
       )}
       {dialog.element}
       <WindowResize onError={notify} />

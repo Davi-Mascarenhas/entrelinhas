@@ -2,6 +2,8 @@ import { tr } from '../i18n'
 import { useEffect, useState } from 'react'
 import type { Editor } from '@tiptap/core'
 import {
+  Type,
+  CaseSensitive,
   Bold,
   Italic,
   Underline,
@@ -98,6 +100,7 @@ export function Formatting({
     >
       <Select
         label={tr('Estilo do parágrafo')}
+        icon={<Type size={16} />}
         value={
           editor.isActive('heading', {
             level: 1,
@@ -162,10 +165,10 @@ export function Formatting({
             value={editor.getAttributes('textStyle').color || '#61755b'}
             textTool
             onChange={(color) => {
-              editor.chain().focus().setColor(color).run()
+              editor.chain().setColor(color).run()
             }}
             onClear={() => {
-              editor.chain().focus().unsetColor().run()
+              editor.chain().unsetColor().run()
             }}
             onDone={() => {
               editor.commands.focus()
@@ -173,6 +176,7 @@ export function Formatting({
           />
           <Select
             label={tr('Tamanho do texto selecionado')}
+            icon={<CaseSensitive size={16} />}
             value={editor.getAttributes('textStyle').fontSize || ''}
             onChange={(value) =>
               value
@@ -279,6 +283,7 @@ export function Formatting({
           {editor.isActive('table') && (
             <Select
               label={tr('Editar tabela')}
+              icon={<Table2 size={16} />}
               value=""
               onChange={(value) => {
                 const commands = editor.chain().focus()

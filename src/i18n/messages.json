@@ -1711,5 +1711,165 @@
   ],
   ["Salvando…", "Saving…", "保存中…", "正在保存…", "Wird gespeichert…"],
   ["{count} palavra", "{count} word", "{count}語", "{count} 词", "{count} Wort"],
-  ["{count} caractere", "{count} character", "{count}文字", "{count} 个字符", "{count} Zeichen"]
+  ["{count} caractere", "{count} character", "{count}文字", "{count} 个字符", "{count} Zeichen"],
+  ["Salvar título", "Save title", "タイトルを保存", "保存标题", "Titel speichern"],
+  [
+    "Barra de formatação",
+    "Formatting toolbar",
+    "書式ツールバー",
+    "格式工具栏",
+    "Formatierungsleiste"
+  ],
+  [
+    "Ferramentas no seu lugar.",
+    "Tools where you need them.",
+    "使いやすい場所にツールを。",
+    "工具，放在顺手的地方。",
+    "Werkzeuge am richtigen Platz."
+  ],
+  [
+    "Escolha onde a barra de formatação acompanha sua escrita.",
+    "Choose where the formatting toolbar appears.",
+    "書式ツールバーの位置を選びましょう。",
+    "选择格式工具栏的位置。",
+    "Wähle, wo die Formatierungsleiste erscheint."
+  ],
+  [
+    "Posição da formatação",
+    "Toolbar position",
+    "ツールバーの位置",
+    "工具栏位置",
+    "Position der Formatierungsleiste"
+  ],
+  ["Na parte de baixo", "At the bottom", "下部", "底部", "Unten"],
+  ["Na lateral", "On the side", "側面", "侧边", "Seitlich"],
+  [
+    "Na lateral, a formatação fica do lado oposto aos projetos.",
+    "The side toolbar sits opposite your projects.",
+    "側面に置く場合は、プロジェクトと反対側に表示します。",
+    "侧边工具栏位于项目栏的另一侧。",
+    "Die seitliche Leiste liegt gegenüber deinen Projekten."
+  ],
+  [
+    "Ocultar formatação no modo Zen",
+    "Hide formatting in Zen mode",
+    "Zenモードで書式ツールを隠す",
+    "在禅模式中隐藏格式工具栏",
+    "Formatierung im Zen-Modus ausblenden"
+  ],
+  [
+    "Por padrão, as ferramentas continuam disponíveis no modo Zen.",
+    "By default, tools stay available in Zen mode.",
+    "標準では、Zenモードでもツールを表示します。",
+    "默认情况下，禅模式中仍显示工具栏。",
+    "Standardmäßig bleiben die Werkzeuge im Zen-Modus verfügbar."
+  ],
+  [
+    "Esc alterna o modo Zen quando há texto. Os painéis abertos têm prioridade. Para revelar os controles com o mouse, aproxime o ponteiro da borda da janela.",
+    "Esc toggles Zen mode when there is text. Open panels close first. Move the pointer to the window edge to reveal the controls.",
+    "文章があるときは、EscでZenモードを切り替えます。開いているパネルがある場合は、先に閉じます。ポインターをウィンドウの端に近づけると操作ボタンが現れます。",
+    "有文字时按 Esc 切换禅模式。打开的面板会优先关闭。将指针移至窗口边缘可显示控件。",
+    "Esc schaltet bei vorhandenem Text den Zen-Modus um. Offene Bereiche werden zuerst geschlossen. Bewege den Zeiger an den Fensterrand, um die Bedienelemente einzublenden."
+  ],
+  ["Comandos de escrita", "Writing commands", "入力コマンド", "写作命令", "Schreibbefehle"],
+  ["Transformar em", "Turn into", "ブロックの種類", "转换为", "Umwandeln in"],
+  [
+    "Nenhum comando encontrado. Esc mantém o texto.",
+    "No commands found. Esc keeps your text.",
+    "コマンドが見つかりません。Escで文字を残して閉じます。",
+    "未找到命令。按 Esc 保留文本并关闭。",
+    "Keine Befehle gefunden. Esc behält deinen Text."
+  ],
+  [
+    "↑ ↓ escolher · Enter aplicar · Esc fechar",
+    "↑ ↓ choose · Enter apply · Esc close",
+    "↑ ↓ 選択 · Enter 適用 · Esc 閉じる",
+    "↑ ↓ 选择 · Enter 应用 · Esc 关闭",
+    "↑ ↓ wählen · Enter anwenden · Esc schließen"
+  ],
+  ["Lista de tarefas", "To-do list", "タスクリスト", "任务清单", "Aufgabenliste"],
+  [
+    "Uma lista para marcar o que falta fazer.",
+    "A list to check off what needs doing.",
+    "やることにチェックを付けるリスト。",
+    "用清单勾选待办事项。",
+    "Eine Liste zum Abhaken deiner Aufgaben."
+  ],
+  [
+    "Organize informações em linhas e colunas.",
+    "Organize information in rows and columns.",
+    "行と列で情報を整理。",
+    "按行和列整理信息。",
+    "Informationen in Zeilen und Spalten ordnen."
+  ],
+  [
+    "Ideias em uma lista simples.",
+    "Ideas in a simple list.",
+    "アイデアをシンプルなリストに。",
+    "用简单列表记录想法。",
+    "Ideen in einer einfachen Liste."
+  ],
+  [
+    "Uma sequência, passo a passo.",
+    "A sequence, step by step.",
+    "順番に、一歩ずつ。",
+    "按顺序，一步一步来。",
+    "Eine Abfolge, Schritt für Schritt."
+  ],
+  [
+    "Um título grande para começar.",
+    "A large heading to begin.",
+    "大きな見出しで始める。",
+    "以大标题开始。",
+    "Eine große Überschrift für den Anfang."
+  ],
+  [
+    "Divida o texto em seções.",
+    "Divide your text into sections.",
+    "文章をセクションに分ける。",
+    "将文本划分为章节。",
+    "Teile deinen Text in Abschnitte."
+  ],
+  [
+    "Um título menor para os detalhes.",
+    "A smaller heading for the details.",
+    "細かな内容には小さな見出しを。",
+    "用小标题呈现细节。",
+    "Eine kleinere Überschrift für Details."
+  ],
+  [
+    "Dê espaço a uma passagem especial.",
+    "Give a special passage some space.",
+    "大切な一節を際立たせる。",
+    "让特别的段落更突出。",
+    "Gib einer besonderen Passage Raum."
+  ],
+  [
+    "Texto com espaçamento fixo.",
+    "Text with fixed spacing.",
+    "等幅で表示するテキスト。",
+    "使用等宽字体显示文本。",
+    "Text mit fester Zeichenbreite."
+  ],
+  [
+    "Uma pausa entre duas ideias.",
+    "A pause between two ideas.",
+    "二つのアイデアの間にひと休み。",
+    "在两个想法之间稍作停顿。",
+    "Eine Pause zwischen zwei Ideen."
+  ],
+  [
+    "Volte ao texto comum.",
+    "Return to regular text.",
+    "通常のテキストに戻す。",
+    "回到普通文本。",
+    "Zurück zu normalem Text."
+  ],
+  [
+    "F11 · tela cheia · Esc · alternar modo Zen",
+    "F11 · full screen · Esc · toggle Zen mode",
+    "F11 · 全画面 · Esc · Zenモードを切り替え",
+    "F11 · 全屏 · Esc · 切换禅模式",
+    "F11 · Vollbild · Esc · Zen-Modus umschalten"
+  ]
 ]

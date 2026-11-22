@@ -1,4 +1,4 @@
-import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
+import { type ReactNode, useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Check, ChevronDown } from 'lucide-react'
 
@@ -13,8 +13,10 @@ export function Select({
   value,
   options,
   onChange,
+  icon,
 }: {
   label: string
+  icon?: ReactNode
   value: string
   options: Option[]
   onChange: (value: string) => void
@@ -152,7 +154,12 @@ export function Select({
           }
         }}
       >
-        <span>{options[selected]?.label ?? value}</span>
+        <span className="select-label">{options[selected]?.label ?? value}</span>
+        {icon && (
+          <span className="select-choice-icon" aria-hidden="true">
+            {icon}
+          </span>
+        )}
         <ChevronDown size={13} aria-hidden="true" />
       </button>
       {open &&
