@@ -23,7 +23,6 @@ import { LanguageChoices } from './LanguageChoices'
 import { formatShortcut, tr } from '../i18n'
 import type { Preferences, ShortcutAction } from '../core/types'
 const sections = [
-  { id: 'toolbar', label: 'Barra de formatação', icon: PanelBottom },
   {
     id: 'appearance',
     label: 'Aparência',
@@ -39,6 +38,7 @@ const sections = [
     label: 'Cursor',
     icon: MousePointer2,
   },
+  { id: 'toolbar', label: 'Barra de formatação', icon: PanelBottom },
   {
     id: 'files',
     label: 'Arquivos',
@@ -422,22 +422,43 @@ export function Settings({
               <p className="muted">
                 {tr('Escolha onde a barra de formatação acompanha sua escrita.')}
               </p>
-              <label className="setting-row">
-                <span>{tr('Posição da formatação')}</span>
-                <Select
-                  label={tr('Posição da formatação')}
-                  value={p.formattingPosition}
-                  onChange={(formattingPosition) =>
-                    onChange({
-                      formattingPosition: formattingPosition as Preferences['formattingPosition'],
-                    })
-                  }
-                  options={[
-                    { value: 'bottom', label: tr('Na parte de baixo') },
-                    { value: 'side', label: tr('Na lateral') },
-                  ]}
-                />
-              </label>
+              <h4>{tr('Posição da formatação')}</h4>
+              <div
+                className="toolbar-choices"
+                role="group"
+                aria-label={tr('Posição da formatação')}
+              >
+                {(['bottom', 'side'] as const).map((position) => (
+                  <button
+                    type="button"
+                    key={position}
+                    data-formatting-position={position}
+                    className={p.formattingPosition === position ? 'selected' : ''}
+                    aria-pressed={p.formattingPosition === position}
+                    onClick={() => onChange({ formattingPosition: position })}
+                  >
+                    <span
+                      className={`toolbar-preview toolbar-preview-${position} projects-${p.sidebarSide}`}
+                      aria-hidden="true"
+                    >
+                      <span className="preview-projects" />
+                      <span className="preview-lines">
+                        <i />
+                        <i />
+                        <i />
+                      </span>
+                      <span className="preview-tools">
+                        <i />
+                        <i />
+                        <i />
+                        <i />
+                        <i />
+                      </span>
+                    </span>
+                    <span>{tr(position === 'bottom' ? 'Na parte de baixo' : 'Na lateral')}</span>
+                  </button>
+                ))}
+              </div>
               <p className="muted small">
                 {tr('Na lateral, a formatação fica do lado oposto aos projetos.')}
               </p>

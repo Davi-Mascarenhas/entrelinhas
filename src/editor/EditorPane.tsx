@@ -6,6 +6,8 @@ import type { Note, Preferences } from '../core/types'
 import { editorExtensions } from './extensions'
 import { SlashMenu } from './SlashMenu'
 import { Caret } from './Caret'
+import { LinkPreview } from './LinkPreview'
+import { useEditorZoom } from './useEditorZoom'
 import type { SlashRange } from './slash'
 
 interface Props {
@@ -20,10 +22,13 @@ interface Props {
   onInsertLink: (editor: Editor, range: SlashRange) => void
   onStats: (text: string) => void
   onSelection: (rect: DOMRect | null) => void
+  onError: (message: string) => void
+  onZoom: (zoom: number) => void
 }
 
 export function EditorPane(props: Props) {
   const language = useLanguage()
+  const scroll = useRef<HTMLDivElement>(null)
   const current = useRef(props)
   current.current = props
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -87,6 +92,7 @@ export function EditorPane(props: Props) {
   })
   const editorRef = useRef<Editor | null>(null)
   editorRef.current = editor
+  useEditorZoom(scroll, editor, props.active, props.preferences.zoom, props.onZoom)
   function currentEditor() {
     return editorRef.current
   }
@@ -117,6 +123,7 @@ export function EditorPane(props: Props) {
   }, [editor, language])
   return (
     <div
+      ref={scroll}
       className={`editor-scroll ${props.active ? '' : 'inactive'}`}
       data-cursor={props.preferences.cursor}
     >
@@ -133,6 +140,7 @@ export function EditorPane(props: Props) {
       {editor && props.active && (
         <Caret editor={editor} enabled={props.preferences.cursor === 'block'} />
       )}
+      {editor && props.active && <LinkPreview editor={editor} onError={props.onError} />}
     </div>
   )
 }

@@ -2,6 +2,7 @@ import type { ChainedCommands, Editor } from '@tiptap/core'
 import { closeHistory } from '@tiptap/pm/history'
 import { Selection, TextSelection, type EditorState } from '@tiptap/pm/state'
 import { getLanguage, tr } from '../i18n'
+import { normalizeLink } from './links'
 
 export interface SlashRange {
   from: number
@@ -201,8 +202,8 @@ export function runSlashCommand(
   const fresh = slashRange(editor.state)
   if (!fresh || fresh.from !== range.from || fresh.to !== range.to || fresh.query !== range.query)
     return false
-  const href = options.href?.trim()
-  if (id === 'link' && (!href || !/^(https?:\/\/|mailto:)/i.test(href))) return false
+  const href = options.href ? normalizeLink(options.href) : null
+  if (id === 'link' && !href) return false
   if (id === 'image' && !options.images?.length) return false
   const now = options.now ?? new Date()
   // Simula antes de aplicar: um bloco incompatível nunca apaga o comando.

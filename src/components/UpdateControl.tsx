@@ -34,7 +34,7 @@ export function UpdateControl({ updates: u }: { updates: UpdatesController }) {
         {u.phase === 'choosing' && <p>{tr('Escolha onde salvar o pacote.')}</p>}
         {u.phase === 'current' && <p>{tr('Não encontramos uma atualização mais recente.')}</p>}
         {u.phase === 'waiting' && (
-          <p>{tr('Você escolheu esperar a versão estável. Nenhum download foi iniciado.')}</p>
+          <p>{tr('Você escolheu esperar a versão estável. O aplicativo não foi alterado.')}</p>
         )}
         {u.info && (
           <p className="update-version">

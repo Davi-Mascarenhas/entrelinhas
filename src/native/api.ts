@@ -43,6 +43,7 @@ export function native<T>(command: string, args?: Record<string, unknown>): Prom
   return invoke<T>(command, args)
 }
 export const backend = {
+  openLink: (href: string) => native<void>('open_link', { href }),
   languageBootstrap: () =>
     native<{ platform: string; installerLanguage: Language | null }>('language_bootstrap'),
   checkUpdate: () => native<UpdateInfo | null>('check_update'),

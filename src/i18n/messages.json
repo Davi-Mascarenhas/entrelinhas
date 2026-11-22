@@ -1967,11 +1967,11 @@
     "Es wurde kein neueres Update gefunden."
   ],
   [
-    "Você escolheu esperar a versão estável. Nenhum download foi iniciado.",
-    "You chose to wait for the stable version. No download was started.",
-    "安定版を待つことを選択しました。ダウンロードは開始されていません。",
-    "你已选择等待稳定版。尚未开始下载。",
-    "Du hast dich entschieden, auf die stabile Version zu warten. Es wurde kein Download gestartet."
+    "Você escolheu esperar a versão estável. O aplicativo não foi alterado.",
+    "You chose to wait for the stable version. The app has not been changed.",
+    "安定版を待つことを選択しました。アプリは変更されていません。",
+    "你已选择等待稳定版。应用未被更改。",
+    "Du hast dich entschieden, auf die stabile Version zu warten. Die App wurde nicht verändert."
   ],
   [
     "Aviso de pré-release",
@@ -2014,5 +2014,43 @@
     "プレリリースに更新",
     "更新至预发布版",
     "Auf Vorabversion aktualisieren"
+  ],
+  ["Prévia do link", "Link preview", "リンクのプレビュー", "链接预览", "Linkvorschau"],
+  [
+    "Ctrl+clique para abrir",
+    "Ctrl+click to open",
+    "Ctrl+クリックで開く",
+    "按住 Ctrl 并点击以打开",
+    "Strg+Klick zum Öffnen"
+  ],
+  ["Abrir link", "Open link", "リンクを開く", "打开链接", "Link öffnen"],
+  [
+    "Digite um endereço válido, como exemplo.com ou nome@exemplo.com.",
+    "Enter a valid address, such as example.com or name@example.com.",
+    "example.com や name@example.com などの有効なアドレスを入力してください。",
+    "请输入有效地址，例如 example.com 或 name@example.com。",
+    "Gib eine gültige Adresse ein, etwa example.com oder name@example.com."
+  ],
+  [
+    "O texto mudou. Selecione o texto novamente para editar o link.",
+    "The text changed. Select it again to edit the link.",
+    "テキストが変更されました。もう一度選択してリンクを編集してください。",
+    "文本已更改。请重新选择文本以编辑链接。",
+    "Der Text wurde geändert. Wähle ihn erneut aus, um den Link zu bearbeiten."
+  ],
+  ["exemplo.com", "example.com", "example.com", "example.com", "beispiel.de"],
+  [
+    "Endereço de link inválido.",
+    "Invalid link address.",
+    "リンクのアドレスが無効です。",
+    "链接地址无效。",
+    "Ungültige Linkadresse."
+  ],
+  [
+    "Não foi possível abrir o link no navegador padrão.",
+    "Could not open the link in the default browser.",
+    "既定のブラウザーでリンクを開けませんでした。",
+    "无法在默认浏览器中打开链接。",
+    "Der Link konnte nicht im Standardbrowser geöffnet werden."
   ]
 ]

@@ -36,6 +36,12 @@ import { useDialog } from './components/useDialog'
 import { open as openNative } from '@tauri-apps/plugin-dialog'
 import { EditorPane } from './editor/EditorPane'
 import { useZenEscape } from './editor/useZenEscape'
+import {
+  applyLinkSelection,
+  captureLinkSelection,
+  normalizeLink,
+  type LinkSelection,
+} from './editor/links'
 import { runSlashCommand, type SlashRange } from './editor/slash'
 import { ProjectAssignment } from './components/ProjectAssignment'
 import { Formatting } from './components/Formatting'
@@ -99,11 +105,13 @@ export default function App() {
   })
   const [editorVersion, setEditorVersion] = useState(0)
   const [link, setLink] = useState<string | null>(null)
+  const [linkSelection, setLinkSelection] = useState<LinkSelection | null>(null)
   const [slashLink, setSlashLink] = useState<{ editor: Editor; range: SlashRange } | null>(null)
   const closeLink = () => {
-    const target = slashLink?.editor
+    const target = slashLink?.editor ?? linkSelection?.editor
     setLink(null)
     setSlashLink(null)
+    setLinkSelection(null)
     if (target)
       requestAnimationFrame(() => {
         if (!target.isDestroyed) target.commands.focus()
@@ -148,6 +156,10 @@ export default function App() {
     [preferences.defaultFormat],
   )
   const notify = useCallback((message: string) => setNotice(message), [])
+  const changeZoom = useCallback(
+    (zoom: number) => setPreferences((current) => ({ ...current, zoom })),
+    [],
+  )
   useEffect(() => {
     if (notice) {
       const timer = setTimeout(() => setNotice(''), 5000)
@@ -621,6 +633,7 @@ export default function App() {
     '--writing-offset': `${layout.writingOffset}px`,
     '--editor-width': `${preferences.editorWidth}px`,
     '--editor-font-size': `${(preferences.fontSize * preferences.zoom) / 100}px`,
+    '--text-zoom': preferences.zoom / 100,
     '--editor-line-height': preferences.lineHeight,
     '--editor-font':
       preferences.fontFamily === 'serif'
@@ -957,9 +970,12 @@ export default function App() {
               onImages={insertImages}
               onChooseImage={(editor, range) => void chooseImage(editor, range)}
               onInsertLink={(editor, range) => {
+                setLinkSelection(null)
                 setSlashLink({ editor, range })
                 setLink('')
               }}
+              onError={notify}
+              onZoom={changeZoom}
               onStats={note.id === activeId ? onStats : () => {}}
               onSelection={note.id === activeId ? setSelectionRect : () => {}}
             />
@@ -974,56 +990,6 @@ export default function App() {
               }}
             />
           )}
-          <div className="formatting-dock">
-            {formattingVisible && activeEditor && (
-              <Formatting
-                editor={activeEditor}
-                compact={!toolbar && !immersive}
-                insertImage={() => void chooseImage()}
-                insertLink={() => {
-                  setSlashLink(null)
-                  setLink(activeEditor.getAttributes('link').href || '')
-                }}
-              />
-            )}
-          </div>
-          <footer className="statusbar chrome">
-            <span className="save-status">
-              {activeNote.dirty ? (
-                <>
-                  <span className="unsaved-dot" />
-                  {tr('Não salvo')}
-                </>
-              ) : (
-                <>
-                  <Check size={13} />
-                  {activeNote.path ? tr('Salvo') : tr('Pronto para escrever')}
-                </>
-              )}
-            </span>
-            <span className="word-count">
-              {formatCount(stats.words, 'words')}
-              <span className="status-dot">·</span>
-              {formatCount(stats.characters, 'characters')}
-            </span>
-            <div className="status-right">
-              <button
-                onClick={() =>
-                  setPreferences((current) => ({
-                    ...current,
-                    zoom: current.zoom >= 150 ? 100 : current.zoom + 10,
-                  }))
-                }
-                aria-label={tr('Alterar zoom')}
-                data-tooltip={tr('Zoom')}
-                data-shortcut="Ctrl+ / Ctrl−"
-              >
-                {preferences.zoom}%
-              </button>
-              <span>{activeNote.format.toUpperCase()}</span>
-              <Focus size={13} />
-            </div>
-          </footer>
           {!activeNote.dirty && !activeNote.path && !formattingVisible && (
             <div className="writing-hint chrome">
               <Keyboard size={13} />
@@ -1032,6 +998,59 @@ export default function App() {
           )}
         </div>
       </section>
+      <div className="editor-footer">
+        <div className="formatting-dock">
+          {formattingVisible && activeEditor && (
+            <Formatting
+              editor={activeEditor}
+              compact={!toolbar && !immersive}
+              insertImage={() => void chooseImage()}
+              insertLink={() => {
+                setSlashLink(null)
+                setLinkSelection(captureLinkSelection(activeEditor))
+                setLink(activeEditor.getAttributes('link').href || '')
+              }}
+            />
+          )}
+        </div>
+        <footer className="statusbar chrome">
+          <span className="save-status">
+            {activeNote.dirty ? (
+              <>
+                <span className="unsaved-dot" />
+                {tr('Não salvo')}
+              </>
+            ) : (
+              <>
+                <Check size={13} />
+                {activeNote.path ? tr('Salvo') : tr('Pronto para escrever')}
+              </>
+            )}
+          </span>
+          <span className="word-count">
+            {formatCount(stats.words, 'words')}
+            <span className="status-dot">·</span>
+            {formatCount(stats.characters, 'characters')}
+          </span>
+          <div className="status-right">
+            <button
+              onClick={() =>
+                setPreferences((current) => ({
+                  ...current,
+                  zoom: current.zoom >= 200 ? 100 : Math.min(200, current.zoom + 10),
+                }))
+              }
+              aria-label={tr('Alterar zoom')}
+              data-tooltip={tr('Zoom')}
+              data-shortcut="Ctrl+ / Ctrl−"
+            >
+              {preferences.zoom}%
+            </button>
+            <span>{activeNote.format.toUpperCase()}</span>
+            <Focus size={13} />
+          </div>
+        </footer>
+      </div>
       {preferencesLoaded && !preferences.onboardingCompleted && (
         <WelcomeTheme
           theme={preferences.theme}
@@ -1086,8 +1105,8 @@ export default function App() {
             className="modal-body"
             onSubmit={(event) => {
               event.preventDefault()
-              if (link && !/^(https?:\/\/|mailto:)/i.test(link)) {
-                notify(tr('Use um endereço https://, http:// ou mailto:.'))
+              if (link.trim() && !normalizeLink(link)) {
+                notify(tr('Digite um endereço válido, como exemplo.com ou nome@exemplo.com.'))
                 return
               }
               if (slashLink) {
@@ -1096,16 +1115,9 @@ export default function App() {
                   closeLink()
                   return
                 }
-              } else if (link)
-                activeEditor
-                  ?.chain()
-                  .focus()
-                  .extendMarkRange('link')
-                  .setLink({
-                    href: link,
-                  })
-                  .run()
-              else activeEditor?.chain().focus().unsetLink().run()
+              } else if (linkSelection && !applyLinkSelection(linkSelection, link)) {
+                notify(tr('O texto mudou. Selecione o texto novamente para editar o link.'))
+              }
               closeLink()
             }}
           >
@@ -1114,7 +1126,7 @@ export default function App() {
               <input
                 autoFocus
                 type="text"
-                placeholder="https://"
+                placeholder={tr('exemplo.com')}
                 required={Boolean(slashLink)}
                 value={link}
                 onChange={(event) => setLink(event.target.value)}

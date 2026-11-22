@@ -237,7 +237,7 @@ it('oferece prévia com aviso e espera em destaque; esperar não baixa nem insta
   )
   expect(backend.downloadUpdate).not.toHaveBeenCalled()
   fireEvent.click(wait)
-  await screen.findByText('Você escolheu esperar a versão estável. Nenhum download foi iniciado.')
+  await screen.findByText('Você escolheu esperar a versão estável. O aplicativo não foi alterado.')
   expect(backend.dismissUpdate).toHaveBeenCalledOnce()
   expect(backend.downloadUpdate).not.toHaveBeenCalled()
   expect(backend.installUpdate).not.toHaveBeenCalled()
@@ -297,4 +297,35 @@ it('prévia Linux cancela o seletor sem baixar e mantém a escolha de esperar', 
     await result.current.waitForStable()
   })
   expect(result.current.phase).toBe('waiting')
+})
+
+it('esperar estável também descarta uma prévia já baixada após cancelar a instalação', async () => {
+  vi.mocked(backend.checkUpdate).mockResolvedValue({
+    ...info,
+    prerelease: true,
+    version: '2.4.0-rc.1',
+  })
+  const before = vi.fn().mockResolvedValue(false)
+  const { result } = renderHook(() =>
+    useUpdates(vi.fn().mockResolvedValue('allow'), before, vi.fn()),
+  )
+  await act(async () => {
+    await result.current.check()
+  })
+  await act(async () => {
+    await result.current.apply()
+  })
+  expect(result.current.phase).toBe('ready')
+  expect(backend.downloadUpdate).toHaveBeenCalledOnce()
+  expect(backend.installUpdate).not.toHaveBeenCalled()
+  await act(async () => {
+    await result.current.waitForStable()
+  })
+  expect(backend.dismissUpdate).toHaveBeenCalledOnce()
+  expect(result.current.info).toBeNull()
+  await act(async () => {
+    await result.current.apply()
+  })
+  expect(backend.installUpdate).not.toHaveBeenCalled()
+  expect(backend.downloadUpdate).toHaveBeenCalledOnce()
 })
