@@ -20,14 +20,16 @@ O Windows gera `.sig` no build. Para o `.deb`, usar `tauri signer sign --app-ver
 
 ## Publicação
 
+A partir da versão 2.1, alterações validadas são publicadas como estáveis. Prévias são reservadas para uma validação específica que dependa do usuário.
+
 1. Compilar, testar e verificar os pacotes finais. Confirmar que builds publicados não habilitam a feature `updater-test` nem transporte inseguro.
 2. Publicar a release e os pacotes `.exe` / `.deb`, suas `.sig`, SHA256SUMS e relatórios. Conferir os downloads e versões.
 3. Atualizar os manifestos somente após os arquivos públicos estarem disponíveis. O gerador de manifestos deve conferir hashes, assinaturas e versão; publicar o commit incremental e verificar o endpoint remoto.
 4. Para uma prévia, atualizar apenas `preview.json`. Para uma estável, atualizar ambos; manter as entradas completas por plataforma.
 
-O gerador está em `scripts/prepare-update-manifest.py` e requer as dependências de `scripts/requirements-release.txt`. Exemplo após publicar os artefatos: `python3 scripts/prepare-update-manifest.py --version 1.2.0-rc.2 --assets artifacts/release-1.2.0-rc.2 --channel preview --notes "Atualizações manuais e correções no Windows."`. Ele verifica as assinaturas Ed25519/Minisign, a versão assinada e os hashes publicados pelo GitHub antes de escrever o manifesto.
+O gerador está em `scripts/prepare-update-manifest.py` e requer as dependências de `scripts/requirements-release.txt`. Exemplo após publicar os artefatos: `python3 scripts/prepare-update-manifest.py --version 2.2.0 --assets artifacts/release-2.2.0 --channel stable --notes "Comandos de escrita, edição direta e modo Zen."`. Ele verifica as assinaturas Ed25519/Minisign, a versão assinada e os hashes publicados pelo GitHub antes de escrever o manifesto.
 
-O manifesto estável inicial referencia somente o pacote Linux 1.1.2 já publicado, sem alterar os bytes ou a release existente. O Windows ainda não tem uma versão estável. A próxima promoção conjunta preencherá ambas as plataformas.
+Os dois canais apontam para a versão estável 2.2.0 para Windows e Linux. Isso permite que instalações de prévias anteriores também encontrem a versão estável, mediante consulta manual autorizada.
 
 ## Testes
 

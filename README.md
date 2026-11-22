@@ -2,11 +2,31 @@
 
 **Um espaço tranquilo para escrever.**
 
-Entrelinhas é um editor **desktop de verdade**, feito com Tauri 2, React e TypeScript para Ubuntu e Windows. Ao começar a digitar, a interface desaparece. Restam o texto, o fundo e o cursor. Esc traz os controles de volta, sem deslocar o texto.
+Entrelinhas é um editor **desktop de verdade**, feito com Tauri 2, React e TypeScript para Ubuntu e Windows. Ao começar a digitar, o modo Zen recolhe a navegação e aproveita a altura da janela, mantendo a coluna de texto e as ferramentas de formatação. Esc alterna o modo Zen.
 
 ![Entrelinhas — Sépia Noturno](docs/screenshots/sepia.png)
 
-## Idiomas e atalhos (2.1 estável)
+## Comandos de escrita e modo Zen (2.2 estável)
+
+A [versão 2.2 estável](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.2.0) está disponível para Windows e Linux. Digite `/` no início de uma linha ou após um espaço para escolher uma lista de tarefas, tabela, lista com marcadores ou números, título, citação, código, separador ou texto comum. Continue digitando para filtrar, use as setas e Enter ou clique na opção. Esc fecha o menu e mantém o texto; desfazer restaura o comando.
+
+| Idioma | Lista de tarefas | Tabela |
+| --- | --- | --- |
+| Português | `/lista` | `/tabela` |
+| English | `/list` | `/table` |
+| 日本語 | `/リスト` | `/テーブル` |
+| 简体中文 | `/清单` ou `/列表` | `/表格` |
+| Deutsch | `/liste` | `/tabelle` |
+
+O menu acompanha o cursor durante a entrada automática no Zen. Não aparece dentro de links ou código e funciona offline.
+
+A paleta de cores abre junto ao botão e aplica a escolha imediatamente, preservando a seleção. Duplo clique no título permite editar o nome na própria barra: Enter confirma e Esc cancela. Mudar de documento cancela uma edição ainda não confirmada; salvar e fechar aguardam uma renomeação já confirmada.
+
+O modo Zen usa mais altura e suaviza o texto nas bordas superior e inferior. **Esc entra e sai quando há conteúdo**; menus e campos abertos recebem Esc primeiro. Em **Configurações → Barra de formatação**, escolha a posição inferior ou lateral e se deseja ocultar as ferramentas no Zen. Por padrão, elas continuam visíveis. Na lateral, ficam sempre do lado oposto aos projetos. As animações respeitam movimento reduzido.
+
+[Menu de comandos](docs/screenshots/slash-pt-BR.png) · [日本語](docs/screenshots/slash-ja.png) · [简体中文](docs/screenshots/slash-zh-CN.png) · [Paleta imediata](docs/screenshots/color-anchored.png) · [Zen com mais altura](docs/screenshots/zen-height.png) · [Formatação lateral](docs/screenshots/formatting-side-right.png).
+
+## Idiomas e atalhos
 
 A [versão 2.1 estável](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.1.0) está disponível para Windows e Linux e adiciona
 português brasileiro, inglês, japonês, chinês simplificado e alemão a toda a interface.
@@ -32,7 +52,7 @@ a captura. As dicas e os menus passam a exibir a combinação escolhida.
 
 - Inicialização normal em uma nota nova, vazia e mantida em memória. Ao abrir pelo explorador, recebe os documentos solicitados. Escrita sem o cabeçalho decorativo, começando mais acima.
 - Tamanho e maximização da janela lembrados ao reabrir. Duplo clique nas áreas livres dos dois lados da barra maximiza ou restaura. O arraste só começa ao mover o mouse pressionado.
-- Duplo clique no título abre a edição do nome: rascunhos ganham um nome sugerido; arquivos salvos são renomeados na mesma pasta, sem salvar as alterações do editor nem substituir outro arquivo.
+- Duplo clique no título permite editar o nome na própria barra: rascunhos ganham um nome sugerido; arquivos salvos são renomeados na mesma pasta, sem salvar as alterações do editor nem substituir outro arquivo.
 - **Nenhum salvamento automático, recuperação de rascunhos ou restauração de abas.**
 - Salvamento manual em arquivos Markdown e TXT comuns, em qualquer pasta. Abertura e salvamento pelo explorador do desktop via XDG Desktop Portal; no GNOME, utiliza o Nautilus. Os diálogos começam na pasta Documentos configurada no sistema; Salvar como mantém o caminho do arquivo aberto.
 - Integração com **Abrir com** para `.md`, `.markdown` e `.txt`. Novos pedidos chegam à janela já aberta, preservam rascunhos e ativam documentos existentes sem duplicar guias.
@@ -42,8 +62,8 @@ a captura. As dicas e os menus passam a exibir a combinação escolhida.
 - Modo Zen automático, alternância manual, acesso por Esc e aproximação das bordas.
 - Apresentação inicial com idioma, boas-vindas, tema e aplicativo padrão opcional no Linux; no Windows, o idioma vem do instalador e a apresentação tem três páginas. Temas Claro, Escuro e Sépia Noturno, com prévia imediata e respeito às preferências de instalações anteriores.
 - Coluna de escrita centralizada na janela inteira, com limite de largura e posição estável ao esconder os controles.
-- Seletores próprios para projeto, cor, fonte, formato, layout e formatação, acompanhando os três temas. Painéis preservam o fundo desfocado.
-- Formatação na parte inferior, com botões sem moldura, e dicas temáticas com nomes e atalhos ao passar o mouse ou navegar pelo teclado.
+- Seletores próprios para projeto, cor, fonte, formato, layout e formatação, acompanhando os três temas. A paleta de cores é um painel local; diálogos de configurações e projetos preservam o fundo desfocado.
+- Formatação na parte inferior ou na lateral, com botões sem moldura, e dicas temáticas com nomes e atalhos ao passar o mouse ou navegar pelo teclado.
 - Cursor em bloco, fino ou invisível; fonte, tamanho, largura, zoom e entrelinha configuráveis.
 - Navegação à esquerda ou à direita, redimensionável; abas superiores ou laterais. Em janelas estreitas, as abas voltam ao topo para manter uma coluna confortável.
 - Busca e substituição no documento; busca por nome e conteúdo nos arquivos salvos registrados.
@@ -62,7 +82,7 @@ As gravações usam arquivo temporário na pasta de destino, sincronização e r
 
 ## Editor e formatos
 
-O editor usa TipTap/ProseMirror, com desfazer/refazer, composição de texto, Unicode e quebra automática de linhas. Os botões de formatação ficam na parte inferior, sem uma moldura ao redor. O botão de ajustes no documento revela as ferramentas completas; selecionar texto revela os controles essenciais no mesmo lugar.
+O editor usa TipTap/ProseMirror, com desfazer/refazer, composição de texto, Unicode e quebra automática de linhas. Os botões de formatação ficam na parte inferior ou na lateral oposta aos projetos, sem uma moldura ao redor. O botão de ajustes no documento revela as ferramentas completas; selecionar texto revela os controles essenciais no mesmo lugar.
 
 Suporta negrito, itálico, sublinhado, tachado, títulos, listas, checklists interativas, citações, código, links, separadores, alinhamento, destaque, cores, tamanho de texto, imagens e tabelas com edição de linhas e colunas.
 
@@ -96,7 +116,7 @@ O cursor em bloco usa as coordenadas reais da seleção do ProseMirror e a largu
 
 ## Instalação no Windows
 
-O instalador **Entrelinhas 2.1.0 para Windows x64** usa NSIS, com logo, artes em sépia e textos em português brasileiro. Está disponível na [release estável](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.1.0), junto com o SHA-256 e o relatório dos testes. Windows e Linux compartilham a versão estável 2.1.0. Na versão 2.1, o primeiro diálogo oferece os cinco idiomas e o aplicativo usa essa escolha na primeira abertura.
+O instalador **Entrelinhas 2.2.0 para Windows x64** usa NSIS, com logo, artes em sépia e cinco idiomas. Está disponível na [release estável](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.2.0), junto com o SHA-256 e o relatório dos testes. Windows e Linux compartilham a versão estável 2.2.0. Na versão 2.1, o primeiro diálogo oferece os cinco idiomas e o aplicativo usa essa escolha na primeira abertura.
 
 - Instalação por usuário, sem exigir administrador para instalar o aplicativo; pasta de destino selecionável, atalho no menu Iniciar e opção de abrir ao concluir.
 - O instalador verifica o WebView2 e baixa o bootstrapper oficial quando necessário. Nesse caso, a primeira instalação precisa de internet.
@@ -108,7 +128,7 @@ O instalador Windows ainda não tem assinatura Authenticode. As atualizações p
 
 [Boas-vindas do instalador](docs/screenshots/windows-welcome.png) · [Escolha da pasta](docs/screenshots/windows-folder.png). As capturas são do wizard real em Windows Server 2025.
 
-Versão 2.1: [Idioma do instalador](docs/screenshots/windows-language.png) · [Chinês simplificado](docs/screenshots/windows-welcome-zh-CN.png) · [Alemão](docs/screenshots/windows-welcome-de.png) · [Aplicativo em japonês](docs/screenshots/windows-language-ja.png). Foram aprovadas **23 verificações Windows**, incluindo as cinco escolhas do instalador, a primeira abertura em cada idioma e uma atualização assinada completa com reinício. [Execução validada](https://github.com/Davi-Mascarenhas/entrelinhas/actions/runs/44972082564).
+[Idioma do instalador](docs/screenshots/windows-language.png) · [Chinês simplificado](docs/screenshots/windows-welcome-zh-CN.png) · [Alemão](docs/screenshots/windows-welcome-de.png) · [Aplicativo em japonês](docs/screenshots/windows-language-ja.png). Foram aprovadas **27 verificações Windows**, incluindo as cinco escolhas do instalador, a primeira abertura em cada idioma, comandos de escrita, edição direta, modo Zen e uma atualização assinada completa com reinício. [Execução validada](https://github.com/Davi-Mascarenhas/entrelinhas/actions/runs/45023383509).
 
 Para compilar no Windows, instale Node.js 24, Rust estável, as ferramentas C++ do Visual Studio e o WebView2. Depois:
 
@@ -125,7 +145,7 @@ As artes vetoriais ficam em `src-tauri/windows/branding/`. Para regenerar os BMP
 
 **Configurações → Sobre → Procurar atualização** pede autorização para consultar o GitHub. Nenhum documento é enviado. Uma versão encontrada aparece antes do download; você escolhe quando continuar. O Windows resolve alterações não salvas antes de reiniciar; no Linux, o pacote `.deb` é salvo no destino escolhido, sem instalação automática.
 
-A versão 1.2.0-rc.1 precisa de instalação manual da nova prévia uma vez para receber esse recurso. [Funcionamento, chaves e publicação dos manifestos](docs/updates.md).
+A versão 1.2.0-rc.1 precisa de instalação manual de uma versão atual uma vez para receber esse recurso. [Funcionamento, chaves e publicação dos manifestos](docs/updates.md).
 
 [Painel de atualizações](docs/screenshots/updates.png) · [Autorização de acesso à internet](docs/screenshots/update-permission.png).
 
@@ -137,12 +157,12 @@ O projeto foi compilado e verificado no **Ubuntu 26.10, x86_64, GNOME/Wayland**.
 
 ### Pacote Debian
 
-[Baixe o instalador e os checksums da versão 2.0.0](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.1.0).
+[Baixe o instalador e os checksums da versão 2.2.0](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.2.0).
 
 Para instalar um pacote compilado localmente:
 
 ```bash
-sudo apt install ./src-tauri/target/release/bundle/deb/Entrelinhas_2.0.0_amd64.deb
+sudo apt install ./src-tauri/target/release/bundle/deb/Entrelinhas_2.2.0_amd64.deb
 ```
 
 O aplicativo aparece no menu como **Entrelinhas**, com ícone próprio. O pacote depende do WebKitGTK 4.1 e GTK 3 do sistema. Uma compilação feita no Ubuntu 26.10 não garante compatibilidade binária com versões anteriores do Ubuntu; para elas, compile no sistema de destino.
@@ -232,9 +252,10 @@ python3 scripts/test-desktop.py --binary src-tauri/target/release/entrelinhas
 
 Os números abaixo descrevem a suíte Linux. A validação Windows tem relatório próprio nos artefatos da rotina Windows e na release estável.
 
-- **109 testes TypeScript:** notas, abas, descarte, preferências, atalhos, Markdown, formatação, TXT, Unicode, busca, imagens, gravação explícita, conflitos, espera de gravações, centralização com diferentes painéis, seletores próprios por mouse e teclado, dicas, guias sob demanda, abertura sem perder texto, apresentação em quatro páginas no Linux e três no Windows, recusa do padrão, tratamento de falhas de associação, migração de preferências, fila de arquivos externos, edição de títulos, nome sugerido ao salvar e gestos da barra superior com exclusão dos botões e seus ícones, cliques sem arraste e cancelamento de gestos pendentes. Inclui catálogos completos dos cinco idiomas, preservação de parâmetros, migração e captura de atalhos com validação de conflitos.
+- **109 testes TypeScript:** notas, abas, descarte, preferências, atalhos, Markdown, formatação, TXT, Unicode, busca, imagens, gravação explícita, conflitos, espera de gravações, centralização com diferentes painéis, seletores próprios por mouse e teclado, dicas, guias sob demanda, abertura sem perder texto, apresentação em quatro páginas no Linux e três no Windows, recusa do padrão, tratamento de falhas de associação, migração de preferências, fila de arquivos externos, edição de títulos, nome sugerido ao salvar e gestos da barra superior com exclusão dos botões e seus ícones, cliques sem arraste e cancelamento de gestos pendentes. Inclui catálogos completos dos cinco idiomas, preservação de parâmetros, migração e captura de atalhos com validação de conflitos, comandos de escrita com desfazer e preservação dos blocos ao salvar/reabrir, edição direta com falhas de renomeação e espera das operações nativas.
 - **19 testes Rust no Linux:** gravação atômica, conflitos, UTF-8, nomes internacionais, imagens relativas, arquivos somente leitura, recursos inválidos, projetos em Downloads, exclusão sem apagar documentos, localização, busca, renomeação sem sobrescrever, preservação de imagens e projeto, reversão em caso de falha no registro, argumentos do explorador e associações MIME em perfis isolados para as instalações local e Debian, além do mapeamento dos idiomas do instalador.
-- **41 verificações desktop:** inicialização, ocultação sem deslocamento, Esc, descarte após reiniciar, Ctrl+S com seletor GNOME, associação externa, abas, busca/substituição, colagem de imagens, temas, cursores, persistência, layout, F11, conflitos, busca global, confirmação opcional, TXT, paleta de cores nos três temas, primeira abertura, centralização ao redimensionar, formatação inferior sem moldura, menus de tabela, dicas nos três temas, tamanho da janela após reiniciar, duplo clique nas áreas livres dos dois lados da barra e entre os controles, arraste apenas ao mover o mouse pressionado, títulos, espaçamento dos campos, abertura/salvamento pelo Nautilus, registro em Abrir com, abertura pelo sistema com a janela aberta ou fechada, aceitação e recusa do padrão, apresentação na menor janela e atalhos na lateral apenas para arquivos vinculados a projetos. Inclui troca e persistência dos cinco idiomas, fontes locais CJK, preservação do documento/histórico e captura real dos atalhos.
+- **41 verificações desktop:** inicialização, ocultação sem deslocamento, Esc, descarte após reiniciar, Ctrl+S com seletor GNOME, associação externa, abas, busca/substituição, colagem de imagens, temas, cursores, persistência, layout, F11, conflitos, busca global, confirmação opcional, TXT, paleta de cores nos três temas, primeira abertura, centralização ao redimensionar, formatação inferior sem moldura, menus de tabela, dicas nos três temas, tamanho da janela após reiniciar, duplo clique nas áreas livres dos dois lados da barra e entre os controles, arraste apenas ao mover o mouse pressionado, títulos, espaçamento dos campos, abertura/salvamento pelo Nautilus, registro em Abrir com, abertura pelo sistema com a janela aberta ou fechada, aceitação e recusa do padrão, apresentação na menor janela e atalhos na lateral apenas para arquivos vinculados a projetos. Inclui troca e persistência dos cinco idiomas, fontes locais CJK, preservação do documento/histórico, captura real dos atalhos, comandos com teclado/mouse nos cinco idiomas, paleta imediata, edição na barra e Zen com ferramentas nas duas laterais.
+- **8 verificações de atualização Linux:** autorização manual, ausência de consultas automáticas, rejeição de bytes/chaves/versão adulterados, cancelamento sem download e salvamento de pacote verificado.
 - O roteiro desktop também passou no **executável otimizado de produção, sem depender do servidor Vite**.
 - Documento de **280 mil caracteres** carregado e editado no roteiro desktop. O tempo medido inclui definir o conteúdo e inserir texto; não representa um benchmark de latência por tecla.
 

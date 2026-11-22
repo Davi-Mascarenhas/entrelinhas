@@ -1,6 +1,6 @@
 # Validação do Entrelinhas no Windows
 
-A prévia inicial é x64 e não assinada. O workflow `Windows installer` executa testes em Windows Server 2025 com WebView2. Ele publica o instalador somente como artefato validado quando todo o job passa; logs, capturas do wizard e das telas do app ficam em `windows-test-evidence`. O SHA do commit e os checksums acompanham o artefato.
+O instalador é x64 e ainda não possui assinatura Authenticode. Os pacotes de atualização possuem assinatura criptográfica própria. O workflow `Windows installer` executa testes em Windows Server 2025 com WebView2. Ele publica o instalador somente como artefato validado quando todo o job passa; logs, capturas do wizard e das telas do app ficam em `windows-test-evidence`. O SHA do commit e os checksums acompanham o artefato.
 
 ## Teste automatizado
 
@@ -8,17 +8,17 @@ O wrapper da CI cria uma conta temporária comum, executa os testes nessa conta 
 
 O roteiro abre o wizard, captura boas-vindas e seleção de pasta e confirma o cancelamento. Em seguida instala silenciosamente em uma pasta com espaços e acentos e verifica o registro de “Abrir com”, o atalho e a preservação dos padrões anteriores.
 
-O aplicativo instalado é operado pelo Microsoft Edge WebDriver na versão correspondente ao WebView2. São verificados: primeira abertura, Markdown/TXT, UTF-8 e nomes internacionais, salvamento manual, renomeação, rascunhos preservados na janela e descartados ao fechar, instância única, guias sem duplicação, temas, preferências e duplo clique na barra. O roteiro também testa reinstalação e desinstalação, preservando biblioteca e documentos. A tela de padrões do Windows não é automatizada para forçar uma associação.
+O aplicativo instalado é operado pelo Microsoft Edge WebDriver na versão correspondente ao WebView2. São verificados: primeira abertura, Markdown/TXT, UTF-8 e nomes internacionais, salvamento manual, renomeação, rascunhos preservados na janela e descartados ao fechar, instância única, guias sem duplicação, temas, preferências e duplo clique na barra. Também verifica os cinco idiomas, créditos, personalização de atalhos, comandos com barra, paleta de cores imediata, edição do título na barra, Esc e barra de formatação no modo Zen nas duas laterais. O roteiro também testa reinstalação e desinstalação, preservando biblioteca e documentos. A tela de padrões do Windows não é automatizada para forçar uma associação.
 
 ## Aprovação manual em Windows 11 x64
 
-Antes de promover a prévia a versão estável, registrar edição/build do Windows, versão do WebView2, versão do app e SHA-256 do instalador e verificar:
+Para a conferência manual em uma máquina Windows 11, registrar edição/build do Windows, versão do WebView2, versão do app e SHA-256 do instalador e verificar:
 
-- [ ] Instalar por usuário sem elevação do aplicativo; conferir wizard em português, logo e artes em escala de 100%, 150% e 200%.
+- [ ] Instalar por usuário sem elevação do aplicativo; conferir wizard nos cinco idiomas, logo e artes em escala de 100%, 150% e 200%.
 - [ ] Cancelar antes de instalar e confirmar que o aplicativo não foi registrado.
 - [ ] Testar instalação com WebView2 presente e em máquina limpa sem WebView2, com internet.
 - [ ] Abrir o aplicativo pelo menu Iniciar e pelo explorador sem surgir console; confirmar que não depende de um terminal aberto. Escolher cada tema e recusar a alteração do padrão.
-- [ ] Em Sobre, recusar e autorizar a consulta. Conferir que não consulta automaticamente nem baixa antes do clique. Testar atualização da nova prévia para outra versão assinada de teste, salvamento/cancelamento dos rascunhos e preservação de projetos/preferências.
+- [ ] Em Sobre, recusar e autorizar a consulta. Conferir que não consulta automaticamente nem baixa antes do clique. Testar atualização da versão instalada para outra versão assinada de teste, salvamento/cancelamento dos rascunhos e preservação de projetos/preferências.
 - [ ] Conferir o Entrelinhas em “Abrir com” para MD, Markdown e TXT; abrir arquivos com espaços, acentos e caracteres japoneses com o app aberto e fechado.
 - [ ] Usar “Abrir configurações do Windows”, selecionar os formatos na tela do sistema e voltar ao app; conferir que o status só indica padrão após a escolha.
 - [ ] Abrir/salvar pelo explorador, salvar novamente, salvar como, renomear sem substituir outro arquivo, inserir imagem e reabrir Markdown com sua pasta de recursos.
@@ -26,6 +26,6 @@ Antes de promover a prévia a versão estável, registrar edição/build do Wind
 - [ ] Atualizar/reinstalar com projetos e preferências existentes; confirmar que documentos e padrões foram preservados.
 - [ ] Desinstalar sem apagar dados; confirmar remoção de atalhos/registro e preservação da biblioteca e dos arquivos pessoais, inclusive um arquivo salvo na pasta de instalação.
 
-Assinatura Authenticode e testes com políticas empresariais ficam para a distribuição estável. Não adicionar uma exceção permanente de segurança para executar testes.
+A publicação estável segue a validação automatizada dos pacotes finais. Uma prévia só é necessária quando existe uma validação específica que dependa do usuário. Assinatura Authenticode depende da aprovação e configuração de um provedor; veja a [política de assinatura](code-signing-policy.md). Não adicionar uma exceção permanente de segurança para executar testes.
 
 A suíte também inspeciona o subsistema gráfico do PE e confirma que o processo não possui console. Dois instaladores exclusivos de teste validam a atualização real e o reinício; pacotes adulterados, chave desconhecida e versão adulterada são rejeitados. Os builds de teste nunca são publicados.
