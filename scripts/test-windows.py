@@ -36,10 +36,11 @@ class WindowsDesktop(desktop_tests.Desktop):
         if not preferences.get('onboardingCompleted', preferences.get('themeChosen', False)):
             wait(lambda: self.js('return !!document.querySelector(".welcome-modal")'), 'boas-vindas')
             self.click('.welcome-actions .primary')
-            self.click('[aria-label="Usar tema Sépia Noturno"]')
+            self.click('.welcome-modal .theme-choice.sepia')
             self.click('.welcome-actions .primary')
             wait(lambda: self.js('return document.querySelector(".default-app").getAttribute("aria-busy")') == 'false', 'padrões do Windows')
-            assert 'Abrir configurações do Windows' in self.js('return document.querySelector(".default-app").innerText')
+            assert self.ipc('default_app_status')['requiresSettings']
+            assert self.js('return document.querySelectorAll(".welcome-steps li").length') == 3
             self.click('.welcome-actions button:last-child')
             wait(lambda: self.ipc('load_library')['preferences'].get('onboardingCompleted'), 'concluir apresentação')
 
@@ -57,7 +58,7 @@ class WindowsDesktop(desktop_tests.Desktop):
 
     def close(self):
         self.reveal()
-        self.click('[aria-label="Fechar aplicativo"]')
+        self.click('.window-controls button:last-child')
         if self.application_process.poll() is None:
             wait(lambda: self.application_process.poll() is not None, 'fechamento normal com gravações concluídas', 30)
         else:
@@ -102,9 +103,11 @@ def defaults_snapshot():
     } for ext in ('.md', '.markdown', '.txt')}
 
 
-def installer_run(executable, directory=None, uninstall=False):
+def installer_run(executable, directory=None, uninstall=False, language=1046):
     # NSIS exige /D como último argumento, sem aspas, mesmo com espaços.
     command = f'"{executable}" /S'
+    if not uninstall:
+        command += f' /LANG={language}'
     if directory is not None:
         command += f' /D={directory}'
     result = subprocess.run(command, timeout=240, check=False)
@@ -146,9 +149,9 @@ def main():
     def passed(label):
         results.append(label); print('OK · ' + label, flush=True)
     subprocess.run(['pwsh', '-NoProfile', '-File', str(ROOT / 'scripts/test-windows-wizard.ps1'),
-                    '-Installer', str(installer), '-OutputDirectory', str(output)], check=True, timeout=60)
+                    '-Installer', str(installer), '-OutputDirectory', str(output)], check=True, timeout=180)
     assert read_registry('Software\\RegisteredApplications', 'Entrelinhas') is None
-    passed('wizard em português com identidade visual, páginas de boas-vindas/pasta e cancelamento')
+    passed('wizard com seletor inicial de cinco idiomas, boas-vindas traduzidas, identidade visual e cancelamento')
     destination = Path(os.environ['LOCALAPPDATA']) / 'Entrelinhas teste ação'
     installer_run(installer, destination)
     executable = destination / 'entrelinhas.exe'
@@ -181,6 +184,25 @@ def main():
         txt.write_text('**Texto literal** 日本語', encoding='utf-8')
         try:
             wait(lambda: urllib.request.urlopen(f'http://127.0.0.1:{port}/status', timeout=1).status == 200, 'Edge WebDriver')
+            database = Path(os.environ['APPDATA']) / 'io.github.bitdevy.entrelinhas/library.sqlite3'
+            assert not database.exists()
+            for lcid, language in [(1033, 'en'), (1041, 'ja'), (2052, 'zh-CN'), (1031, 'de')]:
+                installer_run(installer, destination, language=lcid)
+                assert read_registry('Software\\Entrelinhas', 'InstallerLanguage') == lcid
+                app.start()
+                assert app.js('return document.documentElement.lang') == language
+                assert app.ipc('load_library')['preferences']['language'] == language
+                assert app.ipc('load_library')['preferences']['onboardingCompleted'] is True
+                app.screenshot(output / f'installer-language-{language}.png')
+                app.close()
+                # Perfil descartável ainda não contém documento algum; cada instalação
+                # seguinte simula a primeira abertura com sua escolha de idioma.
+                database.unlink()
+                for suffix in ['-wal', '-shm']:
+                    database.with_name(database.name + suffix).unlink(missing_ok=True)
+            installer_run(installer, destination, language=1046)
+            assert defaults_snapshot() == baseline
+            passed('idioma do wizard chega à primeira abertura nos cinco idiomas, sem repetir seleção no Windows')
             app.start(launch_args=[str(md)])
             import sys
             subprocess.run([sys.executable, '-c', 'import ctypes,sys; k=ctypes.WinDLL("kernel32",use_last_error=True);k.FreeConsole(); attached=k.AttachConsole(int(sys.argv[1]));assert not attached and ctypes.get_last_error()==6,"O aplicativo herdou/criou um console."', str(app.application_process.pid)], check=True)
@@ -197,6 +219,8 @@ def main():
             wait(lambda: 'SALVO MANUALMENTE' in md.read_text(encoding='utf-8'), 'salvamento manual no Windows')
             saved = md.read_bytes()
             passed('WebView2 de produção, primeira abertura, leitura Markdown e salvamento manual UTF-8')
+            from language_checks import exercise as check_languages
+            check_languages(app, output, wait, passed)
             app.editor('editor.commands.insertContent(" RASCUNHO_EM_MEMÓRIA");return true')
             subprocess.run([str(executable), str(txt)], check=True, timeout=20)
             wait(lambda: app.editor('return editor.getText()') == txt.read_text(encoding='utf-8'), 'TXT na mesma janela')

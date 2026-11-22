@@ -14,6 +14,7 @@ on:
       - 'scripts/run-windows-tests.ps1'
       - 'scripts/test-desktop.py'
       - 'scripts/build-update-fixtures.py'
+      - 'scripts/language_checks.py'
       - 'scripts/update_checks.py'
       - 'scripts/windows_update_checks.py'
       - 'scripts/check-windows-subsystem.py'

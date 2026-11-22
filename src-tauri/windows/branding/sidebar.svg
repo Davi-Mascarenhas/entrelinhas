@@ -4,9 +4,5 @@
   <image href="../../../assets/icon.svg" x="20" y="32" width="64" height="64"/>
   <text x="24" y="126" fill="#e2d1b1" font-family="Ubuntu,Segoe UI,sans-serif" font-size="21">Entrelinhas</text>
   <path d="M24 151h32" stroke="#bb9962"/>
-  <g fill="#b7a78e" font-family="Ubuntu,Segoe UI,sans-serif" font-size="10.5">
-    <text x="24" y="175">Um espaço tranquilo</text><text x="24" y="192">para escrever.</text>
-  </g>
   <g stroke="#776b57" stroke-width="1" opacity=".45"><path d="M24 236h116M24 249h98M24 262h110"/></g>
-  <text x="24" y="292" fill="#a18f73" font-family="Ubuntu,Segoe UI,sans-serif" font-size="8.5">SEU TEXTO, SEU TEMPO.</text>
 </svg>

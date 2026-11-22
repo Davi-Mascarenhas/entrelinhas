@@ -9,8 +9,8 @@
       },
       "nsis": {
         "installMode": "currentUser",
-        "languages": ["PortugueseBR"],
-        "displayLanguageSelector": false,
+        "languages": ["PortugueseBR", "English", "Japanese", "SimpChinese", "German"],
+        "displayLanguageSelector": true,
         "installerIcon": "icons/icon.ico",
         "uninstallerIcon": "icons/icon.ico",
         "headerImage": "windows/branding/header.bmp",
@@ -20,8 +20,8 @@
         "compression": "lzma"
       }
     },
-    "publisher": "Bit-Devy",
-    "copyright": "Copyright © 2026 Bit-Devy",
+    "publisher": "Davi Mascarenhas",
+    "copyright": "Copyright © 2026 Davi Mascarenhas",
     "createUpdaterArtifacts": true
   }
 }
