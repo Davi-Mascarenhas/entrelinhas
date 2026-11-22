@@ -4,35 +4,25 @@
 
 Entrelinhas é um editor **desktop de verdade**, feito com Tauri 2, React e TypeScript para Ubuntu e Windows. Ao começar a digitar, o modo Zen recolhe a navegação e aproveita a altura da janela, mantendo a coluna de texto e as ferramentas de formatação. Esc alterna o modo Zen.
 
-![Entrelinhas — Sépia Noturno](docs/screenshots/sepia.png)
+![Entrelinhas — Sépia Noturno](docs/screenshots/stable-2.3-main.png)
 
-## Prévia 2.3.0-rc.2: escolha antes de instalar uma pré-release
+## Versão 2.3 estável
 
-A [rc.2](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.3.0-rc.2) inclui as melhorias da rc.1 e amplia a busca manual de atualizações. Após autorizar a consulta, o aplicativo procura uma estável mais nova primeiro. Quando a novidade é uma pré-release, mostra um aviso vermelho e pergunta antes do download.
+A [versão 2.3.0](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.3.0) reúne as correções das prévias e está disponível para Windows e Linux.
 
-**Esperar versão estável** é o botão destacado e descarta a oferta sem baixar. **Atualizar para pré-release** é uma ação de texto secundária; só esse clique inicia o fluxo da prévia. Novas consultas continuam dependendo do seu clique e autorização. Os avisos e ações acompanham os cinco idiomas e os três temas.
+- **Esc** alterna o modo Zen com o foco dentro do editor. Busca, menus e edição recebem a tecla primeiro.
+- Links aceitam endereços como `exemplo.com`. Passar o mouse ou clicar mostra uma prévia local; **Ctrl+clique** abre no navegador padrão. A prévia não consulta a internet.
+- Zoom do texto de **50% a 200%** pelo botão, teclado, **Ctrl+scroll** ou pinch, mantendo o tamanho dos controles.
+- Barra de formatação inferior centralizada na janela, sem quebrar em várias linhas, e rolagem do próprio app na posição lateral. As configurações mostram prévias das duas posições.
+- Atualizações continuam manuais. Uma estável mais nova tem prioridade; pré-releases têm aviso vermelho e **Esperar versão estável** como ação principal. Apenas a ação secundária explícita baixa a prévia.
 
-A mudança começa na rc.2. Clientes da 2.2 estável mantêm o comportamento anterior e precisam instalar esta prévia manualmente uma vez. A versão estável continua sendo a 2.2.0 até a aprovação dos testes em casa.
+O menu `/` oferece **20 comandos** nos cinco idiomas, incluindo listas recolhíveis, caixas informativas, avisos, imagens, links, data/hora, duplicar bloco e limpar formatação. [Lista completa](docs/slash-commands.md).
 
-Validação da rc.2: 165 testes TypeScript, 19 testes Rust Linux e 18 Windows; 48 verificações desktop Linux, 9 de atualização Linux e [31 Windows](https://github.com/Davi-Mascarenhas/entrelinhas/actions/runs/45063770486).
+Os relatórios e capturas da auditoria acompanham a release. [Cobertura e limites dos testes](docs/validation-2.3.0.md).
 
-[Exemplo do aviso no Sépia Noturno](docs/screenshots/update-preview-sepia.png) · [Tema claro](docs/screenshots/update-preview-light.png) · [Tema escuro](docs/screenshots/update-preview-dark.png). As capturas usam uma atualização fictícia de teste.
+## Comandos de escrita e modo Zen
 
-## Prévia 2.3 para avaliação
-
-A [2.3.0-rc.1](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.3.0-rc.1) é uma **pré-release** para testar em casa antes de aprovar a versão estável. A versão estável continua sendo a 2.2.0. Enquanto durar essa avaliação, novas alterações serão publicadas como prévias.
-
-O Zen ganhou um recuo superior de 28 px e a barra lateral fica a 24 px das bordas. A barra inferior também tem 24 px de espaço abaixo. A coluna de escrita continua centralizada.
-
-O menu `/` agora oferece **20 comandos**. Além dos onze da versão 2.2, inclui lista recolhível, caixa informativa, aviso, imagem, link, data de hoje, hora atual, duplicar bloco e limpar formatação. Todos têm nomes, descrições e buscas nos cinco idiomas. [Lista completa e exemplos](docs/slash-commands.md).
-
-Validação da rc.1: 162 testes TypeScript, 19 testes Rust Linux e 18 Windows; 48 verificações desktop Linux, 8 de atualização Linux e [30 Windows](https://github.com/Davi-Mascarenhas/entrelinhas/actions/runs/45060933045).
-
-[Zen com mais espaço](docs/screenshots/preview-2.3-zen.png) · [Blocos recolhíveis e caixas](docs/screenshots/preview-2.3-blocks.png) · [Lista completa no menu](docs/screenshots/preview-2.3-menu.png).
-
-## Comandos de escrita e modo Zen (2.2 estável)
-
-A [versão 2.2 estável](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.2.0) está disponível para Windows e Linux. Digite `/` no início de uma linha ou após um espaço para escolher uma lista de tarefas, tabela, lista com marcadores ou números, título, citação, código, separador ou texto comum. Continue digitando para filtrar, use as setas e Enter ou clique na opção. Esc fecha o menu e mantém o texto; desfazer restaura o comando.
+Digite `/` no início de uma linha ou após um espaço. Continue digitando para filtrar, use as setas e Enter ou clique na opção. Esc fecha o menu e mantém o texto; desfazer restaura o comando.
 
 | Idioma | Lista de tarefas | Tabela |
 | --- | --- | --- |
@@ -52,8 +42,7 @@ O modo Zen usa mais altura e suaviza o texto nas bordas superior e inferior. **E
 
 ## Idiomas e atalhos
 
-A [versão 2.1 estável](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.1.0) está disponível para Windows e Linux e adiciona
-português brasileiro, inglês, japonês, chinês simplificado e alemão a toda a interface.
+A interface está disponível em português brasileiro, inglês, japonês, chinês simplificado e alemão no Windows e no Linux.
 
 No Windows, o idioma é escolhido na primeira janela do assistente de instalação e
 usado na primeira abertura. As três telas seguintes apresentam o aplicativo, o tema
@@ -140,7 +129,7 @@ O cursor em bloco usa as coordenadas reais da seleção do ProseMirror e a largu
 
 ## Instalação no Windows
 
-O instalador **Entrelinhas 2.2.0 para Windows x64** usa NSIS, com logo, artes em sépia e cinco idiomas. Está disponível na [release estável](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.2.0), junto com o SHA-256 e o relatório dos testes. Windows e Linux compartilham a versão estável 2.2.0. Na versão 2.1, o primeiro diálogo oferece os cinco idiomas e o aplicativo usa essa escolha na primeira abertura.
+O instalador **Entrelinhas 2.3.0 para Windows x64** usa NSIS, com logo, artes em sépia e cinco idiomas. Está disponível na [release estável](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.3.0), junto com o SHA-256 e o relatório dos testes. Windows e Linux compartilham a versão estável 2.3.0. Na versão 2.1, o primeiro diálogo oferece os cinco idiomas e o aplicativo usa essa escolha na primeira abertura.
 
 - Instalação por usuário, sem exigir administrador para instalar o aplicativo; pasta de destino selecionável, atalho no menu Iniciar e opção de abrir ao concluir.
 - O instalador verifica o WebView2 e baixa o bootstrapper oficial quando necessário. Nesse caso, a primeira instalação precisa de internet.
@@ -181,12 +170,12 @@ O projeto foi compilado e verificado no **Ubuntu 26.10, x86_64, GNOME/Wayland**.
 
 ### Pacote Debian
 
-[Baixe o instalador e os checksums da versão 2.2.0](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.2.0).
+[Baixe o instalador e os checksums da versão 2.3.0](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.3.0).
 
 Para instalar um pacote compilado localmente:
 
 ```bash
-sudo apt install ./src-tauri/target/release/bundle/deb/Entrelinhas_2.2.0_amd64.deb
+sudo apt install ./src-tauri/target/release/bundle/deb/Entrelinhas_2.3.0_amd64.deb
 ```
 
 O aplicativo aparece no menu como **Entrelinhas**, com ícone próprio. O pacote depende do WebKitGTK 4.1 e GTK 3 do sistema. Uma compilação feita no Ubuntu 26.10 não garante compatibilidade binária com versões anteriores do Ubuntu; para elas, compile no sistema de destino.
@@ -272,24 +261,13 @@ O mesmo roteiro pode validar a versão empacotada:
 python3 scripts/test-desktop.py --binary src-tauri/target/release/entrelinhas
 ```
 
-### Verificações da versão 2.2 estável
+### Validação da versão 2.3 estável
 
-Os números abaixo descrevem a suíte Linux. A validação Windows tem relatório próprio nos artefatos da rotina Windows e na release estável.
+- 198 testes TypeScript; 20 testes Rust no Linux e 19 no Windows, com formatação e Clippy verificados.
+- 70 verificações do aplicativo Linux empacotado; 10 do atualizador e 3 da abertura de links pelo navegador padrão em perfil isolado.
+- 54 verificações Windows no instalador e no aplicativo instalado, incluindo atualização real com pacotes assinados de teste.
 
-- **109 testes TypeScript:** notas, abas, descarte, preferências, atalhos, Markdown, formatação, TXT, Unicode, busca, imagens, gravação explícita, conflitos, espera de gravações, centralização com diferentes painéis, seletores próprios por mouse e teclado, dicas, guias sob demanda, abertura sem perder texto, apresentação em quatro páginas no Linux e três no Windows, recusa do padrão, tratamento de falhas de associação, migração de preferências, fila de arquivos externos, edição de títulos, nome sugerido ao salvar e gestos da barra superior com exclusão dos botões e seus ícones, cliques sem arraste e cancelamento de gestos pendentes. Inclui catálogos completos dos cinco idiomas, preservação de parâmetros, migração e captura de atalhos com validação de conflitos, comandos de escrita com desfazer e preservação dos blocos ao salvar/reabrir, edição direta com falhas de renomeação e espera das operações nativas.
-- **19 testes Rust no Linux:** gravação atômica, conflitos, UTF-8, nomes internacionais, imagens relativas, arquivos somente leitura, recursos inválidos, projetos em Downloads, exclusão sem apagar documentos, localização, busca, renomeação sem sobrescrever, preservação de imagens e projeto, reversão em caso de falha no registro, argumentos do explorador e associações MIME em perfis isolados para as instalações local e Debian, além do mapeamento dos idiomas do instalador.
-- **41 verificações desktop:** inicialização, ocultação sem deslocamento, Esc, descarte após reiniciar, Ctrl+S com seletor GNOME, associação externa, abas, busca/substituição, colagem de imagens, temas, cursores, persistência, layout, F11, conflitos, busca global, confirmação opcional, TXT, paleta de cores nos três temas, primeira abertura, centralização ao redimensionar, formatação inferior sem moldura, menus de tabela, dicas nos três temas, tamanho da janela após reiniciar, duplo clique nas áreas livres dos dois lados da barra e entre os controles, arraste apenas ao mover o mouse pressionado, títulos, espaçamento dos campos, abertura/salvamento pelo Nautilus, registro em Abrir com, abertura pelo sistema com a janela aberta ou fechada, aceitação e recusa do padrão, apresentação na menor janela e atalhos na lateral apenas para arquivos vinculados a projetos. Inclui troca e persistência dos cinco idiomas, fontes locais CJK, preservação do documento/histórico, captura real dos atalhos, comandos com teclado/mouse nos cinco idiomas, paleta imediata, edição na barra e Zen com ferramentas nas duas laterais.
-- **8 verificações de atualização Linux:** autorização manual, ausência de consultas automáticas, rejeição de bytes/chaves/versão adulterados, cancelamento sem download e salvamento de pacote verificado.
-- O roteiro desktop também passou no **executável otimizado de produção, sem depender do servidor Vite**.
-- Documento de **280 mil caracteres** carregado e editado no roteiro desktop. O tempo medido inclui definir o conteúdo e inserir texto; não representa um benchmark de latência por tecla.
-
-As capturas e o relatório de cada execução ficam em `artifacts/`, ignorado pelo Git. Capturas verificadas dos temas estão em `docs/screenshots/`.
-
-### Limites e validação manual
-
-O limite de abertura é 64 MB por documento. Cada imagem aceita até 20 MB; um salvamento aceita até 128 MB de recursos. A busca global apresenta até 100 resultados e lê os arquivos no backend, fora da thread da interface. Não inclui rascunhos e não mantém um índice oculto de conteúdo.
-
-Os testes verificam Unicode e o tratamento de eventos de composição. **Uma sessão interativa completa com candidatos de um IME japonês ainda exige validação manual**; eventos sintetizados não comprovam toda a experiência do método de entrada. O redimensionamento da janela utiliza as APIs nativas do Tauri, sem tentar controlar painéis ou decorações do GNOME.
+A auditoria usa teclas e ponteiro reais, documentos e perfis descartáveis. Cobre os cinco idiomas, os vinte comandos, Esc, links, zoom, barras em três tamanhos de janela, gravação e leitura de arquivos, imagens, conflitos, projetos e instaladores. [Relatório completo, evidências e limites](docs/validation-2.3.0.md).
 
 ## Atalhos
 

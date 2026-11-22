@@ -1,6 +1,6 @@
 # Comandos de escrita
 
-Na prévia **2.3.0-rc.1**, digite `/` no início de uma linha ou depois de um espaço. Continue digitando para filtrar as vinte opções. Use as setas e Enter ou clique na opção. Esc fecha o menu e preserva o texto; desfazer restaura o comando aplicado.
+A partir da **2.3.0 estável**, digite `/` no início de uma linha ou depois de um espaço. Continue digitando para filtrar as vinte opções. Use as setas e Enter ou clique na opção. Esc fecha o menu e preserva o texto; desfazer restaura o comando aplicado.
 
 | Comando em português | O que faz |
 | --- | --- |
