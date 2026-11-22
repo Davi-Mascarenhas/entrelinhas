@@ -26,6 +26,8 @@ menus japoneses e chineses acompanham o aplicativo e funcionam offline.
 clique em **Salvar**. Duplicatas e combinações reservadas são recusadas. **Esc** cancela
 a captura. As dicas e os menus passam a exibir a combinação escolhida.
 
+[Idiomas nas configurações](docs/screenshots/language-pt-BR.png) · [English](docs/screenshots/language-en.png) · [日本語](docs/screenshots/language-ja.png) · [简体中文](docs/screenshots/language-zh-CN.png) · [Deutsch](docs/screenshots/language-de.png) · [Idioma na primeira abertura](docs/screenshots/welcome-language.png) · [Personalizar atalho](docs/screenshots/shortcut-capture.png).
+
 ## Suas palavras, no seu tempo
 
 - Inicialização normal em uma nota nova, vazia e mantida em memória. Ao abrir pelo explorador, recebe os documentos solicitados. Escrita sem o cabeçalho decorativo, começando mais acima.
@@ -38,7 +40,7 @@ a captura. As dicas e os menus passam a exibir a combinação escolhida.
 - [A lateral](docs/screenshots/projects-only.png) oferece acesso rápido somente aos arquivos vinculados a projetos. Arquivos avulsos podem ser abertos e salvos normalmente; vincular ou desvincular um projeto não modifica o arquivo no disco.
 - Guias ocultas com uma única nota; botão **Nova guia** e **Ctrl+T** revelam a faixa ao abrir a segunda. Guias reordenáveis, com conteúdo, seleção e histórico preservados ao alternar.
 - Modo Zen automático, alternância manual, acesso por Esc e aproximação das bordas.
-- Apresentação inicial em três páginas: boas-vindas, tema e aplicativo padrão opcional. Temas Claro, Escuro e Sépia Noturno, com prévia imediata e respeito às preferências de instalações anteriores.
+- Apresentação inicial com idioma, boas-vindas, tema e aplicativo padrão opcional no Linux; no Windows, o idioma vem do instalador e a apresentação tem três páginas. Temas Claro, Escuro e Sépia Noturno, com prévia imediata e respeito às preferências de instalações anteriores.
 - Coluna de escrita centralizada na janela inteira, com limite de largura e posição estável ao esconder os controles.
 - Seletores próprios para projeto, cor, fonte, formato, layout e formatação, acompanhando os três temas. Painéis preservam o fundo desfocado.
 - Formatação na parte inferior, com botões sem moldura, e dicas temáticas com nomes e atalhos ao passar o mouse ou navegar pelo teclado.
@@ -228,10 +230,10 @@ python3 scripts/test-desktop.py --binary src-tauri/target/release/entrelinhas
 
 Os números abaixo descrevem a suíte Linux. A validação Windows tem relatório próprio nos artefatos da rotina Windows e na release estável.
 
-- **109 testes TypeScript:** notas, abas, descarte, preferências, atalhos, Markdown, formatação, TXT, Unicode, busca, imagens, gravação explícita, conflitos, espera de gravações, centralização com diferentes painéis, seletores próprios por mouse e teclado, dicas, guias sob demanda, abertura sem perder texto, apresentação em três páginas, recusa do padrão, tratamento de falhas de associação, migração de preferências, fila de arquivos externos, edição de títulos, nome sugerido ao salvar e gestos da barra superior com exclusão dos botões e seus ícones, cliques sem arraste e cancelamento de gestos pendentes.
-- **19 testes Rust no Linux:** gravação atômica, conflitos, UTF-8, nomes internacionais, imagens relativas, arquivos somente leitura, recursos inválidos, projetos em Downloads, exclusão sem apagar documentos, localização, busca, renomeação sem sobrescrever, preservação de imagens e projeto, reversão em caso de falha no registro, argumentos do explorador e associações MIME em perfis isolados para as instalações local e Debian.
-- **38 verificações desktop:** inicialização, ocultação sem deslocamento, Esc, descarte após reiniciar, Ctrl+S com seletor GNOME, associação externa, abas, busca/substituição, colagem de imagens, temas, cursores, persistência, layout, F11, conflitos, busca global, confirmação opcional, TXT, paleta de cores nos três temas, primeira abertura, centralização ao redimensionar, formatação inferior sem moldura, menus de tabela, dicas nos três temas, tamanho da janela após reiniciar, duplo clique nas áreas livres dos dois lados da barra e entre os controles, arraste apenas ao mover o mouse pressionado, títulos, espaçamento dos campos, abertura/salvamento pelo Nautilus, registro em Abrir com, abertura pelo sistema com a janela aberta ou fechada, aceitação e recusa do padrão, apresentação na menor janela e atalhos na lateral apenas para arquivos vinculados a projetos.
-- O roteiro desktop também passou no **executável otimizado de produção, com o Vite desligado**.
+- **109 testes TypeScript:** notas, abas, descarte, preferências, atalhos, Markdown, formatação, TXT, Unicode, busca, imagens, gravação explícita, conflitos, espera de gravações, centralização com diferentes painéis, seletores próprios por mouse e teclado, dicas, guias sob demanda, abertura sem perder texto, apresentação em quatro páginas no Linux e três no Windows, recusa do padrão, tratamento de falhas de associação, migração de preferências, fila de arquivos externos, edição de títulos, nome sugerido ao salvar e gestos da barra superior com exclusão dos botões e seus ícones, cliques sem arraste e cancelamento de gestos pendentes. Inclui catálogos completos dos cinco idiomas, preservação de parâmetros, migração e captura de atalhos com validação de conflitos.
+- **19 testes Rust no Linux:** gravação atômica, conflitos, UTF-8, nomes internacionais, imagens relativas, arquivos somente leitura, recursos inválidos, projetos em Downloads, exclusão sem apagar documentos, localização, busca, renomeação sem sobrescrever, preservação de imagens e projeto, reversão em caso de falha no registro, argumentos do explorador e associações MIME em perfis isolados para as instalações local e Debian, além do mapeamento dos idiomas do instalador.
+- **41 verificações desktop:** inicialização, ocultação sem deslocamento, Esc, descarte após reiniciar, Ctrl+S com seletor GNOME, associação externa, abas, busca/substituição, colagem de imagens, temas, cursores, persistência, layout, F11, conflitos, busca global, confirmação opcional, TXT, paleta de cores nos três temas, primeira abertura, centralização ao redimensionar, formatação inferior sem moldura, menus de tabela, dicas nos três temas, tamanho da janela após reiniciar, duplo clique nas áreas livres dos dois lados da barra e entre os controles, arraste apenas ao mover o mouse pressionado, títulos, espaçamento dos campos, abertura/salvamento pelo Nautilus, registro em Abrir com, abertura pelo sistema com a janela aberta ou fechada, aceitação e recusa do padrão, apresentação na menor janela e atalhos na lateral apenas para arquivos vinculados a projetos. Inclui troca e persistência dos cinco idiomas, fontes locais CJK, preservação do documento/histórico e captura real dos atalhos.
+- O roteiro desktop também passou no **executável otimizado de produção, sem depender do servidor Vite**.
 - Documento de **280 mil caracteres** carregado e editado no roteiro desktop. O tempo medido inclui definir o conteúdo e inserir texto; não representa um benchmark de latência por tecla.
 
 As capturas e o relatório de cada execução ficam em `artifacts/`, ignorado pelo Git. Capturas verificadas dos temas estão em `docs/screenshots/`.
@@ -246,6 +248,7 @@ Os testes verificam Unicode e o tratamento de eventos de composição. **Uma ses
 
 | Ação                                | Atalho padrão                   |
 | ----------------------------------- | ------------------------------- |
+| Configurações                       | Ctrl+,                          |
 | Nova nota                           | Ctrl+N                          |
 | Nova guia                           | Ctrl+T                          |
 | Abrir documento                     | Ctrl+O                          |
@@ -256,7 +259,7 @@ Os testes verificam Unicode e o tratamento de eventos de composição. **Uma ses
 | Pesquisar / substituir              | Ctrl+F / Ctrl+H                 |
 | Negrito / itálico / sublinhado      | Ctrl+B / Ctrl+I / Ctrl+U        |
 | Desfazer / refazer                  | Ctrl+Z / Ctrl+Shift+Z           |
-| Modo Zen                       | Ctrl+Shift+F                    |
+| Modo Zen                            | Ctrl+Shift+F                    |
 | Revelar interface                   | Esc                             |
 | Menu do documento                   | Alt+F; setas para navegar       |
 | Tela cheia                          | F11                             |
