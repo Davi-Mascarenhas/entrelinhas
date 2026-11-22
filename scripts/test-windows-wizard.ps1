@@ -29,7 +29,7 @@ foreach ($language in @(
   @{Name='Portugu'; Id=1046; Welcome='Bem-vindo ao Entrelinhas'},
   @{Name='English'; Id=1033; Welcome='Welcome to Entrelinhas'},
   @{Name='日本語'; Id=1041; Welcome='Entrelinhasへようこそ'},
-  @{Name='简体中文'; Id=2052; Welcome='欢迎使用 Entrelinhas'},
+  @{Name='简体'; Id=2052; Welcome='欢迎使用 Entrelinhas'},
   @{Name='Deutsch'; Id=1031; Welcome='Willkommen bei Entrelinhas'}
 )) {
 $wizard = Start-Process -FilePath $Installer -PassThru
