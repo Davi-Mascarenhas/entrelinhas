@@ -2411,6 +2411,85 @@ body,
   padding: 10px;
   font-size: 12px;
 }
+.slash-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.slash-heading > span {
+  font-variant-numeric: tabular-nums;
+}
+.tiptap aside[data-type='callout'] {
+  position: relative;
+  margin-block: 1.1em;
+  padding: 14px 18px 14px 46px;
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--accent) 9%, var(--bg));
+}
+.tiptap aside[data-type='callout']::before {
+  content: 'i';
+  position: absolute;
+  top: 18px;
+  left: 17px;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  color: var(--accent);
+  font: 600 12px/1 sans-serif;
+}
+.tiptap aside[data-kind='warning'] {
+  border-color: color-mix(in srgb, #c4934e 32%, transparent);
+  background: color-mix(in srgb, #c4934e 10%, var(--bg));
+}
+.tiptap aside[data-kind='warning']::before {
+  content: '!';
+  color: var(--accent);
+}
+.tiptap aside[data-type='callout'] > :first-child,
+.tiptap [data-type='detailsContent'] > :first-child {
+  margin-top: 0;
+}
+.tiptap aside[data-type='callout'] > :last-child,
+.tiptap [data-type='detailsContent'] > :last-child {
+  margin-bottom: 0;
+}
+.tiptap details {
+  margin-block: 1em;
+}
+.tiptap details > summary {
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.tiptap details > summary:hover {
+  background: var(--hover);
+}
+.tiptap details > summary::marker {
+  color: var(--accent);
+  font-size: 0.75em;
+}
+.tiptap [data-type='detailsContent'] {
+  margin: 10px 0 10px 12px;
+  padding: 4px 0 4px 20px;
+  border-left: 1px solid var(--border);
+}
+.tiptap details:not([open]) > [data-type='detailsContent'] {
+  display: none;
+}
+.tiptap summary.is-empty::before,
+.tiptap [data-type='detailsContent'] > p.is-empty:only-child::before,
+.tiptap aside[data-type='callout'] > p.is-empty:only-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  color: var(--muted);
+  font-style: italic;
+}
 
 /* O modo Zen libera a altura dos controles e suaviza o texto junto às bordas. */
 .app {

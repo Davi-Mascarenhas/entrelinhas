@@ -109,5 +109,70 @@ def exercise(app, output, wait, passed):
     app.paint();app.key('Escape');wait(lambda: not app.js('return document.querySelector(".app").classList.contains("immersive")'), 'segundo Esc sai do Zen')
     passed('Zen usa mais altura, mantém coluna e ferramentas, barra lateral oposta e menu / acompanha o cursor no Zen automático')
 
+    settings('behavior');preference('autoImmersive',False);close_settings()
+    check_blocks(app, output, wait, passed, settings, close_settings, editor_key)
     app.editor('editor.commands.setContent(arguments[0]);return true', original)
     settings('behavior');preference('autoImmersive',auto);close_settings()
+
+
+def check_blocks(app, output, wait, passed, settings, close_settings, editor_key):
+    def blank():
+        app.editor('editor.commands.setContent("<p></p>");editor.commands.focus("end");return true');app.paint()
+    def choose(query, command):
+        app.keys('.editor-scroll:not(.inactive) .tiptap','/'+query)
+        wait(lambda: app.js('return !!document.querySelector(arguments[0])', f'.slash-menu [data-command="{command}"]'), 'comando /'+query)
+        app.click(f'.slash-menu [data-command="{command}"]')
+        app.paint()
+    blank()
+    for language, toggle, callout, warning, date, clock in [
+        ('pt-BR','recolhivel','dica','aviso','hoje','hora'),
+        ('en','toggle','callout','warning','today','time'),
+        ('ja','トグル','コールアウト','警告','日付','時刻'),
+        ('zh-CN','折叠','提示','警告','日期','时间'),
+        ('de','klappliste','hinweis','warnung','datum','uhrzeit'),
+    ]:
+        settings('language');app.click(f'[data-language="{language}"]');close_settings();blank()
+        choose(toggle,'toggle')
+        assert app.editor('return editor.state.selection.$from.parent.type.name') == 'detailsSummary'
+        app.editor('editor.commands.insertContent("Ideias para guardar");return true');editor_key('Enter')
+        assert app.editor('return editor.state.selection.$from.node(-1).type.name') == 'detailsContent'
+        app.editor('editor.commands.insertContent("Este conteúdo pode ser recolhido sem ser apagado.");return true')
+        editor_key('Enter');editor_key('Enter')
+        assert app.editor('return editor.state.selection.$from.depth') == 1
+        choose(callout,'callout');app.editor('editor.commands.insertContent("Uma ideia merece espaço para crescer.");return true')
+        editor_key('Enter');editor_key('Enter');choose(warning,'warning')
+        app.editor('editor.commands.insertContent("Salvar continua sendo uma escolha sua.");return true')
+        assert app.editor('return editor.getJSON().content.filter(n=>n.type==="callout").map(n=>n.attrs.kind)') == ['info','warning']
+        app.click('.tiptap details > summary')
+        wait(lambda: app.editor('return editor.getJSON().content[0].attrs.open') is False, 'recolher bloco pelo mouse')
+        assert app.js('return document.querySelector(".tiptap [data-type=detailsContent]").getBoundingClientRect().height') == 0
+        assert app.editor('return editor.getText().includes("sem ser apagado")')
+        app.screenshot(output/f'blocks-collapsed-{language}.png')
+        app.click('.tiptap details > summary');wait(lambda: app.editor('return editor.getJSON().content[0].attrs.open') is True, 'reabrir bloco pelo mouse')
+        app.screenshot(output/f'blocks-{language}.png')
+        blank();choose(date,'date')
+        assert app.editor('return !editor.getText().includes("/") && editor.getText().trim().length>5')
+        blank();choose(clock,'time')
+        assert app.editor('return !editor.getText().includes("/") && /[0-9]/.test(editor.getText())')
+    passed('blocos recolhíveis, caixas, avisos, data e hora nos cinco idiomas; mouse e Enter preservam o conteúdo')
+    settings('language');app.click('[data-language="pt-BR"]');close_settings();blank()
+    choose('link','link')
+    wait(lambda: app.js('return !!document.querySelector(arguments[0])', '.modal input[placeholder="https://"]'), 'endereço do link')
+    app.screenshot(output/'slash-link.png')
+    app.key('Escape');assert app.editor('return editor.getText()') == '/link'
+    blank();choose('link','link');app.keys('.modal input[placeholder="https://"]','https://example.com/ideias')
+    app.click('.modal button[type=submit]');wait(lambda: not app.js('return !!document.querySelector(".modal")'), 'aplicar link')
+    assert app.editor('return editor.getHTML().includes("https://example.com/ideias") && !editor.getText().includes("/link")')
+    app.editor('editor.commands.setContent("<p>Ideia <strong>importante</strong> </p>");editor.commands.focus("end");editor.commands.insertContent(" ");return true');app.paint()
+    choose('duplicar','duplicate')
+    assert app.editor('const p=editor.getJSON().content;return p.length===2&&JSON.stringify(p[0])===JSON.stringify(p[1])')
+    app.editor('editor.commands.focus("end");editor.commands.insertContent(" ");return true');app.paint();choose('limpar','clear')
+    assert app.editor('const p=editor.getJSON().content;return JSON.stringify(p[0]).includes("bold")&&!JSON.stringify(p[1]).includes("bold")')
+    passed('link confirmado/cancelado, duplicação com marcas e limpeza apenas do bloco atual no aplicativo real')
+    blank();app.keys('.editor-scroll:not(.inactive) .tiptap','/')
+    wait(lambda: app.js('return document.querySelectorAll(".slash-menu [role=option]").length') == 20, 'vinte comandos no menu')
+    editor_key('ArrowUp');wait(lambda: app.js('return document.querySelector(".slash-menu [aria-selected=true]").dataset.command') == 'clear', 'navegar até o fim do menu')
+    app.screenshot(output/'slash-more.png')
+    editor_key('ArrowDown');wait(lambda: app.js('return document.querySelector(".slash-menu [aria-selected=true]").dataset.command') == 'tasks', 'voltar ao início do menu')
+    editor_key('Escape')
+    passed('vinte comandos com rolagem e navegação circular por teclado, sem mudar o texto ao cancelar')

@@ -6,6 +6,7 @@ import type { Note, Preferences } from '../core/types'
 import { editorExtensions } from './extensions'
 import { SlashMenu } from './SlashMenu'
 import { Caret } from './Caret'
+import type { SlashRange } from './slash'
 
 interface Props {
   note: Note
@@ -15,6 +16,8 @@ interface Props {
   onChange: (id: string) => void
   onTyping: () => void
   onImages: (files: File[], editor: Editor) => void
+  onChooseImage: (editor: Editor, range: SlashRange) => void
+  onInsertLink: (editor: Editor, range: SlashRange) => void
   onStats: (text: string) => void
   onSelection: (rect: DOMRect | null) => void
 }
@@ -120,7 +123,13 @@ export function EditorPane(props: Props) {
       <div className="writing-paper">
         <EditorContent editor={editor} />
       </div>
-      {editor && props.active && <SlashMenu editor={editor} />}
+      {editor && props.active && (
+        <SlashMenu
+          editor={editor}
+          onImage={(range) => props.onChooseImage(editor, range)}
+          onLink={(range) => props.onInsertLink(editor, range)}
+        />
+      )}
       {editor && props.active && (
         <Caret editor={editor} enabled={props.preferences.cursor === 'block'} />
       )}

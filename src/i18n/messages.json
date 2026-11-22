@@ -1871,5 +1871,85 @@
     "F11 · 全画面 · Esc · Zenモードを切り替え",
     "F11 · 全屏 · Esc · 切换禅模式",
     "F11 · Vollbild · Esc · Zen-Modus umschalten"
+  ],
+  ["Lista recolhível", "Toggle list", "トグルリスト", "折叠列表", "Klappliste"],
+  [
+    "Um título que abre e fecha o conteúdo abaixo.",
+    "A heading that opens and closes the content below.",
+    "見出しをクリックして内容を開閉します。",
+    "点击标题展开或收起下方内容。",
+    "Eine Überschrift zum Auf- und Zuklappen des Inhalts."
+  ],
+  ["Caixa informativa", "Callout", "コールアウト", "提示框", "Hinweisbox"],
+  [
+    "Dê destaque a uma ideia ou dica.",
+    "Highlight an idea or tip.",
+    "アイデアやヒントを目立たせます。",
+    "突出显示想法或提示。",
+    "Hebe eine Idee oder einen Tipp hervor."
+  ],
+  ["Aviso", "Warning", "警告", "警告", "Warnung"],
+  [
+    "Uma caixa para algo que merece atenção.",
+    "A box for something that needs attention.",
+    "注意が必要な内容を表示します。",
+    "突出显示需要注意的内容。",
+    "Eine Box für etwas, das Aufmerksamkeit verdient."
+  ],
+  ["Imagem", "Image", "画像", "图片", "Bild"],
+  [
+    "Escolha uma imagem do computador.",
+    "Choose an image from your computer.",
+    "パソコンから画像を選択します。",
+    "从电脑中选择图片。",
+    "Wähle ein Bild von deinem Computer."
+  ],
+  ["Link", "Link", "リンク", "链接", "Link"],
+  [
+    "Insira um endereço como link no texto.",
+    "Insert an address as a link in the text.",
+    "アドレスをリンクとして挿入します。",
+    "将地址作为链接插入文本。",
+    "Füge eine Adresse als Link in den Text ein."
+  ],
+  ["Data de hoje", "Today's date", "今日の日付", "今天的日期", "Heutiges Datum"],
+  [
+    "Insira a data no idioma do aplicativo.",
+    "Insert the date in the app language.",
+    "アプリの言語で日付を挿入します。",
+    "按应用语言插入日期。",
+    "Füge das Datum in der Sprache der App ein."
+  ],
+  ["Hora atual", "Current time", "現在の時刻", "当前时间", "Aktuelle Uhrzeit"],
+  [
+    "Insira a hora atual no texto.",
+    "Insert the current time in the text.",
+    "現在の時刻をテキストに挿入します。",
+    "在文本中插入当前时间。",
+    "Füge die aktuelle Uhrzeit in den Text ein."
+  ],
+  ["Duplicar bloco", "Duplicate block", "ブロックを複製", "复制块", "Block duplizieren"],
+  [
+    "Repita o bloco atual logo abaixo.",
+    "Repeat the current block right below.",
+    "現在のブロックをすぐ下に複製します。",
+    "在下方复制当前块。",
+    "Wiederhole den aktuellen Block direkt darunter."
+  ],
+  ["Limpar formatação", "Clear formatting", "書式をクリア", "清除格式", "Formatierung entfernen"],
+  [
+    "Remova as marcas e o estilo deste parágrafo.",
+    "Remove formatting and styling from this paragraph.",
+    "この段落の文字装飾とスタイルを解除します。",
+    "清除此段落的文本格式和样式。",
+    "Entferne Formatierung und Stil dieses Absatzes."
+  ],
+  ["Título recolhível", "Toggle heading", "トグルの見出し", "折叠标题", "Klappüberschrift"],
+  [
+    "O texto mudou. Digite /link novamente para inserir o endereço.",
+    "The text changed. Type /link again to insert the address.",
+    "テキストが変更されました。/link を再入力してください。",
+    "文本已更改。请重新输入 /link 来插入地址。",
+    "Der Text wurde geändert. Gib /link erneut ein, um die Adresse einzufügen."
   ]
 ]

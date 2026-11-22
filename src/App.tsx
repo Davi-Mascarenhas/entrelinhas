@@ -35,6 +35,7 @@ import { useDocuments } from './documents/useDocuments'
 import { useDialog } from './components/useDialog'
 import { open as openNative } from '@tauri-apps/plugin-dialog'
 import { EditorPane } from './editor/EditorPane'
+import { runSlashCommand, type SlashRange } from './editor/slash'
 import { ProjectAssignment } from './components/ProjectAssignment'
 import { Formatting } from './components/Formatting'
 import { WindowResize } from './native/WindowResize'
@@ -97,6 +98,16 @@ export default function App() {
   })
   const [editorVersion, setEditorVersion] = useState(0)
   const [link, setLink] = useState<string | null>(null)
+  const [slashLink, setSlashLink] = useState<{ editor: Editor; range: SlashRange } | null>(null)
+  const closeLink = () => {
+    const target = slashLink?.editor
+    setLink(null)
+    setSlashLink(null)
+    if (target)
+      requestAnimationFrame(() => {
+        if (!target.isDestroyed) target.commands.focus()
+      })
+  }
   const [selectionRect, setSelectionRect] = useState<DOMRect | null>(null)
   const [notice, setNotice] = useState('')
   const editors = useRef(new Map<string, Editor>())
@@ -310,35 +321,45 @@ export default function App() {
       void unsubscribe.then((fn) => fn())
     }
   }, [notify])
-  const chooseImage = useCallback(async () => {
-    const editor = editors.current.get(activeId)
-    if (!editor) return
-    try {
-      const selected = await openNative({
-        title: tr('Inserir imagem'),
-        multiple: true,
-        filters: [
-          {
-            name: tr('Imagens'),
-            extensions: ['png', 'jpg', 'jpeg', 'gif', 'webp', 'avif', 'bmp'],
-          },
-        ],
-      })
-      for (const path of Array.isArray(selected) ? selected : selected ? [selected] : []) {
-        const src = await backend.importImage(path)
-        editor
-          .chain()
-          .focus()
-          .setImage({
-            src,
-            alt: path.split('/').pop() ?? '',
-          })
-          .run()
+  const chooseImage = useCallback(
+    async (target?: Editor, command?: SlashRange) => {
+      const editor = target ?? editors.current.get(activeId)
+      if (!editor) return
+      try {
+        const selected = await openNative({
+          title: tr('Inserir imagem'),
+          multiple: true,
+          filters: [
+            {
+              name: tr('Imagens'),
+              extensions: ['png', 'jpg', 'jpeg', 'gif', 'webp', 'avif', 'bmp'],
+            },
+          ],
+        })
+        const images: { src: string; alt: string }[] = []
+        for (const path of Array.isArray(selected) ? selected : selected ? [selected] : []) {
+          const src = await backend.importImage(path)
+          images.push({ src, alt: path.split(/[\\/]/).pop() ?? '' })
+        }
+        if (editor.isDestroyed) return
+        if (command) {
+          runSlashCommand(editor, command, 'image', { images })
+        } else
+          for (const image of images) {
+            editor
+              .chain()
+              .focus()
+              .setImage({
+                ...image,
+              })
+              .run()
+          }
+      } catch (error) {
+        notify(errorMessage(error))
       }
-    } catch (error) {
-      notify(errorMessage(error))
-    }
-  }, [activeId, notify])
+    },
+    [activeId, notify],
+  )
   const insertImages = useCallback(
     async (files: File[], editor: Editor) => {
       for (const file of files) {
@@ -938,6 +959,11 @@ export default function App() {
               onChange={onChange}
               onTyping={onTyping}
               onImages={insertImages}
+              onChooseImage={(editor, range) => void chooseImage(editor, range)}
+              onInsertLink={(editor, range) => {
+                setSlashLink({ editor, range })
+                setLink('')
+              }}
               onStats={note.id === activeId ? onStats : () => {}}
               onSelection={note.id === activeId ? setSelectionRect : () => {}}
             />
@@ -958,7 +984,10 @@ export default function App() {
                 editor={activeEditor}
                 compact={!toolbar && !immersive}
                 insertImage={() => void chooseImage()}
-                insertLink={() => setLink(activeEditor.getAttributes('link').href || '')}
+                insertLink={() => {
+                  setSlashLink(null)
+                  setLink(activeEditor.getAttributes('link').href || '')
+                }}
               />
             )}
           </div>
@@ -1056,7 +1085,7 @@ export default function App() {
         />
       )}
       {link !== null && (
-        <Modal title={tr('Inserir link')} onClose={() => setLink(null)}>
+        <Modal title={tr('Inserir link')} onClose={closeLink}>
           <form
             className="modal-body"
             onSubmit={(event) => {
@@ -1065,7 +1094,13 @@ export default function App() {
                 notify(tr('Use um endereço https://, http:// ou mailto:.'))
                 return
               }
-              if (link)
+              if (slashLink) {
+                if (!runSlashCommand(slashLink.editor, slashLink.range, 'link', { href: link })) {
+                  notify(tr('O texto mudou. Digite /link novamente para inserir o endereço.'))
+                  closeLink()
+                  return
+                }
+              } else if (link)
                 activeEditor
                   ?.chain()
                   .focus()
@@ -1075,7 +1110,7 @@ export default function App() {
                   })
                   .run()
               else activeEditor?.chain().focus().unsetLink().run()
-              setLink(null)
+              closeLink()
             }}
           >
             <label>
@@ -1084,12 +1119,13 @@ export default function App() {
                 autoFocus
                 type="text"
                 placeholder="https://"
+                required={Boolean(slashLink)}
                 value={link}
                 onChange={(event) => setLink(event.target.value)}
               />
             </label>
             <div className="modal-actions">
-              <button type="button" onClick={() => setLink(null)}>
+              <button type="button" onClick={closeLink}>
                 {tr('Cancelar')}
               </button>
               <button className="primary" type="submit">

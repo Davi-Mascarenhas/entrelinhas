@@ -1,7 +1,7 @@
-import type { Editor } from '@tiptap/core'
+import type { ChainedCommands, Editor } from '@tiptap/core'
 import { closeHistory } from '@tiptap/pm/history'
-import type { EditorState } from '@tiptap/pm/state'
-import { tr } from '../i18n'
+import { Selection, TextSelection, type EditorState } from '@tiptap/pm/state'
+import { getLanguage, tr } from '../i18n'
 
 export interface SlashRange {
   from: number
@@ -95,6 +95,87 @@ export const slashCommands = [
     description: 'Volte ao texto comum.',
     aliases: ['texto', 'text', 'paragraph', 'テキスト', '文本', 'absatz'],
   },
+  {
+    id: 'toggle',
+    label: 'Lista recolhível',
+    description: 'Um título que abre e fecha o conteúdo abaixo.',
+    aliases: [
+      'recolhivel',
+      'toggle',
+      'accordion',
+      'alternar',
+      'トグル',
+      '折りたたみ',
+      '折叠',
+      'aufklappen',
+      'klappliste',
+    ],
+  },
+  {
+    id: 'callout',
+    label: 'Caixa informativa',
+    description: 'Dê destaque a uma ideia ou dica.',
+    aliases: [
+      'caixa',
+      'dica',
+      'callout',
+      'info',
+      'コールアウト',
+      'ヒント',
+      '提示',
+      '信息',
+      'hinweis',
+    ],
+  },
+  {
+    id: 'warning',
+    label: 'Aviso',
+    description: 'Uma caixa para algo que merece atenção.',
+    aliases: ['aviso', 'atencao', 'warning', 'alert', '警告', '注意', '警示', 'warnung'],
+  },
+  {
+    id: 'image',
+    label: 'Imagem',
+    description: 'Escolha uma imagem do computador.',
+    aliases: ['imagem', 'foto', 'image', 'photo', '画像', '写真', '图片', '图像', 'bild'],
+  },
+  {
+    id: 'link',
+    label: 'Link',
+    description: 'Insira um endereço como link no texto.',
+    aliases: ['link', 'endereco', 'url', 'リンク', '链接', 'verknüpfung'],
+  },
+  {
+    id: 'date',
+    label: 'Data de hoje',
+    description: 'Insira a data no idioma do aplicativo.',
+    aliases: ['data', 'hoje', 'date', 'today', '日付', '今日', '日期', '今天', 'datum', 'heute'],
+  },
+  {
+    id: 'time',
+    label: 'Hora atual',
+    description: 'Insira a hora atual no texto.',
+    aliases: ['hora', 'agora', 'time', 'now', '時刻', '時間', '时间', 'uhrzeit', 'jetzt'],
+  },
+  {
+    id: 'duplicate',
+    label: 'Duplicar bloco',
+    description: 'Repita o bloco atual logo abaixo.',
+    aliases: ['duplicar', 'duplicate', 'copy', '複製', '复制', 'duplizieren'],
+  },
+  {
+    id: 'clear',
+    label: 'Limpar formatação',
+    description: 'Remova as marcas e o estilo deste parágrafo.',
+    aliases: [
+      'limpar',
+      'clear',
+      'formatacao',
+      '書式をクリア',
+      '清除格式',
+      'formatierung entfernen',
+    ],
+  },
 ] as const
 export type SlashCommand = (typeof slashCommands)[number]
 const normalize = (value: string) =>
@@ -105,41 +186,125 @@ export function filterSlashCommands(query: string) {
     [tr(command.label), ...command.aliases].some((text) => normalize(text).includes(needle)),
   )
 }
-export function runSlashCommand(editor: Editor, range: SlashRange, id: SlashCommand['id']) {
+export interface SlashOptions {
+  images?: { src: string; alt?: string }[]
+  href?: string
+  now?: Date
+}
+export function runSlashCommand(
+  editor: Editor,
+  range: SlashRange,
+  id: SlashCommand['id'],
+  options: SlashOptions = {},
+) {
+  if (editor.isDestroyed) return false
   const fresh = slashRange(editor.state)
   if (!fresh || fresh.from !== range.from || fresh.to !== range.to || fresh.query !== range.query)
     return false
-  // Uma única transação: desfazer devolve inclusive o texto do comando.
-  const chain = editor
-    .chain()
-    .focus()
-    .command(({ tr }) => {
-      closeHistory(tr)
-      return true
-    })
-    .deleteRange({ from: range.from, to: range.to })
-  switch (id) {
-    case 'tasks':
-      return chain.toggleTaskList().run()
-    case 'table':
-      return chain.insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()
-    case 'bullet':
-      return chain.toggleBulletList().run()
-    case 'number':
-      return chain.toggleOrderedList().run()
-    case 'heading1':
-      return chain.setHeading({ level: 1 }).run()
-    case 'heading2':
-      return chain.setHeading({ level: 2 }).run()
-    case 'heading3':
-      return chain.setHeading({ level: 3 }).run()
-    case 'quote':
-      return chain.toggleBlockquote().run()
-    case 'code':
-      return chain.toggleCodeBlock().run()
-    case 'divider':
-      return chain.setHorizontalRule().run()
-    case 'text':
-      return chain.setParagraph().run()
+  const href = options.href?.trim()
+  if (id === 'link' && (!href || !/^(https?:\/\/|mailto:)/i.test(href))) return false
+  if (id === 'image' && !options.images?.length) return false
+  const now = options.now ?? new Date()
+  // Simula antes de aplicar: um bloco incompatível nunca apaga o comando.
+  const prepare = (start: ChainedCommands) => {
+    const chain = start
+      .command(({ tr }) => {
+        closeHistory(tr)
+        return true
+      })
+      .deleteRange({ from: range.from, to: range.to })
+    switch (id) {
+      case 'tasks':
+        return chain.toggleTaskList()
+      case 'table':
+        return chain.insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+      case 'bullet':
+        return chain.toggleBulletList()
+      case 'number':
+        return chain.toggleOrderedList()
+      case 'heading1':
+        return chain.setHeading({ level: 1 })
+      case 'heading2':
+        return chain.setHeading({ level: 2 })
+      case 'heading3':
+        return chain.setHeading({ level: 3 })
+      case 'quote':
+        return chain.toggleBlockquote()
+      case 'code':
+        return chain.toggleCodeBlock()
+      case 'divider':
+        return chain.setHorizontalRule()
+      case 'text':
+        return chain.setParagraph()
+      case 'callout':
+      case 'warning':
+        return chain.wrapIn('callout', { kind: id === 'warning' ? 'warning' : 'info' })
+      case 'toggle':
+        return chain.command(({ tr, state }) => {
+          const { $from } = tr.selection
+          const parent = $from.node($from.depth - 1)
+          const index = $from.index($from.depth - 1)
+          if (!parent.canReplaceWith(index, index + 1, state.schema.nodes.details)) return false
+          const node = state.schema.nodes.details.create({ open: true }, [
+            state.schema.nodes.detailsSummary.create(null, $from.parent.content),
+            state.schema.nodes.detailsContent.create(null, state.schema.nodes.paragraph.create()),
+          ])
+          const from = $from.before(),
+            offset = $from.parentOffset
+          tr.replaceWith(from, $from.after(), node)
+          tr.setSelection(TextSelection.near(tr.doc.resolve(from + 2 + offset)))
+          return true
+        })
+      case 'image':
+        return chain.insertContent(
+          options.images!.map((image) => ({ type: 'image', attrs: image })),
+        )
+      case 'link':
+        return chain.insertContent({
+          type: 'text',
+          text: href!,
+          marks: [{ type: 'link', attrs: { href } }],
+        })
+      case 'date':
+        return chain.insertContent({
+          type: 'text',
+          text: new Intl.DateTimeFormat(getLanguage(), { dateStyle: 'long' }).format(now),
+        })
+      case 'time':
+        return chain.insertContent({
+          type: 'text',
+          text: new Intl.DateTimeFormat(getLanguage(), { timeStyle: 'short' }).format(now),
+        })
+      case 'duplicate':
+        return chain.command(({ tr }) => {
+          const { $from } = tr.selection
+          let depth = $from.depth
+          for (let d = depth; d > 0; d--) {
+            if (['listItem', 'taskItem', 'details'].includes($from.node(d).type.name)) {
+              depth = d
+              break
+            }
+          }
+          const node = $from.node(depth)
+          const parent = $from.node(depth - 1),
+            index = $from.indexAfter(depth - 1)
+          if (!parent.canReplaceWith(index, index, node.type)) return false
+          const position = $from.after(depth)
+          tr.insert(position, node.copy(node.content))
+          tr.setSelection(Selection.near(tr.doc.resolve(position + 1)))
+          return true
+        })
+      case 'clear':
+        return chain.command(({ tr, state }) => {
+          const { $from } = tr.selection
+          tr.removeMark($from.start(), $from.end())
+          if (['paragraph', 'heading'].includes($from.parent.type.name))
+            tr.setNodeMarkup($from.before(), state.schema.nodes.paragraph, {})
+          tr.setStoredMarks([])
+          return true
+        })
+    }
   }
+  if (!prepare(editor.can().chain()).run()) return false
+  return prepare(editor.chain().focus()).scrollIntoView().run()
 }

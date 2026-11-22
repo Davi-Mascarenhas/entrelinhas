@@ -9,6 +9,7 @@ import TextAlign from '@tiptap/extension-text-align'
 import Highlight from '@tiptap/extension-highlight'
 import Placeholder from '@tiptap/extension-placeholder'
 import { SearchExtension } from './search'
+import { Callout, Details, DetailsContent, DetailsSummary } from './blocks'
 
 export function editorExtensions(placeholder = true) {
   return [
@@ -39,10 +40,16 @@ export function editorExtensions(placeholder = true) {
       },
     }),
     SearchExtension,
+    Callout,
+    Details,
+    DetailsSummary,
+    DetailsContent,
     ...(placeholder
       ? [
           Placeholder.configure({
-            placeholder: () => tr('Comece a escrever…'),
+            placeholder: ({ node }) =>
+              tr(node.type.name === 'detailsSummary' ? 'Título recolhível' : 'Comece a escrever…'),
+            includeChildren: true,
             emptyEditorClass: 'is-editor-empty',
           }),
         ]

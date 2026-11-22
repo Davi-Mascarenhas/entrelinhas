@@ -22,11 +22,26 @@ converter.addRule('rich-inline', {
 })
 converter.addRule('rich-block', {
   filter: (node) =>
-    ['P', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'TABLE', 'UL', 'OL', 'LI', 'BLOCKQUOTE'].includes(
-      node.nodeName,
-    ) &&
+    [
+      'P',
+      'H1',
+      'H2',
+      'H3',
+      'H4',
+      'H5',
+      'H6',
+      'TABLE',
+      'UL',
+      'OL',
+      'LI',
+      'BLOCKQUOTE',
+      'DETAILS',
+      'ASIDE',
+    ].includes(node.nodeName) &&
     ((node as HTMLElement).hasAttribute('style') ||
       node.nodeName === 'TABLE' ||
+      node.nodeName === 'DETAILS' ||
+      (node as HTMLElement).getAttribute('data-type') === 'callout' ||
       (node as HTMLElement).getAttribute('data-type') === 'taskList'),
   replacement: (_content, node) => `\n\n${(node as HTMLElement).outerHTML}\n\n`,
 })

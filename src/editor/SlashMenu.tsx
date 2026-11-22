@@ -14,6 +14,15 @@ import {
   Code2,
   Minus,
   Type,
+  ChevronRight,
+  Info,
+  TriangleAlert,
+  ImagePlus,
+  Link,
+  CalendarDays,
+  Clock3,
+  Copy,
+  RemoveFormatting,
 } from 'lucide-react'
 import {
   filterSlashCommands,
@@ -35,10 +44,27 @@ const icons = {
   code: Code2,
   divider: Minus,
   text: Type,
+  toggle: ChevronRight,
+  callout: Info,
+  warning: TriangleAlert,
+  image: ImagePlus,
+  link: Link,
+  date: CalendarDays,
+  time: Clock3,
+  duplicate: Copy,
+  clear: RemoveFormatting,
 }
 const key = new PluginKey('entrelinhasSlash')
 
-export function SlashMenu({ editor }: { editor: Editor }) {
+export function SlashMenu({
+  editor,
+  onImage,
+  onLink,
+}: {
+  editor: Editor
+  onImage: (range: SlashRange) => void
+  onLink: (range: SlashRange) => void
+}) {
   const language = useLanguage(),
     id = useId()
   const [range, setRange] = useState<SlashRange | null>(null)
@@ -59,7 +85,9 @@ export function SlashMenu({ editor }: { editor: Editor }) {
     const match = current.current.range
     if (!match) return
     close()
-    runSlashCommand(editor, match, command.id)
+    if (command.id === 'image') onImage(match)
+    else if (command.id === 'link') onLink(match)
+    else runSlashCommand(editor, match, command.id)
   }
   const chooseRef = useRef(choose)
   chooseRef.current = choose
@@ -205,7 +233,9 @@ export function SlashMenu({ editor }: { editor: Editor }) {
           style={position}
           onMouseDown={(event) => event.preventDefault()}
         >
-          <div className="slash-heading">{tr('Transformar em')}</div>
+          <div className="slash-heading">
+            {tr('Comandos de escrita')} <span aria-hidden="true">{items.length}</span>
+          </div>
           {items.map((command, index) => {
             const Icon = icons[command.id]
             return (
