@@ -48,6 +48,7 @@ def exercise(app, output, wait, passed):
     assert not app.js('return document.querySelector(".app").classList.contains("immersive")'), 'Esc não entra no Zen em nota vazia.'
     app.keys('.editor-scroll:not(.inactive) .tiptap','/')
     wait(lambda: app.js('return !!document.querySelector(".slash-menu")'), 'menu completo de comandos')
+    assert app.js('return document.querySelector(".slash-menu [aria-selected=true]").dataset.command') == 'tasks', 'Menu abre na primeira opção, mesmo sob o ponteiro parado.'
     editor_key('ArrowDown');editor_key('Enter')
     wait(lambda: app.editor('return editor.getJSON().content.some(n=>n.type==="table")'), 'setas e Enter em sequência escolhem o segundo comando')
 
@@ -96,6 +97,17 @@ def exercise(app, output, wait, passed):
     wait(lambda: app.js('return getComputedStyle(document.querySelector(".titlebar")).visibility') == 'hidden', 'terminar transição Zen')
     app.screenshot(output/'formatting-side-left.png')
     app.key('Escape');settings('appearance');app.choose('Posição da navegação','left');close_settings();settings('toolbar');app.choose('Posição da formatação','bottom');close_settings()
-    passed('Zen usa mais altura com coluna centralizada, Esc alterna, barra aparece por padrão e pode ocultar ou ficar oposta aos projetos')
+
+    settings('behavior');preference('autoImmersive',True);close_settings()
+    app.editor('editor.commands.setContent("<p></p>");editor.commands.focus("end");return true');app.paint()
+    app.keys('.editor-scroll:not(.inactive) .tiptap','/lista')
+    wait(lambda: app.js('return document.querySelector(".app").classList.contains("immersive")'), 'comando entra no Zen automático')
+    wait(lambda: app.js('return getComputedStyle(document.querySelector(".titlebar")).visibility') == 'hidden', 'animar Zen com menu aberto')
+    wait(lambda: app.editor('const c=editor.view.coordsAtPos(editor.state.selection.head);const m=document.querySelector(".slash-menu")?.getBoundingClientRect();return !!m&&m.top-c.bottom>=0&&m.top-c.bottom<=12'), 'menu segue o cursor durante a animação')
+    app.screenshot(output/'slash-zen.png')
+    editor_key('Escape');assert app.js('return document.querySelector(".app").classList.contains("immersive")'), 'Fechar o menu mantém o Zen.'
+    app.paint();app.key('Escape');wait(lambda: not app.js('return document.querySelector(".app").classList.contains("immersive")'), 'segundo Esc sai do Zen')
+    passed('Zen usa mais altura, mantém coluna e ferramentas, barra lateral oposta e menu / acompanha o cursor no Zen automático')
+
     app.editor('editor.commands.setContent(arguments[0]);return true', original)
     settings('behavior');preference('autoImmersive',auto);close_settings()

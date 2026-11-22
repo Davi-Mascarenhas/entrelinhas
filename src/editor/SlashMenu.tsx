@@ -176,9 +176,14 @@ export function SlashMenu({ editor }: { editor: Editor }) {
     }
     window.addEventListener('scroll', scroll, true)
     window.addEventListener('resize', place)
+    const observer = new ResizeObserver(place)
+    observer.observe(editor.view.dom)
+    observer.observe(editor.view.dom.closest('.editor-scroll')!)
+    observer.observe(menu.current)
     editor.view.dom.setAttribute('aria-controls', id)
     if (items[selected]) editor.view.dom.setAttribute('aria-activedescendant', `${id}-${selected}`)
     return () => {
+      observer.disconnect()
       window.removeEventListener('scroll', scroll, true)
       window.removeEventListener('resize', place)
       editor.view.dom.removeAttribute('aria-controls')
@@ -211,7 +216,10 @@ export function SlashMenu({ editor }: { editor: Editor }) {
                 id={`${id}-${index}`}
                 aria-selected={selected === index}
                 data-command={command.id}
-                onMouseEnter={() => setSelected(index)}
+                onPointerMove={() => {
+                  current.current = { ...current.current, selected: index }
+                  setSelected(index)
+                }}
                 onClick={() => choose(command)}
               >
                 <Icon size={18} />
