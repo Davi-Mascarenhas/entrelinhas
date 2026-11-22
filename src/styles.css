@@ -2362,3 +2362,57 @@ body,
 .select-choice-icon {
   display: none;
 }
+
+.slash-menu {
+  width: min(320px, calc(100vw - 24px));
+  padding: 6px;
+}
+.slash-menu .slash-heading {
+  padding: 8px 10px;
+  font-size: 10px;
+  color: var(--muted);
+}
+.slash-menu > button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: 7px;
+  text-align: start;
+}
+.slash-menu > button[aria-selected='true'] {
+  background: var(--accent-soft);
+  color: var(--text);
+}
+.slash-menu > button > svg {
+  flex: 0 0 18px;
+  color: var(--accent);
+}
+.slash-menu strong {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+}
+.slash-menu small {
+  display: block;
+  margin-top: 3px;
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.slash-menu footer {
+  position: sticky;
+  bottom: -6px;
+  margin: 4px -6px -6px;
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 9px;
+  color: var(--muted);
+}
+.slash-menu > p {
+  padding: 10px;
+  font-size: 12px;
+}

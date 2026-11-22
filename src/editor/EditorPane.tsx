@@ -4,6 +4,7 @@ import { EditorContent, useEditor } from '@tiptap/react'
 import type { Editor } from '@tiptap/core'
 import type { Note, Preferences } from '../core/types'
 import { editorExtensions } from './extensions'
+import { SlashMenu } from './SlashMenu'
 import { Caret } from './Caret'
 
 interface Props {
@@ -119,6 +120,7 @@ export function EditorPane(props: Props) {
       <div className="writing-paper">
         <EditorContent editor={editor} />
       </div>
+      {editor && props.active && <SlashMenu editor={editor} />}
       {editor && props.active && (
         <Caret editor={editor} enabled={props.preferences.cursor === 'block'} />
       )}

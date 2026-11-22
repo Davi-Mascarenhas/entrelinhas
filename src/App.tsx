@@ -418,7 +418,7 @@ export default function App() {
   }, [preferences.theme, notify])
   useEffect(() => {
     const handle = (event: KeyboardEvent) => {
-      if (event.isComposing) return
+      if (event.isComposing || event.defaultPrevented) return
       if (updateLock.current) return
       if (event.key === 'Escape') {
         setImmersive(false)
