@@ -57,6 +57,23 @@ def exercise(app, folder, destination, fixtures, install, wait, passed):
         assert document.read_bytes() == original
         assert app.editor('return editor.getText().includes("ATUALIZACAO SALVA")')
         passed('cancelar atualização preserva rascunho, mesmo com confirmação comum desativada')
+        # O download já ocorreu, mas a instalação foi recusada. Esperar precisa
+        # descartar também esses bytes, sem alterar app, documento ou projeto.
+        requests_before_wait = len(feed.requests)
+        app.click('[data-update-action=wait]')
+        wait(lambda: not app.js('return !!document.querySelector("[data-update-action=apply]")'), 'descartar pré-release já baixada')
+        assert len(feed.requests) == requests_before_wait
+        try:
+            app.ipc('install_update')
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError('A pré-release descartada continuava pronta para instalar.')
+        assert app.ipc('plugin:app|version') == data['1']['version']
+        assert document.read_bytes() == original
+        search(app, wait)
+        wait(lambda: app.js('return !!document.querySelector(".update-version")'), 'ofertar novamente apenas por consulta manual')
+        passed('esperar estável descarta pré-release já baixada e impede instalação posterior sem nova confirmação')
         document.chmod(stat.S_IREAD)
         try:
             apply_update(app, wait)

@@ -117,6 +117,34 @@ class Desktop:
             mark_native_dialog()
         self.js('(document.activeElement||document.body).dispatchEvent(new KeyboardEvent("keydown",{key:arguments[0],ctrlKey:arguments[1],shiftKey:arguments[2],bubbles:true,cancelable:true}))', key, ctrl, shift)
 
+    def real_key(self, key, ctrl=False, shift=False):
+        value = {'Escape': '\ue00c', 'Enter': '\ue007', 'Backspace': '\ue003', 'Tab': '\ue004', 'ArrowDown': '\ue015', 'ArrowUp': '\ue013'}.get(key, key)
+        modifiers = (['\ue009'] if ctrl else []) + (['\ue008'] if shift else [])
+        actions = [{'type': 'keyDown', 'value': item} for item in modifiers]
+        actions += [{'type': 'keyDown', 'value': value}, {'type': 'keyUp', 'value': value}]
+        actions += [{'type': 'keyUp', 'value': item} for item in reversed(modifiers)]
+        self.call('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': actions}]})
+
+    def ctrl_click(self, css):
+        element = self.element(css)
+        self.call('/actions', {'actions': [
+            {'type': 'key', 'id': 'keyboard', 'actions': [{'type': 'keyDown', 'value': '\ue009'}, {'type': 'pause'}, {'type': 'pause'}, {'type': 'keyUp', 'value': '\ue009'}]},
+            {'type': 'pointer', 'id': 'mouse', 'parameters': {'pointerType': 'mouse'}, 'actions': [
+                {'type': 'pointerMove', 'origin': {'element-6066-11e4-a52e-4f735466cecf': element}, 'x': 0, 'y': 0},
+                {'type': 'pointerDown', 'button': 0}, {'type': 'pointerUp', 'button': 0}, {'type': 'pause'}]},
+        ]})
+
+    def real_wheel(self, css, delta, ctrl=False):
+        point = self.js('const r=document.querySelector(arguments[0]).getBoundingClientRect();return {x:Math.floor(r.left+r.width/2),y:Math.floor(r.top+Math.min(80,r.height/2))}', css)
+        if ctrl:
+            self.call('/actions', {'actions': [{'type':'key','id':'keyboard','actions':[{'type':'keyDown','value':'\ue009'}]}]})
+        try:
+            self.call('/actions', {'actions': [{'type':'wheel','id':'scroll','actions':[{'type':'scroll','origin':'viewport', **point, 'deltaX':0, 'deltaY':delta, 'duration':100}]}]})
+            self.paint()
+        finally:
+            if ctrl:
+                self.call('/actions', {'actions': [{'type':'key','id':'keyboard','actions':[{'type':'keyUp','value':'\ue009'}]}]})
+
     def editor(self, expression, *args):
         return self.js('const editor=document.querySelector(".editor-scroll:not(.inactive) .tiptap").editor;' + expression, *args)
 
@@ -292,6 +320,8 @@ def main():
             check_languages(app, output, wait, passed)
             from feature_checks import exercise as check_features
             check_features(app, output, wait, passed)
+            from regression_checks import exercise as check_regressions
+            check_regressions(app, output, wait, passed)
             app.ipc('forget_document', path=str(first_file))
             app.click('[aria-label="Fechar aplicativo"]')
             time.sleep(.3)

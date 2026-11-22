@@ -86,6 +86,31 @@ def main():
                 assert hashlib.sha256(target.read_bytes()).digest() == hashlib.sha256(fixture.read_bytes()).digest()
                 assert app.editor('return editor.getText()') == ''
                 passed('cancelar seletor não baixa; confirmar salva .deb verificado sem instalar ou fechar o app')
+                version += '-rc.1'
+                feed.version = version; feed.signature = sign('test')
+                search(app, wait)
+                wait(lambda: app.js('return !!document.querySelector(".update-preview-warning")'), 'pré-release assinada disponível')
+                assert app.js('return document.querySelector("[data-update-action=wait]").classList.contains("primary")')
+                assert not app.js('return document.querySelector("[data-update-action=apply]").classList.contains("primary")')
+                count = len(feed.requests)
+                app.click('[data-update-action=wait]')
+                wait(lambda: not app.js('return !!document.querySelector("[data-update-action=apply]")'), 'esperar estável limpa a oferta')
+                assert len(feed.requests) == count
+                search(app, wait)
+                wait(lambda: app.js('return !!document.querySelector(".update-preview-warning")'), 'consultar pré-release novamente')
+                app.screenshot(output / 'preview-before-download.png')
+                cancel_count = len(feed.requests)
+                desktop.mark_native_dialog(); apply_update(app, wait)
+                desktop.native_chooser(data_home)
+                wait(lambda: app.js('return !!document.querySelector("[data-update-action=wait]:not(:disabled)")'), 'cancelar destino da pré-release')
+                assert len(feed.requests) == cancel_count
+                desktop.mark_native_dialog(); apply_update(app, wait)
+                preview_target = downloads / 'Entrelinhas pre-release.deb'
+                desktop.native_chooser(data_home, preview_target)
+                wait(preview_target.exists, 'pré-release baixada e assinatura validada', 30)
+                assert hashlib.sha256(preview_target.read_bytes()).digest() == hashlib.sha256(fixture.read_bytes()).digest()
+                assert app.ipc('plugin:app|version') == app_version
+                passed('pré-release: esperar não baixa, cancelar destino não baixa e confirmação explícita salva pacote assinado sem alterar app estável')
                 from update_checks import about
                 for label, theme in (('Claro', 'light'), ('Escuro', 'dark'), ('Sépia Noturno', 'sepia')):
                     button(app, 'Aparência'); app.click(f'[aria-label="{label}"]'); button(app, 'Sobre')

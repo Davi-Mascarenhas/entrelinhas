@@ -85,7 +85,7 @@ def exercise(app, output, wait, passed):
     settings('toolbar'); preference('zenHideFormatting', True);close_settings();app.key('Escape')
     wait(lambda: app.js('return document.querySelector(".app").classList.contains("immersive")'), 'Zen com ferramentas ocultas')
     assert not app.js('return !!document.querySelector(".formatting")')
-    app.key('Escape');settings('toolbar');preference('zenHideFormatting',False);app.choose('Posição da formatação','side');close_settings()
+    app.key('Escape');settings('toolbar');preference('zenHideFormatting',False);app.click('[data-formatting-position=side]');close_settings()
     app.key('Escape');wait(lambda: app.js('return document.querySelector(".app").classList.contains("immersive")'), 'Zen com barra lateral')
     assert app.js('const b=document.querySelector(".formatting-dock").getBoundingClientRect();return b.right>innerWidth-80 && b.top===24 && innerWidth-b.right===24 && innerHeight-b.bottom===24')
     assert app.js('return getComputedStyle(document.querySelector(".formatting")).flexDirection')=='column'
@@ -96,7 +96,7 @@ def exercise(app, output, wait, passed):
     assert app.js('return document.querySelector(".formatting-dock").getBoundingClientRect().left===24')
     wait(lambda: app.js('return getComputedStyle(document.querySelector(".titlebar")).visibility') == 'hidden', 'terminar transição Zen')
     app.screenshot(output/'formatting-side-left.png')
-    app.key('Escape');settings('appearance');app.choose('Posição da navegação','left');close_settings();settings('toolbar');app.choose('Posição da formatação','bottom');close_settings()
+    app.key('Escape');settings('appearance');app.choose('Posição da navegação','left');close_settings();settings('toolbar');app.click('[data-formatting-position=bottom]');close_settings()
 
     settings('behavior');preference('autoImmersive',True);close_settings()
     app.editor('editor.commands.setContent("<p></p>");editor.commands.focus("end");return true');app.paint()
@@ -157,10 +157,10 @@ def check_blocks(app, output, wait, passed, settings, close_settings, editor_key
     passed('blocos recolhíveis, caixas, avisos, data e hora nos cinco idiomas; mouse e Enter preservam o conteúdo')
     settings('language');app.click('[data-language="pt-BR"]');close_settings();blank()
     choose('link','link')
-    wait(lambda: app.js('return !!document.querySelector(arguments[0])', '.modal input[placeholder="https://"]'), 'endereço do link')
+    wait(lambda: app.js('return !!document.querySelector(arguments[0])', '.modal-body input[type=text]'), 'endereço do link')
     app.screenshot(output/'slash-link.png')
     app.key('Escape');assert app.editor('return editor.getText()') == '/link'
-    blank();choose('link','link');app.keys('.modal input[placeholder="https://"]','https://example.com/ideias')
+    blank();choose('link','link');app.keys('.modal-body input[type=text]','https://example.com/ideias')
     app.click('.modal button[type=submit]');wait(lambda: not app.js('return !!document.querySelector(".modal")'), 'aplicar link')
     assert app.editor('return editor.getHTML().includes("https://example.com/ideias") && !editor.getText().includes("/link")')
     app.editor('editor.commands.setContent("<p>Ideia <strong>importante</strong> </p>");editor.commands.focus("end");editor.commands.insertContent(" ");return true');app.paint()

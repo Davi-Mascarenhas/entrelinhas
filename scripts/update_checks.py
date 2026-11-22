@@ -122,7 +122,7 @@ def common(app, feed, wait, passed):
             wait(lambda: app.js('const a=document.querySelector("[data-update-action=apply]").getBoundingClientRect();const p=document.querySelector(".settings-content").getBoundingClientRect();return a.top>=p.top&&a.bottom<=p.bottom'), 'aviso e ações aparecem na área visível')
             app.screenshot(app.output/f'update-preview-{theme}.png')
     button(app,'Esperar versão estável')
-    wait(lambda: app.js('return document.querySelector(".update-control").innerText.includes("Nenhum download")'), 'esperar sem download')
+    wait(lambda: app.js('return document.querySelector(".update-control").innerText.includes("aplicativo não foi alterado")'), 'esperar sem download')
     assert len(feed.requests)==before and not app.js('return !!document.querySelector("[data-update-action=apply]")')
     try:app.ipc('download_update',path=None)
     except RuntimeError:pass

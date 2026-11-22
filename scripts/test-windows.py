@@ -223,6 +223,8 @@ def main():
             check_languages(app, output, wait, passed)
             from feature_checks import exercise as check_features
             check_features(app, output, wait, passed)
+            from regression_checks import exercise as check_regressions
+            check_regressions(app, output, wait, passed)
             app.editor('editor.commands.insertContent(" RASCUNHO_EM_MEMÓRIA");return true')
             subprocess.run([str(executable), str(txt)], check=True, timeout=20)
             wait(lambda: app.editor('return editor.getText()') == txt.read_text(encoding='utf-8'), 'TXT na mesma janela')
