@@ -14,6 +14,8 @@ O Zen ganhou um recuo superior de 28 px e a barra lateral fica a 24 px das borda
 
 O menu `/` agora oferece **20 comandos**. Além dos onze da versão 2.2, inclui lista recolhível, caixa informativa, aviso, imagem, link, data de hoje, hora atual, duplicar bloco e limpar formatação. Todos têm nomes, descrições e buscas nos cinco idiomas. [Lista completa e exemplos](docs/slash-commands.md).
 
+Validação da rc.1: 162 testes TypeScript, 19 testes Rust Linux e 18 Windows; 48 verificações desktop Linux, 8 de atualização Linux e [30 Windows](https://github.com/Davi-Mascarenhas/entrelinhas/actions/runs/45060933045).
+
 [Zen com mais espaço](docs/screenshots/preview-2.3-zen.png) · [Blocos recolhíveis e caixas](docs/screenshots/preview-2.3-blocks.png) · [Lista completa no menu](docs/screenshots/preview-2.3-menu.png).
 
 ## Comandos de escrita e modo Zen (2.2 estável)
@@ -258,7 +260,7 @@ O mesmo roteiro pode validar a versão empacotada:
 python3 scripts/test-desktop.py --binary src-tauri/target/release/entrelinhas
 ```
 
-### Verificações realizadas
+### Verificações da versão 2.2 estável
 
 Os números abaixo descrevem a suíte Linux. A validação Windows tem relatório próprio nos artefatos da rotina Windows e na release estável.
 
