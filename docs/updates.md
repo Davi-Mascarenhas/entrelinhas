@@ -20,16 +20,17 @@ O Windows gera `.sig` no build. Para o `.deb`, usar `tauri signer sign --app-ver
 
 ## Publicação
 
-A partir da versão 2.1, alterações validadas são publicadas como estáveis. Prévias são reservadas para uma validação específica que dependa do usuário.
+Durante a avaliação remota solicitada pelo usuário, publicar novas alterações somente como pré-release. A promoção para estável depende da aprovação explícita depois dos testes em casa. Manter o canal estável e a release mais recente na versão 2.2.0 até essa aprovação.
 
 1. Compilar, testar e verificar os pacotes finais. Confirmar que builds publicados não habilitam a feature `updater-test` nem transporte inseguro.
+   Para prévias Debian, executar `python3 scripts/prepare-deb-preview.py` depois de `npm run package` e antes de assinar. O campo Debian usa `~` (ex.: `2.3.0~rc.1`), mantendo o SemVer do aplicativo e o nome do arquivo. Isso garante que a futura `2.3.0` seja considerada mais nova pelo gerenciador de pacotes; o script verifica que o executável não foi alterado.
 2. Publicar a release e os pacotes `.exe` / `.deb`, suas `.sig`, SHA256SUMS e relatórios. Conferir os downloads e versões.
 3. Atualizar os manifestos somente após os arquivos públicos estarem disponíveis. O gerador de manifestos deve conferir hashes, assinaturas e versão; publicar o commit incremental e verificar o endpoint remoto.
 4. Para uma prévia, atualizar apenas `preview.json`. Para uma estável, atualizar ambos; manter as entradas completas por plataforma.
 
 O gerador está em `scripts/prepare-update-manifest.py` e requer as dependências de `scripts/requirements-release.txt`. Exemplo após publicar os artefatos: `python3 scripts/prepare-update-manifest.py --version 2.2.0 --assets artifacts/release-2.2.0 --channel stable --notes "Comandos de escrita, edição direta e modo Zen."`. Ele verifica as assinaturas Ed25519/Minisign, a versão assinada e os hashes publicados pelo GitHub antes de escrever o manifesto.
 
-Os dois canais apontam para a versão estável 2.2.0 para Windows e Linux. Isso permite que instalações de prévias anteriores também encontrem a versão estável, mediante consulta manual autorizada.
+O canal estável aponta para a 2.2.0 e o canal de prévias para a 2.3.0-rc.1, ambos com Windows e Linux. Clientes estáveis não recebem a prévia automaticamente. Para avaliá-la, instalar o pacote da pré-release; as próximas consultas manuais dessa instalação acompanham o canal de prévias.
 
 ## Testes
 

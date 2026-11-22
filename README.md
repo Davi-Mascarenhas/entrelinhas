@@ -6,6 +6,16 @@ Entrelinhas é um editor **desktop de verdade**, feito com Tauri 2, React e Type
 
 ![Entrelinhas — Sépia Noturno](docs/screenshots/sepia.png)
 
+## Prévia 2.3 para avaliação
+
+A [2.3.0-rc.1](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.3.0-rc.1) é uma **pré-release** para testar em casa antes de aprovar a versão estável. A versão estável continua sendo a 2.2.0. Enquanto durar essa avaliação, novas alterações serão publicadas como prévias.
+
+O Zen ganhou um recuo superior de 28 px e a barra lateral fica a 24 px das bordas. A barra inferior também tem 24 px de espaço abaixo. A coluna de escrita continua centralizada.
+
+O menu `/` agora oferece **20 comandos**. Além dos onze da versão 2.2, inclui lista recolhível, caixa informativa, aviso, imagem, link, data de hoje, hora atual, duplicar bloco e limpar formatação. Todos têm nomes, descrições e buscas nos cinco idiomas. [Lista completa e exemplos](docs/slash-commands.md).
+
+[Zen com mais espaço](docs/screenshots/preview-2.3-zen.png) · [Blocos recolhíveis e caixas](docs/screenshots/preview-2.3-blocks.png) · [Lista completa no menu](docs/screenshots/preview-2.3-menu.png).
+
 ## Comandos de escrita e modo Zen (2.2 estável)
 
 A [versão 2.2 estável](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.2.0) está disponível para Windows e Linux. Digite `/` no início de uma linha ou após um espaço para escolher uma lista de tarefas, tabela, lista com marcadores ou números, título, citação, código, separador ou texto comum. Continue digitando para filtrar, use as setas e Enter ou clique na opção. Esc fecha o menu e mantém o texto; desfazer restaura o comando.
