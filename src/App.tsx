@@ -35,6 +35,7 @@ import { useDocuments } from './documents/useDocuments'
 import { useDialog } from './components/useDialog'
 import { open as openNative } from '@tauri-apps/plugin-dialog'
 import { EditorPane } from './editor/EditorPane'
+import { useZenEscape } from './editor/useZenEscape'
 import { runSlashCommand, type SlashRange } from './editor/slash'
 import { ProjectAssignment } from './components/ProjectAssignment'
 import { Formatting } from './components/Formatting'
@@ -444,30 +445,25 @@ export default function App() {
         .setTheme(preferences.theme === 'light' ? 'light' : 'dark')
         .catch((error) => notify(errorMessage(error)))
   }, [preferences.theme, notify])
+  useZenEscape(preferences.onboardingCompleted && !updateInstalling, () => {
+    if (menu || find) {
+      setMenu(false)
+      setFind(null)
+      editors.current.get(activeId)?.commands.focus()
+      return
+    }
+    setSelectionRect(null)
+    if (immersive) setImmersive(false)
+    else if (!editors.current.get(activeId)?.isEmpty) {
+      setImmersive(true)
+      editors.current.get(activeId)?.commands.focus()
+    }
+  })
   useEffect(() => {
     const handle = (event: KeyboardEvent) => {
       if (event.isComposing || event.defaultPrevented) return
       if (updateLock.current) return
-      if (event.key === 'Escape') {
-        if (
-          document.querySelector('[role=dialog], [data-live-overlay], [data-inline-rename]') ||
-          !preferences.onboardingCompleted
-        )
-          return
-        event.preventDefault()
-        if (menu || find) {
-          setMenu(false)
-          setFind(null)
-          return
-        }
-        setSelectionRect(null)
-        if (immersive) setImmersive(false)
-        else if (!editors.current.get(activeId)?.isEmpty) {
-          setImmersive(true)
-          editors.current.get(activeId)?.commands.focus()
-        }
-        return
-      }
+      if (event.key === 'Escape') return
       if (renameId) return
       if (document.querySelector('[data-shortcut-capture]')) return
       if (event.key === 'F11') {
