@@ -719,8 +719,9 @@ p {
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior: contain;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
+  /* As opções padrão anulam os pseudos abaixo no WebView2 quando não são auto. */
+  scrollbar-width: auto;
+  scrollbar-color: auto;
   scroll-padding: 8px;
 }
 .formatting > * {
@@ -736,6 +737,11 @@ p {
 }
 .formatting::-webkit-scrollbar-track {
   background: transparent;
+}
+.formatting::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
 }
 .editor-footer {
   grid-column: 1 / -1;
@@ -2771,7 +2777,6 @@ body,
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
-  scrollbar-width: thin;
   width: 46px;
   padding: 3px;
 }

@@ -167,7 +167,7 @@ def exercise(app, output, wait, passed):
                     assert (side == 'left' and metrics['dock']['left'] > width-80) or (side == 'right' and metrics['dock']['right'] < 80), metrics
                     if height == 480:
                         assert metrics['scroll'] and metrics['overflow'] == 'auto', metrics
-                        assert metrics['color'] not in ('', 'auto'), metrics
+                        assert app.js('const t=document.querySelector(".formatting"),thumb=getComputedStyle(t,"::-webkit-scrollbar-thumb"),button=getComputedStyle(t,"::-webkit-scrollbar-button");return thumb.backgroundColor===getComputedStyle(t.querySelector(".tool-divider")).backgroundColor&&button.display==="none"'), 'A barra deve usar a cor do app e esconder setas do sistema.'
                 app.js('document.querySelector(".formatting").lastElementChild.scrollIntoView({block:"nearest",inline:"nearest"})'); app.paint()
                 assert app.js('const t=document.querySelector(".formatting"),r=t.getBoundingClientRect(),b=t.lastElementChild.getBoundingClientRect();return b.left>=r.left-1&&b.right<=r.right+1&&b.top>=r.top-1&&b.bottom<=r.bottom+1')
                 app.js('document.querySelector(".formatting").firstElementChild.scrollIntoView({block:"nearest",inline:"nearest"})'); app.paint()
