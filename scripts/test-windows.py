@@ -36,7 +36,7 @@ class WindowsDesktop(desktop_tests.Desktop):
         if not preferences.get('onboardingCompleted', preferences.get('themeChosen', False)):
             wait(lambda: self.js('return !!document.querySelector(".welcome-modal")'), 'boas-vindas')
             self.click('.welcome-actions .primary')
-            self.click('.welcome-modal .theme-choice.sepia')
+            self.click('.welcome-modal .theme-options > button:nth-child(3)')
             self.click('.welcome-actions .primary')
             wait(lambda: self.js('return document.querySelector(".default-app").getAttribute("aria-busy")') == 'false', 'padrões do Windows')
             assert self.ipc('default_app_status')['requiresSettings']
