@@ -1951,5 +1951,68 @@
     "テキストが変更されました。/link を再入力してください。",
     "文本已更改。请重新输入 /link 来插入地址。",
     "Der Text wurde geändert. Gib /link erneut ein, um die Adresse einzufügen."
+  ],
+  [
+    "O Entrelinhas consultará versões estáveis e pré-releases no GitHub. Nenhum documento será enviado. A autorização vale para esta consulta e para o download que você solicitar em seguida.",
+    "Entrelinhas will check stable versions and pre-releases on GitHub. No documents will be sent. Permission applies to this check and any download you request next.",
+    "GitHub で安定版とプレリリースを確認します。文書は送信されません。許可は今回の確認と、その後に選択するダウンロードに適用されます。",
+    "Entrelinhas 将在 GitHub 上检查稳定版和预发布版。不会发送任何文档。授权仅适用于本次检查及随后由你选择的下载。",
+    "Entrelinhas sucht auf GitHub nach stabilen Versionen und Vorabversionen. Es werden keine Dokumente gesendet. Die Erlaubnis gilt für diese Suche und einen anschließend von dir angeforderten Download."
+  ],
+  [
+    "Não encontramos uma atualização mais recente.",
+    "No newer update was found.",
+    "新しい更新は見つかりませんでした。",
+    "未找到更新的版本。",
+    "Es wurde kein neueres Update gefunden."
+  ],
+  [
+    "Você escolheu esperar a versão estável. Nenhum download foi iniciado.",
+    "You chose to wait for the stable version. No download was started.",
+    "安定版を待つことを選択しました。ダウンロードは開始されていません。",
+    "你已选择等待稳定版。尚未开始下载。",
+    "Du hast dich entschieden, auf die stabile Version zu warten. Es wurde kein Download gestartet."
+  ],
+  [
+    "Aviso de pré-release",
+    "Pre-release warning",
+    "プレリリースの注意",
+    "预发布版提示",
+    "Hinweis zur Vorabversion"
+  ],
+  [
+    "Esta atualização é uma pré-release.",
+    "This update is a pre-release.",
+    "この更新はプレリリースです。",
+    "此更新为预发布版。",
+    "Dieses Update ist eine Vorabversion."
+  ],
+  [
+    "Esta versão ainda está em avaliação.",
+    "This version is still being evaluated.",
+    "このバージョンはまだ評価中です。",
+    "此版本仍在评估中。",
+    "Diese Version wird noch erprobt."
+  ],
+  [
+    "Tem certeza de que deseja baixar esta pré-release?",
+    "Are you sure you want to download this pre-release?",
+    "このプレリリースをダウンロードしますか？",
+    "确定要下载此预发布版吗？",
+    "Möchtest du diese Vorabversion wirklich herunterladen?"
+  ],
+  [
+    "Esperar versão estável",
+    "Wait for stable version",
+    "安定版を待つ",
+    "等待稳定版",
+    "Auf stabile Version warten"
+  ],
+  [
+    "Atualizar para pré-release",
+    "Update to pre-release",
+    "プレリリースに更新",
+    "更新至预发布版",
+    "Auf Vorabversion aktualisieren"
   ]
 ]

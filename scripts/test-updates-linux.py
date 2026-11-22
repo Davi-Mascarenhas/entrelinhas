@@ -43,6 +43,7 @@ def main():
             port, native_port = desktop.free_port(), desktop.free_port()
             environment = {**os.environ, 'XDG_DATA_HOME': str(data_home), 'XDG_CONFIG_HOME': str(config),
                 'ENTRELINHAS_UPDATER_TEST_ENDPOINT': feed.url + '/manifest.json',
+                'ENTRELINHAS_UPDATER_TEST_STABLE_ENDPOINT': feed.url + '/stable.json',
                 'ENTRELINHAS_UPDATER_TEST_PUBKEY': (directory / 'test.key.pub').read_text().strip()}
             log = (output / 'driver.log').open('w')
             driver = subprocess.Popen([str(Path.home() / '.cargo/bin/tauri-driver'), '--port', str(port), '--native-port', str(native_port), '--native-driver', os.environ['WEBKIT_WEBDRIVER']], env=environment, stdout=log, stderr=log)

@@ -15,6 +15,7 @@ def exercise(app, folder, destination, fixtures, install, wait, passed):
     original = document.read_bytes()
     with Feed(fixtures / 'fixture-2.exe', data['2']['signature'], data['2']['version'], 'windows-x86_64') as feed:
         os.environ['ENTRELINHAS_UPDATER_TEST_ENDPOINT'] = feed.url + '/manifest.json'
+        os.environ['ENTRELINHAS_UPDATER_TEST_STABLE_ENDPOINT'] = feed.url + '/stable.json'
         os.environ['ENTRELINHAS_UPDATER_TEST_PUBKEY'] = (fixtures / 'test.key.pub').read_text().strip()
         app.start(launch_args=[str(document)])
         wait(lambda: app.editor('return editor.getText().startsWith("Atualização")'), 'documento da atualização')

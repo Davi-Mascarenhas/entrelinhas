@@ -24,11 +24,17 @@ vi.mock('@tauri-apps/api/path', () => ({
   join: vi.fn().mockImplementation((...args: string[]) => Promise.resolve(args.join('/'))),
 }))
 vi.mock('@tauri-apps/plugin-dialog', () => ({ save: vi.fn() }))
-const info = { version: '1.3.0', notes: 'Melhorias na escrita.', mode: 'install' as const }
+const info = {
+  version: '1.3.0',
+  notes: 'Melhorias na escrita.',
+  mode: 'install' as const,
+  prerelease: false,
+}
 beforeEach(() => {
   vi.spyOn(backend, 'checkUpdate').mockResolvedValue(info)
   vi.spyOn(backend, 'downloadUpdate').mockResolvedValue(null)
   vi.spyOn(backend, 'installUpdate').mockResolvedValue()
+  vi.spyOn(backend, 'dismissUpdate').mockResolvedValue()
 })
 afterEach(() => {
   cleanup()
@@ -207,4 +213,88 @@ it('Linux escolhe o destino e salva o pacote sem executar um instalador', async 
   expect(result.current.message).toContain('/downloads/Entrelinhas.deb')
   expect(before).not.toHaveBeenCalled()
   expect(backend.installUpdate).not.toHaveBeenCalled()
+})
+
+it('oferece prévia com aviso e espera em destaque; esperar não baixa nem instala', async () => {
+  vi.mocked(backend.checkUpdate).mockResolvedValue({
+    ...info,
+    version: '2.4.0-rc.1',
+    prerelease: true,
+  })
+  const ask = vi.fn().mockResolvedValue('allow')
+  function Harness() {
+    return <UpdateControl updates={useUpdates(ask, vi.fn(), vi.fn())} />
+  }
+  const view = render(<Harness />)
+  fireEvent.click(screen.getByRole('button', { name: 'Procurar atualização' }))
+  expect(await screen.findByRole('note', { name: 'Aviso de pré-release' })).toHaveTextContent(
+    'Tem certeza',
+  )
+  const wait = screen.getByRole('button', { name: 'Esperar versão estável' })
+  expect(wait).toHaveClass('primary')
+  expect(screen.getByRole('button', { name: 'Atualizar para pré-release' })).not.toHaveClass(
+    'primary',
+  )
+  expect(backend.downloadUpdate).not.toHaveBeenCalled()
+  fireEvent.click(wait)
+  await screen.findByText('Você escolheu esperar a versão estável. Nenhum download foi iniciado.')
+  expect(backend.dismissUpdate).toHaveBeenCalledOnce()
+  expect(backend.downloadUpdate).not.toHaveBeenCalled()
+  expect(backend.installUpdate).not.toHaveBeenCalled()
+  view.rerender(<Harness />)
+  expect(backend.checkUpdate).toHaveBeenCalledOnce()
+  expect(ask).toHaveBeenCalledWith(
+    expect.objectContaining({ message: expect.stringContaining('pré-releases') }),
+  )
+})
+
+it('somente a ação explícita da prévia inicia download e instalação', async () => {
+  vi.mocked(backend.checkUpdate).mockResolvedValue({
+    ...info,
+    version: '2.4.0-rc.1',
+    prerelease: true,
+  })
+  function Harness() {
+    return (
+      <UpdateControl
+        updates={useUpdates(
+          vi.fn().mockResolvedValue('allow'),
+          vi.fn().mockResolvedValue(true),
+          vi.fn(),
+        )}
+      />
+    )
+  }
+  render(<Harness />)
+  fireEvent.click(screen.getByRole('button', { name: 'Procurar atualização' }))
+  const action = await screen.findByRole('button', { name: 'Atualizar para pré-release' })
+  expect(backend.downloadUpdate).not.toHaveBeenCalled()
+  fireEvent.click(action)
+  await waitFor(() => expect(backend.installUpdate).toHaveBeenCalledOnce())
+  expect(backend.downloadUpdate).toHaveBeenCalledOnce()
+})
+
+it('prévia Linux cancela o seletor sem baixar e mantém a escolha de esperar', async () => {
+  vi.mocked(backend.checkUpdate).mockResolvedValue({
+    ...info,
+    prerelease: true,
+    version: '2.4.0-rc.1',
+    mode: 'package',
+  })
+  vi.mocked(save).mockResolvedValue(null)
+  const { result } = renderHook(() =>
+    useUpdates(vi.fn().mockResolvedValue('allow'), vi.fn(), vi.fn()),
+  )
+  await act(async () => {
+    await result.current.check()
+  })
+  await act(async () => {
+    await result.current.apply()
+  })
+  expect(result.current.phase).toBe('available')
+  expect(backend.downloadUpdate).not.toHaveBeenCalled()
+  await act(async () => {
+    await result.current.waitForStable()
+  })
+  expect(result.current.phase).toBe('waiting')
 })

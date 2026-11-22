@@ -217,6 +217,7 @@ pub fn run() {
             default_app_status,
             set_default_app,
             updates::check_update,
+            updates::dismiss_update,
             updates::download_update,
             updates::install_update,
             save_preferences,

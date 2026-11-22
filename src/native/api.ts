@@ -25,6 +25,7 @@ export interface UpdateInfo {
   version: string
   notes: string
   mode: 'install' | 'package'
+  prerelease: boolean
 }
 export function errorMessage(error: unknown): string {
   if (error && typeof error === 'object' && 'message' in error) return tr(String(error.message))
@@ -45,6 +46,7 @@ export const backend = {
   languageBootstrap: () =>
     native<{ platform: string; installerLanguage: Language | null }>('language_bootstrap'),
   checkUpdate: () => native<UpdateInfo | null>('check_update'),
+  dismissUpdate: () => native<void>('dismiss_update'),
   downloadUpdate: (path: string | null) => native<string | null>('download_update', { path }),
   installUpdate: () => native<void>('install_update'),
   defaultAppStatus: () => native<DefaultAppStatus>('default_app_status'),

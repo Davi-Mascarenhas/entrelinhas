@@ -43,6 +43,7 @@ pub struct UpdateInfo {
     version: String,
     notes: String,
     mode: &'static str,
+    prerelease: bool,
 }
 #[derive(Clone, Serialize)]
 pub struct Progress {
@@ -50,15 +51,8 @@ pub struct Progress {
     total: Option<u64>,
 }
 
-fn eligible(current: &Version, remote: &Version) -> bool {
-    remote > current && (!current.pre.is_empty() || remote.pre.is_empty())
-}
-fn channel(version: &Version) -> &'static str {
-    if version.pre.is_empty() {
-        "stable"
-    } else {
-        "preview"
-    }
+fn eligible(current: &Version, remote: &Version, stable_only: bool) -> bool {
+    remote > current && (!stable_only || remote.pre.is_empty())
 }
 fn failure(error: impl std::fmt::Display) -> AppError {
     AppError::new(
@@ -74,53 +68,78 @@ pub async fn check_update(
 ) -> AppResult<Option<UpdateInfo>> {
     let _operation = state.begin()?;
     *state.pending.lock().map_err(failure)? = None;
-    let version = &app.package_info().version;
-    let endpoint = format!("{FEED}/{}.json", channel(version));
-    let builder = app
-        .updater_builder()
-        .timeout(Duration::from_secs(25))
-        .version_comparator(|current, remote| eligible(&current, &remote.version));
+    let endpoints = vec![
+        (format!("{FEED}/stable.json"), true),
+        (format!("{FEED}/preview.json"), false),
+    ];
     // Overrides existem somente no executável de testes, não no distribuído.
     #[cfg(any(debug_assertions, feature = "updater-test"))]
-    let (endpoint, builder) = match std::env::var("ENTRELINHAS_UPDATER_TEST_ENDPOINT") {
-        Ok(endpoint) => (
-            endpoint,
-            builder.pubkey(std::env::var("ENTRELINHAS_UPDATER_TEST_PUBKEY").map_err(failure)?),
-        ),
-        Err(_) => (endpoint, builder),
+    let endpoints = if let Ok(endpoint) = std::env::var("ENTRELINHAS_UPDATER_TEST_ENDPOINT") {
+        std::env::var("ENTRELINHAS_UPDATER_TEST_STABLE_ENDPOINT")
+            .ok()
+            .map(|stable| vec![(stable, true), (endpoint.clone(), false)])
+            .unwrap_or_else(|| vec![(endpoint, false)])
+    } else {
+        endpoints
     };
-    let updater = builder
-        .endpoints(vec![endpoint.parse().map_err(failure)?])
-        .map_err(failure)?
-        .target(if cfg!(windows) {
-            "windows-x86_64"
+    for (endpoint, stable_only) in endpoints {
+        let builder = app
+            .updater_builder()
+            .timeout(Duration::from_secs(25))
+            .version_comparator(move |current, remote| {
+                eligible(&current, &remote.version, stable_only)
+            });
+        #[cfg(any(debug_assertions, feature = "updater-test"))]
+        let builder = if std::env::var("ENTRELINHAS_UPDATER_TEST_ENDPOINT").is_ok() {
+            builder.pubkey(std::env::var("ENTRELINHAS_UPDATER_TEST_PUBKEY").map_err(failure)?)
         } else {
-            "linux-x86_64"
-        })
-        .build()
-        .map_err(failure)?;
-    let Some(mut update) = updater.check().await.map_err(failure)? else {
-        return Ok(None);
-    };
-    update.timeout = Some(Duration::from_secs(180));
-    if update.download_url.scheme() != "https" {
-        #[cfg(not(any(debug_assertions, feature = "updater-test")))]
-        return Err(AppError::new(
-            "update",
-            "O pacote precisa usar uma conexão HTTPS.",
-        ));
+            builder
+        };
+        let updater = builder
+            .endpoints(vec![endpoint.parse().map_err(failure)?])
+            .map_err(failure)?
+            .target(if cfg!(windows) {
+                "windows-x86_64"
+            } else {
+                "linux-x86_64"
+            })
+            .build()
+            .map_err(failure)?;
+        let Some(mut update) = updater.check().await.map_err(failure)? else {
+            continue;
+        };
+        update.timeout = Some(Duration::from_secs(180));
+        if update.download_url.scheme() != "https" {
+            #[cfg(not(any(debug_assertions, feature = "updater-test")))]
+            return Err(AppError::new(
+                "update",
+                "O pacote precisa usar uma conexão HTTPS.",
+            ));
+        }
+        let info = UpdateInfo {
+            prerelease: !Version::parse(&update.version)
+                .map_err(failure)?
+                .pre
+                .is_empty(),
+            version: update.version.clone(),
+            notes: update.body.clone().unwrap_or_default(),
+            mode: if cfg!(windows) { "install" } else { "package" },
+        };
+        *state.pending.lock().map_err(failure)? = Some(Pending {
+            update,
+            #[cfg(windows)]
+            bytes: None,
+        });
+        return Ok(Some(info));
     }
-    let info = UpdateInfo {
-        version: update.version.clone(),
-        notes: update.body.clone().unwrap_or_default(),
-        mode: if cfg!(windows) { "install" } else { "package" },
-    };
-    *state.pending.lock().map_err(failure)? = Some(Pending {
-        update,
-        #[cfg(windows)]
-        bytes: None,
-    });
-    Ok(Some(info))
+    Ok(None)
+}
+
+#[tauri::command]
+pub fn dismiss_update(state: tauri::State<'_, UpdateState>) -> AppResult<()> {
+    let _operation = state.begin()?;
+    *state.pending.lock().map_err(failure)? = None;
+    Ok(())
 }
 
 #[tauri::command]
@@ -248,14 +267,15 @@ mod tests {
         Version::parse(value).unwrap()
     }
     #[test]
-    fn versions_never_downgrade_or_offer_previews_to_stable() {
-        assert!(!eligible(&v("1.2.0"), &v("1.2.0")));
-        assert!(!eligible(&v("1.2.0"), &v("1.1.2")));
-        assert!(!eligible(&v("1.2.0"), &v("1.3.0-rc.1")));
-        assert!(eligible(&v("1.2.0-rc.2"), &v("1.2.0")));
-        assert!(eligible(&v("1.2.0-rc.2"), &v("1.2.0-rc.3")));
-        assert_eq!(channel(&v("1.2.0")), "stable");
-        assert_eq!(channel(&v("1.2.0-rc.2")), "preview");
+    fn versions_never_downgrade_and_stable_source_rejects_previews() {
+        for stable_only in [false, true] {
+            assert!(!eligible(&v("1.2.0"), &v("1.2.0"), stable_only));
+            assert!(!eligible(&v("1.2.0"), &v("1.1.2"), stable_only));
+            assert!(eligible(&v("1.2.0-rc.2"), &v("1.2.0"), stable_only));
+        }
+        assert!(!eligible(&v("1.2.0"), &v("1.3.0-rc.1"), true));
+        assert!(eligible(&v("1.2.0"), &v("1.3.0-rc.1"), false));
+        assert!(eligible(&v("1.2.0-rc.2"), &v("1.2.0-rc.3"), false));
     }
     #[test]
     fn operations_are_exclusive_and_release_after_errors() {

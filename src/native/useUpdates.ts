@@ -15,6 +15,7 @@ type Phase =
   | 'ready'
   | 'installing'
   | 'current'
+  | 'waiting'
   | 'saved'
   | 'error'
 interface State {
@@ -62,7 +63,7 @@ export function useUpdates(
       const choice = await current.current.ask({
         title: 'Permitir acesso à internet para procurar atualizações?',
         message:
-          'O Entrelinhas consultará o GitHub. Nenhum documento será enviado. A autorização vale para esta consulta e para o download que você solicitar em seguida.',
+          'O Entrelinhas consultará versões estáveis e pré-releases no GitHub. Nenhum documento será enviado. A autorização vale para esta consulta e para o download que você solicitar em seguida.',
         choices: [
           { id: 'cancel', label: 'Cancelar' },
           { id: 'allow', label: 'Permitir consulta', primary: true },
@@ -128,5 +129,19 @@ export function useUpdates(
       busy.current = false
     }
   }, [])
-  return { ...state, requesting, check, apply }
+  const waitForStable = useCallback(async () => {
+    if (busy.current || !current.current.state.info?.prerelease) return
+    busy.current = true
+    try {
+      await backend.dismissUpdate()
+      const next: State = { phase: 'waiting', info: null, message: '', progress: null }
+      current.current.state = next
+      setState(next)
+    } catch (error) {
+      setState((value) => ({ ...value, phase: 'error', message: errorMessage(error) }))
+    } finally {
+      busy.current = false
+    }
+  }, [])
+  return { ...state, requesting, check, apply, waitForStable }
 }

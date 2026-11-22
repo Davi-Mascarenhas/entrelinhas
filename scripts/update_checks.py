@@ -11,12 +11,13 @@ class Feed:
         self.body = None
         self.status = 200
         self.tampered = False
+        self.stable_version = None
         feed = self
         class Handler(BaseHTTPRequestHandler):
             def do_GET(self):
                 feed.requests.append(self.path)
-                if self.path == '/manifest.json':
-                    payload = feed.body if feed.body is not None else json.dumps(feed.manifest()).encode()
+                if self.path in ('/manifest.json', '/stable.json'):
+                    payload = feed.body if feed.body is not None else json.dumps(feed.manifest(self.path == '/stable.json')).encode()
                     self.send_response(feed.status)
                     self.send_header('Content-Type', 'application/json')
                 elif self.path == '/package':
@@ -33,8 +34,8 @@ class Feed:
         self.url = f'http://127.0.0.1:{self.server.server_port}'
         self.thread = threading.Thread(target=self.server.serve_forever, daemon=True)
 
-    def manifest(self):
-        return {'version': self.version, 'notes': 'Atualização controlada de integração.', 'platforms': {
+    def manifest(self, stable=False):
+        return {'version': (self.stable_version or '0.0.0') if stable else self.version, 'notes': 'Atualização controlada de integração.', 'platforms': {
             self.target: {'url': self.url + '/package', 'signature': self.signature},
         }}
 
@@ -65,10 +66,10 @@ def search(app, wait, allow=True):
 
 
 def apply_update(app, wait):
-    wait(lambda: app.js('return !!document.querySelector(".update-actions .primary:not(:disabled)")'), 'habilitar download/instalação')
-    app.js('document.querySelector(".update-actions .primary").scrollIntoView({block:"center"})')
+    wait(lambda: app.js('return !!document.querySelector(arguments[0])', '[data-update-action=apply]:not(:disabled)'), 'habilitar download/instalação')
+    app.js('document.querySelector("[data-update-action=apply]").scrollIntoView({block:"center"})')
     app.paint()
-    app.click('.update-actions .primary')
+    app.click('[data-update-action=apply]')
 
 
 def common(app, feed, wait, passed):
@@ -102,3 +103,31 @@ def common(app, feed, wait, passed):
     assert len(feed.requests) == count
     assert newest in app.js('return document.querySelector(".update-version").innerText')
     passed('resultado permanece ao reabrir configurações, sem consulta automática')
+    feed.version = '99.0.0-rc.1'; feed.stable_version = '98.0.0'
+    search(app, wait)
+    wait(lambda: app.js('return document.querySelector(".update-version")?.innerText.includes("98.0.0")'), 'versão estável tem prioridade sobre prévia mais nova')
+    assert not app.js('return !!document.querySelector(".update-preview-warning")')
+    feed.stable_version = None
+    search(app, wait)
+    wait(lambda: app.js('return !!document.querySelector(".update-preview-warning")'), 'aviso de pré-release')
+    assert app.js('return document.querySelector("[data-update-action=wait]").classList.contains("primary")')
+    assert not app.js('return document.querySelector("[data-update-action=apply]").classList.contains("primary")')
+    assert 'Tem certeza' in app.js('return document.querySelector(".update-preview-warning").innerText')
+    assert '/stable.json' in feed.requests and '/manifest.json' in feed.requests
+    before=len(feed.requests)
+    if hasattr(app,'output'):
+        for label,theme in [('Claro','light'),('Escuro','dark'),('Sépia Noturno','sepia')]:
+            button(app,'Aparência');app.click(f'[aria-label="{label}"]');button(app,'Sobre')
+            assert app.js('const c=getComputedStyle(document.querySelector(".update-preview-warning")).color.match(/[0-9]+/g).map(Number);return c[0]>c[1]&&c[0]>c[2]'), 'Aviso de pré-release deve usar vermelho.'
+            wait(lambda: app.js('const a=document.querySelector("[data-update-action=apply]").getBoundingClientRect();const p=document.querySelector(".settings-content").getBoundingClientRect();return a.top>=p.top&&a.bottom<=p.bottom'), 'aviso e ações aparecem na área visível')
+            app.screenshot(app.output/f'update-preview-{theme}.png')
+    button(app,'Esperar versão estável')
+    wait(lambda: app.js('return document.querySelector(".update-control").innerText.includes("Nenhum download")'), 'esperar sem download')
+    assert len(feed.requests)==before and not app.js('return !!document.querySelector("[data-update-action=apply]")')
+    try:app.ipc('download_update',path=None)
+    except RuntimeError:pass
+    else:raise AssertionError('Esperar deve invalidar o pacote pendente.')
+    passed('consulta os dois canais, oferece aviso de prévia nos três temas e esperar não baixa nem deixa pacote pendente')
+    feed.version = newest
+    search(app,wait)
+    wait(lambda: app.js('return document.querySelector(".update-version")?.innerText.includes(arguments[0])',newest), 'restaurar atualização assinada de teste')
