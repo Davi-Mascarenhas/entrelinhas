@@ -549,7 +549,7 @@ def main():
             app.editor('let range;editor.state.doc.descendants((node,pos)=>{if(node.isText && node.text.startsWith("Algumas")) range={from:pos,to:pos+7}});editor.chain().focus().setTextSelection(range).run();return true')
             app.click('[aria-label="Ferramentas de formatação"]')
             assert app.js('return document.querySelectorAll("[role=toolbar][aria-label=Formatação]").length') == 1
-            assert app.js('const tools=document.querySelector(".formatting"), r=tools.getBoundingClientRect(), editor=document.querySelector(".editor-scroll:not(.inactive)").getBoundingClientRect();return r.top>=editor.bottom && r.bottom<=innerHeight-30 && getComputedStyle(tools).borderTopWidth==="0px" && getComputedStyle(tools).boxShadow==="none"')
+            assert app.js('const tools=document.querySelector(".formatting"), r=tools.getBoundingClientRect(), editor=document.querySelector(".editor-scroll:not(.inactive)").getBoundingClientRect(),style=getComputedStyle(tools),shadow=style.boxShadow.match(/-?[0-9.]+px/g).map(parseFloat);return r.top>=editor.bottom && r.bottom<=innerHeight-30 && style.borderTopWidth==="0px" && style.backgroundColor===getComputedStyle(document.querySelector(".statusbar")).backgroundColor && shadow[2]===0')
             selection = app.editor('return {from:editor.state.selection.from,to:editor.state.selection.to}')
             app.choose('Tamanho do texto selecionado', '24px')
             assert app.editor('return editor.getAttributes("textStyle").fontSize') == '24px'
@@ -843,7 +843,7 @@ def main():
             app.click('[aria-label="Fechar aplicativo"]')
             time.sleep(.2)
             app.stop()
-            (output.parent / 'desktop-results.json').write_text(json.dumps({'passed': len(results), 'checks': results, 'engine': 'Tauri 2 / WebKitGTK', 'platform': 'Ubuntu 26.10 / Wayland', 'version': native_version, 'binary': args.binary, 'sha256': hashlib.sha256((root / args.binary).read_bytes()).hexdigest(), 'developmentServer': development_server, 'fileChooser': provider}, ensure_ascii=False, indent=2))
+            (output.parent / 'desktop-results.json').write_text(json.dumps({'passed': len(results), 'checks': results, 'engine': 'Tauri 2 / WebKitGTK', 'platform': 'Ubuntu 26.10 / Wayland', 'gtkBackend': os.environ.get('GDK_BACKEND', 'auto'), 'version': native_version, 'binary': args.binary, 'sha256': hashlib.sha256((root / args.binary).read_bytes()).hexdigest(), 'developmentServer': development_server, 'fileChooser': provider}, ensure_ascii=False, indent=2))
             print(f'\n{len(results)} verificações desktop passaram.', flush=True)
         finally:
             app.stop()
