@@ -40,12 +40,12 @@ class Desktop:
     def __init__(self, url, application):
         self.url, self.application, self.session = url, application, None
 
-    def request(self, path, value=None, method=None, timeout=35):
+    def request(self, path, value=None, method=None, timeout=35, read_only=False):
         data = None if value is None else json.dumps(value).encode()
         request = urllib.request.Request(self.url + path, data, {'Content-Type': 'application/json'}, method=method)
         # O proxy do tauri-driver pode reutilizar uma conexão já encerrada pelo
         # WebKitWebDriver. Repetimos apenas leituras; cliques nunca são repetidos.
-        read_only = path.endswith('/element') or (value is None and method != 'DELETE')
+        read_only = read_only or path.endswith('/element') or (value is None and method != 'DELETE')
         for attempt in range(3):
             try:
                 with urllib.request.urlopen(request, timeout=timeout) as response:
@@ -81,8 +81,8 @@ class Desktop:
                 self.click('.welcome-actions button:last-child')
                 wait(lambda: self.ipc('load_library')['preferences'].get('onboardingCompleted'), 'concluir apresentação')
 
-    def call(self, path, value=None, method=None):
-        return self.request('/session/' + self.session + path, value, method)
+    def call(self, path, value=None, method=None, read_only=False):
+        return self.request('/session/' + self.session + path, value, method, read_only=read_only)
 
     def js(self, script, *args):
         return self.call('/execute/sync', {'script': script, 'args': list(args)})
@@ -179,7 +179,7 @@ class Desktop:
     def paint(self):
         # TipTap restaura o foco em requestAnimationFrame; aguarda também a
         # pintura antes de iniciar a próxima interação ou capturar a janela.
-        self.call('/execute/async', {'script': 'const done=arguments[arguments.length-1];let finished=false;const finish=()=>{if(!finished){finished=true;done(true)}};setTimeout(finish,300);requestAnimationFrame(()=>requestAnimationFrame(finish));', 'args': []})
+        self.call('/execute/async', {'script': 'const done=arguments[arguments.length-1];let finished=false;const finish=()=>{if(!finished){finished=true;done(true)}};setTimeout(finish,300);requestAnimationFrame(()=>requestAnimationFrame(finish));', 'args': []}, read_only=True)
 
     def screenshot(self, path):
         self.paint()
