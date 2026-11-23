@@ -4,17 +4,17 @@
 
 Entrelinhas é um editor **desktop de verdade**, feito com Tauri 2, React e TypeScript para Ubuntu e Windows. Ao começar a digitar, o modo Zen recolhe a navegação e aproveita a altura da janela, mantendo a coluna de texto e as ferramentas de formatação. Esc alterna o modo Zen.
 
-![Entrelinhas — Sépia Noturno](docs/screenshots/stable-2.3-main.png)
+![Entrelinhas — Sépia Noturno](docs/screenshots/stable-2.4.1-toolbar-bottom.png)
 
 ## Versão 2.4 estável: idiomas agrupados e ajustes de escrita
 
-A [2.4.0 estável](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.4.0) está disponível para Windows e Linux.
+A [2.4.1 estável](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.4.1) está disponível para Windows e Linux. A 2.4.0 foi publicada primeiro; a 2.4.1 acrescenta o fundo sólido da barra inferior quando ela avança sobre os projetos em janelas menores, preservando a centralização e o acesso a Configurações.
 
 Os idiomas agora aparecem em seis grupos. **Português** abre Brasil/Portugal, **Español** abre Latinoamérica/España e **中文** abre 简体中文/繁體中文. Inglês, japonês e alemão continuam disponíveis. As nove variantes traduzem a interface, os comandos e os avisos, preservando o conteúdo dos documentos. O Windows oferece os mesmos grupos e variantes no wizard; no Linux, a escolha continua na primeira das quatro telas iniciais. A escrita tradicional usa uma fonte local própria.
 
 Ctrl+clique confirma o envio do link ao navegador, com aviso visível também no Zen e proteção de dois segundos contra aberturas repetidas. O cursor é preservado. A lateral dos projetos chega ao fim da janela, o rodapé fica na área do editor e a barra de formatação continua centralizada na tela inteira. O seletor lateral mostra o ícone completo. O recuo superior do Zen passa a 56 px; a barra lateral de formatação começa a 48 px do alto.
 
-[Capturas, validação e limites da versão estável](docs/validation-2.4.0.md).
+[Capturas, validação e limites da versão estável](docs/validation-2.4.1.md).
 
 ## Versão 2.3 estável (histórico)
 
@@ -139,7 +139,7 @@ O cursor em bloco usa as coordenadas reais da seleção do ProseMirror e a largu
 
 ## Instalação no Windows
 
-O instalador **Entrelinhas 2.4.0 para Windows x64** usa NSIS, com logo, artes em sépia e nove variantes em seis grupos de idioma. Está disponível na [release estável](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.4.0), junto com o SHA-256 e o relatório dos testes. Windows e Linux compartilham a versão estável 2.4.0. Português, espanhol e chinês abrem uma segunda escolha de variante no wizard; o aplicativo usa essa escolha na primeira abertura.
+O instalador **Entrelinhas 2.4.1 para Windows x64** usa NSIS, com logo, artes em sépia e nove variantes em seis grupos de idioma. Está disponível na [release estável](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.4.1), junto com o SHA-256 e o relatório dos testes. Windows e Linux compartilham a versão estável 2.4.1. Português, espanhol e chinês abrem uma segunda escolha de variante no wizard; o aplicativo usa essa escolha na primeira abertura.
 
 - Instalação por usuário, sem exigir administrador para instalar o aplicativo; pasta de destino selecionável, atalho no menu Iniciar e opção de abrir ao concluir.
 - O instalador verifica o WebView2 e baixa o bootstrapper oficial quando necessário. Nesse caso, a primeira instalação precisa de internet.
@@ -180,12 +180,12 @@ O projeto foi compilado e verificado no **Ubuntu 26.10, x86_64, GNOME/Wayland**.
 
 ### Pacote Debian
 
-[Baixe o instalador e os checksums da versão 2.4.0](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.4.0).
+[Baixe o instalador e os checksums da versão 2.4.1](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.4.1).
 
 Para instalar o pacote compilado na `main`:
 
 ```bash
-sudo apt install ./src-tauri/target/release/bundle/deb/Entrelinhas_2.4.0_amd64.deb
+sudo apt install ./src-tauri/target/release/bundle/deb/Entrelinhas_2.4.1_amd64.deb
 ```
 
 O aplicativo aparece no menu como **Entrelinhas**, com ícone próprio. O pacote depende do WebKitGTK 4.1 e GTK 3 do sistema. Uma compilação feita no Ubuntu 26.10 não garante compatibilidade binária com versões anteriores do Ubuntu; para elas, compile no sistema de destino.
