@@ -747,6 +747,11 @@ p {
 .formatting > * {
   flex-shrink: 0;
 }
+.formatting-bottom:not(.immersive) .formatting {
+  background: var(--bg);
+  border-radius: 8px;
+  box-shadow: 0 -3px 0 3px var(--bg);
+}
 .formatting::-webkit-scrollbar {
   width: 5px;
   height: 5px;

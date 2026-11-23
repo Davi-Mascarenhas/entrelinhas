@@ -175,6 +175,8 @@ def exercise(app, output, wait, passed):
                     assert abs(r['left']+r['width']/2-width/2) < 1, metrics
                     assert max(metrics['centers'])-min(metrics['centers']) < 1, metrics
                     assert r['height'] <= 40, metrics
+                    assert app.js('const t=getComputedStyle(document.querySelector(".formatting")),s=getComputedStyle(document.querySelector(".statusbar"));return t.backgroundColor===s.backgroundColor&&t.boxShadow!=="none"'), 'A barra inferior deve ter fundo opaco no tema atual para cobrir a lateral sem deslocar os controles.'
+                    assert app.js('const t=document.querySelector(".formatting"),r=t.getBoundingClientRect(),s=getComputedStyle(t).boxShadow.match(/-?[0-9.]+px/g).map(parseFloat),label=document.querySelector(".sidebar-bottom .nav-button span").getBoundingClientRect();return r.bottom+Math.max(0,s[1]+s[2]+s[3])<=label.top+.5'), 'O fundo da barra não deve encobrir o texto de Configurações.'
                     app.click('[aria-label="Ocultar navegação"]'); app.paint()
                     assert app.js('const r=document.querySelector(".formatting").getBoundingClientRect();return Math.abs(r.left+r.width/2-innerWidth/2)<1')
                     app.click('[aria-label="Mostrar navegação"]'); app.paint()
