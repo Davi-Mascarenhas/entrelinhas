@@ -418,7 +418,7 @@ def main():
             wait(lambda: app.js('return document.querySelector(".app").classList.contains("immersive")'), 'imersão automática')
             after = app.js('return document.querySelector(".tiptap").getBoundingClientRect().toJSON()')
             assert abs(before['left'] - after['left']) < 1
-            wait(lambda: 24 <= app.js('return document.querySelector(".editor-scroll:not(.inactive)").getBoundingClientRect().top') <= 32, 'liberar altura no Zen com recuo confortável')
+            wait(lambda: 52 <= app.js('return document.querySelector(".editor-scroll:not(.inactive)").getBoundingClientRect().top') <= 60, 'liberar altura no Zen com recuo confortável')
             assert abs(after['left'] + after['width'] / 2 - app.js('return innerWidth / 2')) < 1, 'A coluna deve ficar no centro da janela inteira.'
             wait(lambda: app.js('return getComputedStyle(document.querySelector(".titlebar")).visibility==="hidden"'), 'ocultar controles')
             assert app.js('return !!document.querySelector(".block-caret")')
