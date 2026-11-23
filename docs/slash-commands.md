@@ -52,3 +52,7 @@ Recolher um bloco apenas o esconde. Seu conteúdo e o estado aberto/fechado são
 Cancelar o explorador de imagens ou o campo de link mantém o comando original. As imagens ficam em memória até o salvamento manual. A data e a hora são inseridas como texto daquele instante, sem notificações ou relógio em segundo plano.
 
 Links e trechos de código não abrem o menu de comandos. Nenhuma dessas funções consulta a internet automaticamente.
+
+## Variantes na prévia 2.4
+
+Os comandos também têm rótulos, descrições e buscas em português de Portugal, espanhol latino-americano/da Espanha e chinês tradicional. Exemplos: `/lista` e `/tabela` em português; `/tareas` e `/tabla` em espanhol; `/清單` e `/表格` em chinês tradicional. O conteúdo digitado não é traduzido ao trocar a interface.

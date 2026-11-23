@@ -6,6 +6,16 @@ Entrelinhas é um editor **desktop de verdade**, feito com Tauri 2, React e Type
 
 ![Entrelinhas — Sépia Noturno](docs/screenshots/stable-2.3-main.png)
 
+## Prévia 2.4: idiomas agrupados e ajustes de escrita
+
+A [2.4.0-rc.1](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.4.0-rc.1) está disponível para avaliação. A versão estável continua sendo a 2.3.0.
+
+Os idiomas agora aparecem em seis grupos. **Português** abre Brasil/Portugal, **Español** abre Latinoamérica/España e **中文** abre 简体中文/繁體中文. Inglês, japonês e alemão continuam disponíveis. As nove variantes traduzem a interface, os comandos e os avisos, preservando o conteúdo dos documentos. O Windows oferece os mesmos grupos e variantes no wizard; no Linux, a escolha continua na primeira das quatro telas iniciais. A escrita tradicional usa uma fonte local própria.
+
+Ctrl+clique confirma o envio do link ao navegador, com aviso visível também no Zen e proteção de dois segundos contra aberturas repetidas. O cursor é preservado. A lateral dos projetos chega ao fim da janela, o rodapé fica na área do editor e a barra de formatação continua centralizada na tela inteira. O seletor lateral mostra o ícone completo. O recuo superior do Zen passa a 56 px; a barra lateral de formatação começa a 48 px do alto.
+
+[Capturas, validação e limites da prévia](docs/preview-2.4.md).
+
 ## Versão 2.3 estável
 
 A [versão 2.3.0](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.3.0) reúne as correções das prévias e está disponível para Windows e Linux.
