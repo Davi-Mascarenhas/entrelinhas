@@ -43,10 +43,12 @@ def main():
             desktop.wait(lambda: app.js('return !!document.querySelector(".link-preview")'), 'prévia local')
             assert not received.exists(), 'Clique simples não deve abrir o navegador.'
             opened_at = app.js('return Date.now()')
+            selection = app.editor('return editor.state.selection.toJSON()')
             app.ctrl_click('.tiptap a')
             desktop.wait(received.exists, 'navegador padrão recebe URL pelo Gio')
             assert json.loads(received.read_text().splitlines()[0]) == url
             assert app.editor('return editor.getJSON()') == before
+            assert app.editor('return editor.state.selection.toJSON()') == selection
             opened_at = app.js('return Date.now()')
             desktop.wait(lambda: app.js('return Date.now()') > opened_at + 2100, 'intervalo da proteção contra cliques repetidos')
             app.click('.tiptap a'); app.click('.link-preview-actions button')

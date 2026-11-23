@@ -76,6 +76,14 @@ export function LinkPreview({
         open(url)
       } else setAnchor(link)
     }
+    const preserveSelection = (event: MouseEvent) => {
+      if (event.button !== 0 || (!event.ctrlKey && !event.metaKey)) return
+      const link = linkAt(event)
+      if (!link || !normalizeLink(link.getAttribute('href') || '')) return
+      // Ctrl+mousedown seleciona o bloco no ProseMirror. Para links esse gesto
+      // abre o navegador; não deve trocar a seleção nem realçar o parágrafo.
+      event.preventDefault()
+    }
     const outside = (event: PointerEvent) => {
       if (
         !panel.current?.contains(event.target as Node) &&
@@ -97,6 +105,7 @@ export function LinkPreview({
     editor.view.dom.addEventListener('pointerover', over)
     editor.view.dom.addEventListener('pointerout', out)
     editor.view.dom.addEventListener('click', click)
+    editor.view.dom.addEventListener('mousedown', preserveSelection, true)
     editor.view.dom.addEventListener('wheel', close, { passive: true })
     editor.view.dom.addEventListener('gesturestart', close, { passive: true })
     editor.on('update', close)
@@ -110,6 +119,7 @@ export function LinkPreview({
       editor.view.dom.removeEventListener('pointerover', over)
       editor.view.dom.removeEventListener('pointerout', out)
       editor.view.dom.removeEventListener('click', click)
+      editor.view.dom.removeEventListener('mousedown', preserveSelection, true)
       editor.view.dom.removeEventListener('wheel', close)
       editor.view.dom.removeEventListener('gesturestart', close)
       editor.off('update', close)

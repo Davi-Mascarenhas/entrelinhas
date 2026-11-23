@@ -76,3 +76,25 @@ it('mostra falha sem confirmação falsa e permite tentar novamente imediatament
   expect(backend.openLink).toHaveBeenCalledTimes(2)
   expect(notice.mock.lastCall?.[0]).toContain('Link enviado')
 })
+
+it('impede a seleção de bloco no Ctrl+mousedown sem bloquear os menus externos do app', () => {
+  setup()
+  editor.commands.setTextSelection(3)
+  const selection = editor.state.selection.toJSON()
+  const outside = vi.fn()
+  window.addEventListener('mousedown', outside)
+  try {
+    const event = new MouseEvent('mousedown', {
+      ctrlKey: true,
+      button: 0,
+      bubbles: true,
+      cancelable: true,
+    })
+    editor.view.dom.querySelector('a')!.dispatchEvent(event)
+    expect(event.defaultPrevented).toBe(true)
+    expect(outside).toHaveBeenCalledOnce()
+    expect(editor.state.selection.toJSON()).toEqual(selection)
+  } finally {
+    window.removeEventListener('mousedown', outside)
+  }
+})

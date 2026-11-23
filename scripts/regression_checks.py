@@ -89,9 +89,11 @@ def exercise(app, output, wait, passed):
         app.click('.tiptap a'); wait(lambda: app.js('return !!document.querySelector(".link-preview")'), 'clique simples mostra prévia')
         assert app.js('return window.openedLinks.length') == 0
         sent_at = app.js('return Date.now()')
+        link_selection = app.editor('return editor.state.selection.toJSON()')
         app.ctrl_click('.tiptap a')
         wait(lambda: app.js('return window.openedLinks') == ['https://docs.example.com/caderno'], 'Ctrl+clique pede navegador padrão')
         assert app.editor('return editor.getJSON()') == linked
+        assert app.editor('return editor.state.selection.toJSON()') == link_selection, 'Ctrl+clique não deve selecionar o parágrafo.'
         wait(lambda: app.js('return document.querySelector(".toast")?.textContent.includes("Link enviado")'), 'confirmação de envio ao navegador')
         app.real_key('Escape'); wait(zen, 'Zen antes de repetir link')
         app.ctrl_click('.tiptap a')
