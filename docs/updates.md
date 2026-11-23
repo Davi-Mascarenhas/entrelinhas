@@ -22,7 +22,7 @@ O Windows gera `.sig` no build. Para o `.deb`, usar `tauri signer sign --app-ver
 
 ## Publicação
 
-A 2.3.0 estável foi explicitamente autorizada pelo usuário após corrigir e testar os problemas relatados. Durante avaliações remotas futuras, manter novas alterações em pré-release até nova autorização de promoção.
+O usuário autorizou publicar a 2.4.0 estável e, depois, corrigir o fundo da barra inferior e publicar a 2.4.1 estável, ambas após os testes dos pacotes finais. Para outras versões durante avaliações remotas, manter novas alterações em pré-release até nova autorização de promoção.
 
 1. Compilar, testar e verificar os pacotes finais. Confirmar que builds publicados não habilitam a feature `updater-test` nem transporte inseguro.
    Para prévias Debian, executar `python3 scripts/prepare-deb-preview.py` depois de `npm run package` e antes de assinar. O campo Debian usa `~` (ex.: `2.3.0~rc.1`), mantendo o SemVer do aplicativo e o nome do arquivo. Isso garante que a futura `2.3.0` seja considerada mais nova pelo gerenciador de pacotes; o script verifica que o executável não foi alterado.
@@ -32,4 +32,4 @@ A 2.3.0 estável foi explicitamente autorizada pelo usuário após corrigir e te
 
 O gerador está em `scripts/prepare-update-manifest.py` e requer as dependências de `scripts/requirements-release.txt`. Exemplo após publicar os artefatos: `python3 scripts/prepare-update-manifest.py --version 2.3.0 --assets artifacts/release-2.3.0 --channel stable --notes "Comandos de escrita, edição direta e modo Zen."`. Ele verifica as assinaturas Ed25519/Minisign, a versão assinada e os hashes publicados pelo GitHub antes de escrever o manifesto.
 
-O canal estável permanece na 2.3.0; o canal de prévias oferece a 2.4.0-rc.1, ambos com Windows e Linux. A publicação da prévia preservou o manifesto estável e a indicação de versão estável mais recente no GitHub. Nenhuma prévia é baixada automaticamente; ela exige a escolha explícita na ação secundária.
+Os canais estável e de prévias oferecem a 2.4.0 estável, com Windows e Linux. Isso permite atualizar da prévia para a versão final. Uma próxima prévia atualizará somente o seu canal e preservará a indicação de versão estável mais recente no GitHub. Nenhuma prévia é baixada automaticamente; ela exige a escolha explícita na ação secundária.
