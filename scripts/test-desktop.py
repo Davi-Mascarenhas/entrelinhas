@@ -96,10 +96,24 @@ class Desktop:
     def element(self, css):
         return self.call('/element', {'using': 'css selector', 'value': css})['element-6066-11e4-a52e-4f735466cecf']
 
+    def stable_element(self, css):
+        # As transições do Zen e dos painéis movem os alvos. Não enviar um
+        # clique ou texto às coordenadas medidas antes de terminar a animação.
+        previous = None
+        def stationary():
+            nonlocal previous
+            rect = self.js('const r=document.querySelector(arguments[0]).getBoundingClientRect();return [r.x,r.y,r.width,r.height]', css)
+            stable = rect == previous
+            previous = rect
+            return stable
+        wait(stationary, 'posição estável de ' + css)
+        return self.element(css)
+
     def click(self, css):
+        element = self.stable_element(css)
         if 'Inserir imagem' in css or 'Abrir documento' in css:
             mark_native_dialog()
-        self.call('/element/' + self.element(css) + '/click', {})
+        self.call('/element/' + element + '/click', {})
 
     def choose(self, label, value):
         self.click(f'[role="combobox"][aria-label="{label}"]')
@@ -120,7 +134,7 @@ class Desktop:
         self.paint()
 
     def keys(self, css, text):
-        self.call('/element/' + self.element(css) + '/value', {'text': text})
+        self.call('/element/' + self.stable_element(css) + '/value', {'text': text})
 
     def key(self, key, ctrl=False, shift=False):
         if ctrl and key.lower() in ('s', 'o'):
@@ -136,18 +150,7 @@ class Desktop:
         self.call('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': actions}]})
 
     def ctrl_click(self, css):
-        # O Zen anima a posição do texto. WebDriver calcula o ponto do clique
-        # antes de despachar as ações; aguarda o alvo parar para não clicar
-        # nas coordenadas que o link ocupava no meio da transição.
-        previous = None
-        def stationary():
-            nonlocal previous
-            rect = self.js('const r=document.querySelector(arguments[0]).getBoundingClientRect();return [r.x,r.y,r.width,r.height]', css)
-            stable = rect == previous
-            previous = rect
-            return stable
-        wait(stationary, 'posição estável do link antes do Ctrl+clique')
-        element = self.element(css)
+        element = self.stable_element(css)
         self.call('/actions', {'actions': [
             {'type': 'key', 'id': 'keyboard', 'actions': [{'type': 'keyDown', 'value': '\ue009'}, {'type': 'pause'}, {'type': 'pause'}, {'type': 'keyUp', 'value': '\ue009'}]},
             {'type': 'pointer', 'id': 'mouse', 'parameters': {'pointerType': 'mouse'}, 'actions': [
@@ -186,7 +189,7 @@ class Desktop:
         path.write_bytes(base64.b64decode(self.call('/screenshot')))
 
     def hover(self, css):
-        element = self.element(css)
+        element = self.stable_element(css)
         self.call('/actions', {'actions': [{'type': 'pointer', 'id': 'mouse', 'parameters': {'pointerType': 'mouse'}, 'actions': [{'type': 'pointerMove', 'duration': 50, 'origin': 'viewport', 'x': 10, 'y': 10}, {'type': 'pointerMove', 'duration': 100, 'origin': {'element-6066-11e4-a52e-4f735466cecf': element}, 'x': 0, 'y': 0}]}]})
 
     def double_click(self, css, x=0):
