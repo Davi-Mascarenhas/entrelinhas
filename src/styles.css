@@ -284,7 +284,8 @@ p {
   color: #fff;
 }
 .sidebar {
-  grid-row: 2;
+  grid-column: 1;
+  grid-row: 2 / 4;
   position: relative;
   min-width: 0;
   overflow: hidden;
@@ -420,7 +421,7 @@ p {
 }
 .sidebar-right .sidebar {
   grid-column: 2;
-  grid-row: 2;
+  grid-row: 2 / 4;
   border-right: 0;
   border-left: 1px solid var(--border);
 }
@@ -438,6 +439,7 @@ p {
   visibility: hidden;
 }
 .workspace {
+  grid-column: 2;
   grid-row: 2;
   min-width: 0;
   min-height: 0;
@@ -744,10 +746,31 @@ p {
   height: 0;
 }
 .editor-footer {
+  position: relative;
+  z-index: 20;
   grid-column: 1 / -1;
   grid-row: 3;
+  display: grid;
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
   min-width: 0;
+  pointer-events: none;
+}
+.editor-footer > .formatting-dock {
+  grid-column: 1 / -1;
+}
+.editor-footer > .statusbar {
+  grid-column: 2;
   background: var(--bg);
+  pointer-events: auto;
+}
+.editor-footer .formatting {
+  pointer-events: auto;
+}
+.sidebar-right .editor-footer {
+  grid-template-columns: minmax(0, 1fr) var(--sidebar-width);
+}
+.sidebar-right .editor-footer > .statusbar {
+  grid-column: 1;
 }
 .tiptap span[data-editor-font-size] {
   font-size: calc(var(--written-font-size) * var(--text-zoom, 1)) !important;
@@ -1562,7 +1585,7 @@ p {
 .toast {
   position: fixed;
   left: 50%;
-  bottom: 30px;
+  bottom: 92px;
   transform: translateX(-50%);
   max-width: min(650px, 90vw);
   padding: 13px 16px;
@@ -1577,8 +1600,10 @@ p {
   display: flex;
   align-items: center;
   gap: 15px;
+  pointer-events: none;
 }
 .toast button {
+  pointer-events: auto;
   padding: 0;
   color: var(--muted);
 }
@@ -2724,7 +2749,7 @@ body,
   padding-block: 0;
 }
 .immersive .editor-top-space {
-  flex-basis: 28px;
+  flex-basis: 56px;
 }
 .immersive .statusbar {
   flex-basis: 0;
@@ -2778,7 +2803,7 @@ body,
   overflow-x: hidden;
   overscroll-behavior: contain;
   width: 46px;
-  padding: 3px;
+  padding: 3px 0;
 }
 .formatting-side .formatting > * {
   flex-shrink: 0;
@@ -2786,7 +2811,12 @@ body,
 .formatting-side .formatting .select-trigger {
   max-width: 40px;
   width: 40px;
+  padding: 4px;
+  gap: 3px;
   overflow: hidden;
+}
+.formatting-side .formatting .select-trigger svg {
+  flex-shrink: 0;
 }
 .formatting-side .tool-divider {
   width: 20px;
@@ -2794,7 +2824,7 @@ body,
   margin: 5px 0;
 }
 .immersive.formatting-side .formatting-dock {
-  top: 24px;
+  top: 48px;
   bottom: 24px;
 }
 .immersive.formatting-side.sidebar-left .formatting-dock {

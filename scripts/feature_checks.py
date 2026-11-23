@@ -74,7 +74,7 @@ def exercise(app, output, wait, passed):
     before=app.js('return document.querySelector(".editor-scroll:not(.inactive)").getBoundingClientRect().toJSON()')
     app.key('Escape')
     wait(lambda: app.js('return document.querySelector(".app").classList.contains("immersive")'), 'Esc entra no Zen')
-    wait(lambda: 24 <= app.js('return document.querySelector(".editor-scroll:not(.inactive)").getBoundingClientRect().top') <= 32, 'usar altura superior com recuo confortável')
+    wait(lambda: 52 <= app.js('return document.querySelector(".editor-scroll:not(.inactive)").getBoundingClientRect().top') <= 60, 'usar altura superior com recuo confortável')
     after=app.js('return document.querySelector(".editor-scroll:not(.inactive)").getBoundingClientRect().toJSON()')
     assert after['height'] > before['height']+70
     assert app.js('return !!document.querySelector(".formatting") && getComputedStyle(document.querySelector(".formatting-dock")).visibility==="visible"')
@@ -87,7 +87,7 @@ def exercise(app, output, wait, passed):
     assert not app.js('return !!document.querySelector(".formatting")')
     app.key('Escape');settings('toolbar');preference('zenHideFormatting',False);app.click('[data-formatting-position=side]');close_settings()
     app.key('Escape');wait(lambda: app.js('return document.querySelector(".app").classList.contains("immersive")'), 'Zen com barra lateral')
-    assert app.js('const b=document.querySelector(".formatting-dock").getBoundingClientRect();return b.right>innerWidth-80 && b.top===24 && innerWidth-b.right===24 && innerHeight-b.bottom===24')
+    assert app.js('const b=document.querySelector(".formatting-dock").getBoundingClientRect();return b.right>innerWidth-80 && b.top===48 && innerWidth-b.right===24 && innerHeight-b.bottom===24')
     assert app.js('return getComputedStyle(document.querySelector(".formatting")).flexDirection')=='column'
     wait(lambda: app.js('return getComputedStyle(document.querySelector(".titlebar")).visibility') == 'hidden', 'terminar transição Zen')
     app.screenshot(output/'formatting-side-right.png')

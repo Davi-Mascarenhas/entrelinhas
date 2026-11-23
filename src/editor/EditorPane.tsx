@@ -22,7 +22,7 @@ interface Props {
   onInsertLink: (editor: Editor, range: SlashRange) => void
   onStats: (text: string) => void
   onSelection: (rect: DOMRect | null) => void
-  onError: (message: string) => void
+  onNotice: (message: string) => void
   onZoom: (zoom: number) => void
 }
 
@@ -140,7 +140,7 @@ export function EditorPane(props: Props) {
       {editor && props.active && (
         <Caret editor={editor} enabled={props.preferences.cursor === 'block'} />
       )}
-      {editor && props.active && <LinkPreview editor={editor} onError={props.onError} />}
+      {editor && props.active && <LinkPreview editor={editor} onNotice={props.onNotice} />}
     </div>
   )
 }

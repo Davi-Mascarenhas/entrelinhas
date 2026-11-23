@@ -974,7 +974,7 @@ export default function App() {
                 setSlashLink({ editor, range })
                 setLink('')
               }}
-              onError={notify}
+              onNotice={notify}
               onZoom={changeZoom}
               onStats={note.id === activeId ? onStats : () => {}}
               onSelection={note.id === activeId ? setSelectionRect : () => {}}
@@ -1147,7 +1147,7 @@ export default function App() {
       <WindowResize onError={notify} />
       <TooltipLayer />
       {notice && (
-        <div className="toast chrome" role="status">
+        <div className="toast" role="status" aria-live="polite" aria-atomic="true">
           {tr(notice)}
           <button aria-label={tr('Dispensar aviso')} onClick={() => setNotice('')}>
             <X size={14} />

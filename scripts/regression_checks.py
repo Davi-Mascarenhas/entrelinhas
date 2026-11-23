@@ -88,9 +88,14 @@ def exercise(app, output, wait, passed):
         assert not zen()
         app.click('.tiptap a'); wait(lambda: app.js('return !!document.querySelector(".link-preview")'), 'clique simples mostra prévia')
         assert app.js('return window.openedLinks.length') == 0
+        sent_at = app.js('return Date.now()')
         app.ctrl_click('.tiptap a')
         wait(lambda: app.js('return window.openedLinks') == ['https://docs.example.com/caderno'], 'Ctrl+clique pede navegador padrão')
         assert app.editor('return editor.getJSON()') == linked
+        app.click('.tiptap a'); app.click('.link-preview-actions button')
+        assert app.js('return window.openedLinks.length') == 1, 'Cliques seguidos não devem abrir o link várias vezes.'
+        sent_at = app.js('return Date.now()')
+        wait(lambda: app.js('return Date.now()') > sent_at + 2100, 'intervalo para nova abertura intencional')
         app.click('.tiptap a'); app.click('.link-preview-actions button')
         wait(lambda: app.js('return window.openedLinks.length') == 2, 'botão abrir também pede navegador')
     finally:

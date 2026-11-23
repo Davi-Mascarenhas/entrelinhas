@@ -8,10 +8,10 @@ import { normalizeLink } from './links'
 
 export function LinkPreview({
   editor,
-  onError,
+  onNotice,
 }: {
   editor: Editor
-  onError: (message: string) => void
+  onNotice: (message: string) => void
 }) {
   const language = useLanguage()
   const [anchor, setAnchor] = useState<HTMLAnchorElement | null>(null)
@@ -19,10 +19,32 @@ export function LinkPreview({
   const panel = useRef<HTMLDivElement>(null)
   const pending = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const href = anchor ? normalizeLink(anchor.getAttribute('href') || '') : null
-  const onErrorRef = useRef(onError)
-  onErrorRef.current = onError
-  const open = (url: string) =>
-    void backend.openLink(url).catch((error) => onErrorRef.current(errorMessage(error)))
+  const onNoticeRef = useRef(onNotice)
+  onNoticeRef.current = onNotice
+  const requests = useRef(new Map<string, { pending: boolean; at: number }>())
+  const open = async (url: string) => {
+    const previous = requests.current.get(url)
+    if (previous && (previous.pending || Date.now() - previous.at < 2000)) {
+      onNoticeRef.current(
+        tr('Este link já foi enviado ao navegador. Aguarde um instante para abrir novamente.'),
+      )
+      return
+    }
+    const request = { pending: true, at: Date.now() }
+    requests.current.set(url, request)
+    onNoticeRef.current(tr('Abrindo no navegador padrão…'))
+    try {
+      await backend.openLink(url)
+      request.pending = false
+      request.at = Date.now()
+      onNoticeRef.current(
+        tr('Link enviado ao navegador. Se a janela não aparecer, alterne para ele.'),
+      )
+    } catch (error) {
+      requests.current.delete(url)
+      onNoticeRef.current(errorMessage(error))
+    }
+  }
   useEffect(() => {
     const clear = () => clearTimeout(pending.current)
     const close = () => {

@@ -2052,5 +2052,26 @@
     "既定のブラウザーでリンクを開けませんでした。",
     "无法在默认浏览器中打开链接。",
     "Der Link konnte nicht im Standardbrowser geöffnet werden."
+  ],
+  [
+    "Abrindo no navegador padrão…",
+    "Opening in the default browser…",
+    "既定のブラウザーで開いています…",
+    "正在默认浏览器中打开…",
+    "Wird im Standardbrowser geöffnet…"
+  ],
+  [
+    "Link enviado ao navegador. Se a janela não aparecer, alterne para ele.",
+    "Link sent to your browser. Switch to it if its window does not appear.",
+    "リンクをブラウザーに送りました。ウィンドウが表示されない場合はブラウザーに切り替えてください。",
+    "链接已发送到浏览器。如果窗口未显示，请切换到浏览器。",
+    "Link an deinen Browser gesendet. Wechsle dorthin, falls das Fenster nicht erscheint."
+  ],
+  [
+    "Este link já foi enviado ao navegador. Aguarde um instante para abrir novamente.",
+    "This link was already sent to your browser. Wait a moment before opening it again.",
+    "このリンクはすでにブラウザーに送信済みです。少し待ってからもう一度開いてください。",
+    "此链接已发送到浏览器。请稍候再打开。",
+    "Dieser Link wurde bereits an deinen Browser gesendet. Warte kurz, bevor du ihn erneut öffnest."
   ]
 ]
