@@ -182,10 +182,11 @@ O projeto foi compilado e verificado no **Ubuntu 26.10, x86_64, GNOME/Wayland**.
 
 [Baixe o instalador e os checksums da versão 2.3.0](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.3.0).
 
-Para instalar um pacote compilado localmente:
+Para instalar o pacote compilado na `main`, que atualmente está na prévia 2.4.0-rc.1, ajuste primeiro a versão Debian da prévia e depois instale:
 
 ```bash
-sudo apt install ./src-tauri/target/release/bundle/deb/Entrelinhas_2.3.0_amd64.deb
+python3 scripts/prepare-deb-preview.py
+sudo apt install ./src-tauri/target/release/bundle/deb/Entrelinhas_2.4.0-rc.1_amd64.deb
 ```
 
 O aplicativo aparece no menu como **Entrelinhas**, com ícone próprio. O pacote depende do WebKitGTK 4.1 e GTK 3 do sistema. Uma compilação feita no Ubuntu 26.10 não garante compatibilidade binária com versões anteriores do Ubuntu; para elas, compile no sistema de destino.

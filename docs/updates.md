@@ -32,4 +32,4 @@ A 2.3.0 estável foi explicitamente autorizada pelo usuário após corrigir e te
 
 O gerador está em `scripts/prepare-update-manifest.py` e requer as dependências de `scripts/requirements-release.txt`. Exemplo após publicar os artefatos: `python3 scripts/prepare-update-manifest.py --version 2.3.0 --assets artifacts/release-2.3.0 --channel stable --notes "Comandos de escrita, edição direta e modo Zen."`. Ele verifica as assinaturas Ed25519/Minisign, a versão assinada e os hashes publicados pelo GitHub antes de escrever o manifesto.
 
-Os canais estável e de prévias apontam para a 2.3.0 estável, com Windows e Linux. Isso permite sair das prévias anteriores para a versão final. Uma futura pré-release atualiza somente o manifesto de prévias. Nenhuma prévia é baixada automaticamente; ela exige a escolha explícita na ação secundária.
+O canal estável permanece na 2.3.0; o canal de prévias oferece a 2.4.0-rc.1, ambos com Windows e Linux. A publicação da prévia preservou o manifesto estável e a indicação de versão estável mais recente no GitHub. Nenhuma prévia é baixada automaticamente; ela exige a escolha explícita na ação secundária.
