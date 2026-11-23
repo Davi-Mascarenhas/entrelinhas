@@ -1,13 +1,14 @@
 # Fontes da interface
 
-Os subconjuntos locais Entrelinhas UI JP e Entrelinhas UI SC são derivados de
-Noto Sans JP e Noto Sans SC, publicados pelo projeto Google Fonts:
+Os subconjuntos locais Entrelinhas UI JP, Entrelinhas UI SC e Entrelinhas UI TC são derivados de
+Noto Sans JP, Noto Sans SC e Noto Sans TC, publicados pelo projeto Google Fonts:
 
 - https://github.com/google/fonts/tree/main/ofl/notosansjp
 - https://github.com/google/fonts/tree/main/ofl/notosanssc
+- https://github.com/google/fonts/tree/main/ofl/notosanstc
 
-Origem obtida em 21/11/2026. Licenças SIL Open Font License 1.1 completas em
-OFL-NotoSansJP.txt e OFL-NotoSansSC.txt; os avisos de copyright permanecem nas fontes.
+JP e SC obtidas em 21/11/2026; TC obtida em 22/11/2026. Licenças SIL Open Font License 1.1 completas em
+OFL-NotoSansJP.txt, OFL-NotoSansSC.txt e OFL-NotoSansTC.txt; os avisos de copyright permanecem nas fontes.
 Os nomes das derivações não usam o nome reservado Source.
 
 Os arquivos WOFF2 incluem os caracteres dos catálogos da interface e são

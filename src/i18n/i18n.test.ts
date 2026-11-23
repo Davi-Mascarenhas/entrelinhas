@@ -7,7 +7,7 @@ import { suggestedFilename } from '../core/titles'
 
 afterEach(() => setLanguage('pt-BR'))
 describe('catálogos completos e dados preservados', () => {
-  it('tem cinco traduções por mensagem, sem chaves duplicadas nem parâmetros perdidos', () => {
+  it('tem nove traduções por mensagem, sem chaves duplicadas nem parâmetros perdidos', () => {
     expect(new Set(rows.map((row) => row[0])).size).toBe(rows.length)
     for (const row of rows) {
       expect(row).toHaveLength(languages.length)
@@ -58,6 +58,21 @@ describe('catálogos completos e dados preservados', () => {
     expect(tr('Fechar Arquivo {nome}.md')).toBe('Arquivo {nome}.md schließen')
     expect(formatShortcut('Ctrl+Shift+K')).toBe('Strg+Umschalt+K')
   })
+  it('usa vocabulário regional e escrita tradicional sem alterar os IDs de idiomas existentes', () => {
+    setLanguage('pt-PT')
+    expect(tr('Salvar')).toBe('Guardar')
+    expect(tr('Arquivos')).toBe('Ficheiros')
+    setLanguage('es-419')
+    expect(tr('Configurações')).toBe('Configuración')
+    expect(tr('Escolha uma imagem do computador.')).toContain('computadora')
+    setLanguage('es-ES')
+    expect(tr('Configurações')).toBe('Ajustes')
+    expect(tr('Escolha uma imagem do computador.')).toContain('ordenador')
+    setLanguage('zh-TW')
+    expect(tr('Configurações')).toBe('設定')
+    expect(tr('Arquivos')).toBe('檔案')
+    expect(tr('Salvar')).toBe('儲存')
+  })
   it('migra preferências antigas, respeita a escolha do usuário e valida idiomas', () => {
     expect(readPreferences({ theme: 'sepia' })).toMatchObject({
       language: 'pt-BR',
@@ -65,7 +80,10 @@ describe('catálogos completos e dados preservados', () => {
       onboardingCompleted: true,
     })
     expect(readPreferences({ language: 'ja', theme: 'dark' }).language).toBe('ja')
-    expect(readPreferences({ language: 'zh-TW' }).language).toBe('pt-BR')
+    expect(readPreferences({ language: 'zh-TW' }).language).toBe('zh-TW')
+    expect(readPreferences({ language: 'xx' }).language).toBe('pt-BR')
+    for (const language of ['pt-PT', 'es-419', 'es-ES', 'zh-TW'])
+      expect(readPreferences({ language }).language).toBe(language)
     expect(
       readPreferences({ language: 'zh-CN', onboardingCompleted: false }).onboardingCompleted,
     ).toBe(false)

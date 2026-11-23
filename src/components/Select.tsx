@@ -6,6 +6,7 @@ interface Option {
   value: string
   label: string
   disabled?: boolean
+  lang?: string
 }
 
 export function Select({
@@ -14,8 +15,14 @@ export function Select({
   options,
   onChange,
   icon,
+  displayValue,
+  className = '',
+  lang,
 }: {
   label: string
+  displayValue?: string
+  className?: string
+  lang?: string
   icon?: ReactNode
   value: string
   options: Option[]
@@ -102,9 +109,11 @@ export function Select({
       <button
         ref={trigger}
         type="button"
-        className="select-trigger"
+        className={`select-trigger ${className}`.trim()}
+        lang={lang}
         role="combobox"
         aria-label={label}
+        aria-description={displayValue ? options[selected]?.label : undefined}
         aria-expanded={open}
         aria-haspopup="listbox"
         aria-controls={open ? id : undefined}
@@ -154,7 +163,7 @@ export function Select({
           }
         }}
       >
-        <span className="select-label">{options[selected]?.label ?? value}</span>
+        <span className="select-label">{displayValue ?? options[selected]?.label ?? value}</span>
         {icon && (
           <span className="select-choice-icon" aria-hidden="true">
             {icon}
@@ -177,6 +186,7 @@ export function Select({
                 key={option.value}
                 id={`${id}-${index}`}
                 role="option"
+                lang={option.lang}
                 data-value={option.value}
                 aria-selected={option.value === value}
                 aria-disabled={option.disabled || undefined}

@@ -12,6 +12,21 @@
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: 'Entrelinhas UI TC';
+  src: url('/fonts/entrelinhas-ui-tc.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+:root:lang(zh-TW),
+.language-choice:lang(zh-TW),
+.select-options [lang='zh-TW'] {
+  font-family: 'Entrelinhas UI TC', 'Ubuntu', sans-serif;
+}
+.select-options [lang='zh-CN'] {
+  font-family: 'Entrelinhas UI SC', 'Ubuntu', sans-serif;
+}
 :root:lang(ja),
 .language-choice:lang(ja) {
   font-family: 'Entrelinhas UI JP', 'Noto Sans JP', sans-serif;
@@ -403,6 +418,9 @@ p {
   border-top: 1px solid var(--border);
   border-radius: 0;
   padding-top: 17px;
+}
+.formatting-bottom:has(.formatting) .sidebar-bottom > .nav-button {
+  margin-top: 56px;
 }
 .sidebar-resizer {
   position: absolute;
@@ -2456,11 +2474,29 @@ body,
   text-align: start;
   background: var(--bg);
   color: var(--text);
+  font-size: 12px;
 }
 .language-choice[aria-pressed='true'] {
   border-color: var(--accent);
   background: var(--accent-soft);
   color: var(--text);
+}
+.language-family {
+  min-width: 0;
+}
+.language-family .select-trigger {
+  width: 100%;
+  max-width: none;
+}
+.language-family[data-selected='true'] .select-trigger {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--text);
+}
+.language-family .select-trigger .select-label {
+  min-width: 0;
+  flex: 1;
+  text-align: start;
 }
 .shortcut-capture {
   display: grid;
@@ -2498,6 +2534,10 @@ body,
 }
 :root:lang(zh-CN) :is(.settings-content h3, .welcome-body h3, .welcome-note > span) {
   font-family: 'Entrelinhas UI SC', sans-serif;
+  letter-spacing: 0;
+}
+:root:lang(zh-TW) :is(.settings-content h3, .welcome-body h3, .welcome-note > span) {
+  font-family: 'Entrelinhas UI TC', sans-serif;
   letter-spacing: 0;
 }
 

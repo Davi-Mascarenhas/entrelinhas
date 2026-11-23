@@ -1,2077 +1,4763 @@
 [
-  ["Configurações", "Settings", "設定", "设置", "Einstellungen"],
-  ["Linguagem", "Language", "言語", "语言", "Sprache"],
-  ["Aparência", "Appearance", "外観", "外观", "Darstellung"],
-  ["Editor", "Editor", "エディター", "编辑器", "Editor"],
-  ["Cursor", "Cursor", "カーソル", "光标", "Cursor"],
-  ["Arquivos", "Files", "ファイル", "文件", "Dateien"],
-  ["Atalhos", "Keyboard shortcuts", "ショートカット", "键盘快捷键", "Tastenkürzel"],
-  ["Comportamento", "Behavior", "動作", "行为", "Verhalten"],
-  ["Sobre", "About", "アプリについて", "关于", "Über"],
+  [
+    "Configurações",
+    "Settings",
+    "設定",
+    "设置",
+    "Einstellungen",
+    "Definições",
+    "Configuración",
+    "Ajustes",
+    "設定"
+  ],
+  ["Linguagem", "Language", "言語", "语言", "Sprache", "Idioma", "Idioma", "Idioma", "語言"],
+  [
+    "Aparência",
+    "Appearance",
+    "外観",
+    "外观",
+    "Darstellung",
+    "Aparência",
+    "Apariencia",
+    "Apariencia",
+    "外觀"
+  ],
+  ["Editor", "Editor", "エディター", "编辑器", "Editor", "Editor", "Editor", "Editor", "編輯器"],
+  ["Cursor", "Cursor", "カーソル", "光标", "Cursor", "Cursor", "Cursor", "Cursor", "游標"],
+  ["Arquivos", "Files", "ファイル", "文件", "Dateien", "Ficheiros", "Archivos", "Archivos", "檔案"],
+  [
+    "Atalhos",
+    "Keyboard shortcuts",
+    "ショートカット",
+    "键盘快捷键",
+    "Tastenkürzel",
+    "Atalhos de teclado",
+    "Atajos de teclado",
+    "Atajos de teclado",
+    "鍵盤快捷鍵"
+  ],
+  [
+    "Comportamento",
+    "Behavior",
+    "動作",
+    "行为",
+    "Verhalten",
+    "Comportamento",
+    "Comportamiento",
+    "Comportamiento",
+    "行為"
+  ],
+  ["Sobre", "About", "アプリについて", "关于", "Über", "Sobre", "Acerca de", "Acerca de", "關於"],
   [
     "Categorias de configurações",
     "Settings categories",
     "設定カテゴリー",
     "设置分类",
-    "Einstellungskategorien"
+    "Einstellungskategorien",
+    "Categorias de definições",
+    "Categorías de configuración",
+    "Categorías de ajustes",
+    "設定分類"
   ],
   [
     "Escolha seu idioma.",
     "Choose your language.",
     "言語を選んでください。",
     "请选择语言。",
-    "Wähle deine Sprache."
+    "Wähle deine Sprache.",
+    "Escolha seu idioma.",
+    "Elige tu idioma.",
+    "Elige tu idioma.",
+    "請選擇語言。"
   ],
   [
     "A interface muda imediatamente. Seus documentos continuam como estão.",
     "The interface changes immediately. Your documents stay as they are.",
     "表示言語はすぐに切り替わります。文書の内容は変わりません。",
     "界面语言会立即切换，文档内容保持不变。",
-    "Die Oberfläche ändert sich sofort. Deine Dokumente bleiben unverändert."
+    "Die Oberfläche ändert sich sofort. Deine Dokumente bleiben unverändert.",
+    "A interface muda de imediato. Os seus documentos mantêm-se como estão.",
+    "La interfaz cambia al instante. Tus documentos permanecen como están.",
+    "La interfaz cambia al instante. Tus documentos permanecen como están.",
+    "介面語言會立即切換，文件內容保持不變。"
   ],
   [
     "Em que idioma você quer escrever sua história?",
     "Which language feels like home?",
     "どの言語で始めますか？",
     "你想使用哪种语言？",
-    "In welcher Sprache fühlst du dich zu Hause?"
+    "In welcher Sprache fühlst du dich zu Hause?",
+    "Em que idioma quer escrever a sua história?",
+    "¿En qué idioma quieres escribir tu historia?",
+    "¿En qué idioma quieres escribir tu historia?",
+    "你想使用哪種語言？"
   ],
   [
     "Você pode mudar o idioma a qualquer momento nas configurações.",
     "You can change the language anytime in Settings.",
     "言語は設定でいつでも変更できます。",
     "你随时可以在设置中更改语言。",
-    "Du kannst die Sprache jederzeit in den Einstellungen ändern."
+    "Du kannst die Sprache jederzeit in den Einstellungen ändern.",
+    "Pode alterar o idioma em qualquer momento nas definições.",
+    "Puedes cambiar el idioma en cualquier momento desde los configuración.",
+    "Puedes cambiar el idioma en cualquier momento desde los ajustes.",
+    "你隨時可以在設定中更改語言。"
   ],
   [
     "Seu espaço, sua luz.",
     "Your space, your light.",
     "あなたの場所、あなたの明かり。",
     "你的空间，你的光。",
-    "Dein Raum, dein Licht."
+    "Dein Raum, dein Licht.",
+    "Seu espaço, sua luz.",
+    "Tu espacio, tu luz.",
+    "Tu espacio, tu luz.",
+    "你的空間，你的光。"
   ],
   [
     "Escolha a atmosfera que acompanha sua escrita.",
     "Choose the atmosphere for your writing.",
     "書く時間に合う雰囲気を選びましょう。",
     "选择适合你写作的氛围。",
-    "Wähle die Atmosphäre für dein Schreiben."
+    "Wähle die Atmosphäre für dein Schreiben.",
+    "Escolha a atmosfera que acompanha sua escrita.",
+    "Elige el ambiente que acompaña tu escritura.",
+    "Elige el ambiente que acompaña tu escritura.",
+    "選擇適合你寫作的氛圍。"
   ],
-  ["Claro", "Light", "ライト", "浅色", "Hell"],
-  ["Escuro", "Dark", "ダーク", "深色", "Dunkel"],
-  ["Sépia Noturno", "Night sepia", "ナイトセピア", "夜间棕褐", "Nachtsepia"],
-  ["Leve e luminoso.", "Light and bright.", "明るく軽やかに。", "轻盈明亮。", "Hell und leicht."],
+  ["Claro", "Light", "ライト", "浅色", "Hell", "Claro", "Claro", "Claro", "淺色"],
+  ["Escuro", "Dark", "ダーク", "深色", "Dunkel", "Escuro", "Oscuro", "Oscuro", "深色"],
+  [
+    "Sépia Noturno",
+    "Night sepia",
+    "ナイトセピア",
+    "夜间棕褐",
+    "Nachtsepia",
+    "Sépia Noturno",
+    "Sepia nocturno",
+    "Sepia nocturno",
+    "夜間棕褐"
+  ],
+  [
+    "Leve e luminoso.",
+    "Light and bright.",
+    "明るく軽やかに。",
+    "轻盈明亮。",
+    "Hell und leicht.",
+    "Leve e luminoso.",
+    "Ligero y luminoso.",
+    "Ligero y luminoso.",
+    "輕盈明亮。"
+  ],
   [
     "Contraste suave para a noite.",
     "Gentle contrast for the evening.",
     "夜にやさしいコントラスト。",
     "适合夜晚的柔和对比。",
-    "Sanfter Kontrast für den Abend."
+    "Sanfter Kontrast für den Abend.",
+    "Contraste suave para a noite.",
+    "Contraste suave para la noche.",
+    "Contraste suave para la noche.",
+    "適合夜晚的柔和對比。"
   ],
   [
     "Tons quentes para escrever com calma.",
     "Warm tones for unhurried writing.",
     "落ち着いて書くための暖かい色合い。",
     "用温暖色调，静心写作。",
-    "Warme Töne für entspanntes Schreiben."
+    "Warme Töne für entspanntes Schreiben.",
+    "Tons quentes para escrever com calma.",
+    "Tonos cálidos para escribir con calma.",
+    "Tonos cálidos para escribir con calma.",
+    "用溫暖色調，靜心寫作。"
   ],
   [
     "Usar tema {theme}",
     "Use {theme} theme",
     "{theme}テーマを使う",
     "使用{theme}主题",
-    "Design {theme} verwenden"
+    "Design {theme} verwenden",
+    "Usar tema {theme}",
+    "Usar tema {theme}",
+    "Usar tema {theme}",
+    "使用{theme}主題"
   ],
-  ["Layout", "Layout", "レイアウト", "布局", "Layout"],
+  [
+    "Layout",
+    "Layout",
+    "レイアウト",
+    "布局",
+    "Layout",
+    "Layout",
+    "Distribución",
+    "Distribución",
+    "佈局"
+  ],
   [
     "Posição da navegação",
     "Navigation position",
     "ナビゲーションの位置",
     "导航位置",
-    "Position der Navigation"
+    "Position der Navigation",
+    "Posição da navegação",
+    "Posición de la navegación",
+    "Posición de la navegación",
+    "導航位置"
   ],
-  ["Posição das abas", "Tab position", "タブの位置", "标签页位置", "Position der Tabs"],
-  ["Esquerda", "Left", "左", "左侧", "Links"],
-  ["Direita", "Right", "右", "右侧", "Rechts"],
-  ["Superior", "Top", "上", "顶部", "Oben"],
-  ["Lateral esquerda", "Left side", "左側", "左侧边栏", "Linke Seite"],
-  ["Lateral direita", "Right side", "右側", "右侧边栏", "Rechte Seite"],
+  [
+    "Posição das abas",
+    "Tab position",
+    "タブの位置",
+    "标签页位置",
+    "Position der Tabs",
+    "Posição dos separadores",
+    "Posición de las pestañas",
+    "Posición de las pestañas",
+    "標籤頁位置"
+  ],
+  ["Esquerda", "Left", "左", "左侧", "Links", "Esquerda", "Izquierda", "Izquierda", "左側"],
+  ["Direita", "Right", "右", "右侧", "Rechts", "Direita", "Derecha", "Derecha", "右側"],
+  ["Superior", "Top", "上", "顶部", "Oben", "Superior", "Arriba", "Arriba", "頂部"],
+  [
+    "Lateral esquerda",
+    "Left side",
+    "左側",
+    "左侧边栏",
+    "Linke Seite",
+    "Lateral esquerda",
+    "Lateral izquierda",
+    "Lateral izquierda",
+    "左側邊欄"
+  ],
+  [
+    "Lateral direita",
+    "Right side",
+    "右側",
+    "右侧边栏",
+    "Rechte Seite",
+    "Lateral direita",
+    "Lateral derecha",
+    "Lateral derecha",
+    "右側邊欄"
+  ],
   [
     "Em janelas estreitas, as abas laterais voltam ao topo para preservar o espaço de escrita.",
     "In narrow windows, side tabs move to the top to keep room for writing.",
     "ウィンドウの幅が狭いときは、書く場所を確保するためタブが上部に移動します。",
     "窗口较窄时，侧边标签页会移到顶部，为写作留出空间。",
-    "In schmalen Fenstern wandern seitliche Tabs nach oben, damit Platz zum Schreiben bleibt."
+    "In schmalen Fenstern wandern seitliche Tabs nach oben, damit Platz zum Schreiben bleibt.",
+    "Em janelas estreitas, os separadores laterais voltam ao topo para preservar o espaço de escrita.",
+    "En ventanas estrechas, las pestañas laterales vuelven arriba para conservar el espacio de escritura.",
+    "En ventanas estrechas, las pestañas laterales vuelven arriba para conservar el espacio de escritura.",
+    "視窗較窄時，側邊標籤頁會移到頂部，為寫作留出空間。"
   ],
   [
     "Um ritmo confortável.",
     "A comfortable rhythm.",
     "心地よいリズムで。",
     "找到舒适的节奏。",
-    "Ein angenehmer Rhythmus."
+    "Ein angenehmer Rhythmus.",
+    "Um ritmo confortável.",
+    "Un ritmo cómodo.",
+    "Un ritmo cómodo.",
+    "找到舒適的節奏。"
   ],
-  ["Fonte da escrita", "Writing font", "本文のフォント", "写作字体", "Schriftart zum Schreiben"],
+  [
+    "Fonte da escrita",
+    "Writing font",
+    "本文のフォント",
+    "写作字体",
+    "Schriftart zum Schreiben",
+    "Tipo de letra da escrita",
+    "Fuente de escritura",
+    "Fuente de escritura",
+    "寫作字型"
+  ],
   [
     "Serifada · Noto Serif",
     "Serif · Noto Serif",
     "セリフ · Noto Serif",
     "衬线 · Noto Serif",
-    "Serif · Noto Serif"
+    "Serif · Noto Serif",
+    "Serifada · Noto Serif",
+    "Con serifa · Noto Serif",
+    "Con serifa · Noto Serif",
+    "襯線 · Noto Serif"
   ],
   [
     "Sem serifa · Ubuntu",
     "Sans serif · Ubuntu",
     "サンセリフ · Ubuntu",
     "无衬线 · Ubuntu",
-    "Serifenlos · Ubuntu"
+    "Serifenlos · Ubuntu",
+    "Sem serifa · Ubuntu",
+    "Sin serifa · Ubuntu",
+    "Sin serifa · Ubuntu",
+    "無襯線 · Ubuntu"
   ],
-  ["Monoespaçada", "Monospace", "等幅", "等宽", "Nichtproportional"],
-  ["Tamanho da fonte", "Font size", "フォントサイズ", "字号", "Schriftgröße"],
-  ["Espaçamento entre linhas", "Line spacing", "行間", "行距", "Zeilenabstand"],
-  ["Largura da escrita", "Writing width", "本文の幅", "写作区域宽度", "Textbreite"],
+  [
+    "Monoespaçada",
+    "Monospace",
+    "等幅",
+    "等宽",
+    "Nichtproportional",
+    "Monoespaçada",
+    "Monoespaciada",
+    "Monoespaciada",
+    "等寬"
+  ],
+  [
+    "Tamanho da fonte",
+    "Font size",
+    "フォントサイズ",
+    "字号",
+    "Schriftgröße",
+    "Tamanho da letra",
+    "Tamaño de fuente",
+    "Tamaño de fuente",
+    "字號"
+  ],
+  [
+    "Espaçamento entre linhas",
+    "Line spacing",
+    "行間",
+    "行距",
+    "Zeilenabstand",
+    "Espaçamento entre linhas",
+    "Interlineado",
+    "Interlineado",
+    "行距"
+  ],
+  [
+    "Largura da escrita",
+    "Writing width",
+    "本文の幅",
+    "写作区域宽度",
+    "Textbreite",
+    "Largura da escrita",
+    "Anchura de escritura",
+    "Anchura de escritura",
+    "寫作區域寬度"
+  ],
   [
     "Largura da navegação",
     "Navigation width",
     "ナビゲーションの幅",
     "导航宽度",
-    "Breite der Navigation"
+    "Breite der Navigation",
+    "Largura da navegação",
+    "Anchura de la navegación",
+    "Anchura de la navegación",
+    "導航寬度"
   ],
-  ["Zoom", "Zoom", "ズーム", "缩放", "Zoom"],
-  ["Alterar zoom", "Change zoom", "ズームを変更", "更改缩放", "Zoom ändern"],
-  ["Verificação ortográfica", "Spellcheck", "スペルチェック", "拼写检查", "Rechtschreibprüfung"],
+  ["Zoom", "Zoom", "ズーム", "缩放", "Zoom", "Zoom", "Zoom", "Zoom", "縮放"],
+  [
+    "Alterar zoom",
+    "Change zoom",
+    "ズームを変更",
+    "更改缩放",
+    "Zoom ändern",
+    "Alterar zoom",
+    "Cambiar zoom",
+    "Cambiar zoom",
+    "更改縮放"
+  ],
+  [
+    "Verificação ortográfica",
+    "Spellcheck",
+    "スペルチェック",
+    "拼写检查",
+    "Rechtschreibprüfung",
+    "Correção ortográfica",
+    "Corrección ortográfica",
+    "Corrección ortográfica",
+    "拼寫檢查"
+  ],
   [
     "Usa os idiomas disponíveis no sistema.",
     "Uses the languages available on your system.",
     "システムで利用できる言語を使用します。",
     "使用系统中可用的语言。",
-    "Verwendet die auf deinem System verfügbaren Sprachen."
+    "Verwendet die auf deinem System verfügbaren Sprachen.",
+    "Usa os idiomas disponíveis no sistema.",
+    "Utiliza los idiomas disponibles en el sistema.",
+    "Utiliza los idiomas disponibles en el sistema.",
+    "使用系統中可用的語言。"
   ],
   [
     "Ferramentas ao selecionar",
     "Selection tools",
     "選択時のツール",
     "选中文本时显示工具",
-    "Werkzeuge bei Textauswahl"
+    "Werkzeuge bei Textauswahl",
+    "Ferramentas ao selecionar",
+    "Herramientas al seleccionar",
+    "Herramientas al seleccionar",
+    "選中文字時顯示工具"
   ],
   [
     "Revela os botões de formatação na parte de baixo.",
     "Shows formatting buttons at the bottom.",
     "画面下部に書式設定ボタンを表示します。",
     "在底部显示格式按钮。",
-    "Zeigt Formatierungsschaltflächen unten an."
+    "Zeigt Formatierungsschaltflächen unten an.",
+    "Mostra os botões de formatação na parte inferior.",
+    "Muestra los botones de formato en la parte inferior.",
+    "Muestra los botones de formato en la parte inferior.",
+    "在底部顯示格式按鈕。"
   ],
   [
     "O ponto de partida.",
     "Where it begins.",
     "書き始める場所。",
     "一切从这里开始。",
-    "Der Anfangspunkt."
+    "Der Anfangspunkt.",
+    "O ponto de partida.",
+    "El punto de partida.",
+    "El punto de partida.",
+    "一切從這裡開始。"
   ],
   [
     "O cursor acompanha a posição real da escrita.",
     "The cursor follows the actual writing position.",
     "カーソルは実際の入力位置を示します。",
     "光标跟随实际输入位置。",
-    "Der Cursor folgt der tatsächlichen Schreibposition."
+    "Der Cursor folgt der tatsächlichen Schreibposition.",
+    "O cursor acompanha a posição real da escrita.",
+    "El cursor sigue la posición real de la escritura.",
+    "El cursor sigue la posición real de la escritura.",
+    "游標跟隨實際輸入位置。"
   ],
-  ["Em bloco", "Block", "ブロック", "方块", "Block"],
-  ["Fino", "Thin", "細線", "细线", "Schmal"],
-  ["Invisível", "Invisible", "非表示", "隐藏", "Unsichtbar"],
+  ["Em bloco", "Block", "ブロック", "方块", "Block", "Em bloco", "En bloque", "En bloque", "方塊"],
+  ["Fino", "Thin", "細線", "细线", "Schmal", "Fino", "Fino", "Fino", "細線"],
+  [
+    "Invisível",
+    "Invisible",
+    "非表示",
+    "隐藏",
+    "Unsichtbar",
+    "Invisível",
+    "Invisible",
+    "Invisible",
+    "隱藏"
+  ],
   [
     "O padrão do Entrelinhas.",
     "The Entrelinhas default.",
     "Entrelinhasの標準です。",
     "Entrelinhas 的默认样式。",
-    "Der Standard von Entrelinhas."
+    "Der Standard von Entrelinhas.",
+    "O estilo predefinido do Entrelinhas.",
+    "El estilo predeterminado de Entrelinhas.",
+    "El estilo predeterminado de Entrelinhas.",
+    "Entrelinhas 的預設樣式。"
   ],
   [
     "Uma linha discreta.",
     "A subtle line.",
     "さりげない一本の線。",
     "一条简洁的细线。",
-    "Eine dezente Linie."
+    "Eine dezente Linie.",
+    "Uma linha discreta.",
+    "Una línea discreta.",
+    "Una línea discreta.",
+    "一條簡潔的細線。"
   ],
   [
     "Apenas suas palavras.",
     "Just your words.",
     "あなたの言葉だけを。",
     "只有你的文字。",
-    "Nur deine Worte."
+    "Nur deine Worte.",
+    "Apenas suas palavras.",
+    "Solo tus palabras.",
+    "Solo tus palabras.",
+    "只有你的文字。"
   ],
   [
     "Suas palavras continuam suas.",
     "Your words remain yours.",
     "言葉は、いつでもあなたのもの。",
     "你的文字，始终属于你。",
-    "Deine Worte bleiben deine."
+    "Deine Worte bleiben deine.",
+    "As suas palavras continuam a ser suas.",
+    "Tus palabras siguen siendo tuyas.",
+    "Tus palabras siguen siendo tuyas.",
+    "你的文字，始終屬於你。"
   ],
   [
     "Documentos são arquivos comuns. Você escolhe quando e onde salvar.",
     "Documents are ordinary files. You choose when and where to save.",
     "文書は通常のファイルです。保存するタイミングと場所は自分で選べます。",
     "文档就是普通文件，何时保存、保存到哪里，都由你决定。",
-    "Dokumente sind gewöhnliche Dateien. Du entscheidest, wann und wo du speicherst."
+    "Dokumente sind gewöhnliche Dateien. Du entscheidest, wann und wo du speicherst.",
+    "Os documentos são ficheiros normais. Escolha quando e onde guardar.",
+    "Los documentos son archivos normales. Tú eliges cuándo y dónde guardar.",
+    "Los documentos son archivos normales. Tú eliges cuándo y dónde guardar.",
+    "文件就是普通檔案，何時儲存、儲存到哪裡，都由你決定。"
   ],
   [
     "Formato de novas notas",
     "New note format",
     "新しいノートの形式",
     "新笔记格式",
-    "Format neuer Notizen"
+    "Format neuer Notizen",
+    "Formato de novas notas",
+    "Formato de las notas nuevas",
+    "Formato de las notas nuevas",
+    "新筆記格式"
   ],
-  ["Markdown (.md)", "Markdown (.md)", "Markdown (.md)", "Markdown (.md)", "Markdown (.md)"],
+  [
+    "Markdown (.md)",
+    "Markdown (.md)",
+    "Markdown (.md)",
+    "Markdown (.md)",
+    "Markdown (.md)",
+    "Markdown (.md)",
+    "Markdown (.md)",
+    "Markdown (.md)",
+    "Markdown (.md)"
+  ],
   [
     "Texto simples (.txt)",
     "Plain text (.txt)",
     "プレーンテキスト (.txt)",
     "纯文本 (.txt)",
-    "Nur Text (.txt)"
+    "Nur Text (.txt)",
+    "Texto simples (.txt)",
+    "Texto sin formato (.txt)",
+    "Texto sin formato (.txt)",
+    "純文字 (.txt)"
   ],
   [
     "Imagens ficam em memória até o salvamento. Ao salvar em Markdown, os recursos vão para uma pasta ao lado do documento.",
     "Images stay in memory until you save. When saving Markdown, assets go into a folder beside the document.",
     "画像は保存するまでメモリに保持されます。Markdownで保存すると、画像は文書と同じ場所の専用フォルダーに保存されます。",
     "保存前，图片保留在内存中。保存为 Markdown 时，资源会放入文档旁的文件夹。",
-    "Bilder bleiben bis zum Speichern im Arbeitsspeicher. Bei Markdown werden sie in einem Ordner neben dem Dokument gespeichert."
+    "Bilder bleiben bis zum Speichern im Arbeitsspeicher. Bei Markdown werden sie in einem Ordner neben dem Dokument gespeichert.",
+    "Imagens ficam em memória até o gravação. Ao guardar em Markdown, os recursos vão para uma pasta ao lado do documento.",
+    "Las imágenes permanecen en la memoria hasta que guardes. Al guardar en Markdown, los recursos van a una carpeta junto al documento.",
+    "Las imágenes permanecen en la memoria hasta que guardes. Al guardar en Markdown, los recursos van a una carpeta junto al documento.",
+    "儲存前，圖片保留在記憶體中。儲存為 Markdown 時，資源會放入文件旁的資料夾。"
   ],
   [
     "Ao alcance das mãos.",
     "Within easy reach.",
     "手の届くところに。",
     "触手可及。",
-    "Alles in Reichweite."
+    "Alles in Reichweite.",
+    "Ao alcance das mãos.",
+    "Al alcance de tus manos.",
+    "Al alcance de tus manos.",
+    "觸手可及。"
   ],
   [
     "Clique em um atalho para escolher uma nova combinação.",
     "Click a shortcut to choose a new key combination.",
     "ショートカットをクリックして、新しいキーの組み合わせを設定します。",
     "点击快捷键即可设置新的组合。",
-    "Klicke auf ein Tastenkürzel, um eine neue Kombination zu wählen."
+    "Klicke auf ein Tastenkürzel, um eine neue Kombination zu wählen.",
+    "Clique em um atalho para escolher uma nova combinação.",
+    "Haz clic en un atajo para elegir una nueva combinación.",
+    "Haz clic en un atajo para elegir una nueva combinación.",
+    "點選快捷鍵即可設定新的組合。"
   ],
   [
     "Alterar atalho",
     "Change shortcut",
     "ショートカットを変更",
     "更改快捷键",
-    "Tastenkürzel ändern"
+    "Tastenkürzel ändern",
+    "Alterar atalho",
+    "Cambiar atajo",
+    "Cambiar atajo",
+    "更改快捷鍵"
   ],
   [
     "Pressione a combinação desejada. Depois, clique em Salvar.",
     "Press the keys you want, then click Save.",
     "使いたいキーを押してから「保存」をクリックしてください。",
     "按下所需的组合键，然后点击保存。",
-    "Drücke die gewünschte Kombination und klicke dann auf Speichern."
+    "Drücke die gewünschte Kombination und klicke dann auf Speichern.",
+    "Prima a combinação pretendida. Depois, clique em Guardar.",
+    "Presiona la combinación que quieras. Después, haz clic en Guardar.",
+    "Pulsa la combinación que quieras. Después, haz clic en Guardar.",
+    "按下所需的組合鍵，然後點選儲存。"
   ],
   [
     "Capturar novo atalho",
     "Capture new shortcut",
     "新しいショートカットを入力",
     "录入新快捷键",
-    "Neues Tastenkürzel erfassen"
+    "Neues Tastenkürzel erfassen",
+    "Capturar novo atalho",
+    "Capturar nuevo atajo",
+    "Capturar nuevo atajo",
+    "錄入新快捷鍵"
   ],
   [
     "Use Ctrl, Alt ou uma tecla de função. Esc cancela.",
     "Use Ctrl, Alt or a function key. Esc cancels.",
     "Ctrl、Alt、またはファンクションキーを使ってください。Escでキャンセルします。",
     "使用 Ctrl、Alt 或功能键。Esc 取消。",
-    "Verwende Strg, Alt oder eine Funktionstaste. Esc bricht ab."
+    "Verwende Strg, Alt oder eine Funktionstaste. Esc bricht ab.",
+    "Utilize Ctrl, Alt ou uma tecla de função. Esc cancela.",
+    "Usa Ctrl, Alt o una tecla de función. Esc cancela.",
+    "Usa Ctrl, Alt o una tecla de función. Esc cancela.",
+    "使用 Ctrl、Alt 或功能鍵。Esc 取消。"
   ],
   [
     "Essa combinação está reservada ou não pode ser usada.",
     "That combination is reserved or unavailable.",
     "その組み合わせは予約済みか、使用できません。",
     "此组合键已被保留或不可用。",
-    "Diese Kombination ist reserviert oder nicht verfügbar."
+    "Diese Kombination ist reserviert oder nicht verfügbar.",
+    "Essa combinação está reservada ou não pode ser usada.",
+    "Esta combinación está reservada o no se puede usar.",
+    "Esta combinación está reservada o no se puede usar.",
+    "此組合鍵已被保留或不可用。"
   ],
   [
     "Atalho já utilizado por {action}.",
     "Shortcut already used by {action}.",
     "このショートカットは「{action}」で使用中です。",
     "此快捷键已用于“{action}”。",
-    "Dieses Tastenkürzel wird bereits für {action} verwendet."
+    "Dieses Tastenkürzel wird bereits für {action} verwendet.",
+    "Atalho já utilizado por {action}.",
+    "Este atajo ya lo utiliza {action}.",
+    "Este atajo ya lo utiliza {action}.",
+    "此快捷鍵已用於“{action}”。"
   ],
-  ["Restaurar padrão", "Restore default", "既定値に戻す", "恢复默认", "Standard wiederherstellen"],
-  ["Atalho: {0}", "Shortcut: {0}", "ショートカット：{0}", "快捷键：{0}", "Tastenkürzel: {0}"],
+  [
+    "Restaurar padrão",
+    "Restore default",
+    "既定値に戻す",
+    "恢复默认",
+    "Standard wiederherstellen",
+    "Restaurar predefinição",
+    "Restaurar valor predeterminado",
+    "Restaurar valor predeterminado",
+    "恢復預設"
+  ],
+  [
+    "Atalho: {0}",
+    "Shortcut: {0}",
+    "ショートカット：{0}",
+    "快捷键：{0}",
+    "Tastenkürzel: {0}",
+    "Atalho: {0}",
+    "Atajo: {0}",
+    "Atajo: {0}",
+    "快捷鍵：{0}"
+  ],
   [
     "F11 · tela cheia · Esc · revelar controles",
     "F11 · full screen · Esc · show controls",
     "F11 · 全画面 · Esc · 操作ボタンを表示",
     "F11 · 全屏 · Esc · 显示控件",
-    "F11 · Vollbild · Esc · Bedienelemente anzeigen"
+    "F11 · Vollbild · Esc · Bedienelemente anzeigen",
+    "F11 · ecrã completo · Esc · mostrar controlos",
+    "F11 · pantalla completa · Esc · mostrar controles",
+    "F11 · pantalla completa · Esc · mostrar controles",
+    "F11 · 全屏 · Esc · 顯示控制元件"
   ],
   [
     "Ctrl+Tab · próxima aba · Ctrl+Shift+Tab · aba anterior",
     "Ctrl+Tab · next tab · Ctrl+Shift+Tab · previous tab",
     "Ctrl+Tab · 次のタブ · Ctrl+Shift+Tab · 前のタブ",
     "Ctrl+Tab · 下一个标签页 · Ctrl+Shift+Tab · 上一个标签页",
-    "Strg+Tab · nächster Tab · Strg+Umschalt+Tab · vorheriger Tab"
+    "Strg+Tab · nächster Tab · Strg+Umschalt+Tab · vorheriger Tab",
+    "Ctrl+Tab · separador seguinte · Ctrl+Shift+Tab · separador anterior",
+    "Ctrl+Tab · pestaña siguiente · Ctrl+Shift+Tab · pestaña anterior",
+    "Ctrl+Tab · pestaña siguiente · Ctrl+Shift+Tab · pestaña anterior",
+    "Ctrl+Tab · 下一個標籤頁 · Ctrl+Shift+Tab · 上一個標籤頁"
   ],
   [
     "Ctrl+T · nova guia · As guias aparecem a partir da segunda nota.",
     "Ctrl+T · new tab · Tabs appear when a second note is opened.",
     "Ctrl+T · 新しいタブ · 2つ目のノートからタブが表示されます。",
     "Ctrl+T · 新建标签页 · 打开第二篇笔记后显示标签栏。",
-    "Strg+T · neuer Tab · Tabs erscheinen ab der zweiten Notiz."
+    "Strg+T · neuer Tab · Tabs erscheinen ab der zweiten Notiz.",
+    "Ctrl+T · novo separador · Os separadores aparecem a partir da segunda nota.",
+    "Ctrl+T · nueva pestaña · Las pestañas aparecen a partir de la segunda nota.",
+    "Ctrl+T · nueva pestaña · Las pestañas aparecen a partir de la segunda nota.",
+    "Ctrl+T · 新建標籤頁 · 開啟第二篇筆記後顯示標籤欄。"
   ],
   [
     "A interface sabe a hora.",
     "An interface that knows when.",
     "必要なときに、必要なものを。",
     "界面懂得适时退场。",
-    "Eine Oberfläche mit Gespür."
+    "Eine Oberfläche mit Gespür.",
+    "A interface sabe a hora.",
+    "La interfaz sabe cuándo.",
+    "La interfaz sabe cuándo.",
+    "介面懂得適時退場。"
   ],
-  ["Modo Zen", "Zen mode", "Zenモード", "禅模式", "Zen-Modus"],
+  [
+    "Modo Zen",
+    "Zen mode",
+    "Zenモード",
+    "禅模式",
+    "Zen-Modus",
+    "Modo Zen",
+    "Modo Zen",
+    "Modo Zen",
+    "禪模式"
+  ],
   [
     "Modo Zen automático",
     "Automatic Zen mode",
     "自動Zenモード",
     "自动禅模式",
-    "Automatischer Zen-Modus"
+    "Automatischer Zen-Modus",
+    "Modo Zen automático",
+    "Modo Zen automático",
+    "Modo Zen automático",
+    "自動禪模式"
   ],
   [
     "Oculta os controles assim que você começa a escrever.",
     "Hides the controls as soon as you start writing.",
     "書き始めると操作ボタンを非表示にします。",
     "开始写作时自动隐藏控件。",
-    "Blendet die Bedienelemente aus, sobald du schreibst."
+    "Blendet die Bedienelemente aus, sobald du schreibst.",
+    "Oculta os controlos assim que você começa a escrever.",
+    "Oculta los controles en cuanto empiezas a escribir.",
+    "Oculta los controles en cuanto empiezas a escribir.",
+    "開始寫作時自動隱藏控制元件。"
   ],
   [
     "Perguntar antes de descartar",
     "Ask before discarding",
     "破棄する前に確認",
     "丢弃前询问",
-    "Vor dem Verwerfen nachfragen"
+    "Vor dem Verwerfen nachfragen",
+    "Perguntar antes de descartar",
+    "Preguntar antes de descartar",
+    "Preguntar antes de descartar",
+    "丟棄前詢問"
   ],
   [
     "Ao fechar uma aba ou o aplicativo com alterações não salvas.",
     "When closing a tab or the app with unsaved changes.",
     "未保存の変更があるタブやアプリを閉じるときに確認します。",
     "关闭有未保存更改的标签页或应用时询问。",
-    "Beim Schließen eines Tabs oder der App mit ungespeicherten Änderungen."
+    "Beim Schließen eines Tabs oder der App mit ungespeicherten Änderungen.",
+    "Ao fechar um separador ou a aplicação com alterações por guardar.",
+    "Al cerrar una pestaña o la aplicación con cambios sin guardar.",
+    "Al cerrar una pestaña o la aplicación con cambios sin guardar.",
+    "關閉有未儲存更改的標籤頁或應用時詢問。"
   ],
   [
     "Esc revela os controles. Para acessá-los com o mouse, mantenha o ponteiro junto à borda superior ou à borda da navegação por um instante.",
     "Esc shows the controls. To reveal them with the mouse, pause at the top or navigation edge.",
     "Escで操作ボタンを表示します。マウスで表示するには、画面上端またはナビゲーション側の端にポインターを少し置きます。",
     "按 Esc 显示控件，也可将鼠标指针在顶部或导航边缘稍作停留。",
-    "Esc zeigt die Bedienelemente. Mit der Maus kurz am oberen Rand oder am Rand der Navigation verweilen."
+    "Esc zeigt die Bedienelemente. Mit der Maus kurz am oberen Rand oder am Rand der Navigation verweilen.",
+    "Esc mostra os controlos. Para lhes aceder com o rato, mantenha o ponteiro junto ao bordo superior ou ao bordo da navegação por um instante.",
+    "Esc muestra los controles. Para acceder con el mouse, mantén el puntero junto al borde superior o al borde de la navegación un momento.",
+    "Esc muestra los controles. Para acceder con el ratón, mantén el puntero junto al borde superior o al borde de la navegación un momento.",
+    "按 Esc 顯示控制元件，也可將滑鼠指標在頂部或導航邊緣稍作停留。"
   ],
   [
     "O aplicativo sempre começa com uma nota vazia. Rascunhos descartados não são gravados nem recuperados.",
     "The app always starts with a blank note. Discarded drafts are neither saved nor recovered.",
     "アプリは常に空のノートで起動します。破棄した下書きは保存も復元もされません。",
     "应用始终从空白笔记开始，已丢弃的草稿不会保存或恢复。",
-    "Die App startet immer mit einer leeren Notiz. Verworfene Entwürfe werden weder gespeichert noch wiederhergestellt."
+    "Die App startet immer mit einer leeren Notiz. Verworfene Entwürfe werden weder gespeichert noch wiederhergestellt.",
+    "A aplicação começa sempre com uma nota vazia. Os rascunhos descartados não são gravados nem recuperados.",
+    "La aplicación siempre empieza con una nota vacía. Los borradores descartados no se guardan ni se recuperan.",
+    "La aplicación siempre empieza con una nota vacía. Los borradores descartados no se guardan ni se recuperan.",
+    "應用始終從空白筆記開始，已丟棄的草稿不會儲存或恢復。"
   ],
   [
     "Um espaço tranquilo para escrever.",
     "A quiet space to write.",
     "静かに書ける場所。",
     "一处静心写作的空间。",
-    "Ein ruhiger Ort zum Schreiben."
+    "Ein ruhiger Ort zum Schreiben.",
+    "Um espaço tranquilo para escrever.",
+    "Un espacio tranquilo para escribir.",
+    "Un espacio tranquilo para escribir.",
+    "一處靜心寫作的空間。"
   ],
   [
     "Versão {version}",
     "Version {version}",
     "バージョン {version}",
     "版本 {version}",
-    "Version {version}"
+    "Version {version}",
+    "Versão {version}",
+    "Versión {version}",
+    "Versión {version}",
+    "版本 {version}"
   ],
   [
     "Feito com Tauri, React e cuidado.",
     "Made with Tauri, React and care.",
     "TauriとReactで、心を込めて作りました。",
     "用 Tauri、React 和用心打造。",
-    "Mit Tauri, React und Sorgfalt entwickelt."
+    "Mit Tauri, React und Sorgfalt entwickelt.",
+    "Feito com Tauri, React e cuidado.",
+    "Hecho con Tauri, React y cuidado.",
+    "Hecho con Tauri, React y cuidado.",
+    "用 Tauri、React 和用心打造。"
   ],
   [
     "Local, offline e com salvamento manual.",
     "Local, offline, with manual saving.",
     "ローカルで、オフラインで。保存は自分のタイミングで。",
     "本地运行、离线使用、手动保存。",
-    "Lokal, offline und mit manuellem Speichern."
+    "Lokal, offline und mit manuellem Speichern.",
+    "Local, offline e com gravação manual.",
+    "Local, sin conexión y con guardado manual.",
+    "Local, sin conexión y con guardado manual.",
+    "本地執行、離線使用、手動儲存。"
   ],
   [
     "Por Davi Mascarenhas · Licença MIT",
     "By Davi Mascarenhas · MIT License",
     "Davi Mascarenhas 作 · MITライセンス",
     "作者 Davi Mascarenhas · MIT 许可证",
-    "Von Davi Mascarenhas · MIT-Lizenz"
+    "Von Davi Mascarenhas · MIT-Lizenz",
+    "Por Davi Mascarenhas · Licença MIT",
+    "Por Davi Mascarenhas · Licencia MIT",
+    "Por Davi Mascarenhas · Licencia MIT",
+    "作者 Davi Mascarenhas · MIT 許可證"
   ],
   [
     "Bem-vindo ao Entrelinhas",
     "Welcome to Entrelinhas",
     "Entrelinhasへようこそ",
     "欢迎使用 Entrelinhas",
-    "Willkommen bei Entrelinhas"
+    "Willkommen bei Entrelinhas",
+    "Bem-vindo ao Entrelinhas",
+    "Te damos la bienvenida a Entrelinhas",
+    "Te damos la bienvenida a Entrelinhas",
+    "歡迎使用 Entrelinhas"
   ],
-  ["Boas-vindas", "Welcome", "ようこそ", "欢迎", "Willkommen"],
-  ["Seu tema", "Your theme", "テーマ", "你的主题", "Dein Design"],
-  ["Seus arquivos", "Your files", "ファイル", "你的文件", "Deine Dateien"],
+  [
+    "Boas-vindas",
+    "Welcome",
+    "ようこそ",
+    "欢迎",
+    "Willkommen",
+    "Boas-vindas",
+    "Bienvenida",
+    "Bienvenida",
+    "歡迎"
+  ],
+  [
+    "Seu tema",
+    "Your theme",
+    "テーマ",
+    "你的主题",
+    "Dein Design",
+    "Seu tema",
+    "Tu tema",
+    "Tu tema",
+    "你的主題"
+  ],
+  [
+    "Seus arquivos",
+    "Your files",
+    "ファイル",
+    "你的文件",
+    "Deine Dateien",
+    "Seus ficheiros",
+    "Tus archivos",
+    "Tus archivos",
+    "你的檔案"
+  ],
   [
     "Etapas da apresentação",
     "Setup steps",
     "初期設定の手順",
     "初始设置步骤",
-    "Einrichtungsschritte"
+    "Einrichtungsschritte",
+    "Etapas da apresentação",
+    "Pasos de la presentación",
+    "Pasos de la presentación",
+    "初始設定步驟"
   ],
   [
     "Um espaço para suas palavras.",
     "A space for your words.",
     "あなたの言葉のための場所。",
     "为你的文字留一方空间。",
-    "Ein Raum für deine Worte."
+    "Ein Raum für deine Worte.",
+    "Um espaço para suas palavras.",
+    "Un espacio para tus palabras.",
+    "Un espacio para tus palabras.",
+    "為你的文字留一方空間。"
   ],
   [
     "Bem-vindo ao Entrelinhas. Escreva, organize suas ideias e encontre seu ritmo.",
     "Welcome to Entrelinhas. Write, organize your ideas and find your rhythm.",
     "Entrelinhasへようこそ。書いて、アイデアを整理して、自分のリズムを見つけましょう。",
     "欢迎使用 Entrelinhas。写下文字、整理想法，找到自己的节奏。",
-    "Willkommen bei Entrelinhas. Schreibe, ordne deine Ideen und finde deinen Rhythmus."
+    "Willkommen bei Entrelinhas. Schreibe, ordne deine Ideen und finde deinen Rhythmus.",
+    "Bem-vindo ao Entrelinhas. Escreva, organize suas ideias e encontre seu ritmo.",
+    "Te damos la bienvenida a Entrelinhas. Escribe, organiza tus ideas y encuentra tu ritmo.",
+    "Te damos la bienvenida a Entrelinhas. Escribe, organiza tus ideas y encuentra tu ritmo.",
+    "歡迎使用 Entrelinhas。寫下文字、整理想法，找到自己的節奏。"
   ],
   [
     "Seu texto, seu tempo.",
     "Your text, your pace.",
     "あなたの文章、あなたのペース。",
     "你的文字，你的节奏。",
-    "Dein Text, dein Tempo."
+    "Dein Text, dein Tempo.",
+    "Seu texto, seu tempo.",
+    "Tu texto, tu tiempo.",
+    "Tu texto, tu tiempo.",
+    "你的文字，你的節奏。"
   ],
   [
     "Seus documentos ficam no seu computador.",
     "Your documents stay on your computer.",
     "文書はあなたのコンピューターに保存されます。",
     "文档保存在你自己的电脑上。",
-    "Deine Dokumente bleiben auf deinem Computer."
+    "Deine Dokumente bleiben auf deinem Computer.",
+    "Os seus documentos ficam no seu computador.",
+    "Tus documentos permanecen en tu computadora.",
+    "Tus documentos permanecen en tu ordenador.",
+    "文件儲存在你自己的電腦上。"
   ],
   [
     "Você escolhe quando e onde salvar.",
     "You choose when and where to save.",
     "いつ、どこに保存するかは自分で選べます。",
     "何时保存、保存到哪里，都由你决定。",
-    "Du entscheidest, wann und wo du speicherst."
+    "Du entscheidest, wann und wo du speicherst.",
+    "Escolha quando e onde guardar.",
+    "Tú eliges cuándo y dónde guardar.",
+    "Tú eliges cuándo y dónde guardar.",
+    "何時儲存、儲存到哪裡，都由你決定。"
   ],
   [
     "Vamos preparar seu espaço em poucos passos.",
     "Let's prepare your space in a few steps.",
     "いくつかの手順で、書く場所を整えましょう。",
     "只需几步，即可准备好你的写作空间。",
-    "Wir richten deinen Raum in wenigen Schritten ein."
+    "Wir richten deinen Raum in wenigen Schritten ein.",
+    "Vamos preparar seu espaço em poucos passos.",
+    "Vamos a preparar tu espacio en unos pocos pasos.",
+    "Vamos a preparar tu espacio en unos pocos pasos.",
+    "只需幾步，即可準備好你的寫作空間。"
   ],
   [
     "Você pode mudar o tema a qualquer momento nas configurações.",
     "You can change the theme anytime in Settings.",
     "テーマは設定でいつでも変更できます。",
     "你随时可以在设置中更改主题。",
-    "Du kannst das Design jederzeit in den Einstellungen ändern."
+    "Du kannst das Design jederzeit in den Einstellungen ändern.",
+    "Pode alterar o tema em qualquer momento nas definições.",
+    "Puedes cambiar el tema en cualquier momento desde los configuración.",
+    "Puedes cambiar el tema en cualquier momento desde los ajustes.",
+    "你隨時可以在設定中更改主題。"
   ],
   [
     "Suas ideias, a um clique.",
     "Your ideas, a click away.",
     "アイデアに、ワンクリックで。",
     "一键抵达你的想法。",
-    "Deine Ideen, einen Klick entfernt."
+    "Deine Ideen, einen Klick entfernt.",
+    "Suas ideias, a um clique.",
+    "Tus ideas, a un clic.",
+    "Tus ideas, a un clic.",
+    "一鍵抵達你的想法。"
   ],
   [
     "Quer abrir seus documentos aqui por padrão?",
     "Open your documents here by default?",
     "文書を既定でここに開きますか？",
     "想默认在这里打开文档吗？",
-    "Deine Dokumente standardmäßig hier öffnen?"
+    "Deine Dokumente standardmäßig hier öffnen?",
+    "Quer abrir os seus documentos aqui por predefinição?",
+    "¿Quieres abrir tus documentos aquí de forma predeterminada?",
+    "¿Quieres abrir tus documentos aquí de forma predeterminada?",
+    "想預設在這裡開啟文件嗎？"
   ],
   [
     "A escolha é sua. Esta opção também fica em Configurações → Arquivos.",
     "It's your choice. This option is also in Settings → Files.",
     "選ぶのはあなたです。この設定は「設定 → ファイル」にもあります。",
     "选择由你决定。也可以在设置 → 文件中找到此选项。",
-    "Du entscheidest. Diese Option findest du auch unter Einstellungen → Dateien."
+    "Du entscheidest. Diese Option findest du auch unter Einstellungen → Dateien.",
+    "A escolha é sua. Esta opção também está em Definições → Ficheiros.",
+    "Tú decides. Esta opción también está en Configuración → Archivos.",
+    "Tú decides. Esta opción también está en Ajustes → Archivos.",
+    "選擇由你決定。也可以在設定 → 檔案中找到此選項。"
   ],
   [
     "Etapa {current} de {total}",
     "Step {current} of {total}",
     "{total}ステップ中の{current}",
     "第 {current} 步，共 {total} 步",
-    "Schritt {current} von {total}"
+    "Schritt {current} von {total}",
+    "Etapa {current} de {total}",
+    "Paso {current} de {total}",
+    "Paso {current} de {total}",
+    "第 {current} 步，共 {total} 步"
   ],
-  ["Continuar", "Continue", "続ける", "继续", "Weiter"],
-  ["Voltar", "Back", "戻る", "返回", "Zurück"],
-  ["Agora não", "Not now", "今はしない", "暂不设置", "Jetzt nicht"],
-  ["SEU ESPAÇO", "YOUR SPACE", "あなたのスペース", "你的空间", "DEIN RAUM"],
-  ["PROJETOS", "PROJECTS", "プロジェクト", "项目", "PROJEKTE"],
-  ["Navegação", "Navigation", "ナビゲーション", "导航", "Navigation"],
+  [
+    "Continuar",
+    "Continue",
+    "続ける",
+    "继续",
+    "Weiter",
+    "Continuar",
+    "Continuar",
+    "Continuar",
+    "繼續"
+  ],
+  ["Voltar", "Back", "戻る", "返回", "Zurück", "Voltar", "Atrás", "Atrás", "返回"],
+  [
+    "Agora não",
+    "Not now",
+    "今はしない",
+    "暂不设置",
+    "Jetzt nicht",
+    "Agora não",
+    "Ahora no",
+    "Ahora no",
+    "暫不設定"
+  ],
+  [
+    "SEU ESPAÇO",
+    "YOUR SPACE",
+    "あなたのスペース",
+    "你的空间",
+    "DEIN RAUM",
+    "SEU ESPAÇO",
+    "TU ESPACIO",
+    "TU ESPACIO",
+    "你的空間"
+  ],
+  [
+    "PROJETOS",
+    "PROJECTS",
+    "プロジェクト",
+    "项目",
+    "PROJEKTE",
+    "PROJETOS",
+    "PROYECTOS",
+    "PROYECTOS",
+    "專案"
+  ],
+  [
+    "Navegação",
+    "Navigation",
+    "ナビゲーション",
+    "导航",
+    "Navigation",
+    "Navegação",
+    "Navegación",
+    "Navegación",
+    "導航"
+  ],
   [
     "Mostrar navegação",
     "Show navigation",
     "ナビゲーションを表示",
     "显示导航",
-    "Navigation anzeigen"
+    "Navigation anzeigen",
+    "Mostrar navegação",
+    "Mostrar navegación",
+    "Mostrar navegación",
+    "顯示導航"
   ],
   [
     "Ocultar navegação",
     "Hide navigation",
     "ナビゲーションを隠す",
     "隐藏导航",
-    "Navigation ausblenden"
+    "Navigation ausblenden",
+    "Ocultar navegação",
+    "Ocultar navegación",
+    "Ocultar navegación",
+    "隱藏導航"
   ],
-  ["Nova nota", "New note", "新しいノート", "新建笔记", "Neue Notiz"],
-  ["Abrir documento", "Open document", "文書を開く", "打开文档", "Dokument öffnen"],
-  ["Buscar documentos", "Search documents", "文書を検索", "搜索文档", "Dokumente suchen"],
+  [
+    "Nova nota",
+    "New note",
+    "新しいノート",
+    "新建笔记",
+    "Neue Notiz",
+    "Nova nota",
+    "Nueva nota",
+    "Nueva nota",
+    "新建筆記"
+  ],
+  [
+    "Abrir documento",
+    "Open document",
+    "文書を開く",
+    "打开文档",
+    "Dokument öffnen",
+    "Abrir documento",
+    "Abrir documento",
+    "Abrir documento",
+    "開啟文件"
+  ],
+  [
+    "Buscar documentos",
+    "Search documents",
+    "文書を検索",
+    "搜索文档",
+    "Dokumente suchen",
+    "Buscar documentos",
+    "Buscar documentos",
+    "Buscar documentos",
+    "搜尋文件"
+  ],
   [
     "Buscar documentos salvos",
     "Search saved documents",
     "保存済み文書を検索",
     "搜索已保存的文档",
-    "Gespeicherte Dokumente suchen"
+    "Gespeicherte Dokumente suchen",
+    "Buscar documentos guardados",
+    "Buscar documentos guardados",
+    "Buscar documentos guardados",
+    "搜尋已儲存的文件"
   ],
   [
     "Seu espaço é local.",
     "Your space is local.",
     "あなたのスペースはローカルに。",
     "你的空间保存在本地。",
-    "Dein Raum ist lokal."
+    "Dein Raum ist lokal.",
+    "Seu espaço é local.",
+    "Tu espacio es local.",
+    "Tu espacio es local.",
+    "你的空間儲存在本地。"
   ],
   [
     "Ideias ganham espaço.",
     "Room for ideas.",
     "アイデアが広がる場所。",
     "让想法有处安放。",
-    "Platz für Ideen."
+    "Platz für Ideen.",
+    "Ideias ganham espaço.",
+    "Las ideas encuentran su lugar.",
+    "Las ideas encuentran su lugar.",
+    "讓想法有處安放。"
   ],
   [
     "Crie seu primeiro projeto.",
     "Create your first project.",
     "最初のプロジェクトを作りましょう。",
     "创建你的第一个项目。",
-    "Erstelle dein erstes Projekt."
+    "Erstelle dein erstes Projekt.",
+    "Crie seu primeiro projeto.",
+    "Crea tu primer proyecto.",
+    "Crea tu primer proyecto.",
+    "建立你的第一個專案。"
   ],
-  ["Novo projeto", "New project", "新しいプロジェクト", "新建项目", "Neues Projekt"],
-  ["Criar projeto", "Create project", "プロジェクトを作成", "创建项目", "Projekt erstellen"],
-  ["Editar projeto", "Edit project", "プロジェクトを編集", "编辑项目", "Projekt bearbeiten"],
-  ["Excluir projeto", "Delete project", "プロジェクトを削除", "删除项目", "Projekt löschen"],
+  [
+    "Novo projeto",
+    "New project",
+    "新しいプロジェクト",
+    "新建项目",
+    "Neues Projekt",
+    "Novo projeto",
+    "Nuevo proyecto",
+    "Nuevo proyecto",
+    "新建專案"
+  ],
+  [
+    "Criar projeto",
+    "Create project",
+    "プロジェクトを作成",
+    "创建项目",
+    "Projekt erstellen",
+    "Criar projeto",
+    "Crear proyecto",
+    "Crear proyecto",
+    "建立專案"
+  ],
+  [
+    "Editar projeto",
+    "Edit project",
+    "プロジェクトを編集",
+    "编辑项目",
+    "Projekt bearbeiten",
+    "Editar projeto",
+    "Editar proyecto",
+    "Editar proyecto",
+    "編輯專案"
+  ],
+  [
+    "Excluir projeto",
+    "Delete project",
+    "プロジェクトを削除",
+    "删除项目",
+    "Projekt löschen",
+    "Eliminar projeto",
+    "Eliminar proyecto",
+    "Eliminar proyecto",
+    "刪除專案"
+  ],
   [
     "Um novo espaço de ideias",
     "A new space for ideas",
     "アイデアのための新しい場所",
     "一个新的灵感空间",
-    "Ein neuer Raum für Ideen"
+    "Ein neuer Raum für Ideen",
+    "Um novo espaço de ideias",
+    "Un nuevo espacio de ideas",
+    "Un nuevo espacio de ideas",
+    "一個新的靈感空間"
   ],
-  ["Nome", "Name", "名前", "名称", "Name"],
-  ["Cor", "Color", "色", "颜色", "Farbe"],
-  ["Cor do projeto", "Project color", "プロジェクトの色", "项目颜色", "Projektfarbe"],
-  ["Ícone opcional", "Optional icon", "アイコン（任意）", "图标（可选）", "Optionales Symbol"],
-  ["Ícone do projeto", "Project icon", "プロジェクトのアイコン", "项目图标", "Projektsymbol"],
-  ["Opcional", "Optional", "任意", "可选", "Optional"],
-  ["Ex.: 📖", "E.g. 📖", "例：📖", "例如：📖", "Z. B. 📖"],
+  ["Nome", "Name", "名前", "名称", "Name", "Nome", "Nombre", "Nombre", "名稱"],
+  ["Cor", "Color", "色", "颜色", "Farbe", "Cor", "Color", "Color", "顏色"],
+  [
+    "Cor do projeto",
+    "Project color",
+    "プロジェクトの色",
+    "项目颜色",
+    "Projektfarbe",
+    "Cor do projeto",
+    "Color del proyecto",
+    "Color del proyecto",
+    "專案顏色"
+  ],
+  [
+    "Ícone opcional",
+    "Optional icon",
+    "アイコン（任意）",
+    "图标（可选）",
+    "Optionales Symbol",
+    "Ícone opcional",
+    "Icono opcional",
+    "Icono opcional",
+    "圖示（可選）"
+  ],
+  [
+    "Ícone do projeto",
+    "Project icon",
+    "プロジェクトのアイコン",
+    "项目图标",
+    "Projektsymbol",
+    "Ícone do projeto",
+    "Icono del proyecto",
+    "Icono del proyecto",
+    "專案圖示"
+  ],
+  ["Opcional", "Optional", "任意", "可选", "Optional", "Opcional", "Opcional", "Opcional", "可選"],
+  [
+    "Ex.: 📖",
+    "E.g. 📖",
+    "例：📖",
+    "例如：📖",
+    "Z. B. 📖",
+    "Ex.: 📖",
+    "Ej.: 📖",
+    "Ej.: 📖",
+    "例如：📖"
+  ],
   [
     "Projetos organizam referências. Seus documentos podem ficar em qualquer pasta.",
     "Projects organize references. Your documents can stay in any folder.",
     "プロジェクトは文書への参照を整理します。文書はどのフォルダーに置いてもかまいません。",
     "项目用于整理文档引用，文档可以保存在任何文件夹。",
-    "Projekte ordnen Verweise. Deine Dokumente können in beliebigen Ordnern bleiben."
+    "Projekte ordnen Verweise. Deine Dokumente können in beliebigen Ordnern bleiben.",
+    "Os projetos organizam referências. Os seus documentos podem ficar em qualquer pasta.",
+    "Los proyectos organizan referencias. Tus documentos pueden estar en cualquier carpeta.",
+    "Los proyectos organizan referencias. Tus documentos pueden estar en cualquier carpeta.",
+    "專案用於整理文件引用，文件可以儲存在任何資料夾。"
   ],
-  ["Salvar projeto", "Save project", "プロジェクトを保存", "保存项目", "Projekt speichern"],
+  [
+    "Salvar projeto",
+    "Save project",
+    "プロジェクトを保存",
+    "保存项目",
+    "Projekt speichern",
+    "Guardar projeto",
+    "Guardar proyecto",
+    "Guardar proyecto",
+    "儲存專案"
+  ],
   [
     "Nova nota neste projeto",
     "New note in this project",
     "このプロジェクトに新しいノート",
     "在此项目中新建笔记",
-    "Neue Notiz in diesem Projekt"
+    "Neue Notiz in diesem Projekt",
+    "Nova nota neste projeto",
+    "Nueva nota en este proyecto",
+    "Nueva nota en este proyecto",
+    "在此專案中新建筆記"
   ],
   [
     "Associar arquivo existente",
     "Add existing file",
     "既存のファイルを関連付ける",
     "关联现有文件",
-    "Vorhandene Datei zuordnen"
+    "Vorhandene Datei zuordnen",
+    "Associar ficheiro existente",
+    "Asociar archivo existente",
+    "Asociar archivo existente",
+    "關聯現有檔案"
   ],
-  ["Mover para cima", "Move up", "上に移動", "上移", "Nach oben verschieben"],
-  ["Mover para baixo", "Move down", "下に移動", "下移", "Nach unten verschieben"],
-  ["Organizar documento", "Organize document", "文書を整理", "整理文档", "Dokument organisieren"],
+  [
+    "Mover para cima",
+    "Move up",
+    "上に移動",
+    "上移",
+    "Nach oben verschieben",
+    "Mover para cima",
+    "Subir",
+    "Subir",
+    "上移"
+  ],
+  [
+    "Mover para baixo",
+    "Move down",
+    "下に移動",
+    "下移",
+    "Nach unten verschieben",
+    "Mover para baixo",
+    "Bajar",
+    "Bajar",
+    "下移"
+  ],
+  [
+    "Organizar documento",
+    "Organize document",
+    "文書を整理",
+    "整理文档",
+    "Dokument organisieren",
+    "Organizar documento",
+    "Organizar documento",
+    "Organizar documento",
+    "整理文件"
+  ],
   [
     "Organizar nesta coleção",
     "Add to this collection",
     "このコレクションに追加",
     "添加到此集合",
-    "Dieser Sammlung zuordnen"
+    "Dieser Sammlung zuordnen",
+    "Organizar nesta coleção",
+    "Organizar en esta colección",
+    "Organizar en esta colección",
+    "新增到此集合"
   ],
-  ["Excluir “{0}”?", "Delete “{0}”?", "「{0}」を削除しますか？", "删除“{0}”？", "„{0}“ löschen?"],
+  [
+    "Excluir “{0}”?",
+    "Delete “{0}”?",
+    "「{0}」を削除しますか？",
+    "删除“{0}”？",
+    "„{0}“ löschen?",
+    "Eliminar “{0}”?",
+    "¿Eliminar «{0}»?",
+    "¿Eliminar «{0}»?",
+    "刪除“{0}”？"
+  ],
   [
     "O projeto será removido da organização. Todos os documentos e suas imagens permanecerão nos locais originais.",
     "The project will be removed from your organization. All documents and images will stay in their original locations.",
     "プロジェクトの整理情報を削除します。文書と画像はすべて元の場所に残ります。",
     "项目将从组织列表中移除，所有文档和图片仍保留在原位置。",
-    "Das Projekt wird aus der Übersicht entfernt. Alle Dokumente und Bilder bleiben an ihren ursprünglichen Orten."
+    "Das Projekt wird aus der Übersicht entfernt. Alle Dokumente und Bilder bleiben an ihren ursprünglichen Orten.",
+    "O projeto será removido da organização. Todos os documentos e as respetivas imagens permanecerão nas localizações originais.",
+    "El proyecto se eliminará de la organización. Todos los documentos y sus imágenes permanecerán en sus ubicaciones originales.",
+    "El proyecto se eliminará de la organización. Todos los documentos y sus imágenes permanecerán en sus ubicaciones originales.",
+    "專案將從組織列表中移除，所有文件和圖片仍保留在原位置。"
   ],
   [
     "O arquivo no disco será preservado.",
     "The file on disk will be preserved.",
     "ディスク上のファイルはそのまま残ります。",
     "磁盘上的文件将保留。",
-    "Die Datei auf dem Datenträger bleibt erhalten."
+    "Die Datei auf dem Datenträger bleibt erhalten.",
+    "O ficheiro no disco será mantido.",
+    "El archivo del disco se conservará.",
+    "El archivo del disco se conservará.",
+    "磁碟上的檔案將保留。"
   ],
   [
     "Remover da biblioteca",
     "Remove from library",
     "ライブラリから削除",
     "从文库中移除",
-    "Aus Bibliothek entfernen"
+    "Aus Bibliothek entfernen",
+    "Remover da biblioteca",
+    "Quitar de la biblioteca",
+    "Quitar de la biblioteca",
+    "從文庫中移除"
   ],
-  ["Opções de {0}", "Options for {0}", "{0}のオプション", "{0} 的选项", "Optionen für {0}"],
-  ["Projeto de {0}", "Project for {0}", "{0}のプロジェクト", "{0} 的项目", "Projekt für {0}"],
+  [
+    "Opções de {0}",
+    "Options for {0}",
+    "{0}のオプション",
+    "{0} 的选项",
+    "Optionen für {0}",
+    "Opções de {0}",
+    "Opciones de {0}",
+    "Opciones de {0}",
+    "{0} 的選項"
+  ],
+  [
+    "Projeto de {0}",
+    "Project for {0}",
+    "{0}のプロジェクト",
+    "{0} 的项目",
+    "Projekt für {0}",
+    "Projeto de {0}",
+    "Proyecto de {0}",
+    "Proyecto de {0}",
+    "{0} 的專案"
+  ],
   [
     "Opções do projeto {0}",
     "Options for project {0}",
     "プロジェクト「{0}」のオプション",
     "项目 {0} 的选项",
-    "Optionen für Projekt {0}"
+    "Optionen für Projekt {0}",
+    "Opções do projeto {0}",
+    "Opciones del proyecto {0}",
+    "Opciones del proyecto {0}",
+    "專案 {0} 的選項"
   ],
-  ["Associar a {0}", "Add to {0}", "{0}に関連付ける", "关联到 {0}", "{0} zuordnen"],
-  ["Sem projeto", "No project", "プロジェクトなし", "无项目", "Kein Projekt"],
+  [
+    "Associar a {0}",
+    "Add to {0}",
+    "{0}に関連付ける",
+    "关联到 {0}",
+    "{0} zuordnen",
+    "Associar a {0}",
+    "Asociar a {0}",
+    "Asociar a {0}",
+    "關聯到 {0}"
+  ],
+  [
+    "Sem projeto",
+    "No project",
+    "プロジェクトなし",
+    "无项目",
+    "Kein Projekt",
+    "Sem projeto",
+    "Sin proyecto",
+    "Sin proyecto",
+    "無專案"
+  ],
   [
     "Sem atalho na lateral",
     "No sidebar shortcut",
     "サイドバーに表示しない",
     "不在侧栏显示快捷入口",
-    "Kein Eintrag in der Seitenleiste"
+    "Kein Eintrag in der Seitenleiste",
+    "Sem atalho na lateral",
+    "Sin acceso directo en la barra lateral",
+    "Sin acceso directo en la barra lateral",
+    "不在側欄顯示快捷入口"
   ],
   [
     "Projeto do documento atual",
     "Current document project",
     "現在の文書のプロジェクト",
     "当前文档的项目",
-    "Projekt des aktuellen Dokuments"
+    "Projekt des aktuellen Dokuments",
+    "Projeto do documento atual",
+    "Proyecto del documento actual",
+    "Proyecto del documento actual",
+    "當前文件的專案"
   ],
   [
     "Escolha onde esta página aparece.",
     "Choose where this page appears.",
     "このページを表示する場所を選びます。",
     "选择此页面出现的位置。",
-    "Wähle, wo diese Seite erscheint."
+    "Wähle, wo diese Seite erscheint.",
+    "Escolha onde esta página aparece.",
+    "Elige dónde aparece esta página.",
+    "Elige dónde aparece esta página.",
+    "選擇此頁面出現的位置。"
   ],
   [
     "Encontrar um projeto…",
     "Find a project…",
     "プロジェクトを検索…",
     "查找项目…",
-    "Projekt suchen…"
+    "Projekt suchen…",
+    "Encontrar um projeto…",
+    "Encontrar un proyecto…",
+    "Encontrar un proyecto…",
+    "查詢專案…"
   ],
-  ["Filtrar projetos", "Filter projects", "プロジェクトを絞り込む", "筛选项目", "Projekte filtern"],
+  [
+    "Filtrar projetos",
+    "Filter projects",
+    "プロジェクトを絞り込む",
+    "筛选项目",
+    "Projekte filtern",
+    "Filtrar projetos",
+    "Filtrar proyectos",
+    "Filtrar proyectos",
+    "篩選專案"
+  ],
   [
     "Projetos disponíveis",
     "Available projects",
     "利用できるプロジェクト",
     "可用项目",
-    "Verfügbare Projekte"
+    "Verfügbare Projekte",
+    "Projetos disponíveis",
+    "Proyectos disponibles",
+    "Proyectos disponibles",
+    "可用專案"
   ],
   [
     "Nenhum projeto com esse nome.",
     "No project with that name.",
     "その名前のプロジェクトはありません。",
     "没有此名称的项目。",
-    "Kein Projekt mit diesem Namen."
+    "Kein Projekt mit diesem Namen.",
+    "Nenhum projeto com esse nome.",
+    "No hay ningún proyecto con ese nombre.",
+    "No hay ningún proyecto con ese nombre.",
+    "沒有此名稱的專案。"
   ],
   [
     "Crie seu primeiro projeto na navegação.",
     "Create your first project in the sidebar.",
     "ナビゲーションから最初のプロジェクトを作成できます。",
     "在导航栏中创建你的第一个项目。",
-    "Erstelle dein erstes Projekt in der Navigation."
+    "Erstelle dein erstes Projekt in der Navigation.",
+    "Crie seu primeiro projeto na navegação.",
+    "Crea tu primer proyecto en la navegación.",
+    "Crea tu primer proyecto en la navegación.",
+    "在導航欄中建立你的第一個專案。"
   ],
-  ["Documentos", "Documents", "文書", "文档", "Dokumente"],
-  ["Documentos abertos", "Open documents", "開いている文書", "已打开的文档", "Geöffnete Dokumente"],
-  ["Fechar {0}", "Close {0}", "{0}を閉じる", "关闭 {0}", "{0} schließen"],
-  ["Nova guia ({0})", "New tab ({0})", "新しいタブ（{0}）", "新建标签页（{0}）", "Neuer Tab ({0})"],
-  ["Rascunho", "Draft", "下書き", "草稿", "Entwurf"],
-  ["Sem título", "Untitled", "無題", "无标题", "Unbenannt"],
-  ["Opções do documento", "Document options", "文書のオプション", "文档选项", "Dokumentoptionen"],
-  ["Salvar", "Save", "保存", "保存", "Speichern"],
-  ["Salvar documento", "Save document", "文書を保存", "保存文档", "Dokument speichern"],
-  ["Salvar como", "Save as", "名前を付けて保存", "另存为", "Speichern unter"],
-  ["Pesquisar", "Find", "検索", "查找", "Suchen"],
-  ["Substituir", "Replace", "置換", "替换", "Ersetzen"],
-  ["Fechar aba", "Close tab", "タブを閉じる", "关闭标签页", "Tab schließen"],
-  ["Não salvo", "Unsaved", "未保存", "未保存", "Nicht gespeichert"],
-  ["Salvo", "Saved", "保存済み", "已保存", "Gespeichert"],
+  [
+    "Documentos",
+    "Documents",
+    "文書",
+    "文档",
+    "Dokumente",
+    "Documentos",
+    "Documentos",
+    "Documentos",
+    "文件"
+  ],
+  [
+    "Documentos abertos",
+    "Open documents",
+    "開いている文書",
+    "已打开的文档",
+    "Geöffnete Dokumente",
+    "Documentos abertos",
+    "Documentos abiertos",
+    "Documentos abiertos",
+    "已開啟的文件"
+  ],
+  [
+    "Fechar {0}",
+    "Close {0}",
+    "{0}を閉じる",
+    "关闭 {0}",
+    "{0} schließen",
+    "Fechar {0}",
+    "Cerrar {0}",
+    "Cerrar {0}",
+    "關閉 {0}"
+  ],
+  [
+    "Nova guia ({0})",
+    "New tab ({0})",
+    "新しいタブ（{0}）",
+    "新建标签页（{0}）",
+    "Neuer Tab ({0})",
+    "Novo separador ({0})",
+    "Nueva pestaña ({0})",
+    "Nueva pestaña ({0})",
+    "新建標籤頁（{0}）"
+  ],
+  ["Rascunho", "Draft", "下書き", "草稿", "Entwurf", "Rascunho", "Borrador", "Borrador", "草稿"],
+  [
+    "Sem título",
+    "Untitled",
+    "無題",
+    "无标题",
+    "Unbenannt",
+    "Sem título",
+    "Sin título",
+    "Sin título",
+    "無標題"
+  ],
+  [
+    "Opções do documento",
+    "Document options",
+    "文書のオプション",
+    "文档选项",
+    "Dokumentoptionen",
+    "Opções do documento",
+    "Opciones del documento",
+    "Opciones del documento",
+    "文件選項"
+  ],
+  ["Salvar", "Save", "保存", "保存", "Speichern", "Guardar", "Guardar", "Guardar", "儲存"],
+  [
+    "Salvar documento",
+    "Save document",
+    "文書を保存",
+    "保存文档",
+    "Dokument speichern",
+    "Guardar documento",
+    "Guardar documento",
+    "Guardar documento",
+    "儲存文件"
+  ],
+  [
+    "Salvar como",
+    "Save as",
+    "名前を付けて保存",
+    "另存为",
+    "Speichern unter",
+    "Guardar como",
+    "Guardar como",
+    "Guardar como",
+    "另存為"
+  ],
+  ["Pesquisar", "Find", "検索", "查找", "Suchen", "Pesquisar", "Buscar", "Buscar", "查詢"],
+  [
+    "Substituir",
+    "Replace",
+    "置換",
+    "替换",
+    "Ersetzen",
+    "Substituir",
+    "Reemplazar",
+    "Reemplazar",
+    "替換"
+  ],
+  [
+    "Fechar aba",
+    "Close tab",
+    "タブを閉じる",
+    "关闭标签页",
+    "Tab schließen",
+    "Fechar separador",
+    "Cerrar pestaña",
+    "Cerrar pestaña",
+    "關閉標籤頁"
+  ],
+  [
+    "Não salvo",
+    "Unsaved",
+    "未保存",
+    "未保存",
+    "Nicht gespeichert",
+    "Não guardado",
+    "Sin guardar",
+    "Sin guardar",
+    "未儲存"
+  ],
+  [
+    "Salvo",
+    "Saved",
+    "保存済み",
+    "已保存",
+    "Gespeichert",
+    "Guardado",
+    "Guardado",
+    "Guardado",
+    "已儲存"
+  ],
   [
     "Pronto para escrever",
     "Ready to write",
     "書く準備ができました",
     "准备好开始写作",
-    "Bereit zum Schreiben"
+    "Bereit zum Schreiben",
+    "Pronto para escrever",
+    "Listo para escribir",
+    "Listo para escribir",
+    "準備好開始寫作"
   ],
   [
     "Alterações não salvas",
     "Unsaved changes",
     "未保存の変更",
     "未保存的更改",
-    "Ungespeicherte Änderungen"
+    "Ungespeicherte Änderungen",
+    "Alterações por guardar",
+    "Cambios sin guardar",
+    "Cambios sin guardar",
+    "未儲存的更改"
   ],
-  ["{count} palavras", "{count} words", "{count}語", "{count} 词", "{count} Wörter"],
-  ["{count} caracteres", "{count} characters", "{count}文字", "{count} 个字符", "{count} Zeichen"],
+  [
+    "{count} palavras",
+    "{count} words",
+    "{count}語",
+    "{count} 词",
+    "{count} Wörter",
+    "{count} palavras",
+    "{count} palabras",
+    "{count} palabras",
+    "{count} 詞"
+  ],
+  [
+    "{count} caracteres",
+    "{count} characters",
+    "{count}文字",
+    "{count} 个字符",
+    "{count} Zeichen",
+    "{count} carateres",
+    "{count} caracteres",
+    "{count} caracteres",
+    "{count} 個字元"
+  ],
   [
     "Comece a escrever…",
     "Start writing…",
     "書き始めましょう…",
     "开始写作…",
-    "Fang an zu schreiben…"
+    "Fang an zu schreiben…",
+    "Comece a escrever…",
+    "Empieza a escribir…",
+    "Empieza a escribir…",
+    "開始寫作…"
   ],
   [
     "Comece a escrever. O resto desaparece.",
     "Start writing. Everything else fades away.",
     "書き始めると、あとは消えていきます。",
     "开始写作，其他一切悄然隐去。",
-    "Fang an zu schreiben. Der Rest verschwindet."
+    "Fang an zu schreiben. Der Rest verschwindet.",
+    "Comece a escrever. O resto desaparece.",
+    "Empieza a escribir. El resto desaparece.",
+    "Empieza a escribir. El resto desaparece.",
+    "開始寫作，其他一切悄然隱去。"
   ],
-  ["Área de escrita", "Writing area", "本文入力欄", "写作区域", "Schreibbereich"],
+  [
+    "Área de escrita",
+    "Writing area",
+    "本文入力欄",
+    "写作区域",
+    "Schreibbereich",
+    "Área de escrita",
+    "Área de escritura",
+    "Área de escritura",
+    "寫作區域"
+  ],
   [
     "Editar título do documento",
     "Edit document title",
     "文書のタイトルを編集",
     "编辑文档标题",
-    "Dokumenttitel bearbeiten"
+    "Dokumenttitel bearbeiten",
+    "Editar título do documento",
+    "Editar título del documento",
+    "Editar título del documento",
+    "編輯文件標題"
   ],
-  ["Editar título", "Edit title", "タイトルを編集", "编辑标题", "Titel bearbeiten"],
-  ["Duplo clique", "Double-click", "ダブルクリック", "双击", "Doppelklick"],
-  ["Minimizar", "Minimize", "最小化", "最小化", "Minimieren"],
+  [
+    "Editar título",
+    "Edit title",
+    "タイトルを編集",
+    "编辑标题",
+    "Titel bearbeiten",
+    "Editar título",
+    "Editar título",
+    "Editar título",
+    "編輯標題"
+  ],
+  [
+    "Duplo clique",
+    "Double-click",
+    "ダブルクリック",
+    "双击",
+    "Doppelklick",
+    "Duplo clique",
+    "Doble clic",
+    "Doble clic",
+    "雙擊"
+  ],
+  [
+    "Minimizar",
+    "Minimize",
+    "最小化",
+    "最小化",
+    "Minimieren",
+    "Minimizar",
+    "Minimizar",
+    "Minimizar",
+    "最小化"
+  ],
   [
     "Maximizar ou restaurar",
     "Maximize or restore",
     "最大化または元に戻す",
     "最大化或还原",
-    "Maximieren oder wiederherstellen"
+    "Maximieren oder wiederherstellen",
+    "Maximizar ou restaurar",
+    "Maximizar o restaurar",
+    "Maximizar o restaurar",
+    "最大化或還原"
   ],
-  ["Fechar aplicativo", "Close app", "アプリを終了", "关闭应用", "App schließen"],
-  ["Fechar painel", "Close panel", "パネルを閉じる", "关闭面板", "Bereich schließen"],
-  ["Título do documento", "Document title", "文書のタイトル", "文档标题", "Dokumenttitel"],
+  [
+    "Fechar aplicativo",
+    "Close app",
+    "アプリを終了",
+    "关闭应用",
+    "App schließen",
+    "Fechar aplicação",
+    "Cerrar aplicación",
+    "Cerrar aplicación",
+    "關閉應用"
+  ],
+  [
+    "Fechar painel",
+    "Close panel",
+    "パネルを閉じる",
+    "关闭面板",
+    "Bereich schließen",
+    "Fechar painel",
+    "Cerrar panel",
+    "Cerrar panel",
+    "關閉面板"
+  ],
+  [
+    "Título do documento",
+    "Document title",
+    "文書のタイトル",
+    "文档标题",
+    "Dokumenttitel",
+    "Título do documento",
+    "Título del documento",
+    "Título del documento",
+    "文件標題"
+  ],
   [
     "O arquivo será renomeado na mesma pasta, mantendo a extensão e o conteúdo salvo.",
     "The file will be renamed in the same folder, keeping its extension and saved content.",
     "同じフォルダー内でファイル名を変更します。拡張子と保存済みの内容は維持されます。",
     "文件将在原文件夹中重命名，扩展名和已保存内容保持不变。",
-    "Die Datei wird im selben Ordner umbenannt. Erweiterung und gespeicherter Inhalt bleiben erhalten."
+    "Die Datei wird im selben Ordner umbenannt. Erweiterung und gespeicherter Inhalt bleiben erhalten.",
+    "O ficheiro será renomeado na mesma pasta, mantendo a extensão e o conteúdo guardado.",
+    "Se cambiará el nombre del archivo en la misma carpeta, conservando la extensión y el contenido guardado.",
+    "Se cambiará el nombre del archivo en la misma carpeta, conservando la extensión y el contenido guardado.",
+    "檔案將在原資料夾中重新命名，副檔名和已儲存內容保持不變。"
   ],
   [
     "Este será o nome sugerido quando você salvar a nota.",
     "This name will be suggested when you save the note.",
     "ノートの保存時に、この名前が候補として使われます。",
     "保存笔记时将建议使用此名称。",
-    "Dieser Name wird beim Speichern der Notiz vorgeschlagen."
+    "Dieser Name wird beim Speichern der Notiz vorgeschlagen.",
+    "Este será o nome sugerido quando guardar a nota.",
+    "Este será el nombre sugerido cuando guardes la nota.",
+    "Este será el nombre sugerido cuando guardes la nota.",
+    "儲存筆記時將建議使用此名稱。"
   ],
-  ["Renomear arquivo", "Rename file", "ファイル名を変更", "重命名文件", "Datei umbenennen"],
-  ["Usar título", "Use title", "このタイトルを使う", "使用标题", "Titel verwenden"],
+  [
+    "Renomear arquivo",
+    "Rename file",
+    "ファイル名を変更",
+    "重命名文件",
+    "Datei umbenennen",
+    "Renomear ficheiro",
+    "Cambiar nombre del archivo",
+    "Cambiar nombre del archivo",
+    "重新命名檔案"
+  ],
+  [
+    "Usar título",
+    "Use title",
+    "このタイトルを使う",
+    "使用标题",
+    "Titel verwenden",
+    "Usar título",
+    "Usar título",
+    "Usar título",
+    "使用標題"
+  ],
   [
     "Digite um título para o documento.",
     "Enter a title for the document.",
     "文書のタイトルを入力してください。",
     "请输入文档标题。",
-    "Gib einen Titel für das Dokument ein."
+    "Gib einen Titel für das Dokument ein.",
+    "Introduza um título para o documento.",
+    "Escribe un título para el documento.",
+    "Escribe un título para el documento.",
+    "請輸入文件標題。"
   ],
   [
     "O título não pode conter barras ou caracteres de controle.",
     "The title cannot contain slashes or control characters.",
     "タイトルにスラッシュや制御文字は使えません。",
     "标题不能包含斜杠或控制字符。",
-    "Der Titel darf keine Schrägstriche oder Steuerzeichen enthalten."
+    "Der Titel darf keine Schrägstriche oder Steuerzeichen enthalten.",
+    "O título não pode conter barras ou caracteres de controle.",
+    "El título no puede contener barras ni caracteres de control.",
+    "El título no puede contener barras ni caracteres de control.",
+    "標題不能包含斜槓或控制字元。"
   ],
   [
     "Esse título é longo demais. Use um nome mais curto.",
     "This title is too long. Choose a shorter name.",
     "タイトルが長すぎます。短い名前にしてください。",
     "标题过长，请使用较短的名称。",
-    "Dieser Titel ist zu lang. Wähle einen kürzeren Namen."
+    "Dieser Titel ist zu lang. Wähle einen kürzeren Namen.",
+    "Esse título é longo demais. Use um nome mais curto.",
+    "Ese título es demasiado largo. Usa un nombre más corto.",
+    "Ese título es demasiado largo. Usa un nombre más corto.",
+    "標題過長，請使用較短的名稱。"
   ],
   [
     "Um nome, uma palavra, uma ideia…",
     "A name, a word, an idea…",
     "名前、言葉、アイデア…",
     "一个名字、一个词、一种想法…",
-    "Ein Name, ein Wort, eine Idee…"
+    "Ein Name, ein Wort, eine Idee…",
+    "Um nome, uma palavra, uma ideia…",
+    "Un nombre, una palabra, una idea…",
+    "Un nombre, una palabra, una idea…",
+    "一個名字、一個詞、一種想法…"
   ],
   [
     "Buscando nos arquivos…",
     "Searching files…",
     "ファイルを検索中…",
     "正在搜索文件…",
-    "Dateien werden durchsucht…"
+    "Dateien werden durchsucht…",
+    "Buscando nos ficheiros…",
+    "Buscando en los archivos…",
+    "Buscando en los archivos…",
+    "正在搜尋檔案…"
   ],
   [
     "Nenhum documento encontrado.",
     "No documents found.",
     "文書が見つかりません。",
     "未找到文档。",
-    "Keine Dokumente gefunden."
+    "Keine Dokumente gefunden.",
+    "Nenhum documento encontrado.",
+    "No se ha encontrado ningún documento.",
+    "No se ha encontrado ningún documento.",
+    "未找到文件。"
   ],
-  ["Todas", "All", "すべて", "全部", "Alle"],
+  ["Todas", "All", "すべて", "全部", "Alle", "Todas", "Todas", "Todas", "全部"],
   [
     "· Somente documentos salvos da biblioteca.",
     "· Only saved documents in the library.",
     "· ライブラリの保存済み文書のみ。",
     "· 仅包含文库中已保存的文档。",
-    "· Nur gespeicherte Dokumente der Bibliothek."
+    "· Nur gespeicherte Dokumente der Bibliothek.",
+    "· Somente documentos guardados da biblioteca.",
+    "· Solo documentos guardados de la biblioteca.",
+    "· Solo documentos guardados de la biblioteca.",
+    "· 僅包含文庫中已儲存的文件。"
   ],
-  ["{0} resultado(s)", "{0} result(s)", "{0}件の結果", "{0} 个结果", "{0} Ergebnis(se)"],
+  [
+    "{0} resultado(s)",
+    "{0} result(s)",
+    "{0}件の結果",
+    "{0} 个结果",
+    "{0} Ergebnis(se)",
+    "{0} resultado(s)",
+    "{0} resultado(s)",
+    "{0} resultado(s)",
+    "{0} 個結果"
+  ],
   [
     "Indisponível · {0}",
     "Unavailable · {0}",
     "利用不可 · {0}",
     "不可用 · {0}",
-    "Nicht verfügbar · {0}"
+    "Nicht verfügbar · {0}",
+    "Indisponível · {0}",
+    "No disponible · {0}",
+    "No disponible · {0}",
+    "不可用 · {0}"
   ],
   [
     "Localizar novamente: {0}",
     "Locate again: {0}",
     "再検索：{0}",
     "重新定位：{0}",
-    "Erneut suchen: {0}"
+    "Erneut suchen: {0}",
+    "Localizar novamente: {0}",
+    "Volver a localizar: {0}",
+    "Volver a localizar: {0}",
+    "重新定位：{0}"
   ],
-  ["Localizar novamente", "Locate again", "再検索", "重新定位", "Erneut suchen"],
-  ["Localizar documento", "Locate document", "文書の場所を指定", "定位文档", "Dokument suchen"],
+  [
+    "Localizar novamente",
+    "Locate again",
+    "再検索",
+    "重新定位",
+    "Erneut suchen",
+    "Localizar novamente",
+    "Volver a localizar",
+    "Volver a localizar",
+    "重新定位"
+  ],
+  [
+    "Localizar documento",
+    "Locate document",
+    "文書の場所を指定",
+    "定位文档",
+    "Dokument suchen",
+    "Localizar documento",
+    "Localizar documento",
+    "Localizar documento",
+    "定位文件"
+  ],
   [
     "Arquivo não encontrado",
     "File not found",
     "ファイルが見つかりません",
     "未找到文件",
-    "Datei nicht gefunden"
+    "Datei nicht gefunden",
+    "Ficheiro não encontrado",
+    "Archivo no encontrado",
+    "Archivo no encontrado",
+    "未找到檔案"
   ],
   [
     "Caminho atualizado. Abra o documento para continuar.",
     "Path updated. Open the document to continue.",
     "パスを更新しました。続けるには文書を開いてください。",
     "路径已更新，打开文档以继续。",
-    "Pfad aktualisiert. Öffne das Dokument, um fortzufahren."
+    "Pfad aktualisiert. Öffne das Dokument, um fortzufahren.",
+    "Caminho atualizado. Abra o documento para continuar.",
+    "Ruta actualizada. Abre el documento para continuar.",
+    "Ruta actualizada. Abre el documento para continuar.",
+    "路徑已更新，開啟文件以繼續。"
   ],
   [
     "O arquivo pode ter sido movido ou apagado. Escolha seu novo local para atualizar a referência; nenhum arquivo será movido.",
     "The file may have been moved or deleted. Choose its new location to update the reference; no file will be moved.",
     "ファイルが移動または削除された可能性があります。新しい場所を指定して参照を更新してください。ファイル自体は移動しません。",
     "文件可能已移动或删除。请选择新位置以更新引用；不会移动任何文件。",
-    "Die Datei wurde möglicherweise verschoben oder gelöscht. Wähle den neuen Ort, um den Verweis zu aktualisieren. Es wird keine Datei verschoben."
+    "Die Datei wurde möglicherweise verschoben oder gelöscht. Wähle den neuen Ort, um den Verweis zu aktualisieren. Es wird keine Datei verschoben.",
+    "O ficheiro pode ter sido movido ou eliminado. Escolha seu novo local para atualizar a referência; nenhum ficheiro será movido.",
+    "Puede que el archivo se haya movido o eliminado. Elige su nueva ubicación para actualizar la referencia; no se moverá ningún archivo.",
+    "Puede que el archivo se haya movido o eliminado. Elige su nueva ubicación para actualizar la referencia; no se moverá ningún archivo.",
+    "檔案可能已移動或刪除。請選擇新位置以更新引用；不會移動任何檔案。"
   ],
-  ["Localizar no texto", "Find in text", "本文内を検索", "在文本中查找", "Im Text suchen"],
-  ["Localizar no texto…", "Find in text…", "本文内を検索…", "在文本中查找…", "Im Text suchen…"],
-  ["Pesquisa no documento", "Document search", "文書内検索", "文档内搜索", "Dokumentsuche"],
-  ["Substituir por", "Replace with", "置換後の文字列", "替换为", "Ersetzen durch"],
-  ["Substituir por…", "Replace with…", "置換後の文字列…", "替换为…", "Ersetzen durch…"],
+  [
+    "Localizar no texto",
+    "Find in text",
+    "本文内を検索",
+    "在文本中查找",
+    "Im Text suchen",
+    "Localizar no texto",
+    "Buscar en el texto",
+    "Buscar en el texto",
+    "在文字中查詢"
+  ],
+  [
+    "Localizar no texto…",
+    "Find in text…",
+    "本文内を検索…",
+    "在文本中查找…",
+    "Im Text suchen…",
+    "Localizar no texto…",
+    "Buscar en el texto…",
+    "Buscar en el texto…",
+    "在文字中查詢…"
+  ],
+  [
+    "Pesquisa no documento",
+    "Document search",
+    "文書内検索",
+    "文档内搜索",
+    "Dokumentsuche",
+    "Pesquisa no documento",
+    "Buscar en el documento",
+    "Buscar en el documento",
+    "文件內搜尋"
+  ],
+  [
+    "Substituir por",
+    "Replace with",
+    "置換後の文字列",
+    "替换为",
+    "Ersetzen durch",
+    "Substituir por",
+    "Reemplazar por",
+    "Reemplazar por",
+    "替換為"
+  ],
+  [
+    "Substituir por…",
+    "Replace with…",
+    "置換後の文字列…",
+    "替换为…",
+    "Ersetzen durch…",
+    "Substituir por…",
+    "Reemplazar por…",
+    "Reemplazar por…",
+    "替換為…"
+  ],
   [
     "Diferenciar maiúsculas",
     "Match case",
     "大文字と小文字を区別",
     "区分大小写",
-    "Groß-/Kleinschreibung beachten"
+    "Groß-/Kleinschreibung beachten",
+    "Diferenciar maiúsculas",
+    "Distinguir mayúsculas y minúsculas",
+    "Distinguir mayúsculas y minúsculas",
+    "區分大小寫"
   ],
-  ["Resultado anterior", "Previous result", "前の結果", "上一个结果", "Vorheriges Ergebnis"],
-  ["Próximo resultado", "Next result", "次の結果", "下一个结果", "Nächstes Ergebnis"],
-  ["Fechar pesquisa", "Close search", "検索を閉じる", "关闭查找", "Suche schließen"],
-  ["{0} de {1}", "{0} of {1}", "{1}件中の{0}", "第 {0} 项，共 {1} 项", "{0} von {1}"],
+  [
+    "Resultado anterior",
+    "Previous result",
+    "前の結果",
+    "上一个结果",
+    "Vorheriges Ergebnis",
+    "Resultado anterior",
+    "Resultado anterior",
+    "Resultado anterior",
+    "上一個結果"
+  ],
+  [
+    "Próximo resultado",
+    "Next result",
+    "次の結果",
+    "下一个结果",
+    "Nächstes Ergebnis",
+    "Próximo resultado",
+    "Resultado siguiente",
+    "Resultado siguiente",
+    "下一個結果"
+  ],
+  [
+    "Fechar pesquisa",
+    "Close search",
+    "検索を閉じる",
+    "关闭查找",
+    "Suche schließen",
+    "Fechar pesquisa",
+    "Cerrar búsqueda",
+    "Cerrar búsqueda",
+    "關閉查詢"
+  ],
+  [
+    "{0} de {1}",
+    "{0} of {1}",
+    "{1}件中の{0}",
+    "第 {0} 项，共 {1} 项",
+    "{0} von {1}",
+    "{0} de {1}",
+    "{0} de {1}",
+    "{0} de {1}",
+    "第 {0} 項，共 {1} 項"
+  ],
   [
     "Ferramentas de formatação",
     "Formatting tools",
     "書式設定ツール",
     "格式工具",
-    "Formatierungswerkzeuge"
+    "Formatierungswerkzeuge",
+    "Ferramentas de formatação",
+    "Herramientas de formato",
+    "Herramientas de formato",
+    "格式工具"
   ],
-  ["Formatação", "Formatting", "書式設定", "格式", "Formatierung"],
+  [
+    "Formatação",
+    "Formatting",
+    "書式設定",
+    "格式",
+    "Formatierung",
+    "Formatação",
+    "Formato",
+    "Formato",
+    "格式"
+  ],
   [
     "Mostrar formatação",
     "Show formatting",
     "書式設定を表示",
     "显示格式工具",
-    "Formatierung anzeigen"
+    "Formatierung anzeigen",
+    "Mostrar formatação",
+    "Mostrar formato",
+    "Mostrar formato",
+    "顯示格式工具"
   ],
   [
     "Ocultar formatação",
     "Hide formatting",
     "書式設定を隠す",
     "隐藏格式工具",
-    "Formatierung ausblenden"
+    "Formatierung ausblenden",
+    "Ocultar formatação",
+    "Ocultar formato",
+    "Ocultar formato",
+    "隱藏格式工具"
   ],
-  ["Estilo do parágrafo", "Paragraph style", "段落スタイル", "段落样式", "Absatzstil"],
-  ["Texto", "Text", "テキスト", "文本", "Text"],
-  ["Título 1", "Heading 1", "見出し1", "标题 1", "Überschrift 1"],
-  ["Título 2", "Heading 2", "見出し2", "标题 2", "Überschrift 2"],
-  ["Título 3", "Heading 3", "見出し3", "标题 3", "Überschrift 3"],
-  ["Negrito (Ctrl+B)", "Bold (Ctrl+B)", "太字（Ctrl+B）", "粗体（Ctrl+B）", "Fett (Strg+B)"],
-  ["Itálico (Ctrl+I)", "Italic (Ctrl+I)", "斜体（Ctrl+I）", "斜体（Ctrl+I）", "Kursiv (Strg+I)"],
+  [
+    "Estilo do parágrafo",
+    "Paragraph style",
+    "段落スタイル",
+    "段落样式",
+    "Absatzstil",
+    "Estilo do parágrafo",
+    "Estilo del párrafo",
+    "Estilo del párrafo",
+    "段落樣式"
+  ],
+  ["Texto", "Text", "テキスト", "文本", "Text", "Texto", "Texto", "Texto", "文字"],
+  [
+    "Título 1",
+    "Heading 1",
+    "見出し1",
+    "标题 1",
+    "Überschrift 1",
+    "Título 1",
+    "Título 1",
+    "Título 1",
+    "標題 1"
+  ],
+  [
+    "Título 2",
+    "Heading 2",
+    "見出し2",
+    "标题 2",
+    "Überschrift 2",
+    "Título 2",
+    "Título 2",
+    "Título 2",
+    "標題 2"
+  ],
+  [
+    "Título 3",
+    "Heading 3",
+    "見出し3",
+    "标题 3",
+    "Überschrift 3",
+    "Título 3",
+    "Título 3",
+    "Título 3",
+    "標題 3"
+  ],
+  [
+    "Negrito (Ctrl+B)",
+    "Bold (Ctrl+B)",
+    "太字（Ctrl+B）",
+    "粗体（Ctrl+B）",
+    "Fett (Strg+B)",
+    "Negrito (Ctrl+B)",
+    "Negrita (Ctrl+B)",
+    "Negrita (Ctrl+B)",
+    "粗體（Ctrl+B）"
+  ],
+  [
+    "Itálico (Ctrl+I)",
+    "Italic (Ctrl+I)",
+    "斜体（Ctrl+I）",
+    "斜体（Ctrl+I）",
+    "Kursiv (Strg+I)",
+    "Itálico (Ctrl+I)",
+    "Cursiva (Ctrl+I)",
+    "Cursiva (Ctrl+I)",
+    "斜體（Ctrl+I）"
+  ],
   [
     "Sublinhado (Ctrl+U)",
     "Underline (Ctrl+U)",
     "下線（Ctrl+U）",
     "下划线（Ctrl+U）",
-    "Unterstrichen (Strg+U)"
+    "Unterstrichen (Strg+U)",
+    "Sublinhado (Ctrl+U)",
+    "Subrayado (Ctrl+U)",
+    "Subrayado (Ctrl+U)",
+    "下劃線（Ctrl+U）"
   ],
-  ["Tachado", "Strikethrough", "取り消し線", "删除线", "Durchgestrichen"],
-  ["Destaque", "Highlight", "ハイライト", "高亮", "Hervorheben"],
-  ["Cor do texto", "Text color", "文字色", "文字颜色", "Textfarbe"],
-  ["Tamanho", "Size", "サイズ", "大小", "Größe"],
+  [
+    "Tachado",
+    "Strikethrough",
+    "取り消し線",
+    "删除线",
+    "Durchgestrichen",
+    "Tachado",
+    "Tachado",
+    "Tachado",
+    "刪除線"
+  ],
+  [
+    "Destaque",
+    "Highlight",
+    "ハイライト",
+    "高亮",
+    "Hervorheben",
+    "Destaque",
+    "Resaltado",
+    "Resaltado",
+    "高亮"
+  ],
+  [
+    "Cor do texto",
+    "Text color",
+    "文字色",
+    "文字颜色",
+    "Textfarbe",
+    "Cor do texto",
+    "Color del texto",
+    "Color del texto",
+    "文字顏色"
+  ],
+  ["Tamanho", "Size", "サイズ", "大小", "Größe", "Tamanho", "Tamaño", "Tamaño", "大小"],
   [
     "Tamanho do texto selecionado",
     "Selected text size",
     "選択した文字のサイズ",
     "选中文本字号",
-    "Größe des ausgewählten Textes"
+    "Größe des ausgewählten Textes",
+    "Tamanho do texto selecionado",
+    "Tamaño del texto seleccionado",
+    "Tamaño del texto seleccionado",
+    "選中文字字號"
   ],
-  ["Lista com marcadores", "Bullet list", "箇条書き", "无序列表", "Aufzählung"],
-  ["Lista numerada", "Numbered list", "番号付きリスト", "有序列表", "Nummerierte Liste"],
-  ["Checklist", "Checklist", "チェックリスト", "任务清单", "Checkliste"],
-  ["Citação", "Quote", "引用", "引用", "Zitat"],
-  ["Bloco de código", "Code block", "コードブロック", "代码块", "Codeblock"],
-  ["Alinhar à esquerda", "Align left", "左揃え", "左对齐", "Linksbündig"],
-  ["Centralizar", "Center", "中央揃え", "居中", "Zentrieren"],
-  ["Alinhar à direita", "Align right", "右揃え", "右对齐", "Rechtsbündig"],
-  ["Inserir separador", "Insert divider", "区切り線を挿入", "插入分隔线", "Trennlinie einfügen"],
-  ["Inserir link", "Insert link", "リンクを挿入", "插入链接", "Link einfügen"],
-  ["Inserir imagem", "Insert image", "画像を挿入", "插入图片", "Bild einfügen"],
-  ["Inserir tabela", "Insert table", "表を挿入", "插入表格", "Tabelle einfügen"],
-  ["Editar tabela", "Edit table", "表を編集", "编辑表格", "Tabelle bearbeiten"],
-  ["Tabela", "Table", "表", "表格", "Tabelle"],
-  ["Adicionar linha", "Add row", "行を追加", "添加行", "Zeile hinzufügen"],
-  ["Adicionar coluna", "Add column", "列を追加", "添加列", "Spalte hinzufügen"],
-  ["Remover linha", "Remove row", "行を削除", "删除行", "Zeile entfernen"],
-  ["Remover coluna", "Remove column", "列を削除", "删除列", "Spalte entfernen"],
-  ["Remover tabela", "Remove table", "表を削除", "删除表格", "Tabelle entfernen"],
+  [
+    "Lista com marcadores",
+    "Bullet list",
+    "箇条書き",
+    "无序列表",
+    "Aufzählung",
+    "Lista com marcadores",
+    "Lista con viñetas",
+    "Lista con viñetas",
+    "無序列表"
+  ],
+  [
+    "Lista numerada",
+    "Numbered list",
+    "番号付きリスト",
+    "有序列表",
+    "Nummerierte Liste",
+    "Lista numerada",
+    "Lista numerada",
+    "Lista numerada",
+    "有序列表"
+  ],
+  [
+    "Checklist",
+    "Checklist",
+    "チェックリスト",
+    "任务清单",
+    "Checkliste",
+    "Checklist",
+    "Lista de verificación",
+    "Lista de verificación",
+    "任務清單"
+  ],
+  ["Citação", "Quote", "引用", "引用", "Zitat", "Citação", "Cita", "Cita", "引用"],
+  [
+    "Bloco de código",
+    "Code block",
+    "コードブロック",
+    "代码块",
+    "Codeblock",
+    "Bloco de código",
+    "Bloque de código",
+    "Bloque de código",
+    "程式碼塊"
+  ],
+  [
+    "Alinhar à esquerda",
+    "Align left",
+    "左揃え",
+    "左对齐",
+    "Linksbündig",
+    "Alinhar à esquerda",
+    "Alinear a la izquierda",
+    "Alinear a la izquierda",
+    "左對齊"
+  ],
+  [
+    "Centralizar",
+    "Center",
+    "中央揃え",
+    "居中",
+    "Zentrieren",
+    "Centralizar",
+    "Centrar",
+    "Centrar",
+    "居中"
+  ],
+  [
+    "Alinhar à direita",
+    "Align right",
+    "右揃え",
+    "右对齐",
+    "Rechtsbündig",
+    "Alinhar à direita",
+    "Alinear a la derecha",
+    "Alinear a la derecha",
+    "右對齊"
+  ],
+  [
+    "Inserir separador",
+    "Insert divider",
+    "区切り線を挿入",
+    "插入分隔线",
+    "Trennlinie einfügen",
+    "Inserir separador",
+    "Insertar separador",
+    "Insertar separador",
+    "插入分隔線"
+  ],
+  [
+    "Inserir link",
+    "Insert link",
+    "リンクを挿入",
+    "插入链接",
+    "Link einfügen",
+    "Inserir link",
+    "Insertar enlace",
+    "Insertar enlace",
+    "插入連結"
+  ],
+  [
+    "Inserir imagem",
+    "Insert image",
+    "画像を挿入",
+    "插入图片",
+    "Bild einfügen",
+    "Inserir imagem",
+    "Insertar imagen",
+    "Insertar imagen",
+    "插入圖片"
+  ],
+  [
+    "Inserir tabela",
+    "Insert table",
+    "表を挿入",
+    "插入表格",
+    "Tabelle einfügen",
+    "Inserir tabela",
+    "Insertar tabla",
+    "Insertar tabla",
+    "插入表格"
+  ],
+  [
+    "Editar tabela",
+    "Edit table",
+    "表を編集",
+    "编辑表格",
+    "Tabelle bearbeiten",
+    "Editar tabela",
+    "Editar tabla",
+    "Editar tabla",
+    "編輯表格"
+  ],
+  ["Tabela", "Table", "表", "表格", "Tabelle", "Tabela", "Tabla", "Tabla", "表格"],
+  [
+    "Adicionar linha",
+    "Add row",
+    "行を追加",
+    "添加行",
+    "Zeile hinzufügen",
+    "Adicionar linha",
+    "Agregar fila",
+    "Añadir fila",
+    "新增行"
+  ],
+  [
+    "Adicionar coluna",
+    "Add column",
+    "列を追加",
+    "添加列",
+    "Spalte hinzufügen",
+    "Adicionar coluna",
+    "Agregar columna",
+    "Añadir columna",
+    "新增列"
+  ],
+  [
+    "Remover linha",
+    "Remove row",
+    "行を削除",
+    "删除行",
+    "Zeile entfernen",
+    "Remover linha",
+    "Eliminar fila",
+    "Eliminar fila",
+    "刪除行"
+  ],
+  [
+    "Remover coluna",
+    "Remove column",
+    "列を削除",
+    "删除列",
+    "Spalte entfernen",
+    "Remover coluna",
+    "Eliminar columna",
+    "Eliminar columna",
+    "刪除列"
+  ],
+  [
+    "Remover tabela",
+    "Remove table",
+    "表を削除",
+    "删除表格",
+    "Tabelle entfernen",
+    "Remover tabela",
+    "Eliminar tabla",
+    "Eliminar tabla",
+    "刪除表格"
+  ],
   [
     "Desfazer (Ctrl+Z)",
     "Undo (Ctrl+Z)",
     "元に戻す（Ctrl+Z）",
     "撤销（Ctrl+Z）",
-    "Rückgängig (Strg+Z)"
+    "Rückgängig (Strg+Z)",
+    "Anular (Ctrl+Z)",
+    "Deshacer (Ctrl+Z)",
+    "Deshacer (Ctrl+Z)",
+    "撤銷（Ctrl+Z）"
   ],
   [
     "Refazer (Ctrl+Shift+Z)",
     "Redo (Ctrl+Shift+Z)",
     "やり直す（Ctrl+Shift+Z）",
     "重做（Ctrl+Shift+Z）",
-    "Wiederholen (Strg+Umschalt+Z)"
+    "Wiederholen (Strg+Umschalt+Z)",
+    "Refazer (Ctrl+Shift+Z)",
+    "Rehacer (Ctrl+Shift+Z)",
+    "Rehacer (Ctrl+Shift+Z)",
+    "重做（Ctrl+Shift+Z）"
   ],
-  ["Endereço", "Address", "アドレス", "地址", "Adresse"],
-  ["Aplicar", "Apply", "適用", "应用", "Anwenden"],
+  [
+    "Endereço",
+    "Address",
+    "アドレス",
+    "地址",
+    "Adresse",
+    "Endereço",
+    "Dirección",
+    "Dirección",
+    "地址"
+  ],
+  ["Aplicar", "Apply", "適用", "应用", "Anwenden", "Aplicar", "Aplicar", "Aplicar", "應用"],
   [
     "Use um endereço https://, http:// ou mailto:.",
     "Use an https://, http:// or mailto: address.",
     "https://、http://、mailto:で始まるアドレスを使ってください。",
     "请使用 https://、http:// 或 mailto: 地址。",
-    "Verwende eine Adresse mit https://, http:// oder mailto:."
+    "Verwende eine Adresse mit https://, http:// oder mailto:.",
+    "Use um endereço https://, http:// ou mailto:.",
+    "Usa una dirección https://, http:// o mailto:.",
+    "Usa una dirección https://, http:// o mailto:.",
+    "請使用 https://、http:// 或 mailto: 地址。"
   ],
-  ["Imagens", "Images", "画像", "图片", "Bilder"],
+  ["Imagens", "Images", "画像", "图片", "Bilder", "Imagens", "Imágenes", "Imágenes", "圖片"],
   [
     "Use uma imagem PNG, JPEG, GIF, WebP, AVIF ou BMP.",
     "Use a PNG, JPEG, GIF, WebP, AVIF or BMP image.",
     "PNG、JPEG、GIF、WebP、AVIF、BMPの画像を使ってください。",
     "请使用 PNG、JPEG、GIF、WebP、AVIF 或 BMP 图片。",
-    "Verwende ein Bild im Format PNG, JPEG, GIF, WebP, AVIF oder BMP."
+    "Verwende ein Bild im Format PNG, JPEG, GIF, WebP, AVIF oder BMP.",
+    "Use uma imagem PNG, JPEG, GIF, WebP, AVIF ou BMP.",
+    "Usa una imagen PNG, JPEG, GIF, WebP, AVIF o BMP.",
+    "Usa una imagen PNG, JPEG, GIF, WebP, AVIF o BMP.",
+    "請使用 PNG、JPEG、GIF、WebP、AVIF 或 BMP 圖片。"
   ],
   [
     "A imagem excede o limite de 20 MB.",
     "The image exceeds the 20 MB limit.",
     "画像が20 MBの上限を超えています。",
     "图片超过 20 MB 的限制。",
-    "Das Bild überschreitet die Grenze von 20 MB."
+    "Das Bild überschreitet die Grenze von 20 MB.",
+    "A imagem excede o limite de 20 MB.",
+    "La imagen supera el límite de 20 MB.",
+    "La imagen supera el límite de 20 MB.",
+    "圖片超過 20 MB 的限制。"
   ],
   [
     "Não foi possível ler a imagem.",
     "The image could not be read.",
     "画像を読み込めませんでした。",
     "无法读取图片。",
-    "Das Bild konnte nicht gelesen werden."
+    "Das Bild konnte nicht gelesen werden.",
+    "Não foi possível ler a imagem.",
+    "No se ha podido leer la imagen.",
+    "No se ha podido leer la imagen.",
+    "無法讀取圖片。"
   ],
   [
     "Marcar tarefa: {text}",
     "Toggle task: {text}",
     "タスクのチェックを切り替え：{text}",
     "切换任务勾选状态：{text}",
-    "Aufgabe umschalten: {text}"
+    "Aufgabe umschalten: {text}",
+    "Marcar tarefa: {text}",
+    "Marcar tarea: {text}",
+    "Marcar tarea: {text}",
+    "切換任務勾選狀態：{text}"
   ],
-  ["sem texto", "no text", "テキストなし", "无文本", "ohne Text"],
-  ["Paleta de cores", "Color palette", "カラーパレット", "调色板", "Farbpalette"],
-  ["Cor do tema", "Theme color", "テーマの色", "主题颜色", "Designfarbe"],
-  ["Cor em hexadecimal", "Hex color", "16進数の色", "十六进制颜色", "Hex-Farbe"],
-  ["Matiz", "Hue", "色相", "色相", "Farbton"],
-  ["Matiz da cor", "Color hue", "色の色相", "颜色色相", "Farbton der Farbe"],
+  [
+    "sem texto",
+    "no text",
+    "テキストなし",
+    "无文本",
+    "ohne Text",
+    "sem texto",
+    "sin texto",
+    "sin texto",
+    "無文字"
+  ],
+  [
+    "Paleta de cores",
+    "Color palette",
+    "カラーパレット",
+    "调色板",
+    "Farbpalette",
+    "Paleta de cores",
+    "Paleta de colores",
+    "Paleta de colores",
+    "調色盤"
+  ],
+  [
+    "Cor do tema",
+    "Theme color",
+    "テーマの色",
+    "主题颜色",
+    "Designfarbe",
+    "Cor do tema",
+    "Color del tema",
+    "Color del tema",
+    "主題顏色"
+  ],
+  [
+    "Cor em hexadecimal",
+    "Hex color",
+    "16進数の色",
+    "十六进制颜色",
+    "Hex-Farbe",
+    "Cor em hexadecimal",
+    "Color en hexadecimal",
+    "Color en hexadecimal",
+    "十六進位制顏色"
+  ],
+  ["Matiz", "Hue", "色相", "色相", "Farbton", "Matiz", "Tono", "Tono", "色相"],
+  [
+    "Matiz da cor",
+    "Color hue",
+    "色の色相",
+    "颜色色相",
+    "Farbton der Farbe",
+    "Matiz da cor",
+    "Tono del color",
+    "Tono del color",
+    "顏色色相"
+  ],
   [
     "Saturação e brilho: use as setas para ajustar",
     "Saturation and brightness: use arrow keys to adjust",
     "彩度と明度：矢印キーで調整",
     "饱和度和亮度：使用方向键调整",
-    "Sättigung und Helligkeit: mit Pfeiltasten anpassen"
+    "Sättigung und Helligkeit: mit Pfeiltasten anpassen",
+    "Saturação e brilho: use as setas para ajustar",
+    "Saturación y brillo: usa las flechas para ajustar",
+    "Saturación y brillo: usa las flechas para ajustar",
+    "飽和度和亮度：使用方向鍵調整"
   ],
   [
     "Use um código como #768C66.",
     "Use a code such as #768C66.",
     "#768C66のようなコードを使ってください。",
     "请使用 #768C66 这样的颜色代码。",
-    "Verwende einen Code wie #768C66."
+    "Verwende einen Code wie #768C66.",
+    "Use um código como #768C66.",
+    "Usa un código como #768C66.",
+    "Usa un código como #768C66.",
+    "請使用 #768C66 這樣的顏色程式碼。"
   ],
-  ["Usar cor {0}", "Use color {0}", "色{0}を使う", "使用颜色 {0}", "Farbe {0} verwenden"],
-  ["Aplicar cor", "Apply color", "色を適用", "应用颜色", "Farbe anwenden"],
-  ["Aplicativo padrão", "Default app", "既定のアプリ", "默认应用", "Standard-App"],
+  [
+    "Usar cor {0}",
+    "Use color {0}",
+    "色{0}を使う",
+    "使用颜色 {0}",
+    "Farbe {0} verwenden",
+    "Usar cor {0}",
+    "Usar color {0}",
+    "Usar color {0}",
+    "使用顏色 {0}"
+  ],
+  [
+    "Aplicar cor",
+    "Apply color",
+    "色を適用",
+    "应用颜色",
+    "Farbe anwenden",
+    "Aplicar cor",
+    "Aplicar color",
+    "Aplicar color",
+    "應用顏色"
+  ],
+  [
+    "Aplicativo padrão",
+    "Default app",
+    "既定のアプリ",
+    "默认应用",
+    "Standard-App",
+    "Aplicação predefinida",
+    "Aplicación predeterminada",
+    "Aplicación predeterminada",
+    "預設應用"
+  ],
   [
     "Abra seus arquivos Markdown e de texto direto no Entrelinhas.",
     "Open Markdown and text files directly in Entrelinhas.",
     "MarkdownとテキストファイルをEntrelinhasで直接開きます。",
     "直接在 Entrelinhas 中打开 Markdown 和文本文件。",
-    "Öffne Markdown- und Textdateien direkt in Entrelinhas."
+    "Öffne Markdown- und Textdateien direkt in Entrelinhas.",
+    "Abra os seus ficheiros Markdown e de texto diretamente no Entrelinhas.",
+    "Abre tus archivos Markdown y de texto directamente en Entrelinhas.",
+    "Abre tus archivos Markdown y de texto directamente en Entrelinhas.",
+    "直接在 Entrelinhas 中開啟 Markdown 和文字檔案。"
   ],
   [
     "Esta opção está disponível no aplicativo instalado.",
     "This option is available in the installed app.",
     "このオプションはインストール済みのアプリで利用できます。",
     "此选项仅在已安装的应用中可用。",
-    "Diese Option ist in der installierten App verfügbar."
+    "Diese Option ist in der installierten App verfügbar.",
+    "Esta opção está disponível na aplicação instalada.",
+    "Esta opción está disponible en la aplicación instalada.",
+    "Esta opción está disponible en la aplicación instalada.",
+    "此選項僅在已安裝的應用中可用。"
   ],
   [
     "Instale ou atualize o Entrelinhas para habilitar esta opção.",
     "Install or update Entrelinhas to enable this option.",
     "このオプションを使うには、Entrelinhasをインストールまたは更新してください。",
     "安装或更新 Entrelinhas 以启用此选项。",
-    "Installiere oder aktualisiere Entrelinhas, um diese Option zu aktivieren."
+    "Installiere oder aktualisiere Entrelinhas, um diese Option zu aktivieren.",
+    "Instale ou atualize o Entrelinhas para habilitar esta opção.",
+    "Instala o actualiza Entrelinhas para habilitar esta opción.",
+    "Instala o actualiza Entrelinhas para habilitar esta opción.",
+    "安裝或更新 Entrelinhas 以啟用此選項。"
   ],
-  ["É o padrão", "Default", "既定", "已设为默认", "Standard"],
-  ["Já é o padrão", "Already the default", "既定に設定済み", "已是默认应用", "Bereits Standard"],
-  ["Usar como padrão", "Set as default", "既定に設定", "设为默认", "Als Standard festlegen"],
+  [
+    "É o padrão",
+    "Default",
+    "既定",
+    "已设为默认",
+    "Standard",
+    "É a predefinição",
+    "Es la predeterminada",
+    "Es la predeterminada",
+    "已設為預設"
+  ],
+  [
+    "Já é o padrão",
+    "Already the default",
+    "既定に設定済み",
+    "已是默认应用",
+    "Bereits Standard",
+    "Já é a predefinição",
+    "Ya es la predeterminada",
+    "Ya es la predeterminada",
+    "已是預設應用"
+  ],
+  [
+    "Usar como padrão",
+    "Set as default",
+    "既定に設定",
+    "设为默认",
+    "Als Standard festlegen",
+    "Usar por predefinição",
+    "Usar como predeterminada",
+    "Usar como predeterminada",
+    "設為預設"
+  ],
   [
     "Abrir configurações do Windows",
     "Open Windows settings",
     "Windowsの設定を開く",
     "打开 Windows 设置",
-    "Windows-Einstellungen öffnen"
+    "Windows-Einstellungen öffnen",
+    "Abrir as Definições do Windows",
+    "Abrir la configuración de Windows",
+    "Abrir la configuración de Windows",
+    "開啟 Windows 設定"
   ],
   [
     "Nas configurações do Windows, escolha o Entrelinhas para .md, .markdown e .txt. Depois, volte para esta janela.",
     "In Windows settings, choose Entrelinhas for .md, .markdown and .txt. Then return to this window.",
     "Windowsの設定で、.md、.markdown、.txtのアプリにEntrelinhasを選択してから、この画面に戻ってください。",
     "在 Windows 设置中，为 .md、.markdown 和 .txt 选择 Entrelinhas，然后返回此窗口。",
-    "Wähle in den Windows-Einstellungen Entrelinhas für .md, .markdown und .txt. Kehre danach zu diesem Fenster zurück."
+    "Wähle in den Windows-Einstellungen Entrelinhas für .md, .markdown und .txt. Kehre danach zu diesem Fenster zurück.",
+    "Nas Definições do Windows, escolha o Entrelinhas para .md, .markdown e .txt. Depois, volte a esta janela.",
+    "En la configuración de Windows, elige Entrelinhas para .md, .markdown y .txt. Después, vuelve a esta ventana.",
+    "En la configuración de Windows, elige Entrelinhas para .md, .markdown y .txt. Después, vuelve a esta ventana.",
+    "在 Windows 設定中，為 .md、.markdown 和 .txt 選擇 Entrelinhas，然後返回此視窗。"
   ],
   [
     "Escolha o Entrelinhas nas configurações de aplicativos padrão do sistema.",
     "Choose Entrelinhas in the system's default app settings.",
     "システムの既定のアプリ設定でEntrelinhasを選択してください。",
     "请在系统的默认应用设置中选择 Entrelinhas。",
-    "Wähle Entrelinhas in den Standard-App-Einstellungen des Systems."
+    "Wähle Entrelinhas in den Standard-App-Einstellungen des Systems.",
+    "Escolha o Entrelinhas nas definições de aplicações predefinidas do sistema.",
+    "Elige Entrelinhas en la configuración de aplicaciones predeterminadas del sistema.",
+    "Elige Entrelinhas en la configuración de aplicaciones predeterminadas del sistema.",
+    "請在系統的預設應用設定中選擇 Entrelinhas。"
   ],
   [
     "Você pode mudar essa escolha depois, em “Abrir com” no explorador de arquivos.",
     "You can change this later using “Open with” in your file manager.",
     "後からファイルマネージャーの「プログラムから開く」で変更できます。",
     "之后可在文件管理器的“打开方式”中更改此选择。",
-    "Du kannst diese Auswahl später über „Öffnen mit“ im Dateimanager ändern."
+    "Du kannst diese Auswahl später über „Öffnen mit“ im Dateimanager ändern.",
+    "Pode alterar esta escolha mais tarde, em “Abrir com” no explorador de ficheiros.",
+    "Puedes cambiar esta elección después en «Abrir con» en el explorador de archivos.",
+    "Puedes cambiar esta elección después en «Abrir con» en el explorador de archivos.",
+    "之後可在檔案管理器的“開啟方式”中更改此選擇。"
   ],
   [
     "O sistema ainda não confirmou a alteração. Tente novamente.",
     "The system has not confirmed the change yet. Try again.",
     "システムが変更をまだ確認していません。もう一度お試しください。",
     "系统尚未确认更改，请重试。",
-    "Das System hat die Änderung noch nicht bestätigt. Versuche es erneut."
+    "Das System hat die Änderung noch nicht bestätigt. Versuche es erneut.",
+    "O sistema ainda não confirmou a alteração. Tente novamente.",
+    "El sistema todavía no ha confirmado el cambio. Inténtalo de nuevo.",
+    "El sistema todavía no ha confirmado el cambio. Inténtalo de nuevo.",
+    "系統尚未確認更改，請重試。"
   ],
-  ["Verificando…", "Checking…", "確認中…", "正在检查…", "Wird geprüft…"],
-  ["Aplicando…", "Applying…", "適用中…", "正在应用…", "Wird angewendet…"],
-  ["Começar a escrever", "Start writing", "書き始める", "开始写作", "Schreiben beginnen"],
-  ["Atualizações", "Updates", "アップデート", "更新", "Updates"],
+  [
+    "Verificando…",
+    "Checking…",
+    "確認中…",
+    "正在检查…",
+    "Wird geprüft…",
+    "A verificar…",
+    "Comprobando…",
+    "Comprobando…",
+    "正在檢查…"
+  ],
+  [
+    "Aplicando…",
+    "Applying…",
+    "適用中…",
+    "正在应用…",
+    "Wird angewendet…",
+    "A aplicar…",
+    "Aplicando…",
+    "Aplicando…",
+    "正在應用…"
+  ],
+  [
+    "Começar a escrever",
+    "Start writing",
+    "書き始める",
+    "开始写作",
+    "Schreiben beginnen",
+    "Começar a escrever",
+    "Empezar a escribir",
+    "Empezar a escribir",
+    "開始寫作"
+  ],
+  [
+    "Atualizações",
+    "Updates",
+    "アップデート",
+    "更新",
+    "Updates",
+    "Atualizações",
+    "Actualizaciones",
+    "Actualizaciones",
+    "更新"
+  ],
   [
     "Você escolhe quando procurar. Sem consultas automáticas.",
     "You choose when to check. No automatic checks.",
     "確認するタイミングは自分で選べます。自動で確認することはありません。",
     "何时检查由你决定，不会自动查询。",
-    "Du entscheidest, wann geprüft wird. Keine automatischen Abfragen."
+    "Du entscheidest, wann geprüft wird. Keine automatischen Abfragen.",
+    "Escolha quando procurar. Sem consultas automáticas.",
+    "Tú eliges cuándo buscar. Sin consultas automáticas.",
+    "Tú eliges cuándo buscar. Sin consultas automáticas.",
+    "何時檢查由你決定，不會自動查詢。"
   ],
   [
     "Procurar atualização",
     "Check for updates",
     "アップデートを確認",
     "检查更新",
-    "Nach Updates suchen"
+    "Nach Updates suchen",
+    "Procurar atualizações",
+    "Buscar actualización",
+    "Buscar actualización",
+    "檢查更新"
   ],
   [
     "Procurando atualização…",
     "Checking for updates…",
     "アップデートを確認中…",
     "正在检查更新…",
-    "Updates werden gesucht…"
+    "Updates werden gesucht…",
+    "A procurar atualizações…",
+    "Buscando actualización…",
+    "Buscando actualización…",
+    "正在檢查更新…"
   ],
   [
     "Você está com a versão mais recente deste canal.",
     "You have the latest version on this channel.",
     "このチャンネルの最新バージョンです。",
     "你使用的已是此通道的最新版本。",
-    "Du hast die neueste Version dieses Kanals."
+    "Du hast die neueste Version dieses Kanals.",
+    "Está a utilizar a versão mais recente deste canal.",
+    "Tienes la versión más reciente de este canal.",
+    "Tienes la versión más reciente de este canal.",
+    "你使用的已是此通道的最新版本。"
   ],
   [
     "Versão {version} disponível",
     "Version {version} available",
     "バージョン{version}を利用できます",
     "版本 {version} 可用",
-    "Version {version} verfügbar"
+    "Version {version} verfügbar",
+    "Versão {version} disponível",
+    "Versión {version} disponible",
+    "Versión {version} disponible",
+    "版本 {version} 可用"
   ],
   [
     "Baixar e instalar",
     "Download and install",
     "ダウンロードしてインストール",
     "下载并安装",
-    "Herunterladen und installieren"
+    "Herunterladen und installieren",
+    "Transferir e instalar",
+    "Descargar e instalar",
+    "Descargar e instalar",
+    "下載並安裝"
   ],
   [
     "Baixar pacote .deb",
     "Download .deb package",
     ".debパッケージをダウンロード",
     "下载 .deb 软件包",
-    ".deb-Paket herunterladen"
+    ".deb-Paket herunterladen",
+    "Transferir pacote .deb",
+    "Descargar paquete .deb",
+    "Descargar paquete .deb",
+    "下載 .deb 軟體包"
   ],
   [
     "Instalar e reiniciar",
     "Install and restart",
     "インストールして再起動",
     "安装并重启",
-    "Installieren und neu starten"
+    "Installieren und neu starten",
+    "Instalar e reiniciar",
+    "Instalar y reiniciar",
+    "Instalar y reiniciar",
+    "安裝並重啟"
   ],
   [
     "A instalação fechará e reabrirá o Entrelinhas. Você poderá salvar as alterações antes de continuar.",
     "Installation will close and reopen Entrelinhas. You can save your changes before continuing.",
     "インストール時にEntrelinhasを閉じて再起動します。続行前に変更を保存できます。",
     "安装将关闭并重新打开 Entrelinhas，你可以在继续前保存更改。",
-    "Bei der Installation wird Entrelinhas geschlossen und neu geöffnet. Vorher kannst du deine Änderungen speichern."
+    "Bei der Installation wird Entrelinhas geschlossen und neu geöffnet. Vorher kannst du deine Änderungen speichern.",
+    "A instalação fechará e voltará a abrir o Entrelinhas. Poderá guardar as alterações antes de continuar.",
+    "La instalación cerrará y volverá a abrir Entrelinhas. Podrás guardar los cambios antes de continuar.",
+    "La instalación cerrará y volverá a abrir Entrelinhas. Podrás guardar los cambios antes de continuar.",
+    "安裝將關閉並重新開啟 Entrelinhas，你可以在繼續前儲存更改。"
   ],
   [
     "Escolha onde salvar o pacote.",
     "Choose where to save the package.",
     "パッケージの保存先を選択してください。",
     "选择软件包保存位置。",
-    "Wähle einen Speicherort für das Paket."
+    "Wähle einen Speicherort für das Paket.",
+    "Escolha onde guardar o pacote.",
+    "Elige dónde guardar el paquete.",
+    "Elige dónde guardar el paquete.",
+    "選擇軟體包儲存位置。"
   ],
   [
     "Baixando atualização",
     "Downloading update",
     "アップデートをダウンロード中",
     "正在下载更新",
-    "Update wird heruntergeladen"
+    "Update wird heruntergeladen",
+    "A transferir atualização",
+    "Descargando actualización",
+    "Descargando actualización",
+    "正在下載更新"
   ],
   [
     "Download da atualização",
     "Update download",
     "アップデートのダウンロード",
     "更新下载",
-    "Update-Download"
+    "Update-Download",
+    "Transferência da atualização",
+    "Descarga de la actualización",
+    "Descarga de la actualización",
+    "更新下載"
   ],
   [
     "Instalando atualização. O aplicativo será reaberto.",
     "Installing update. The app will reopen.",
     "アップデートをインストール中です。アプリが再起動します。",
     "正在安装更新，应用将重新打开。",
-    "Update wird installiert. Die App wird neu geöffnet."
+    "Update wird installiert. Die App wird neu geöffnet.",
+    "A instalar a atualização. A aplicação voltará a abrir.",
+    "Instalando actualización. La aplicación se volverá a abrir.",
+    "Instalando actualización. La aplicación se volverá a abrir.",
+    "正在安裝更新，應用將重新開啟。"
   ],
   [
     "Permitir acesso à internet para procurar atualizações?",
     "Allow internet access to check for updates?",
     "アップデートの確認のためにインターネット接続を許可しますか？",
     "允许联网检查更新吗？",
-    "Internetzugriff für die Suche nach Updates erlauben?"
+    "Internetzugriff für die Suche nach Updates erlauben?",
+    "Permitir acesso à Internet para procurar atualizações?",
+    "¿Permitir el acceso a Internet para buscar actualizaciones?",
+    "¿Permitir el acceso a Internet para buscar actualizaciones?",
+    "允許聯網檢查更新嗎？"
   ],
   [
     "O Entrelinhas consultará o GitHub. Nenhum documento será enviado. A autorização vale para esta consulta e para o download que você solicitar em seguida.",
     "Entrelinhas will contact GitHub. No documents will be sent. Permission applies to this check and any download you request next.",
     "EntrelinhasがGitHubに接続します。文書は送信しません。許可は今回の確認と、続けて要求するダウンロードにのみ適用されます。",
     "Entrelinhas 将访问 GitHub，不会发送任何文档。此授权仅适用于本次查询及你随后请求的下载。",
-    "Entrelinhas fragt GitHub ab. Es werden keine Dokumente gesendet. Die Erlaubnis gilt für diese Abfrage und den anschließend von dir angeforderten Download."
+    "Entrelinhas fragt GitHub ab. Es werden keine Dokumente gesendet. Die Erlaubnis gilt für diese Abfrage und den anschließend von dir angeforderten Download.",
+    "O Entrelinhas consultará o GitHub. Nenhum documento será enviado. A autorização aplica-se a esta consulta e à transferência que solicitar a seguir.",
+    "Entrelinhas consultará GitHub. No se enviará ningún documento. La autorización es válida para esta consulta y para la descarga que solicites a continuación.",
+    "Entrelinhas consultará GitHub. No se enviará ningún documento. La autorización es válida para esta consulta y para la descarga que solicites a continuación.",
+    "Entrelinhas 將訪問 GitHub，不會傳送任何文件。此授權僅適用於本次查詢及你隨後請求的下載。"
   ],
-  ["Permitir consulta", "Allow check", "確認を許可", "允许查询", "Abfrage erlauben"],
+  [
+    "Permitir consulta",
+    "Allow check",
+    "確認を許可",
+    "允许查询",
+    "Abfrage erlauben",
+    "Permitir consulta",
+    "Permitir consulta",
+    "Permitir consulta",
+    "允許查詢"
+  ],
   [
     "Salvar atualização do Entrelinhas",
     "Save Entrelinhas update",
     "Entrelinhasのアップデートを保存",
     "保存 Entrelinhas 更新",
-    "Entrelinhas-Update speichern"
+    "Entrelinhas-Update speichern",
+    "Guardar atualização do Entrelinhas",
+    "Guardar actualización de Entrelinhas",
+    "Guardar actualización de Entrelinhas",
+    "儲存 Entrelinhas 更新"
   ],
-  ["Pacote Debian", "Debian package", "Debianパッケージ", "Debian 软件包", "Debian-Paket"],
+  [
+    "Pacote Debian",
+    "Debian package",
+    "Debianパッケージ",
+    "Debian 软件包",
+    "Debian-Paket",
+    "Pacote Debian",
+    "Paquete Debian",
+    "Paquete Debian",
+    "Debian 軟體包"
+  ],
   [
     "Pacote verificado e salvo em {0}. Abra o arquivo pelo sistema para instalar.",
     "Package verified and saved to {0}. Open the file with your system to install it.",
     "パッケージを検証し、{0}に保存しました。システムからファイルを開いてインストールしてください。",
     "软件包已验证并保存到 {0}。请通过系统打开此文件进行安装。",
-    "Paket geprüft und unter {0} gespeichert. Öffne die Datei über das System, um es zu installieren."
+    "Paket geprüft und unter {0} gespeichert. Öffne die Datei über das System, um es zu installieren.",
+    "Pacote verificado e guardado em {0}. Abra o ficheiro através do sistema para instalar.",
+    "Paquete verificado y guardado en {0}. Abre el archivo desde el sistema para instalarlo.",
+    "Paquete verificado y guardado en {0}. Abre el archivo desde el sistema para instalarlo.",
+    "軟體包已驗證並儲存到 {0}。請透過系統開啟此檔案進行安裝。"
   ],
-  ["Cancelar", "Cancel", "キャンセル", "取消", "Abbrechen"],
-  ["Tentar novamente", "Try again", "再試行", "重试", "Erneut versuchen"],
-  ["Dispensar aviso", "Dismiss notification", "通知を閉じる", "关闭通知", "Hinweis schließen"],
+  [
+    "Cancelar",
+    "Cancel",
+    "キャンセル",
+    "取消",
+    "Abbrechen",
+    "Cancelar",
+    "Cancelar",
+    "Cancelar",
+    "取消"
+  ],
+  [
+    "Tentar novamente",
+    "Try again",
+    "再試行",
+    "重试",
+    "Erneut versuchen",
+    "Tentar novamente",
+    "Intentar de nuevo",
+    "Intentar de nuevo",
+    "重試"
+  ],
+  [
+    "Dispensar aviso",
+    "Dismiss notification",
+    "通知を閉じる",
+    "关闭通知",
+    "Hinweis schließen",
+    "Dispensar aviso",
+    "Descartar aviso",
+    "Descartar aviso",
+    "關閉通知"
+  ],
   [
     "Salvar antes de atualizar?",
     "Save before updating?",
     "更新前に保存しますか？",
     "更新前保存吗？",
-    "Vor dem Aktualisieren speichern?"
+    "Vor dem Aktualisieren speichern?",
+    "Guardar antes de atualizar?",
+    "¿Guardar antes de actualizar?",
+    "¿Guardar antes de actualizar?",
+    "更新前儲存嗎？"
   ],
   [
     "Salvar antes de fechar?",
     "Save before closing?",
     "閉じる前に保存しますか？",
     "关闭前保存吗？",
-    "Vor dem Schließen speichern?"
+    "Vor dem Schließen speichern?",
+    "Guardar antes de fechar?",
+    "¿Guardar antes de cerrar?",
+    "¿Guardar antes de cerrar?",
+    "關閉前儲存嗎？"
   ],
   [
     "“{0}” tem alterações não salvas. Ao descartar, o texto não poderá ser recuperado.",
     "“{0}” has unsaved changes. Discarded text cannot be recovered.",
     "「{0}」には未保存の変更があります。破棄した文章は復元できません。",
     "“{0}”有未保存的更改，丢弃后将无法恢复。",
-    "„{0}“ hat ungespeicherte Änderungen. Verworfener Text kann nicht wiederhergestellt werden."
+    "„{0}“ hat ungespeicherte Änderungen. Verworfener Text kann nicht wiederhergestellt werden.",
+    "“{0}” tem alterações por guardar. Ao descartá-las, o texto não poderá ser recuperado.",
+    "«{0}» tiene cambios sin guardar. Si los descartas, el texto no se podrá recuperar.",
+    "«{0}» tiene cambios sin guardar. Si los descartas, el texto no se podrá recuperar.",
+    "“{0}”有未儲存的更改，丟棄後將無法恢復。"
   ],
   [
     "Salvar e continuar",
     "Save and continue",
     "保存して続ける",
     "保存并继续",
-    "Speichern und fortfahren"
+    "Speichern und fortfahren",
+    "Guardar e continuar",
+    "Guardar y continuar",
+    "Guardar y continuar",
+    "儲存並繼續"
   ],
-  ["Descartar", "Discard", "破棄", "丢弃", "Verwerfen"],
+  [
+    "Descartar",
+    "Discard",
+    "破棄",
+    "丢弃",
+    "Verwerfen",
+    "Descartar",
+    "Descartar",
+    "Descartar",
+    "丟棄"
+  ],
   [
     "Descartar e continuar",
     "Discard and continue",
     "破棄して続ける",
     "丢弃并继续",
-    "Verwerfen und fortfahren"
+    "Verwerfen und fortfahren",
+    "Descartar e continuar",
+    "Descartar y continuar",
+    "Descartar y continuar",
+    "丟棄並繼續"
   ],
   [
     "Salvar como texto simples?",
     "Save as plain text?",
     "プレーンテキストで保存しますか？",
     "保存为纯文本吗？",
-    "Als reinen Text speichern?"
+    "Als reinen Text speichern?",
+    "Guardar como texto simples?",
+    "¿Guardar como texto sin formato?",
+    "¿Guardar como texto sin formato?",
+    "儲存為純文字嗎？"
   ],
   [
     "TXT preserva somente o texto. Formatação, tabelas e imagens não serão mantidas no arquivo. O documento aberto continuará com a formatação até ser fechado.",
     "TXT keeps only text. Formatting, tables and images will not be saved in the file. The open document will keep its formatting until closed.",
     "TXTに保存されるのはテキストのみです。書式、表、画像は保存されません。開いている文書の書式は、閉じるまで維持されます。",
     "TXT 仅保留文字，文件中不会保存格式、表格和图片。当前打开的文档在关闭前仍会保留格式。",
-    "TXT enthält nur Text. Formatierungen, Tabellen und Bilder werden nicht gespeichert. Das geöffnete Dokument behält seine Formatierung bis zum Schließen."
+    "TXT enthält nur Text. Formatierungen, Tabellen und Bilder werden nicht gespeichert. Das geöffnete Dokument behält seine Formatierung bis zum Schließen.",
+    "TXT mantém apenas o texto. A formatação, as tabelas e as imagens não serão mantidas no ficheiro. O documento aberto manterá a formatação até ser fechado.",
+    "TXT conserva solo el texto. El formato, las tablas y las imágenes no se mantendrán en el archivo. El documento abierto conservará el formato hasta que se cierre.",
+    "TXT conserva solo el texto. El formato, las tablas y las imágenes no se mantendrán en el archivo. El documento abierto conservará el formato hasta que se cierre.",
+    "TXT 僅保留文字，檔案中不會儲存格式、表格和圖片。當前開啟的文件在關閉前仍會保留格式。"
   ],
   [
     "Salvar somente o texto",
     "Save text only",
     "テキストのみ保存",
     "仅保存文本",
-    "Nur Text speichern"
+    "Nur Text speichern",
+    "Guardar somente o texto",
+    "Guardar solo el texto",
+    "Guardar solo el texto",
+    "僅儲存文字"
   ],
-  ["Texto simples", "Plain text", "プレーンテキスト", "纯文本", "Nur Text"],
+  [
+    "Texto simples",
+    "Plain text",
+    "プレーンテキスト",
+    "纯文本",
+    "Nur Text",
+    "Texto simples",
+    "Texto sin formato",
+    "Texto sin formato",
+    "純文字"
+  ],
   [
     "Use a extensão .md ou .txt para escolher o formato.",
     "Use the .md or .txt extension to choose the format.",
     ".mdまたは.txtの拡張子で形式を指定してください。",
     "使用 .md 或 .txt 扩展名选择格式。",
-    "Wähle das Format mit der Erweiterung .md oder .txt."
+    "Wähle das Format mit der Erweiterung .md oder .txt.",
+    "Use a extensão .md ou .txt para escolher o formato.",
+    "Usa la extensión .md o .txt para elegir el formato.",
+    "Usa la extensión .md o .txt para elegir el formato.",
+    "使用 .md 或 .txt 副檔名選擇格式。"
   ],
   [
     "Este arquivo já está aberto em outra aba. Salve com outro nome.",
     "This file is already open in another tab. Save with a different name.",
     "このファイルは別のタブで開いています。別の名前で保存してください。",
     "此文件已在另一个标签页中打开，请使用其他名称保存。",
-    "Diese Datei ist bereits in einem anderen Tab geöffnet. Speichere unter einem anderen Namen."
+    "Diese Datei ist bereits in einem anderen Tab geöffnet. Speichere unter einem anderen Namen.",
+    "Este ficheiro já está aberto noutro separador. Guarde com outro nome.",
+    "Este archivo ya está abierto en otra pestaña. Guárdalo con otro nombre.",
+    "Este archivo ya está abierto en otra pestaña. Guárdalo con otro nombre.",
+    "此檔案已在另一個標籤頁中開啟，請使用其他名稱儲存。"
   ],
   [
     "Há imagens indisponíveis",
     "Some images are unavailable",
     "利用できない画像があります",
     "部分图片不可用",
-    "Einige Bilder sind nicht verfügbar"
+    "Einige Bilder sind nicht verfügbar",
+    "Há imagens indisponíveis",
+    "Hay imágenes no disponibles",
+    "Hay imágenes no disponibles",
+    "部分圖片不可用"
   ],
   [
     "{0} imagem(ns) indisponível(is). As referências foram mantidas. Imagens remotas não são baixadas automaticamente.",
     "{0} image(s) unavailable. References have been kept. Remote images are not downloaded automatically.",
     "{0}枚の画像を利用できません。参照は保持しています。リモート画像は自動でダウンロードされません。",
     "{0} 张图片不可用，引用已保留。远程图片不会自动下载。",
-    "{0} Bild(er) nicht verfügbar. Verweise bleiben erhalten. Externe Bilder werden nicht automatisch heruntergeladen."
+    "{0} Bild(er) nicht verfügbar. Verweise bleiben erhalten. Externe Bilder werden nicht automatisch heruntergeladen.",
+    "{0} imagem(ns) indisponível(is). As referências foram mantidas. Imagens remotas não são baixadas automaticamente.",
+    "{0} imagen(es) no disponible(s). Se han conservado las referencias. Las imágenes remotas no se descargan automáticamente.",
+    "{0} imagen(es) no disponible(s). Se han conservado las referencias. Las imágenes remotas no se descargan automáticamente.",
+    "{0} 張圖片不可用，引用已保留。遠端圖片不會自動下載。"
   ],
   [
     "{0} imagem(ns) têm referências relativas que não puderam ser carregadas. Ao salvar em outra pasta, essas referências podem deixar de apontar para o local correto. Deseja preservá-las mesmo assim?",
     "{0} image(s) have relative references that could not be loaded. Saving to another folder may break these references. Keep them anyway?",
     "{0}枚の画像の相対参照を読み込めませんでした。別のフォルダーに保存すると、参照先が正しくなくなる場合があります。それでも保持しますか？",
     "{0} 张图片的相对引用无法加载。保存到其他文件夹后，这些引用可能指向错误位置。仍要保留吗？",
-    "{0} Bild(er) haben relative Verweise, die nicht geladen werden konnten. Beim Speichern in einem anderen Ordner können diese Verweise ungültig werden. Trotzdem behalten?"
+    "{0} Bild(er) haben relative Verweise, die nicht geladen werden konnten. Beim Speichern in einem anderen Ordner können diese Verweise ungültig werden. Trotzdem behalten?",
+    "{0} imagem(ns) têm referências relativas que não puderam ser carregadas. Ao guardar em outra pasta, essas referências podem deixar de apontar para o local correto. Deseja preservá-las mesmo assim?",
+    "{0} imagen(es) tienen referencias relativas que no se han podido cargar. Si guardas en otra carpeta, esas referencias pueden dejar de apuntar a la ubicación correcta. ¿Quieres conservarlas de todos modos?",
+    "{0} imagen(es) tienen referencias relativas que no se han podido cargar. Si guardas en otra carpeta, esas referencias pueden dejar de apuntar a la ubicación correcta. ¿Quieres conservarlas de todos modos?",
+    "{0} 張圖片的相對引用無法載入。儲存到其他資料夾後，這些引用可能指向錯誤位置。仍要保留嗎？"
   ],
-  ["Preservar referências", "Keep references", "参照を保持", "保留引用", "Verweise behalten"],
+  [
+    "Preservar referências",
+    "Keep references",
+    "参照を保持",
+    "保留引用",
+    "Verweise behalten",
+    "Preservar referências",
+    "Conservar referencias",
+    "Conservar referencias",
+    "保留引用"
+  ],
   [
     "O arquivo no disco é diferente",
     "The file on disk is different",
     "ディスク上のファイルが変更されています",
     "磁盘上的文件已更改",
-    "Die Datei auf dem Datenträger ist anders"
+    "Die Datei auf dem Datenträger ist anders",
+    "O ficheiro no disco é diferente",
+    "El archivo del disco es diferente",
+    "El archivo del disco es diferente",
+    "磁碟上的檔案已更改"
   ],
-  ["Substituir arquivo", "Replace file", "ファイルを置き換える", "替换文件", "Datei ersetzen"],
-  ["Salvo · {0}", "Saved · {0}", "保存しました · {0}", "已保存 · {0}", "Gespeichert · {0}"],
+  [
+    "Substituir arquivo",
+    "Replace file",
+    "ファイルを置き換える",
+    "替换文件",
+    "Datei ersetzen",
+    "Substituir ficheiro",
+    "Reemplazar archivo",
+    "Reemplazar archivo",
+    "替換檔案"
+  ],
+  [
+    "Salvo · {0}",
+    "Saved · {0}",
+    "保存しました · {0}",
+    "已保存 · {0}",
+    "Gespeichert · {0}",
+    "Guardado · {0}",
+    "Guardado · {0}",
+    "Guardado · {0}",
+    "已儲存 · {0}"
+  ],
   [
     "Não foi possível salvar: {0}",
     "Could not save: {0}",
     "保存できませんでした：{0}",
     "无法保存：{0}",
-    "Speichern fehlgeschlagen: {0}"
+    "Speichern fehlgeschlagen: {0}",
+    "Não foi possível guardar: {0}",
+    "No se ha podido guardar: {0}",
+    "No se ha podido guardar: {0}",
+    "無法儲存：{0}"
   ],
   [
     "Não foi possível abrir o documento: {0}",
     "Could not open document: {0}",
     "文書を開けませんでした：{0}",
     "无法打开文档：{0}",
-    "Dokument konnte nicht geöffnet werden: {0}"
+    "Dokument konnte nicht geöffnet werden: {0}",
+    "Não foi possível abrir o documento: {0}",
+    "No se ha podido abrir el documento: {0}",
+    "No se ha podido abrir el documento: {0}",
+    "無法開啟文件：{0}"
   ],
   [
     "Biblioteca indisponível: {0}",
     "Library unavailable: {0}",
     "ライブラリを利用できません：{0}",
     "文库不可用：{0}",
-    "Bibliothek nicht verfügbar: {0}"
+    "Bibliothek nicht verfügbar: {0}",
+    "Biblioteca indisponível: {0}",
+    "Biblioteca no disponible: {0}",
+    "Biblioteca no disponible: {0}",
+    "文庫不可用：{0}"
   ],
   [
     "Não foi possível ler as preferências: {0}",
     "Could not read preferences: {0}",
     "設定を読み込めませんでした：{0}",
     "无法读取偏好设置：{0}",
-    "Einstellungen konnten nicht gelesen werden: {0}"
+    "Einstellungen konnten nicht gelesen werden: {0}",
+    "Não foi possível ler as preferências: {0}",
+    "No se han podido leer las preferencias: {0}",
+    "No se han podido leer las preferencias: {0}",
+    "無法讀取偏好設定：{0}"
   ],
   [
     "Não foi possível guardar as preferências: {0}",
     "Could not save preferences: {0}",
     "設定を保存できませんでした：{0}",
     "无法保存偏好设置：{0}",
-    "Einstellungen konnten nicht gespeichert werden: {0}"
+    "Einstellungen konnten nicht gespeichert werden: {0}",
+    "Não foi possível guardar as preferências: {0}",
+    "No se han podido guardar las preferencias: {0}",
+    "No se han podido guardar las preferencias: {0}",
+    "無法儲存偏好設定：{0}"
   ],
   [
     "Esta operação requer o aplicativo desktop. Execute npm run desktop.",
     "This operation requires the desktop app. Run npm run desktop.",
     "この操作にはデスクトップアプリが必要です。npm run desktopを実行してください。",
     "此操作需要桌面应用，请运行 npm run desktop。",
-    "Diese Aktion benötigt die Desktop-App. Führe npm run desktop aus."
+    "Diese Aktion benötigt die Desktop-App. Führe npm run desktop aus.",
+    "Esta operação requer a aplicação para computador. Execute npm run desktop.",
+    "Esta operación requiere la aplicación de escritorio. Ejecuta npm run desktop.",
+    "Esta operación requiere la aplicación de escritorio. Ejecuta npm run desktop.",
+    "此操作需要桌面應用，請執行 npm run desktop。"
   ],
-  ["disponível", "available", "利用可能", "可用", "verfügbar"],
+  [
+    "disponível",
+    "available",
+    "利用可能",
+    "可用",
+    "verfügbar",
+    "disponível",
+    "disponible",
+    "disponible",
+    "可用"
+  ],
   [
     "A gravação anterior não terminou corretamente.",
     "The previous save did not finish correctly.",
     "前の保存が正常に完了しませんでした。",
     "上一次保存未正常完成。",
-    "Der vorherige Speichervorgang wurde nicht korrekt abgeschlossen."
+    "Der vorherige Speichervorgang wurde nicht korrekt abgeschlossen.",
+    "A gravação anterior não terminou corretamente.",
+    "La escritura anterior no terminó correctamente.",
+    "La escritura anterior no terminó correctamente.",
+    "上一次儲存未正常完成。"
   ],
   [
     "A gravação anterior ainda não terminou.",
     "The previous save is still in progress.",
     "前の保存がまだ終わっていません。",
     "上一次保存仍在进行中。",
-    "Der vorherige Speichervorgang läuft noch."
+    "Der vorherige Speichervorgang läuft noch.",
+    "A gravação anterior ainda não terminou.",
+    "La escritura anterior todavía no ha terminado.",
+    "La escritura anterior todavía no ha terminado.",
+    "上一次儲存仍在進行中。"
   ],
   [
     "O arquivo foi salvo, mas não foi possível atualizar a biblioteca: {0}",
     "The file was saved, but the library could not be updated: {0}",
     "ファイルは保存しましたが、ライブラリを更新できませんでした：{0}",
     "文件已保存，但无法更新文库：{0}",
-    "Die Datei wurde gespeichert, aber die Bibliothek konnte nicht aktualisiert werden: {0}"
+    "Die Datei wurde gespeichert, aber die Bibliothek konnte nicht aktualisiert werden: {0}",
+    "O ficheiro foi guardado, mas não foi possível atualizar a biblioteca: {0}",
+    "El archivo se ha guardado, pero no se ha podido actualizar la biblioteca: {0}",
+    "El archivo se ha guardado, pero no se ha podido actualizar la biblioteca: {0}",
+    "檔案已儲存，但無法更新文庫：{0}"
   ],
   [
     "Pesquisa muito longa.",
     "The search is too long.",
     "検索文字列が長すぎます。",
     "搜索内容过长。",
-    "Die Suchanfrage ist zu lang."
+    "Die Suchanfrage ist zu lang.",
+    "Pesquisa muito longa.",
+    "La búsqueda es demasiado larga.",
+    "La búsqueda es demasiado larga.",
+    "搜尋內容過長。"
   ],
   [
     "Preferências inválidas.",
     "Invalid preferences.",
     "設定が無効です。",
     "偏好设置无效。",
-    "Ungültige Einstellungen."
+    "Ungültige Einstellungen.",
+    "Preferências inválidas.",
+    "Preferencias no válidas.",
+    "Preferencias no válidas.",
+    "偏好設定無效。"
   ],
   [
     "Preferências muito grandes.",
     "Preferences are too large.",
     "設定データが大きすぎます。",
     "偏好设置数据过大。",
-    "Die Einstellungen sind zu umfangreich."
+    "Die Einstellungen sind zu umfangreich.",
+    "Preferências muito grandes.",
+    "Las preferencias son demasiado grandes.",
+    "Las preferencias son demasiado grandes.",
+    "偏好設定資料過大。"
   ],
   [
     "Nome, ícone ou cor do projeto inválidos.",
     "Invalid project name, icon or color.",
     "プロジェクトの名前、アイコン、または色が無効です。",
     "项目名称、图标或颜色无效。",
-    "Ungültiger Projektname, ungültiges Symbol oder ungültige Farbe."
+    "Ungültiger Projektname, ungültiges Symbol oder ungültige Farbe.",
+    "Nome, ícone ou cor do projeto inválidos.",
+    "Nombre, icono o color del proyecto no válidos.",
+    "Nombre, icono o color del proyecto no válidos.",
+    "專案名稱、圖示或顏色無效。"
   ],
   [
     "O documento não é um arquivo.",
     "The document is not a file.",
     "指定した文書はファイルではありません。",
     "此文档不是文件。",
-    "Das Dokument ist keine Datei."
+    "Das Dokument ist keine Datei.",
+    "O documento não é um ficheiro.",
+    "El documento no es un archivo.",
+    "El documento no es un archivo.",
+    "此文件不是檔案。"
   ],
   [
     "Salve o documento antes de associá-lo.",
     "Save the document before adding it to a project.",
     "プロジェクトに関連付ける前に文書を保存してください。",
     "请先保存文档，再关联到项目。",
-    "Speichere das Dokument, bevor du es einem Projekt zuordnest."
+    "Speichere das Dokument, bevor du es einem Projekt zuordnest.",
+    "Guarde o documento antes de o associar.",
+    "Guarda el documento antes de asociarlo.",
+    "Guarda el documento antes de asociarlo.",
+    "請先儲存文件，再關聯到專案。"
   ],
   [
     "Este caminho já está registrado. Remova a associação antiga ou escolha outro arquivo.",
     "This path is already registered. Remove the old reference or choose another file.",
     "このパスは登録済みです。古い関連付けを削除するか、別のファイルを選んでください。",
     "此路径已登记，请移除旧关联或选择其他文件。",
-    "Dieser Pfad ist bereits registriert. Entferne den alten Verweis oder wähle eine andere Datei."
+    "Dieser Pfad ist bereits registriert. Entferne den alten Verweis oder wähle eine andere Datei.",
+    "Este caminho já está registado. Remova a associação antiga ou escolha outro ficheiro.",
+    "Esta ruta ya está registrada. Quita la asociación anterior o elige otro archivo.",
+    "Esta ruta ya está registrada. Quita la asociación anterior o elige otro archivo.",
+    "此路徑已登記，請移除舊關聯或選擇其他檔案。"
   ],
   [
     "Esta referência não está mais na biblioteca. Abra o arquivo pelo seu novo local.",
     "This reference is no longer in the library. Open the file from its new location.",
     "この参照はライブラリにありません。新しい場所からファイルを開いてください。",
     "此引用已不在文库中，请从新位置打开文件。",
-    "Dieser Verweis ist nicht mehr in der Bibliothek. Öffne die Datei an ihrem neuen Ort."
+    "Dieser Verweis ist nicht mehr in der Bibliothek. Öffne die Datei an ihrem neuen Ort.",
+    "Esta referência já não está na biblioteca. Abra o ficheiro na sua nova localização.",
+    "Esta referencia ya no está en la biblioteca. Abre el archivo desde su nueva ubicación.",
+    "Esta referencia ya no está en la biblioteca. Abre el archivo desde su nueva ubicación.",
+    "此引用已不在文庫中，請從新位置開啟檔案。"
   ],
   [
     "Escolha um título válido, sem barras e com um nome mais curto.",
     "Choose a valid, shorter title without slashes.",
     "スラッシュを含まない、短く有効なタイトルを選んでください。",
     "请选择不含斜杠且较短的有效标题。",
-    "Wähle einen gültigen, kürzeren Titel ohne Schrägstriche."
+    "Wähle einen gültigen, kürzeren Titel ohne Schrägstriche.",
+    "Escolha um título válido, sem barras e com um nome mais curto.",
+    "Elige un título válido, sin barras y con un nombre más corto.",
+    "Elige un título válido, sin barras y con un nombre más corto.",
+    "請選擇不含斜槓且較短的有效標題。"
   ],
   [
     "Já existe um arquivo com esse título nesta pasta.",
     "A file with this title already exists in this folder.",
     "このフォルダーには同じタイトルのファイルがあります。",
     "此文件夹中已存在同名文件。",
-    "In diesem Ordner gibt es bereits eine Datei mit diesem Titel."
+    "In diesem Ordner gibt es bereits eine Datei mit diesem Titel.",
+    "Já existe um ficheiro com esse título nesta pasta.",
+    "Ya existe un archivo con ese título en esta carpeta.",
+    "Ya existe un archivo con ese título en esta carpeta.",
+    "此資料夾中已存在同名檔案。"
   ],
   [
     "Reabra o documento antes de renomear esse caminho.",
     "Reopen the document before renaming it.",
     "名前を変更する前に文書を開き直してください。",
     "请先重新打开文档，再重命名。",
-    "Öffne das Dokument erneut, bevor du es umbenennst."
+    "Öffne das Dokument erneut, bevor du es umbenennst.",
+    "Reabra o documento antes de renomear esse caminho.",
+    "Vuelve a abrir el documento antes de cambiar el nombre de esta ruta.",
+    "Vuelve a abrir el documento antes de cambiar el nombre de esta ruta.",
+    "請先重新開啟文件，再重新命名。"
   ],
   [
     "Já existe uma referência a esse nome na biblioteca. Escolha outro título.",
     "The library already has a reference with that name. Choose another title.",
     "ライブラリに同じ名前の参照があります。別のタイトルを選んでください。",
     "文库中已有此名称的引用，请选择其他标题。",
-    "In der Bibliothek gibt es bereits einen Verweis mit diesem Namen. Wähle einen anderen Titel."
+    "In der Bibliothek gibt es bereits einen Verweis mit diesem Namen. Wähle einen anderen Titel.",
+    "Já existe uma referência a esse nome na biblioteca. Escolha outro título.",
+    "Ya existe una referencia a ese nombre en la biblioteca. Elige otro título.",
+    "Ya existe una referencia a ese nombre en la biblioteca. Elige otro título.",
+    "文庫中已有此名稱的引用，請選擇其他標題。"
   ],
   [
     "Salve o documento para registrar seu caminho antes de renomear.",
     "Save the document to register its path before renaming.",
     "名前を変更する前に文書を保存してパスを登録してください。",
     "请先保存文档以登记路径，再重命名。",
-    "Speichere das Dokument, um seinen Pfad vor dem Umbenennen zu registrieren."
+    "Speichere das Dokument, um seinen Pfad vor dem Umbenennen zu registrieren.",
+    "Guarde o documento para registar o seu caminho antes de o renomear.",
+    "Guarda el documento para registrar su ruta antes de cambiarle el nombre.",
+    "Guarda el documento para registrar su ruta antes de cambiarle el nombre.",
+    "請先儲存文件以登記路徑，再重新命名。"
   ],
   [
     "O arquivo está em {path}. Não foi possível atualizar a biblioteca nem voltar ao nome anterior: {error} / {rollback}",
     "The file is at {path}. The library could not be updated and the old name could not be restored: {error} / {rollback}",
     "ファイルは{path}にあります。ライブラリを更新できず、元の名前にも戻せませんでした：{error} / {rollback}",
     "文件位于 {path}。无法更新文库，也无法恢复原文件名：{error} / {rollback}",
-    "Die Datei liegt unter {path}. Die Bibliothek konnte nicht aktualisiert und der alte Name nicht wiederhergestellt werden: {error} / {rollback}"
+    "Die Datei liegt unter {path}. Die Bibliothek konnte nicht aktualisiert und der alte Name nicht wiederhergestellt werden: {error} / {rollback}",
+    "O ficheiro está em {path}. Não foi possível atualizar a biblioteca nem voltar ao nome anterior: {error} / {rollback}",
+    "El archivo está en {path}. No se ha podido actualizar la biblioteca ni volver al nombre anterior: {error} / {rollback}",
+    "El archivo está en {path}. No se ha podido actualizar la biblioteca ni volver al nombre anterior: {error} / {rollback}",
+    "檔案位於 {path}。無法更新文庫，也無法恢復原檔名：{error} / {rollback}"
   ],
   [
     "Instale ou atualize o Entrelinhas para registrá-lo no menu de aplicativos.",
     "Install or update Entrelinhas to register it in the application menu.",
     "アプリメニューに登録するには、Entrelinhasをインストールまたは更新してください。",
     "安装或更新 Entrelinhas，以将其登记到应用菜单中。",
-    "Installiere oder aktualisiere Entrelinhas, um es im Anwendungsmenü zu registrieren."
+    "Installiere oder aktualisiere Entrelinhas, um es im Anwendungsmenü zu registrieren.",
+    "Instale ou atualize o Entrelinhas para o registar no menu de aplicações.",
+    "Instala o actualiza Entrelinhas para registrarlo en el menú de aplicaciones.",
+    "Instala o actualiza Entrelinhas para registrarlo en el menú de aplicaciones.",
+    "安裝或更新 Entrelinhas，以將其登記到應用選單中。"
   ],
   [
     "O sistema não permitiu definir o padrão para {mime}: {error}",
     "The system did not allow setting the default for {mime}: {error}",
     "システムが{mime}の既定設定を許可しませんでした：{error}",
     "系统不允许为 {mime} 设置默认应用：{error}",
-    "Das System hat die Standardzuordnung für {mime} nicht erlaubt: {error}"
+    "Das System hat die Standardzuordnung für {mime} nicht erlaubt: {error}",
+    "O sistema não permitiu definir a predefinição para {mime}: {error}",
+    "El sistema no ha permitido establecer el valor predeterminado para {mime}: {error}",
+    "El sistema no ha permitido establecer el valor predeterminado para {mime}: {error}",
+    "系統不允許為 {mime} 設定預設應用：{error}"
   ],
   [
     "O sistema ainda não confirmou o Entrelinhas como padrão. Tente novamente nas configurações.",
     "The system has not confirmed Entrelinhas as the default. Try again in Settings.",
     "Entrelinhasが既定に設定されたことをシステムがまだ確認していません。設定から再試行してください。",
     "系统尚未确认 Entrelinhas 为默认应用，请在设置中重试。",
-    "Das System hat Entrelinhas noch nicht als Standard bestätigt. Versuche es erneut in den Einstellungen."
+    "Das System hat Entrelinhas noch nicht als Standard bestätigt. Versuche es erneut in den Einstellungen.",
+    "O sistema ainda não confirmou o Entrelinhas como predefinição. Tente novamente nas definições.",
+    "El sistema todavía no ha confirmado Entrelinhas como aplicación predeterminada. Inténtalo de nuevo desde los configuración.",
+    "El sistema todavía no ha confirmado Entrelinhas como aplicación predeterminada. Inténtalo de nuevo desde los ajustes.",
+    "系統尚未確認 Entrelinhas 為預設應用，請在設定中重試。"
   ],
   [
     "Instale o Entrelinhas antes de escolhê-lo como padrão.",
     "Install Entrelinhas before choosing it as the default.",
     "既定に設定する前にEntrelinhasをインストールしてください。",
     "请先安装 Entrelinhas，再将其设为默认应用。",
-    "Installiere Entrelinhas, bevor du es als Standard auswählst."
+    "Installiere Entrelinhas, bevor du es als Standard auswählst.",
+    "Instale o Entrelinhas antes de o escolher como predefinição.",
+    "Instala Entrelinhas antes de elegirlo como predeterminado.",
+    "Instala Entrelinhas antes de elegirlo como predeterminado.",
+    "請先安裝 Entrelinhas，再將其設為預設應用。"
   ],
   [
     "Não foi possível abrir as configurações do Windows. Abra Configurações → Aplicativos → Aplicativos padrão.",
     "Could not open Windows settings. Open Settings → Apps → Default apps.",
     "Windowsの設定を開けませんでした。「設定 → アプリ → 既定のアプリ」を開いてください。",
     "无法打开 Windows 设置，请打开设置 → 应用 → 默认应用。",
-    "Die Windows-Einstellungen konnten nicht geöffnet werden. Öffne Einstellungen → Apps → Standard-Apps."
+    "Die Windows-Einstellungen konnten nicht geöffnet werden. Öffne Einstellungen → Apps → Standard-Apps.",
+    "Não foi possível abrir as Definições do Windows. Abra Definições → Aplicações → Aplicações predefinidas.",
+    "No se ha podido abrir la configuración de Windows. Abre Configuración → Aplicaciones → Aplicaciones predeterminadas.",
+    "No se ha podido abrir la configuración de Windows. Abre Configuración → Aplicaciones → Aplicaciones predeterminadas.",
+    "無法開啟 Windows 設定，請開啟設定 → 應用 → 預設應用。"
   ],
   [
     "Já existe uma atualização em andamento.",
     "An update is already in progress.",
     "アップデートはすでに進行中です。",
     "更新已在进行中。",
-    "Ein Update läuft bereits."
+    "Ein Update läuft bereits.",
+    "Já está a decorrer uma atualização.",
+    "Ya hay una actualización en curso.",
+    "Ya hay una actualización en curso.",
+    "更新已在進行中。"
   ],
   [
     "Não foi possível concluir a atualização: {error}",
     "The update could not be completed: {error}",
     "アップデートを完了できませんでした：{error}",
     "无法完成更新：{error}",
-    "Das Update konnte nicht abgeschlossen werden: {error}"
+    "Das Update konnte nicht abgeschlossen werden: {error}",
+    "Não foi possível concluir a atualização: {error}",
+    "No se ha podido completar la actualización: {error}",
+    "No se ha podido completar la actualización: {error}",
+    "無法完成更新：{error}"
   ],
   [
     "O pacote precisa usar uma conexão HTTPS.",
     "The package must use an HTTPS connection.",
     "パッケージにはHTTPS接続が必要です。",
     "软件包必须使用 HTTPS 连接。",
-    "Das Paket muss eine HTTPS-Verbindung verwenden."
+    "Das Paket muss eine HTTPS-Verbindung verwenden.",
+    "O pacote tem de utilizar uma ligação HTTPS.",
+    "El paquete debe usar una conexión HTTPS.",
+    "El paquete debe usar una conexión HTTPS.",
+    "軟體包必須使用 HTTPS 連線。"
   ],
   [
     "Procure uma atualização antes de baixar.",
     "Check for an update before downloading.",
     "ダウンロード前にアップデートを確認してください。",
     "请先检查更新，再下载。",
-    "Suche vor dem Herunterladen nach einem Update."
+    "Suche vor dem Herunterladen nach einem Update.",
+    "Procure uma atualização antes de transferir.",
+    "Busca una actualización antes de descargar.",
+    "Busca una actualización antes de descargar.",
+    "請先檢查更新，再下載。"
   ],
   [
     "Escolha um caminho completo terminado em .deb.",
     "Choose a full path ending in .deb.",
     ".debで終わる絶対パスを指定してください。",
     "请选择以 .deb 结尾的完整路径。",
-    "Wähle einen vollständigen Pfad mit der Endung .deb."
+    "Wähle einen vollständigen Pfad mit der Endung .deb.",
+    "Escolha um caminho completo terminado em .deb.",
+    "Elige una ruta completa que termine en .deb.",
+    "Elige una ruta completa que termine en .deb.",
+    "請選擇以 .deb 結尾的完整路徑。"
   ],
   [
     "Pasta inválida.",
     "Invalid folder.",
     "フォルダーが無効です。",
     "文件夹无效。",
-    "Ungültiger Ordner."
+    "Ungültiger Ordner.",
+    "Pasta inválida.",
+    "Carpeta no válida.",
+    "Carpeta no válida.",
+    "資料夾無效。"
   ],
   [
     "Procure uma atualização antes de instalar.",
     "Check for an update before installing.",
     "インストール前にアップデートを確認してください。",
     "请先检查更新，再安装。",
-    "Suche vor dem Installieren nach einem Update."
+    "Suche vor dem Installieren nach einem Update.",
+    "Procure uma atualização antes de instalar.",
+    "Busca una actualización antes de instalar.",
+    "Busca una actualización antes de instalar.",
+    "請先檢查更新，再安裝。"
   ],
   [
     "Baixe a atualização antes de instalar.",
     "Download the update before installing.",
     "インストール前にアップデートをダウンロードしてください。",
     "请先下载更新，再安装。",
-    "Lade das Update vor der Installation herunter."
+    "Lade das Update vor der Installation herunter.",
+    "Transfira a atualização antes de instalar.",
+    "Descarga la actualización antes de instalar.",
+    "Descarga la actualización antes de instalar.",
+    "請先下載更新，再安裝。"
   ],
   [
     "No Linux, instale o pacote .deb pelo sistema.",
     "On Linux, install the .deb package using your system.",
     "Linuxでは、システムから.debパッケージをインストールしてください。",
     "在 Linux 上，请通过系统安装 .deb 软件包。",
-    "Installiere unter Linux das .deb-Paket über das System."
+    "Installiere unter Linux das .deb-Paket über das System.",
+    "No Linux, instale o pacote .deb através do sistema.",
+    "En Linux, instala el paquete .deb desde el sistema.",
+    "En Linux, instala el paquete .deb desde el sistema.",
+    "在 Linux 上，請透過系統安裝 .deb 軟體包。"
   ],
   [
     "O nome do arquivo não está em Unicode válido.",
     "The filename is not valid Unicode.",
     "ファイル名が有効なUnicodeではありません。",
     "文件名不是有效的 Unicode。",
-    "Der Dateiname ist kein gültiges Unicode."
+    "Der Dateiname ist kein gültiges Unicode.",
+    "O nome do ficheiro não está em Unicode válido.",
+    "El nombre del archivo no está en Unicode válido.",
+    "El nombre del archivo no está en Unicode válido.",
+    "檔名不是有效的 Unicode。"
   ],
   [
     "Abra um arquivo local .md, .markdown ou .txt.",
     "Open a local .md, .markdown or .txt file.",
     "ローカルの.md、.markdown、.txtファイルを開いてください。",
     "请打开本地 .md、.markdown 或 .txt 文件。",
-    "Öffne eine lokale .md-, .markdown- oder .txt-Datei."
+    "Öffne eine lokale .md-, .markdown- oder .txt-Datei.",
+    "Abra um ficheiro local .md, .markdown ou .txt.",
+    "Abre un archivo local .md, .markdown o .txt.",
+    "Abre un archivo local .md, .markdown o .txt.",
+    "請開啟本地 .md、.markdown 或 .txt 檔案。"
   ],
   [
     "“{file}” não é um documento Markdown ou TXT.",
     "“{file}” is not a Markdown or TXT document.",
     "「{file}」はMarkdownまたはTXT文書ではありません。",
     "“{file}”不是 Markdown 或 TXT 文档。",
-    "„{file}“ ist kein Markdown- oder TXT-Dokument."
+    "„{file}“ ist kein Markdown- oder TXT-Dokument.",
+    "“{file}” não é um documento Markdown ou TXT.",
+    "«{file}» no es un documento Markdown ni TXT.",
+    "«{file}» no es un documento Markdown ni TXT.",
+    "“{file}”不是 Markdown 或 TXT 文件。"
   ],
   [
     "O caminho do arquivo não está em Unicode válido.",
     "The file path is not valid Unicode.",
     "ファイルのパスが有効なUnicodeではありません。",
     "文件路径不是有效的 Unicode。",
-    "Der Dateipfad ist kein gültiges Unicode."
+    "Der Dateipfad ist kein gültiges Unicode.",
+    "O caminho do ficheiro não está em Unicode válido.",
+    "La ruta del archivo no está en Unicode válido.",
+    "La ruta del archivo no está en Unicode válido.",
+    "檔案路徑不是有效的 Unicode。"
   ],
   [
     "Não foi possível receber os documentos do explorador.",
     "Could not receive documents from the file manager.",
     "ファイルマネージャーから文書を受け取れませんでした。",
     "无法接收文件管理器传来的文档。",
-    "Die Dokumente konnten nicht vom Dateimanager empfangen werden."
+    "Die Dokumente konnten nicht vom Dateimanager empfangen werden.",
+    "Não foi possível receber os documentos do explorador.",
+    "No se han podido recibir los documentos del explorador.",
+    "No se han podido recibir los documentos del explorador.",
+    "無法接收檔案管理器傳來的文件。"
   ],
   [
     "Escolha um caminho absoluto.",
     "Choose an absolute path.",
     "絶対パスを指定してください。",
     "请选择绝对路径。",
-    "Wähle einen absoluten Pfad."
+    "Wähle einen absoluten Pfad.",
+    "Escolha um caminho absoluto.",
+    "Elige una ruta absoluta.",
+    "Elige una ruta absoluta.",
+    "請選擇絕對路徑。"
   ],
   [
     "Escolha a extensão .md ou .txt.",
     "Choose the .md or .txt extension.",
     ".mdまたは.txtの拡張子を選んでください。",
     "请选择 .md 或 .txt 扩展名。",
-    "Wähle die Erweiterung .md oder .txt."
+    "Wähle die Erweiterung .md oder .txt.",
+    "Escolha a extensão .md ou .txt.",
+    "Elige la extensión .md o .txt.",
+    "Elige la extensión .md o .txt.",
+    "請選擇 .md 或 .txt 副檔名。"
   ],
-  ["Nome inválido.", "Invalid name.", "名前が無効です。", "名称无效。", "Ungültiger Name."],
+  [
+    "Nome inválido.",
+    "Invalid name.",
+    "名前が無効です。",
+    "名称无效。",
+    "Ungültiger Name.",
+    "Nome inválido.",
+    "Nombre no válido.",
+    "Nombre no válido.",
+    "名稱無效。"
+  ],
   [
     "O documento deve ser um arquivo de até 64 MB.",
     "The document must be a file no larger than 64 MB.",
     "文書は64 MB以下のファイルである必要があります。",
     "文档必须是大小不超过 64 MB 的文件。",
-    "Das Dokument muss eine Datei mit höchstens 64 MB sein."
+    "Das Dokument muss eine Datei mit höchstens 64 MB sein.",
+    "O documento deve ser um ficheiro de até 64 MB.",
+    "El documento debe ser un archivo de hasta 64 MB.",
+    "El documento debe ser un archivo de hasta 64 MB.",
+    "文件必須是大小不超過 64 MB 的檔案。"
   ],
   [
     "O arquivo não está em UTF-8. Converta a codificação em outro editor antes de abrir.",
     "The file is not UTF-8. Convert its encoding in another editor before opening.",
     "ファイルがUTF-8ではありません。別のエディターで文字コードを変換してから開いてください。",
     "文件不是 UTF-8 编码，请先在其他编辑器中转换编码。",
-    "Die Datei ist nicht UTF-8-kodiert. Wandle die Kodierung vor dem Öffnen in einem anderen Editor um."
+    "Die Datei ist nicht UTF-8-kodiert. Wandle die Kodierung vor dem Öffnen in einem anderen Editor um.",
+    "O ficheiro não está em UTF-8. Converta a codificação em outro editor antes de abrir.",
+    "El archivo no está en UTF-8. Convierte la codificación en otro editor antes de abrirlo.",
+    "El archivo no está en UTF-8. Convierte la codificación en otro editor antes de abrirlo.",
+    "檔案不是 UTF-8 編碼，請先在其他編輯器中轉換編碼。"
   ],
   [
     "O arquivo contém dados binários.",
     "The file contains binary data.",
     "ファイルにバイナリデータが含まれています。",
     "文件包含二进制数据。",
-    "Die Datei enthält Binärdaten."
+    "Die Datei enthält Binärdaten.",
+    "O ficheiro contém dados binários.",
+    "El archivo contiene datos binarios.",
+    "El archivo contiene datos binarios.",
+    "檔案包含二進位制資料。"
   ],
   [
     "O arquivo já existe ou foi alterado fora do Entrelinhas.",
     "The file already exists or was changed outside Entrelinhas.",
     "ファイルがすでに存在するか、Entrelinhas以外で変更されています。",
     "文件已存在，或已在 Entrelinhas 外部被更改。",
-    "Die Datei existiert bereits oder wurde außerhalb von Entrelinhas geändert."
+    "Die Datei existiert bereits oder wurde außerhalb von Entrelinhas geändert.",
+    "O ficheiro já existe ou foi alterado fora do Entrelinhas.",
+    "El archivo ya existe o se ha modificado fuera de Entrelinhas.",
+    "El archivo ya existe o se ha modificado fuera de Entrelinhas.",
+    "檔案已存在，或已在 Entrelinhas 外部被更改。"
   ],
   [
     "Caminho de imagem inválido.",
     "Invalid image path.",
     "画像のパスが無効です。",
     "图片路径无效。",
-    "Ungültiger Bildpfad."
+    "Ungültiger Bildpfad.",
+    "Caminho de imagem inválido.",
+    "Ruta de imagen no válida.",
+    "Ruta de imagen no válida.",
+    "圖片路徑無效。"
   ],
   [
     "Formato de imagem não suportado.",
     "Unsupported image format.",
     "対応していない画像形式です。",
     "不支持此图片格式。",
-    "Nicht unterstütztes Bildformat."
+    "Nicht unterstütztes Bildformat.",
+    "Formato de imagem não suportado.",
+    "Formato de imagen no compatible.",
+    "Formato de imagen no compatible.",
+    "不支援此圖片格式。"
   ],
   [
     "O arquivo está marcado como somente leitura. Use Salvar como para criar uma cópia.",
     "The file is read-only. Use Save as to create a copy.",
     "このファイルは読み取り専用です。「名前を付けて保存」でコピーを作成してください。",
     "文件为只读，请使用“另存为”创建副本。",
-    "Die Datei ist schreibgeschützt. Verwende „Speichern unter“, um eine Kopie zu erstellen."
+    "Die Datei ist schreibgeschützt. Verwende „Speichern unter“, um eine Kopie zu erstellen.",
+    "O ficheiro está marcado como só de leitura. Utilize Guardar como para criar uma cópia.",
+    "El archivo está marcado como solo lectura. Usa Guardar como para crear una copia.",
+    "El archivo está marcado como solo lectura. Usa Guardar como para crear una copia.",
+    "檔案為只讀，請使用“另存為”建立副本。"
   ],
   [
     "TXT não armazena imagens.",
     "TXT does not store images.",
     "TXTは画像を保存できません。",
     "TXT 无法保存图片。",
-    "TXT speichert keine Bilder."
+    "TXT speichert keine Bilder.",
+    "TXT não armazena imagens.",
+    "TXT no guarda imágenes.",
+    "TXT no guarda imágenes.",
+    "TXT 無法儲存圖片。"
   ],
   [
     "Referência de imagem inválida.",
     "Invalid image reference.",
     "画像の参照が無効です。",
     "图片引用无效。",
-    "Ungültiger Bildverweis."
+    "Ungültiger Bildverweis.",
+    "Referência de imagem inválida.",
+    "Referencia de imagen no válida.",
+    "Referencia de imagen no válida.",
+    "圖片引用無效。"
   ],
-  ["Imagem inválida.", "Invalid image.", "画像が無効です。", "图片无效。", "Ungültiges Bild."],
+  [
+    "Imagem inválida.",
+    "Invalid image.",
+    "画像が無効です。",
+    "图片无效。",
+    "Ungültiges Bild.",
+    "Imagem inválida.",
+    "Imagen no válida.",
+    "Imagen no válida.",
+    "圖片無效。"
+  ],
   [
     "A imagem está corrompida.",
     "The image is corrupted.",
     "画像が破損しています。",
     "图片已损坏。",
-    "Das Bild ist beschädigt."
+    "Das Bild ist beschädigt.",
+    "A imagem está corrompida.",
+    "La imagen está dañada.",
+    "La imagen está dañada.",
+    "圖片已損壞。"
   ],
   [
     "Recursos de imagem excedem o limite de memória por salvamento (128 MB).",
     "Image assets exceed the per-save memory limit (128 MB).",
     "画像データが1回の保存あたりのメモリ上限（128 MB）を超えています。",
     "图片资源超过每次保存的内存限制（128 MB）。",
-    "Die Bilddaten überschreiten das Speicherlimit pro Speichervorgang (128 MB)."
+    "Die Bilddaten überschreiten das Speicherlimit pro Speichervorgang (128 MB).",
+    "Recursos de imagem excedem o limite de memória por gravação (128 MB).",
+    "Los recursos de imagen superan el límite de memoria por guardado (128 MB).",
+    "Los recursos de imagen superan el límite de memoria por guardado (128 MB).",
+    "圖片資源超過每次儲存的記憶體限制（128 MB）。"
   ],
   [
     "Uma imagem em memória não foi fornecida. O documento não foi salvo.",
     "An in-memory image was not provided. The document was not saved.",
     "メモリ内の画像データが見つかりません。文書は保存していません。",
     "缺少内存中的图片数据，文档未保存。",
-    "Ein Bild aus dem Arbeitsspeicher wurde nicht bereitgestellt. Das Dokument wurde nicht gespeichert."
+    "Ein Bild aus dem Arbeitsspeicher wurde nicht bereitgestellt. Das Dokument wurde nicht gespeichert.",
+    "Uma imagem em memória não foi fornecida. O documento não foi guardado.",
+    "No se ha proporcionado una imagen en memoria. El documento no se ha guardado.",
+    "No se ha proporcionado una imagen en memoria. El documento no se ha guardado.",
+    "缺少記憶體中的圖片資料，文件未儲存。"
   ],
   [
     "Um recurso de imagem foi alterado. Nenhum documento foi sobrescrito.",
     "An image asset was changed. No document was overwritten.",
     "画像リソースが変更されています。文書は上書きしていません。",
     "一个图片资源已更改，未覆盖任何文档。",
-    "Eine Bilddatei wurde geändert. Es wurde kein Dokument überschrieben."
+    "Eine Bilddatei wurde geändert. Es wurde kein Dokument überschrieben.",
+    "Um recurso de imagem foi alterado. Nenhum documento foi sobrescrito.",
+    "Se ha modificado un recurso de imagen. No se ha sobrescrito ningún documento.",
+    "Se ha modificado un recurso de imagen. No se ha sobrescrito ningún documento.",
+    "一個圖片資源已更改，未覆蓋任何文件。"
   ],
   [
     "Documento inválido.",
     "Invalid document.",
     "文書が無効です。",
     "文档无效。",
-    "Ungültiges Dokument."
+    "Ungültiges Dokument.",
+    "Documento inválido.",
+    "Documento no válido.",
+    "Documento no válido.",
+    "文件無效。"
   ],
   [
     "{error} Deseja substituir o arquivo por esta versão? Você também pode cancelar e usar Salvar como.",
     "{error} Replace the file with this version? You can also cancel and use Save as.",
     "{error} このバージョンでファイルを置き換えますか？キャンセルして「名前を付けて保存」を使うこともできます。",
     "{error} 要用此版本替换文件吗？你也可以取消并使用“另存为”。",
-    "{error} Datei durch diese Version ersetzen? Du kannst auch abbrechen und „Speichern unter“ verwenden."
+    "{error} Datei durch diese Version ersetzen? Du kannst auch abbrechen und „Speichern unter“ verwenden.",
+    "{error} Deseja substituir o ficheiro por esta versão? Você também pode cancelar e usar Guardar como.",
+    "{error} ¿Quieres reemplazar el archivo por esta versión? También puedes cancelar y usar Guardar como.",
+    "{error} ¿Quieres reemplazar el archivo por esta versión? También puedes cancelar y usar Guardar como.",
+    "{error} 要用此版本替換檔案嗎？你也可以取消並使用“另存為”。"
   ],
-  ["Salvando…", "Saving…", "保存中…", "正在保存…", "Wird gespeichert…"],
-  ["{count} palavra", "{count} word", "{count}語", "{count} 词", "{count} Wort"],
-  ["{count} caractere", "{count} character", "{count}文字", "{count} 个字符", "{count} Zeichen"],
-  ["Salvar título", "Save title", "タイトルを保存", "保存标题", "Titel speichern"],
+  [
+    "Salvando…",
+    "Saving…",
+    "保存中…",
+    "正在保存…",
+    "Wird gespeichert…",
+    "A guardar…",
+    "Guardando…",
+    "Guardando…",
+    "正在儲存…"
+  ],
+  [
+    "{count} palavra",
+    "{count} word",
+    "{count}語",
+    "{count} 词",
+    "{count} Wort",
+    "{count} palavra",
+    "{count} palabra",
+    "{count} palabra",
+    "{count} 詞"
+  ],
+  [
+    "{count} caractere",
+    "{count} character",
+    "{count}文字",
+    "{count} 个字符",
+    "{count} Zeichen",
+    "{count} carácter",
+    "{count} carácter",
+    "{count} carácter",
+    "{count} 個字元"
+  ],
+  [
+    "Salvar título",
+    "Save title",
+    "タイトルを保存",
+    "保存标题",
+    "Titel speichern",
+    "Guardar título",
+    "Guardar título",
+    "Guardar título",
+    "儲存標題"
+  ],
   [
     "Barra de formatação",
     "Formatting toolbar",
     "書式ツールバー",
     "格式工具栏",
-    "Formatierungsleiste"
+    "Formatierungsleiste",
+    "Barra de formatação",
+    "Barra de formato",
+    "Barra de formato",
+    "格式工具欄"
   ],
   [
     "Ferramentas no seu lugar.",
     "Tools where you need them.",
     "使いやすい場所にツールを。",
     "工具，放在顺手的地方。",
-    "Werkzeuge am richtigen Platz."
+    "Werkzeuge am richtigen Platz.",
+    "Ferramentas no seu lugar.",
+    "Tus herramientas, en su sitio.",
+    "Tus herramientas, en su sitio.",
+    "工具，放在順手的地方。"
   ],
   [
     "Escolha onde a barra de formatação acompanha sua escrita.",
     "Choose where the formatting toolbar appears.",
     "書式ツールバーの位置を選びましょう。",
     "选择格式工具栏的位置。",
-    "Wähle, wo die Formatierungsleiste erscheint."
+    "Wähle, wo die Formatierungsleiste erscheint.",
+    "Escolha onde a barra de formatação acompanha sua escrita.",
+    "Elige dónde te acompaña la barra de formato mientras escribes.",
+    "Elige dónde te acompaña la barra de formato mientras escribes.",
+    "選擇格式工具欄的位置。"
   ],
   [
     "Posição da formatação",
     "Toolbar position",
     "ツールバーの位置",
     "工具栏位置",
-    "Position der Formatierungsleiste"
+    "Position der Formatierungsleiste",
+    "Posição da formatação",
+    "Posición de la barra de formato",
+    "Posición de la barra de formato",
+    "工具欄位置"
   ],
-  ["Na parte de baixo", "At the bottom", "下部", "底部", "Unten"],
-  ["Na lateral", "On the side", "側面", "侧边", "Seitlich"],
+  [
+    "Na parte de baixo",
+    "At the bottom",
+    "下部",
+    "底部",
+    "Unten",
+    "Na parte de baixo",
+    "En la parte inferior",
+    "En la parte inferior",
+    "底部"
+  ],
+  [
+    "Na lateral",
+    "On the side",
+    "側面",
+    "侧边",
+    "Seitlich",
+    "Na lateral",
+    "En el lateral",
+    "En el lateral",
+    "側邊"
+  ],
   [
     "Na lateral, a formatação fica do lado oposto aos projetos.",
     "The side toolbar sits opposite your projects.",
     "側面に置く場合は、プロジェクトと反対側に表示します。",
     "侧边工具栏位于项目栏的另一侧。",
-    "Die seitliche Leiste liegt gegenüber deinen Projekten."
+    "Die seitliche Leiste liegt gegenüber deinen Projekten.",
+    "Na lateral, a formatação fica do lado oposto aos projetos.",
+    "En el lateral, el formato queda en el lado opuesto a los proyectos.",
+    "En el lateral, el formato queda en el lado opuesto a los proyectos.",
+    "側邊工具欄位於專案欄的另一側。"
   ],
   [
     "Ocultar formatação no modo Zen",
     "Hide formatting in Zen mode",
     "Zenモードで書式ツールを隠す",
     "在禅模式中隐藏格式工具栏",
-    "Formatierung im Zen-Modus ausblenden"
+    "Formatierung im Zen-Modus ausblenden",
+    "Ocultar formatação no modo Zen",
+    "Ocultar formato en el modo Zen",
+    "Ocultar formato en el modo Zen",
+    "在禪模式中隱藏格式工具欄"
   ],
   [
     "Por padrão, as ferramentas continuam disponíveis no modo Zen.",
     "By default, tools stay available in Zen mode.",
     "標準では、Zenモードでもツールを表示します。",
     "默认情况下，禅模式中仍显示工具栏。",
-    "Standardmäßig bleiben die Werkzeuge im Zen-Modus verfügbar."
+    "Standardmäßig bleiben die Werkzeuge im Zen-Modus verfügbar.",
+    "Por predefinição, as ferramentas continuam disponíveis no modo Zen.",
+    "De forma predeterminada, las herramientas siguen disponibles en el modo Zen.",
+    "De forma predeterminada, las herramientas siguen disponibles en el modo Zen.",
+    "預設情況下，禪模式中仍顯示工具欄。"
   ],
   [
     "Esc alterna o modo Zen quando há texto. Os painéis abertos têm prioridade. Para revelar os controles com o mouse, aproxime o ponteiro da borda da janela.",
     "Esc toggles Zen mode when there is text. Open panels close first. Move the pointer to the window edge to reveal the controls.",
     "文章があるときは、EscでZenモードを切り替えます。開いているパネルがある場合は、先に閉じます。ポインターをウィンドウの端に近づけると操作ボタンが現れます。",
     "有文字时按 Esc 切换禅模式。打开的面板会优先关闭。将指针移至窗口边缘可显示控件。",
-    "Esc schaltet bei vorhandenem Text den Zen-Modus um. Offene Bereiche werden zuerst geschlossen. Bewege den Zeiger an den Fensterrand, um die Bedienelemente einzublenden."
+    "Esc schaltet bei vorhandenem Text den Zen-Modus um. Offene Bereiche werden zuerst geschlossen. Bewege den Zeiger an den Fensterrand, um die Bedienelemente einzublenden.",
+    "Esc alterna o modo Zen quando há texto. Os painéis abertos têm prioridade. Para mostrar os controlos com o rato, aproxime o ponteiro do bordo da janela.",
+    "Esc alterna el modo Zen cuando hay texto. Los paneles abiertos tienen prioridad. Para mostrar los controles con el mouse, acerca el puntero al borde de la ventana.",
+    "Esc alterna el modo Zen cuando hay texto. Los paneles abiertos tienen prioridad. Para mostrar los controles con el ratón, acerca el puntero al borde de la ventana.",
+    "有文字時按 Esc 切換禪模式。開啟的面板會優先關閉。將指標移至視窗邊緣可顯示控制元件。"
   ],
-  ["Comandos de escrita", "Writing commands", "入力コマンド", "写作命令", "Schreibbefehle"],
-  ["Transformar em", "Turn into", "ブロックの種類", "转换为", "Umwandeln in"],
+  [
+    "Comandos de escrita",
+    "Writing commands",
+    "入力コマンド",
+    "写作命令",
+    "Schreibbefehle",
+    "Comandos de escrita",
+    "Comandos de escritura",
+    "Comandos de escritura",
+    "寫作命令"
+  ],
+  [
+    "Transformar em",
+    "Turn into",
+    "ブロックの種類",
+    "转换为",
+    "Umwandeln in",
+    "Transformar em",
+    "Convertir en",
+    "Convertir en",
+    "轉換為"
+  ],
   [
     "Nenhum comando encontrado. Esc mantém o texto.",
     "No commands found. Esc keeps your text.",
     "コマンドが見つかりません。Escで文字を残して閉じます。",
     "未找到命令。按 Esc 保留文本并关闭。",
-    "Keine Befehle gefunden. Esc behält deinen Text."
+    "Keine Befehle gefunden. Esc behält deinen Text.",
+    "Nenhum comando encontrado. Esc mantém o texto.",
+    "No se ha encontrado ningún comando. Esc conserva el texto.",
+    "No se ha encontrado ningún comando. Esc conserva el texto.",
+    "未找到命令。按 Esc 保留文字並關閉。"
   ],
   [
     "↑ ↓ escolher · Enter aplicar · Esc fechar",
     "↑ ↓ choose · Enter apply · Esc close",
     "↑ ↓ 選択 · Enter 適用 · Esc 閉じる",
     "↑ ↓ 选择 · Enter 应用 · Esc 关闭",
-    "↑ ↓ wählen · Enter anwenden · Esc schließen"
+    "↑ ↓ wählen · Enter anwenden · Esc schließen",
+    "↑ ↓ escolher · Enter aplicar · Esc fechar",
+    "↑ ↓ elegir · Enter aplicar · Esc cerrar",
+    "↑ ↓ elegir · Enter aplicar · Esc cerrar",
+    "↑ ↓ 選擇 · Enter 應用 · Esc 關閉"
   ],
-  ["Lista de tarefas", "To-do list", "タスクリスト", "任务清单", "Aufgabenliste"],
+  [
+    "Lista de tarefas",
+    "To-do list",
+    "タスクリスト",
+    "任务清单",
+    "Aufgabenliste",
+    "Lista de tarefas",
+    "Lista de tareas",
+    "Lista de tareas",
+    "任務清單"
+  ],
   [
     "Uma lista para marcar o que falta fazer.",
     "A list to check off what needs doing.",
     "やることにチェックを付けるリスト。",
     "用清单勾选待办事项。",
-    "Eine Liste zum Abhaken deiner Aufgaben."
+    "Eine Liste zum Abhaken deiner Aufgaben.",
+    "Uma lista para marcar o que falta fazer.",
+    "Una lista para marcar lo que falta por hacer.",
+    "Una lista para marcar lo que falta por hacer.",
+    "用清單勾選待辦事項。"
   ],
   [
     "Organize informações em linhas e colunas.",
     "Organize information in rows and columns.",
     "行と列で情報を整理。",
     "按行和列整理信息。",
-    "Informationen in Zeilen und Spalten ordnen."
+    "Informationen in Zeilen und Spalten ordnen.",
+    "Organize informações em linhas e colunas.",
+    "Organiza información en filas y columnas.",
+    "Organiza información en filas y columnas.",
+    "按行和列整理資訊。"
   ],
   [
     "Ideias em uma lista simples.",
     "Ideas in a simple list.",
     "アイデアをシンプルなリストに。",
     "用简单列表记录想法。",
-    "Ideen in einer einfachen Liste."
+    "Ideen in einer einfachen Liste.",
+    "Ideias em uma lista simples.",
+    "Ideas en una lista sencilla.",
+    "Ideas en una lista sencilla.",
+    "用簡單列表記錄想法。"
   ],
   [
     "Uma sequência, passo a passo.",
     "A sequence, step by step.",
     "順番に、一歩ずつ。",
     "按顺序，一步一步来。",
-    "Eine Abfolge, Schritt für Schritt."
+    "Eine Abfolge, Schritt für Schritt.",
+    "Uma sequência, passo a passo.",
+    "Una secuencia, paso a paso.",
+    "Una secuencia, paso a paso.",
+    "按順序，一步一步來。"
   ],
   [
     "Um título grande para começar.",
     "A large heading to begin.",
     "大きな見出しで始める。",
     "以大标题开始。",
-    "Eine große Überschrift für den Anfang."
+    "Eine große Überschrift für den Anfang.",
+    "Um título grande para começar.",
+    "Un título grande para empezar.",
+    "Un título grande para empezar.",
+    "以大標題開始。"
   ],
   [
     "Divida o texto em seções.",
     "Divide your text into sections.",
     "文章をセクションに分ける。",
     "将文本划分为章节。",
-    "Teile deinen Text in Abschnitte."
+    "Teile deinen Text in Abschnitte.",
+    "Divida o texto em seções.",
+    "Divide el texto en secciones.",
+    "Divide el texto en secciones.",
+    "將文字劃分為章節。"
   ],
   [
     "Um título menor para os detalhes.",
     "A smaller heading for the details.",
     "細かな内容には小さな見出しを。",
     "用小标题呈现细节。",
-    "Eine kleinere Überschrift für Details."
+    "Eine kleinere Überschrift für Details.",
+    "Um título menor para os detalhes.",
+    "Un título más pequeño para los detalles.",
+    "Un título más pequeño para los detalles.",
+    "用小標題呈現細節。"
   ],
   [
     "Dê espaço a uma passagem especial.",
     "Give a special passage some space.",
     "大切な一節を際立たせる。",
     "让特别的段落更突出。",
-    "Gib einer besonderen Passage Raum."
+    "Gib einer besonderen Passage Raum.",
+    "Dê espaço a uma passagem especial.",
+    "Dale espacio a un pasaje especial.",
+    "Dale espacio a un pasaje especial.",
+    "讓特別的段落更突出。"
   ],
   [
     "Texto com espaçamento fixo.",
     "Text with fixed spacing.",
     "等幅で表示するテキスト。",
     "使用等宽字体显示文本。",
-    "Text mit fester Zeichenbreite."
+    "Text mit fester Zeichenbreite.",
+    "Texto com espaçamento fixo.",
+    "Texto con espaciado fijo.",
+    "Texto con espaciado fijo.",
+    "使用等寬字型顯示文字。"
   ],
   [
     "Uma pausa entre duas ideias.",
     "A pause between two ideas.",
     "二つのアイデアの間にひと休み。",
     "在两个想法之间稍作停顿。",
-    "Eine Pause zwischen zwei Ideen."
+    "Eine Pause zwischen zwei Ideen.",
+    "Uma pausa entre duas ideias.",
+    "Una pausa entre dos ideas.",
+    "Una pausa entre dos ideas.",
+    "在兩個想法之間稍作停頓。"
   ],
   [
     "Volte ao texto comum.",
     "Return to regular text.",
     "通常のテキストに戻す。",
     "回到普通文本。",
-    "Zurück zu normalem Text."
+    "Zurück zu normalem Text.",
+    "Volte ao texto comum.",
+    "Vuelve al texto normal.",
+    "Vuelve al texto normal.",
+    "回到普通文字。"
   ],
   [
     "F11 · tela cheia · Esc · alternar modo Zen",
     "F11 · full screen · Esc · toggle Zen mode",
     "F11 · 全画面 · Esc · Zenモードを切り替え",
     "F11 · 全屏 · Esc · 切换禅模式",
-    "F11 · Vollbild · Esc · Zen-Modus umschalten"
+    "F11 · Vollbild · Esc · Zen-Modus umschalten",
+    "F11 · ecrã completo · Esc · alternar modo Zen",
+    "F11 · pantalla completa · Esc · alternar modo Zen",
+    "F11 · pantalla completa · Esc · alternar modo Zen",
+    "F11 · 全屏 · Esc · 切換禪模式"
   ],
-  ["Lista recolhível", "Toggle list", "トグルリスト", "折叠列表", "Klappliste"],
+  [
+    "Lista recolhível",
+    "Toggle list",
+    "トグルリスト",
+    "折叠列表",
+    "Klappliste",
+    "Lista recolhível",
+    "Lista desplegable",
+    "Lista desplegable",
+    "摺疊列表"
+  ],
   [
     "Um título que abre e fecha o conteúdo abaixo.",
     "A heading that opens and closes the content below.",
     "見出しをクリックして内容を開閉します。",
     "点击标题展开或收起下方内容。",
-    "Eine Überschrift zum Auf- und Zuklappen des Inhalts."
+    "Eine Überschrift zum Auf- und Zuklappen des Inhalts.",
+    "Um título que abre e fecha o conteúdo abaixo.",
+    "Un título que muestra y oculta el contenido de debajo.",
+    "Un título que muestra y oculta el contenido de debajo.",
+    "點選標題展開或收起下方內容。"
   ],
-  ["Caixa informativa", "Callout", "コールアウト", "提示框", "Hinweisbox"],
+  [
+    "Caixa informativa",
+    "Callout",
+    "コールアウト",
+    "提示框",
+    "Hinweisbox",
+    "Caixa informativa",
+    "Cuadro informativo",
+    "Cuadro informativo",
+    "提示框"
+  ],
   [
     "Dê destaque a uma ideia ou dica.",
     "Highlight an idea or tip.",
     "アイデアやヒントを目立たせます。",
     "突出显示想法或提示。",
-    "Hebe eine Idee oder einen Tipp hervor."
+    "Hebe eine Idee oder einen Tipp hervor.",
+    "Dê destaque a uma ideia ou dica.",
+    "Resalta una idea o un consejo.",
+    "Resalta una idea o un consejo.",
+    "突出顯示想法或提示。"
   ],
-  ["Aviso", "Warning", "警告", "警告", "Warnung"],
+  ["Aviso", "Warning", "警告", "警告", "Warnung", "Aviso", "Aviso", "Aviso", "警告"],
   [
     "Uma caixa para algo que merece atenção.",
     "A box for something that needs attention.",
     "注意が必要な内容を表示します。",
     "突出显示需要注意的内容。",
-    "Eine Box für etwas, das Aufmerksamkeit verdient."
+    "Eine Box für etwas, das Aufmerksamkeit verdient.",
+    "Uma caixa para algo que merece atenção.",
+    "Un cuadro para algo que merece atención.",
+    "Un cuadro para algo que merece atención.",
+    "突出顯示需要注意的內容。"
   ],
-  ["Imagem", "Image", "画像", "图片", "Bild"],
+  ["Imagem", "Image", "画像", "图片", "Bild", "Imagem", "Imagen", "Imagen", "圖片"],
   [
     "Escolha uma imagem do computador.",
     "Choose an image from your computer.",
     "パソコンから画像を選択します。",
     "从电脑中选择图片。",
-    "Wähle ein Bild von deinem Computer."
+    "Wähle ein Bild von deinem Computer.",
+    "Escolha uma imagem do computador.",
+    "Elige una imagen de tu computadora.",
+    "Elige una imagen de tu ordenador.",
+    "從電腦中選擇圖片。"
   ],
-  ["Link", "Link", "リンク", "链接", "Link"],
+  ["Link", "Link", "リンク", "链接", "Link", "Hiperligação", "Enlace", "Enlace", "連結"],
   [
     "Insira um endereço como link no texto.",
     "Insert an address as a link in the text.",
     "アドレスをリンクとして挿入します。",
     "将地址作为链接插入文本。",
-    "Füge eine Adresse als Link in den Text ein."
+    "Füge eine Adresse als Link in den Text ein.",
+    "Insira um endereço como hiperligação no texto.",
+    "Inserta una dirección como enlace en el texto.",
+    "Inserta una dirección como enlace en el texto.",
+    "將地址作為連結插入文字。"
   ],
-  ["Data de hoje", "Today's date", "今日の日付", "今天的日期", "Heutiges Datum"],
+  [
+    "Data de hoje",
+    "Today's date",
+    "今日の日付",
+    "今天的日期",
+    "Heutiges Datum",
+    "Data de hoje",
+    "Fecha de hoy",
+    "Fecha de hoy",
+    "今天的日期"
+  ],
   [
     "Insira a data no idioma do aplicativo.",
     "Insert the date in the app language.",
     "アプリの言語で日付を挿入します。",
     "按应用语言插入日期。",
-    "Füge das Datum in der Sprache der App ein."
+    "Füge das Datum in der Sprache der App ein.",
+    "Insira a data no idioma da aplicação.",
+    "Inserta la fecha en el idioma de la aplicación.",
+    "Inserta la fecha en el idioma de la aplicación.",
+    "按應用語言插入日期。"
   ],
-  ["Hora atual", "Current time", "現在の時刻", "当前时间", "Aktuelle Uhrzeit"],
+  [
+    "Hora atual",
+    "Current time",
+    "現在の時刻",
+    "当前时间",
+    "Aktuelle Uhrzeit",
+    "Hora atual",
+    "Hora actual",
+    "Hora actual",
+    "當前時間"
+  ],
   [
     "Insira a hora atual no texto.",
     "Insert the current time in the text.",
     "現在の時刻をテキストに挿入します。",
     "在文本中插入当前时间。",
-    "Füge die aktuelle Uhrzeit in den Text ein."
+    "Füge die aktuelle Uhrzeit in den Text ein.",
+    "Insira a hora atual no texto.",
+    "Inserta la hora actual en el texto.",
+    "Inserta la hora actual en el texto.",
+    "在文字中插入當前時間。"
   ],
-  ["Duplicar bloco", "Duplicate block", "ブロックを複製", "复制块", "Block duplizieren"],
+  [
+    "Duplicar bloco",
+    "Duplicate block",
+    "ブロックを複製",
+    "复制块",
+    "Block duplizieren",
+    "Duplicar bloco",
+    "Duplicar bloque",
+    "Duplicar bloque",
+    "複製塊"
+  ],
   [
     "Repita o bloco atual logo abaixo.",
     "Repeat the current block right below.",
     "現在のブロックをすぐ下に複製します。",
     "在下方复制当前块。",
-    "Wiederhole den aktuellen Block direkt darunter."
+    "Wiederhole den aktuellen Block direkt darunter.",
+    "Repita o bloco atual logo abaixo.",
+    "Repite el bloque actual justo debajo.",
+    "Repite el bloque actual justo debajo.",
+    "在下方複製當前塊。"
   ],
-  ["Limpar formatação", "Clear formatting", "書式をクリア", "清除格式", "Formatierung entfernen"],
+  [
+    "Limpar formatação",
+    "Clear formatting",
+    "書式をクリア",
+    "清除格式",
+    "Formatierung entfernen",
+    "Limpar formatação",
+    "Limpiar formato",
+    "Limpiar formato",
+    "清除格式"
+  ],
   [
     "Remova as marcas e o estilo deste parágrafo.",
     "Remove formatting and styling from this paragraph.",
     "この段落の文字装飾とスタイルを解除します。",
     "清除此段落的文本格式和样式。",
-    "Entferne Formatierung und Stil dieses Absatzes."
+    "Entferne Formatierung und Stil dieses Absatzes.",
+    "Remova as marcas e o estilo deste parágrafo.",
+    "Quita las marcas y el estilo de este párrafo.",
+    "Quita las marcas y el estilo de este párrafo.",
+    "清除此段落的文字格式和樣式。"
   ],
-  ["Título recolhível", "Toggle heading", "トグルの見出し", "折叠标题", "Klappüberschrift"],
+  [
+    "Título recolhível",
+    "Toggle heading",
+    "トグルの見出し",
+    "折叠标题",
+    "Klappüberschrift",
+    "Título recolhível",
+    "Título desplegable",
+    "Título desplegable",
+    "摺疊標題"
+  ],
   [
     "O texto mudou. Digite /link novamente para inserir o endereço.",
     "The text changed. Type /link again to insert the address.",
     "テキストが変更されました。/link を再入力してください。",
     "文本已更改。请重新输入 /link 来插入地址。",
-    "Der Text wurde geändert. Gib /link erneut ein, um die Adresse einzufügen."
+    "Der Text wurde geändert. Gib /link erneut ein, um die Adresse einzufügen.",
+    "O texto mudou. Introduza /link novamente para inserir o endereço.",
+    "El texto ha cambiado. Escribe /link de nuevo para insertar la dirección.",
+    "El texto ha cambiado. Escribe /link de nuevo para insertar la dirección.",
+    "文字已更改。請重新輸入 /link 來插入地址。"
   ],
   [
     "O Entrelinhas consultará versões estáveis e pré-releases no GitHub. Nenhum documento será enviado. A autorização vale para esta consulta e para o download que você solicitar em seguida.",
     "Entrelinhas will check stable versions and pre-releases on GitHub. No documents will be sent. Permission applies to this check and any download you request next.",
     "GitHub で安定版とプレリリースを確認します。文書は送信されません。許可は今回の確認と、その後に選択するダウンロードに適用されます。",
     "Entrelinhas 将在 GitHub 上检查稳定版和预发布版。不会发送任何文档。授权仅适用于本次检查及随后由你选择的下载。",
-    "Entrelinhas sucht auf GitHub nach stabilen Versionen und Vorabversionen. Es werden keine Dokumente gesendet. Die Erlaubnis gilt für diese Suche und einen anschließend von dir angeforderten Download."
+    "Entrelinhas sucht auf GitHub nach stabilen Versionen und Vorabversionen. Es werden keine Dokumente gesendet. Die Erlaubnis gilt für diese Suche und einen anschließend von dir angeforderten Download.",
+    "O Entrelinhas consultará versões estáveis e de pré-lançamento no GitHub. Nenhum documento será enviado. A autorização aplica-se a esta consulta e à transferência que solicitar a seguir.",
+    "Entrelinhas consultará versiones estables y preliminares en GitHub. No se enviará ningún documento. La autorización es válida para esta consulta y para la descarga que solicites a continuación.",
+    "Entrelinhas consultará versiones estables y preliminares en GitHub. No se enviará ningún documento. La autorización es válida para esta consulta y para la descarga que solicites a continuación.",
+    "Entrelinhas 將在 GitHub 上檢查穩定版和預釋出版。不會傳送任何文件。授權僅適用於本次檢查及隨後由你選擇的下載。"
   ],
   [
     "Não encontramos uma atualização mais recente.",
     "No newer update was found.",
     "新しい更新は見つかりませんでした。",
     "未找到更新的版本。",
-    "Es wurde kein neueres Update gefunden."
+    "Es wurde kein neueres Update gefunden.",
+    "Não encontramos uma atualização mais recente.",
+    "No hemos encontrado una actualización más reciente.",
+    "No hemos encontrado una actualización más reciente.",
+    "未找到更新的版本。"
   ],
   [
     "Você escolheu esperar a versão estável. O aplicativo não foi alterado.",
     "You chose to wait for the stable version. The app has not been changed.",
     "安定版を待つことを選択しました。アプリは変更されていません。",
     "你已选择等待稳定版。应用未被更改。",
-    "Du hast dich entschieden, auf die stabile Version zu warten. Die App wurde nicht verändert."
+    "Du hast dich entschieden, auf die stabile Version zu warten. Die App wurde nicht verändert.",
+    "Escolheu aguardar a versão estável. A aplicação não foi alterada.",
+    "Has elegido esperar a la versión estable. La aplicación no se ha modificado.",
+    "Has elegido esperar a la versión estable. La aplicación no se ha modificado.",
+    "你已選擇等待穩定版。應用未被更改。"
   ],
   [
     "Aviso de pré-release",
     "Pre-release warning",
     "プレリリースの注意",
     "预发布版提示",
-    "Hinweis zur Vorabversion"
+    "Hinweis zur Vorabversion",
+    "Aviso de pré-lançamento",
+    "Aviso de versión preliminar",
+    "Aviso de versión preliminar",
+    "預釋出版提示"
   ],
   [
     "Esta atualização é uma pré-release.",
     "This update is a pre-release.",
     "この更新はプレリリースです。",
     "此更新为预发布版。",
-    "Dieses Update ist eine Vorabversion."
+    "Dieses Update ist eine Vorabversion.",
+    "Esta atualização é uma versão de pré-lançamento.",
+    "Esta actualización es una versión preliminar.",
+    "Esta actualización es una versión preliminar.",
+    "此更新為預釋出版。"
   ],
   [
     "Esta versão ainda está em avaliação.",
     "This version is still being evaluated.",
     "このバージョンはまだ評価中です。",
     "此版本仍在评估中。",
-    "Diese Version wird noch erprobt."
+    "Diese Version wird noch erprobt.",
+    "Esta versão ainda está em avaliação.",
+    "Esta versión todavía está en evaluación.",
+    "Esta versión todavía está en evaluación.",
+    "此版本仍在評估中。"
   ],
   [
     "Tem certeza de que deseja baixar esta pré-release?",
     "Are you sure you want to download this pre-release?",
     "このプレリリースをダウンロードしますか？",
     "确定要下载此预发布版吗？",
-    "Möchtest du diese Vorabversion wirklich herunterladen?"
+    "Möchtest du diese Vorabversion wirklich herunterladen?",
+    "Tem a certeza de que quer transferir esta versão de pré-lançamento?",
+    "¿Seguro que quieres descargar esta versión preliminar?",
+    "¿Seguro que quieres descargar esta versión preliminar?",
+    "確定要下載此預釋出版嗎？"
   ],
   [
     "Esperar versão estável",
     "Wait for stable version",
     "安定版を待つ",
     "等待稳定版",
-    "Auf stabile Version warten"
+    "Auf stabile Version warten",
+    "Aguardar versão estável",
+    "Esperar a la versión estable",
+    "Esperar a la versión estable",
+    "等待穩定版"
   ],
   [
     "Atualizar para pré-release",
     "Update to pre-release",
     "プレリリースに更新",
     "更新至预发布版",
-    "Auf Vorabversion aktualisieren"
+    "Auf Vorabversion aktualisieren",
+    "Atualizar para versão de pré-lançamento",
+    "Actualizar a la versión preliminar",
+    "Actualizar a la versión preliminar",
+    "更新至預釋出版"
   ],
-  ["Prévia do link", "Link preview", "リンクのプレビュー", "链接预览", "Linkvorschau"],
+  [
+    "Prévia do link",
+    "Link preview",
+    "リンクのプレビュー",
+    "链接预览",
+    "Linkvorschau",
+    "Pré-visualização da hiperligação",
+    "Vista previa del enlace",
+    "Vista previa del enlace",
+    "連結預覽"
+  ],
   [
     "Ctrl+clique para abrir",
     "Ctrl+click to open",
     "Ctrl+クリックで開く",
     "按住 Ctrl 并点击以打开",
-    "Strg+Klick zum Öffnen"
+    "Strg+Klick zum Öffnen",
+    "Ctrl+clique para abrir",
+    "Ctrl+clic para abrir",
+    "Ctrl+clic para abrir",
+    "按住 Ctrl 並點選以開啟"
   ],
-  ["Abrir link", "Open link", "リンクを開く", "打开链接", "Link öffnen"],
+  [
+    "Abrir link",
+    "Open link",
+    "リンクを開く",
+    "打开链接",
+    "Link öffnen",
+    "Abrir hiperligação",
+    "Abrir enlace",
+    "Abrir enlace",
+    "開啟連結"
+  ],
   [
     "Digite um endereço válido, como exemplo.com ou nome@exemplo.com.",
     "Enter a valid address, such as example.com or name@example.com.",
     "example.com や name@example.com などの有効なアドレスを入力してください。",
     "请输入有效地址，例如 example.com 或 name@example.com。",
-    "Gib eine gültige Adresse ein, etwa example.com oder name@example.com."
+    "Gib eine gültige Adresse ein, etwa example.com oder name@example.com.",
+    "Introduza um endereço válido, como exemplo.pt ou nome@exemplo.pt.",
+    "Escribe una dirección válida, como ejemplo.com o nombre@ejemplo.com.",
+    "Escribe una dirección válida, como ejemplo.com o nombre@ejemplo.com.",
+    "請輸入有效地址，例如 example.com 或 name@example.com。"
   ],
   [
     "O texto mudou. Selecione o texto novamente para editar o link.",
     "The text changed. Select it again to edit the link.",
     "テキストが変更されました。もう一度選択してリンクを編集してください。",
     "文本已更改。请重新选择文本以编辑链接。",
-    "Der Text wurde geändert. Wähle ihn erneut aus, um den Link zu bearbeiten."
+    "Der Text wurde geändert. Wähle ihn erneut aus, um den Link zu bearbeiten.",
+    "O texto mudou. Selecione o texto novamente para editar a hiperligação.",
+    "El texto ha cambiado. Vuelve a seleccionarlo para editar el enlace.",
+    "El texto ha cambiado. Vuelve a seleccionarlo para editar el enlace.",
+    "文字已更改。請重新選擇文字以編輯連結。"
   ],
-  ["exemplo.com", "example.com", "example.com", "example.com", "beispiel.de"],
+  [
+    "exemplo.com",
+    "example.com",
+    "example.com",
+    "example.com",
+    "beispiel.de",
+    "exemplo.pt",
+    "ejemplo.com",
+    "ejemplo.com",
+    "example.com"
+  ],
   [
     "Endereço de link inválido.",
     "Invalid link address.",
     "リンクのアドレスが無効です。",
     "链接地址无效。",
-    "Ungültige Linkadresse."
+    "Ungültige Linkadresse.",
+    "Endereço de hiperligação inválido.",
+    "Dirección de enlace no válida.",
+    "Dirección de enlace no válida.",
+    "連結地址無效。"
   ],
   [
     "Não foi possível abrir o link no navegador padrão.",
     "Could not open the link in the default browser.",
     "既定のブラウザーでリンクを開けませんでした。",
     "无法在默认浏览器中打开链接。",
-    "Der Link konnte nicht im Standardbrowser geöffnet werden."
+    "Der Link konnte nicht im Standardbrowser geöffnet werden.",
+    "Não foi possível abrir a hiperligação no navegador predefinido.",
+    "No se ha podido abrir el enlace en el navegador predeterminado.",
+    "No se ha podido abrir el enlace en el navegador predeterminado.",
+    "無法在預設瀏覽器中開啟連結。"
   ],
   [
     "Abrindo no navegador padrão…",
     "Opening in the default browser…",
     "既定のブラウザーで開いています…",
     "正在默认浏览器中打开…",
-    "Wird im Standardbrowser geöffnet…"
+    "Wird im Standardbrowser geöffnet…",
+    "A abrir no navegador predefinido…",
+    "Abriendo en el navegador predeterminado…",
+    "Abriendo en el navegador predeterminado…",
+    "正在預設瀏覽器中開啟…"
   ],
   [
     "Link enviado ao navegador. Se a janela não aparecer, alterne para ele.",
     "Link sent to your browser. Switch to it if its window does not appear.",
     "リンクをブラウザーに送りました。ウィンドウが表示されない場合はブラウザーに切り替えてください。",
     "链接已发送到浏览器。如果窗口未显示，请切换到浏览器。",
-    "Link an deinen Browser gesendet. Wechsle dorthin, falls das Fenster nicht erscheint."
+    "Link an deinen Browser gesendet. Wechsle dorthin, falls das Fenster nicht erscheint.",
+    "Hiperligação enviada ao navegador. Se a janela não aparecer, mude para o navegador.",
+    "Enlace enviado al navegador. Si la ventana no aparece, cambia a ella.",
+    "Enlace enviado al navegador. Si la ventana no aparece, cambia a ella.",
+    "連結已傳送到瀏覽器。如果視窗未顯示，請切換到瀏覽器。"
   ],
   [
     "Este link já foi enviado ao navegador. Aguarde um instante para abrir novamente.",
     "This link was already sent to your browser. Wait a moment before opening it again.",
     "このリンクはすでにブラウザーに送信済みです。少し待ってからもう一度開いてください。",
     "此链接已发送到浏览器。请稍候再打开。",
-    "Dieser Link wurde bereits an deinen Browser gesendet. Warte kurz, bevor du ihn erneut öffnest."
+    "Dieser Link wurde bereits an deinen Browser gesendet. Warte kurz, bevor du ihn erneut öffnest.",
+    "Esta hiperligação já foi enviada ao navegador. Aguarde um instante antes de abrir novamente.",
+    "Este enlace ya se ha enviado al navegador. Espera un momento antes de abrirlo de nuevo.",
+    "Este enlace ya se ha enviado al navegador. Espera un momento antes de abrirlo de nuevo.",
+    "此連結已傳送到瀏覽器。請稍候再開啟。"
   ]
 ]

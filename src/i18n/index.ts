@@ -7,8 +7,20 @@ export const languages = [
   { id: 'ja', name: '日本語' },
   { id: 'zh-CN', name: '简体中文' },
   { id: 'de', name: 'Deutsch' },
+  { id: 'pt-PT', name: 'Português (Portugal)' },
+  { id: 'es-419', name: 'Español (Latinoamérica)' },
+  { id: 'es-ES', name: 'Español (España)' },
+  { id: 'zh-TW', name: '繁體中文' },
 ] as const
 export type Language = (typeof languages)[number]['id']
+export const languageFamilies: { id: string; name: string; locales: Language[] }[] = [
+  { id: 'pt', name: 'Português', locales: ['pt-BR', 'pt-PT'] },
+  { id: 'en', name: 'English', locales: ['en'] },
+  { id: 'es', name: 'Español', locales: ['es-419', 'es-ES'] },
+  { id: 'ja', name: '日本語', locales: ['ja'] },
+  { id: 'zh', name: '中文', locales: ['zh-CN', 'zh-TW'] },
+  { id: 'de', name: 'Deutsch', locales: ['de'] },
+]
 let language: Language = 'pt-BR'
 const listeners = new Set<() => void>()
 export const isLanguage = (value: unknown): value is Language =>

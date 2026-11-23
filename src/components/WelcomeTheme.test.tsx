@@ -95,7 +95,10 @@ it('apresenta quatro telas no Linux com idioma primeiro e permite voltar à esco
     />,
   )
   expect(screen.getByText('Etapa 1 de 4')).toBeInTheDocument()
-  expect(screen.getByRole('button', { name: '简体中文' })).toHaveAttribute('aria-pressed', 'true')
+  fireEvent.click(screen.getByRole('combobox', { name: '中文' }))
+  expect(screen.getByRole('option', { name: '简体中文' })).toHaveAttribute('aria-selected', 'true')
+  expect(screen.getByRole('option', { name: '繁體中文' })).toHaveAttribute('lang', 'zh-TW')
+  fireEvent.keyDown(screen.getByRole('combobox', { name: '中文' }), { key: 'Escape' })
   fireEvent.click(screen.getByRole('button', { name: '日本語' }))
   expect(language).toHaveBeenCalledWith('ja')
   fireEvent.click(screen.getByRole('button', { name: 'Continuar' }))
