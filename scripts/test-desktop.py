@@ -136,6 +136,17 @@ class Desktop:
         self.call('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': actions}]})
 
     def ctrl_click(self, css):
+        # O Zen anima a posição do texto. WebDriver calcula o ponto do clique
+        # antes de despachar as ações; aguarda o alvo parar para não clicar
+        # nas coordenadas que o link ocupava no meio da transição.
+        previous = None
+        def stationary():
+            nonlocal previous
+            rect = self.js('const r=document.querySelector(arguments[0]).getBoundingClientRect();return [r.x,r.y,r.width,r.height]', css)
+            stable = rect == previous
+            previous = rect
+            return stable
+        wait(stationary, 'posição estável do link antes do Ctrl+clique')
         element = self.element(css)
         self.call('/actions', {'actions': [
             {'type': 'key', 'id': 'keyboard', 'actions': [{'type': 'keyDown', 'value': '\ue009'}, {'type': 'pause'}, {'type': 'pause'}, {'type': 'keyUp', 'value': '\ue009'}]},

@@ -98,7 +98,7 @@ def exercise(app, output, wait, passed):
         app.real_key('Escape'); wait(zen, 'Zen antes de repetir link')
         app.ctrl_click('.tiptap a')
         assert app.js('return window.openedLinks.length') == 1
-        assert app.js('const t=document.querySelector(".toast");return t.textContent.includes("já foi enviado")&&getComputedStyle(t).visibility==="visible"&&getComputedStyle(t).opacity==="1"'), 'A confirmação deve aparecer também no Zen.'
+        wait(lambda: app.js('const t=document.querySelector(".toast");return t?.textContent.includes("já foi enviado")&&getComputedStyle(t).visibility==="visible"&&getComputedStyle(t).opacity==="1"'), 'confirmação visível também no Zen')
         app.screenshot(output/'link-feedback-zen.png')
         app.real_key('Escape'); wait(lambda: not zen(), 'voltar do Zen após aviso de link')
         app.click('.tiptap a'); app.click('.link-preview-actions button')
