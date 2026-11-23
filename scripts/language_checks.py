@@ -13,8 +13,8 @@ def exercise(app, output, wait, passed):
     app.key(',', ctrl=True)
     wait(lambda: app.js('return !!document.querySelector(".settings-layout")'), 'atalho de configurações')
     app.click('[data-section="language"]')
-    for index, language in enumerate(['pt-BR', 'en', 'ja', 'zh-CN', 'de']):
-        app.click(f'[data-language="{language}"]')
+    for index, language in enumerate(['pt-BR', 'en', 'ja', 'zh-CN', 'de', 'pt-PT', 'es-419', 'es-ES', 'zh-TW']):
+        app.language(language)
         wait(lambda: app.js('return document.documentElement.lang') == language, 'troca imediata de idioma')
         wait(lambda: app.ipc('load_library')['preferences'].get('language') == language, 'persistir idioma')
         assert app.js('return document.querySelector(".settings-nav [data-section=shortcuts]").textContent') == translations['Atalhos'][index]
@@ -28,17 +28,17 @@ def exercise(app, output, wait, passed):
         app.click('[data-section="language"]')
     assert app.editor('return editor.getJSON()') == original, 'Traduzir a interface não deve reescrever o documento.'
     assert app.editor('return editor.can().undo()') == undo, 'Trocar idioma deve preservar o histórico.'
-    app.click('[data-language="pt-BR"]')
+    app.language('pt-BR')
     wait(lambda: app.ipc('load_library')['preferences'].get('language') == 'pt-BR', 'restaurar idioma de teste')
-    passed('cinco idiomas trocam imediatamente e persistem, com créditos/atualizações traduzidos e documento/histórico preservados')
+    passed('nove variantes em seis idiomas trocam imediatamente e persistem, com créditos/atualizações traduzidos e documento/histórico preservados')
     # Confirma que ambas as fontes locais carregam no motor real, sem depender do SO.
-    for suffix, text in [('JP', '設定'), ('SC', '设置')]:
+    for suffix, text in [('JP', '設定'), ('SC', '设置'), ('TC', '設定')]:
         loaded = app.call('/execute/async', {
             'script': 'const done=arguments[arguments.length-1];document.fonts.load(arguments[0],arguments[1]).then(fonts=>done(fonts.length>0)).catch(()=>done(false));',
             'args': [f'14px "Entrelinhas UI {suffix}"', text],
         })
         assert loaded, f'Fonte {suffix} não carregou.'
-    passed('fontes japonesas e chinesas carregam localmente no WebView')
+    passed('fontes japonesas e chinesas simplificadas/tradicionais carregam localmente no WebView')
     app.click('[data-section="shortcuts"]')
     app.click('[data-action="settings"]')
     wait(lambda: app.js('return !!document.querySelector("[data-shortcut-capture]")'), 'captura de atalho')

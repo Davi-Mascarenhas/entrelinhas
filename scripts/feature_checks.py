@@ -27,8 +27,8 @@ def exercise(app, output, wait, passed):
     def editor_key(key):
         app.editor('editor.commands.focus();return true'); app.paint(); app.real_key(key)
     settings('behavior'); auto = app.js('return document.querySelector("[data-preference=autoImmersive]").checked'); preference('autoImmersive', False); close_settings()
-    for language, tasks, table in [('pt-BR','lista','tabela'),('en','list','table'),('ja','リスト','テーブル'),('zh-CN','清单','表格'),('de','liste','tabelle')]:
-        settings('language'); app.click(f'[data-language="{language}"]'); close_settings()
+    for language, tasks, table in [('pt-BR','lista','tabela'),('en','list','table'),('ja','リスト','テーブル'),('zh-CN','清单','表格'),('de','liste','tabelle'),('pt-PT','lista','tabela'),('es-419','tareas','tabla'),('es-ES','tareas','tabla'),('zh-TW','清單','表格')]:
+        settings('language'); app.language(language); close_settings()
         app.editor('editor.commands.setContent("<p></p>");editor.commands.focus("end");return true');app.paint()
         app.keys('.editor-scroll:not(.inactive) .tiptap', '/'+tasks)
         wait(lambda: app.js('return !!document.querySelector(".slash-menu [data-command=tasks]")'), 'comando de tarefas em '+language)
@@ -43,7 +43,7 @@ def exercise(app, output, wait, passed):
         editor_key('Enter')
         wait(lambda: app.editor('return editor.getJSON().content.some(n=>n.type==="table")'), 'inserir tabela')
         assert app.editor('return editor.getText().includes("Antes")')
-    settings('language');app.click('[data-language="pt-BR"]');close_settings()
+    settings('language');app.language('pt-BR');close_settings()
     app.editor('editor.commands.setContent("<p></p>");editor.commands.focus("end");return true');app.paint();app.key('Escape')
     assert not app.js('return document.querySelector(".app").classList.contains("immersive")'), 'Esc não entra no Zen em nota vazia.'
     app.keys('.editor-scroll:not(.inactive) .tiptap','/')
@@ -58,7 +58,7 @@ def exercise(app, output, wait, passed):
     assert not app.js('return document.querySelector(".app").classList.contains("immersive")'), 'Esc do menu não deve entrar no Zen.'
     app.editor('editor.commands.setContent("<p>https://example.com/pasta</p>");editor.commands.focus("end");return true');app.paint()
     assert not app.js('return !!document.querySelector(".slash-menu")')
-    passed('comandos /lista e /tabela nos cinco idiomas, teclado/mouse, texto preservado e Esc fecha apenas o menu')
+    passed('comandos /lista e /tabela nas nove variantes em seis idiomas, teclado/mouse, texto preservado e Esc fecha apenas o menu')
     app.editor('editor.commands.setContent("<p>Cor e escrita.</p>");editor.commands.focus("end");return true');app.reveal()
     if not app.js('return !!document.querySelector(".formatting")'): app.click('[aria-label="Ferramentas de formatação"]')
     app.editor('editor.chain().focus().selectAll().run();return true')
@@ -130,8 +130,12 @@ def check_blocks(app, output, wait, passed, settings, close_settings, editor_key
         ('ja','トグル','コールアウト','警告','日付','時刻'),
         ('zh-CN','折叠','提示','警告','日期','时间'),
         ('de','klappliste','hinweis','warnung','datum','uhrzeit'),
+        ('pt-PT','recolhível','informativa','aviso','hoje','hora'),
+        ('es-419','desplegable','informativo','aviso','hoy','hora'),
+        ('es-ES','desplegable','informativo','aviso','hoy','hora'),
+        ('zh-TW','摺疊','提示','警告','日期','時間'),
     ]:
-        settings('language');app.click(f'[data-language="{language}"]');close_settings();blank()
+        settings('language');app.language(language);close_settings();blank()
         choose(toggle,'toggle')
         assert app.editor('return editor.state.selection.$from.parent.type.name') == 'detailsSummary'
         app.editor('editor.commands.insertContent("Ideias para guardar");return true');editor_key('Enter')
@@ -154,8 +158,8 @@ def check_blocks(app, output, wait, passed, settings, close_settings, editor_key
         assert app.editor('return !editor.getText().includes("/") && editor.getText().trim().length>5')
         blank();choose(clock,'time')
         assert app.editor('return !editor.getText().includes("/") && /[0-9]/.test(editor.getText())')
-    passed('blocos recolhíveis, caixas, avisos, data e hora nos cinco idiomas; mouse e Enter preservam o conteúdo')
-    settings('language');app.click('[data-language="pt-BR"]');close_settings();blank()
+    passed('blocos recolhíveis, caixas, avisos, data e hora nas nove variantes em seis idiomas; mouse e Enter preservam o conteúdo')
+    settings('language');app.language('pt-BR');close_settings();blank()
     choose('link','link')
     wait(lambda: app.js('return !!document.querySelector(arguments[0])', '.modal-body input[type=text]'), 'endereço do link')
     app.screenshot(output/'slash-link.png')

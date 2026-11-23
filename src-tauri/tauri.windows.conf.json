@@ -9,7 +9,17 @@
       },
       "nsis": {
         "installMode": "currentUser",
-        "languages": ["PortugueseBR", "English", "Japanese", "SimpChinese", "German"],
+        "languages": [
+          "PortugueseBR",
+          "English",
+          "Japanese",
+          "SimpChinese",
+          "German",
+          "Portuguese",
+          "SpanishInternational",
+          "Spanish",
+          "TradChinese"
+        ],
         "displayLanguageSelector": true,
         "installerIcon": "icons/icon.ico",
         "uninstallerIcon": "icons/icon.ico",

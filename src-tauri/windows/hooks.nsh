@@ -19,10 +19,24 @@
   ${If} $UpdateMode != 1
   ${AndIf} $PassiveMode != 1
     ${Unless} ${Silent}
-      LangDLL::LangDialog "Entrelinhas" "Português · English · 日本語 · 简体中文 · Deutsch" A ${MUI_LANGDLL_LANGUAGES} ""
+      entre_language_family:
+      LangDLL::LangDialog "Entrelinhas" "Português · English · Español · 日本語 · 中文 · Deutsch" A "Português" "1046" "English" "1033" "Español" "1034" "日本語" "1041" "中文" "2052" "Deutsch" "1031" ""
       Pop $LANGUAGE
       ${If} $LANGUAGE == "cancel"
         Abort
+      ${EndIf}
+      ${If} $LANGUAGE == 1046
+        LangDLL::LangDialog "Português" "Escolha a variante de português:" A "Português (Brasil)" "1046" "Português (Portugal)" "2070" ""
+        Pop $LANGUAGE
+      ${ElseIf} $LANGUAGE == 1034
+        LangDLL::LangDialog "Español" "Elige tu variante de español:" A "Español (Latinoamérica)" "3082" "Español (España)" "1034" ""
+        Pop $LANGUAGE
+      ${ElseIf} $LANGUAGE == 2052
+        LangDLL::LangDialog "中文" "请选择中文版本 / 請選擇中文版本：" A "简体中文" "2052" "繁體中文" "1028" ""
+        Pop $LANGUAGE
+      ${EndIf}
+      ${If} $LANGUAGE == "cancel"
+        Goto entre_language_family
       ${EndIf}
     ${EndUnless}
   ${EndIf}
@@ -64,6 +78,37 @@ LangString EntreTextDescription 2052 "文本文档"
 LangString EntreAppDescription 1031 "Ein ruhiger Ort zum Schreiben"
 LangString EntreMarkdownDescription 1031 "Markdown-Dokument"
 LangString EntreTextDescription 1031 "Textdokument"
+
+
+; Variantes regionais e escrita tradicional.
+LangString EntreWelcomeTitle 2070 "Bem-vindo ao Entrelinhas"
+LangString EntreWelcomeText 2070 "Um espaço tranquilo para escrever.$\r$\n$\r$\nEste assistente instala o Entrelinhas neste computador.$\r$\nOs seus documentos ficam nas localizações que escolher.$\r$\n$\r$\nClique em Seguinte para continuar."
+LangString EntreFinishTitle 2070 "Pronto para escrever."
+LangString EntreFinishText 2070 "O Entrelinhas foi instalado.$\r$\n$\r$\nAo abrir a aplicação, escolha um tema para a sua escrita.$\r$\n$\r$\nOs ficheiros são seus. Escolha quando e onde guardar."
+LangString EntreAppDescription 2070 "Um espaço tranquilo para escrever"
+LangString EntreMarkdownDescription 2070 "Documento Markdown"
+LangString EntreTextDescription 2070 "Documento de texto"
+LangString EntreWelcomeTitle 1034 "Te damos la bienvenida a Entrelinhas"
+LangString EntreWelcomeText 1034 "Un espacio tranquilo para escribir.$\r$\n$\r$\nEste asistente instalará Entrelinhas en tu ordenador.$\r$\nTus documentos permanecen donde tú elijas.$\r$\n$\r$\nHaz clic en Siguiente para continuar."
+LangString EntreFinishTitle 1034 "Todo listo para escribir."
+LangString EntreFinishText 1034 "Entrelinhas se ha instalado.$\r$\n$\r$\nAl abrir la aplicación, elige un tema para tu escritura.$\r$\n$\r$\nTus archivos son tuyos. Tú eliges cuándo y dónde guardar."
+LangString EntreAppDescription 1034 "Un espacio tranquilo para escribir"
+LangString EntreMarkdownDescription 1034 "Documento Markdown"
+LangString EntreTextDescription 1034 "Documento de texto"
+LangString EntreWelcomeTitle 1028 "歡迎使用 Entrelinhas"
+LangString EntreWelcomeText 1028 "一處靜心寫作的空間。$\r$\n$\r$\n此精靈將在這台電腦安裝 Entrelinhas。$\r$\n文件仍保存在你選擇的位置。$\r$\n$\r$\n按一下「下一步」繼續。"
+LangString EntreFinishTitle 1028 "準備好開始寫作。"
+LangString EntreFinishText 1028 "Entrelinhas 已安裝。$\r$\n$\r$\n開啟應用程式後，請選擇適合寫作的主題。$\r$\n$\r$\n檔案屬於你自己，何時儲存、儲存到哪裡，都由你決定。"
+LangString EntreAppDescription 1028 "一處靜心寫作的空間"
+LangString EntreMarkdownDescription 1028 "Markdown 文件"
+LangString EntreTextDescription 1028 "純文字文件"
+LangString EntreWelcomeTitle 3082 "Te damos la bienvenida a Entrelinhas"
+LangString EntreWelcomeText 3082 "Un espacio tranquilo para escribir.$\r$\n$\r$\nEste asistente instalará Entrelinhas en tu computadora.$\r$\nTus documentos permanecen donde tú elijas.$\r$\n$\r$\nHaz clic en Siguiente para continuar."
+LangString EntreFinishTitle 3082 "Todo listo para escribir."
+LangString EntreFinishText 3082 "Entrelinhas se instaló.$\r$\n$\r$\nAl abrir la aplicación, elige un tema para tu escritura.$\r$\n$\r$\nTus archivos son tuyos. Tú eliges cuándo y dónde guardar."
+LangString EntreAppDescription 3082 "Un espacio tranquilo para escribir"
+LangString EntreMarkdownDescription 3082 "Documento Markdown"
+LangString EntreTextDescription 3082 "Documento de texto"
 
 ; Registra Abrir com e a página de padrões, sem escrever nos padrões atuais
 ; das extensões nem na chave protegida UserChoice do Windows.

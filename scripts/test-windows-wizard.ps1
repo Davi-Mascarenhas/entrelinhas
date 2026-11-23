@@ -26,10 +26,14 @@ public static class WizardWindow {
 '@
 New-Item -ItemType Directory -Path $OutputDirectory -Force | Out-Null
 foreach ($language in @(
-  @{Name='Portugu'; Id=1046; Welcome='Bem-vindo ao Entrelinhas'},
+  @{Name='Português'; Variant='Brasil'; Id=1046; Welcome='Bem-vindo ao Entrelinhas'},
+  @{Name='Português'; Variant='Portugal'; Id=2070; Welcome='Bem-vindo ao Entrelinhas'},
   @{Name='English'; Id=1033; Welcome='Welcome to Entrelinhas'},
+  @{Name='Español'; Variant='Latinoamérica'; Id=3082; Welcome='Te damos la bienvenida a Entrelinhas'},
+  @{Name='Español'; Variant='España'; Id=1034; Welcome='Te damos la bienvenida a Entrelinhas'},
   @{Name='日本語'; Id=1041; Welcome='Entrelinhasへようこそ'},
-  @{Name='简体'; Id=2052; Welcome='欢迎使用 Entrelinhas'},
+  @{Name='中文'; Variant='简体中文'; Id=2052; Welcome='欢迎使用 Entrelinhas'},
+  @{Name='中文'; Variant='繁體中文'; Id=1028; Welcome='歡迎使用 Entrelinhas'},
   @{Name='Deutsch'; Id=1031; Welcome='Willkommen bei Entrelinhas'}
 )) {
 $wizard = Start-Process -FilePath $Installer -PassThru
@@ -60,7 +64,7 @@ try {
   $combo = [WizardWindow]::FindWindowEx($handle,[IntPtr]::Zero,'ComboBox',$null)
   if ($combo -eq [IntPtr]::Zero) { throw 'O seletor de idioma deve ser a primeira janela.' }
   $count = [int][WizardWindow]::SendMessage($combo,0x146,[IntPtr]::Zero,[IntPtr]::Zero)
-  if ($count -ne 5) { throw "Esperados cinco idiomas; encontrados $count." }
+  if ($count -ne 6) { throw "Esperados seis grupos de idiomas; encontrados $count." }
   Save-Wizard ("wizard-language-{0}.png" -f $language.Id)
   $selected = -1
   for ($index=0; $index -lt $count; $index++) {
@@ -73,6 +77,27 @@ try {
   $oldHandle = $handle
   $ok = [WizardWindow]::GetDlgItem($handle,1)
   [WizardWindow]::SendMessage($handle,0x111,[IntPtr]1,$ok) | Out-Null
+  if ($language.Variant) {
+    $deadline = (Get-Date).AddSeconds(20)
+    do {
+      Start-Sleep -Milliseconds 150
+      $wizard.Refresh(); $handle = $wizard.MainWindowHandle
+      $combo = if ($handle -ne [IntPtr]::Zero) { [WizardWindow]::FindWindowEx($handle,[IntPtr]::Zero,'ComboBox',$null) } else { [IntPtr]::Zero }
+      $count = if ($combo -ne [IntPtr]::Zero) { [int][WizardWindow]::SendMessage($combo,0x146,[IntPtr]::Zero,[IntPtr]::Zero) } else { 0 }
+    } until ($count -eq 2 -or (Get-Date) -gt $deadline)
+    if ($count -ne 2) { throw "Menu de variantes ausente: $($language.Name)" }
+    Save-Wizard ("wizard-variant-{0}.png" -f $language.Id)
+    $selected = -1
+    for ($index=0; $index -lt $count; $index++) {
+      $text = [System.Text.StringBuilder]::new(256)
+      [WizardWindow]::SendMessage($combo,0x148,[IntPtr]$index,$text) | Out-Null
+      if ($text.ToString().Contains($language.Variant)) { $selected=$index }
+    }
+    if ($selected -lt 0) { throw "Variante ausente: $($language.Variant)" }
+    [WizardWindow]::SendMessage($combo,0x14E,[IntPtr]$selected,[IntPtr]::Zero) | Out-Null
+    $ok = [WizardWindow]::GetDlgItem($handle,1)
+    [WizardWindow]::SendMessage($handle,0x111,[IntPtr]1,$ok) | Out-Null
+  }
   $deadline = (Get-Date).AddSeconds(20)
   do {
     Start-Sleep -Milliseconds 200

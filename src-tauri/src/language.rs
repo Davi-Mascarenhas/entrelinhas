@@ -11,10 +11,16 @@ pub struct LanguageBootstrap {
 fn from_lcid(value: u32) -> Option<&'static str> {
     match value {
         1046 => Some("pt-BR"),
+        2070 => Some("pt-PT"),
         1033 => Some("en"),
         1041 => Some("ja"),
         2052 => Some("zh-CN"),
+        1028 => Some("zh-TW"),
         1031 => Some("de"),
+        1034 => Some("es-ES"),
+        // Nosso seletor usa os recursos SpanishInternational para a opção
+        // Latinoamérica. O valor é a escolha do instalador, não o idioma do SO.
+        3082 => Some("es-419"),
         _ => None,
     }
 }
@@ -73,10 +79,14 @@ mod tests {
             (1041, "ja"),
             (2052, "zh-CN"),
             (1031, "de"),
+            (2070, "pt-PT"),
+            (1034, "es-ES"),
+            (3082, "es-419"),
+            (1028, "zh-TW"),
         ] {
             assert_eq!(from_lcid(lcid), Some(language));
         }
-        assert_eq!(from_lcid(1028), None);
+        assert_eq!(from_lcid(9999), None);
         assert_eq!(from_lcid(0), None);
     }
 }

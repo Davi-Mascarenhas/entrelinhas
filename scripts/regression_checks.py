@@ -92,6 +92,13 @@ def exercise(app, output, wait, passed):
         app.ctrl_click('.tiptap a')
         wait(lambda: app.js('return window.openedLinks') == ['https://docs.example.com/caderno'], 'Ctrl+clique pede navegador padrão')
         assert app.editor('return editor.getJSON()') == linked
+        wait(lambda: app.js('return document.querySelector(".toast")?.textContent.includes("Link enviado")'), 'confirmação de envio ao navegador')
+        app.real_key('Escape'); wait(zen, 'Zen antes de repetir link')
+        app.ctrl_click('.tiptap a')
+        assert app.js('return window.openedLinks.length') == 1
+        assert app.js('const t=document.querySelector(".toast");return t.textContent.includes("já foi enviado")&&getComputedStyle(t).visibility==="visible"&&getComputedStyle(t).opacity==="1"'), 'A confirmação deve aparecer também no Zen.'
+        app.screenshot(output/'link-feedback-zen.png')
+        app.real_key('Escape'); wait(lambda: not zen(), 'voltar do Zen após aviso de link')
         app.click('.tiptap a'); app.click('.link-preview-actions button')
         assert app.js('return window.openedLinks.length') == 1, 'Cliques seguidos não devem abrir o link várias vezes.'
         sent_at = app.js('return Date.now()')
@@ -158,6 +165,7 @@ def exercise(app, output, wait, passed):
                     app.screenshot(output/f'regression-settings-{theme}-{position}.png')
                 close_settings(); app.paint()
                 metrics = app.js('const t=document.querySelector(".formatting"),r=t.getBoundingClientRect(),d=document.querySelector(".formatting-dock").getBoundingClientRect(),s=document.querySelector(".sidebar-bottom").getBoundingClientRect();return {r:r.toJSON(),dock:d.toJSON(),w:innerWidth,h:innerHeight,scroll:t.scrollHeight>t.clientHeight,overflow:getComputedStyle(t).overflowY,color:getComputedStyle(t).scrollbarColor,settings:s.toJSON(),centers:[...t.querySelectorAll(".icon-button")].map(n=>{const b=n.getBoundingClientRect();return b.top+b.height/2})}')
+                assert app.js('const a=document.querySelector(".sidebar").getBoundingClientRect(),s=document.querySelector(".statusbar").getBoundingClientRect();return a.bottom===innerHeight&&(document.querySelector(".app").classList.contains("sidebar-right")?s.right<=a.left+1:s.left>=a.right-1)'), 'O rodapé pertence ao editor e os projetos chegam ao fim da janela.'
                 r = metrics['r']
                 assert r['left'] >= 0 and r['right'] <= width and r['top'] >= 0 and r['bottom'] <= height-30, metrics
                 assert metrics['settings']['bottom'] <= height, metrics
@@ -169,6 +177,7 @@ def exercise(app, output, wait, passed):
                     assert app.js('const r=document.querySelector(".formatting").getBoundingClientRect();return Math.abs(r.left+r.width/2-innerWidth/2)<1')
                     app.click('[aria-label="Mostrar navegação"]'); app.paint()
                 else:
+                    assert app.js('return [...document.querySelectorAll(".formatting .select-trigger")].every(b=>{const r=b.getBoundingClientRect();return [...b.querySelectorAll("svg")].every(n=>{const s=n.getBoundingClientRect();return s.left>=r.left&&s.right<=r.right&&s.top>=r.top&&s.bottom<=r.bottom})})'), 'Ícones laterais devem caber inteiros nos seletores.'
                     assert (side == 'left' and metrics['dock']['left'] > width-80) or (side == 'right' and metrics['dock']['right'] < 80), metrics
                     if height == 480:
                         assert metrics['scroll'] and metrics['overflow'] == 'auto', metrics

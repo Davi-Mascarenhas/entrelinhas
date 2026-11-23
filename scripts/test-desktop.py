@@ -109,6 +109,16 @@ class Desktop:
         wait(lambda: self.js('return !document.querySelector(".select-options")'), 'confirmar seleção ' + label)
         self.paint()
 
+    def language(self, value):
+        direct = f'button[data-language="{value}"]'
+        if self.js('return !!document.querySelector(arguments[0])', direct):
+            self.click(direct)
+        else:
+            self.click(f'.language-family[data-locales~="{value}"] [role=combobox]')
+            wait(lambda: self.js('return !!document.querySelector(".select-options")'), 'menu de variantes')
+            self.click(f'.select-options [data-value="{value}"]')
+        self.paint()
+
     def keys(self, css, text):
         self.call('/element/' + self.element(css) + '/value', {'text': text})
 

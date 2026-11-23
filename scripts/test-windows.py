@@ -151,7 +151,7 @@ def main():
     subprocess.run(['pwsh', '-NoProfile', '-File', str(ROOT / 'scripts/test-windows-wizard.ps1'),
                     '-Installer', str(installer), '-OutputDirectory', str(output)], check=True, timeout=180)
     assert read_registry('Software\\RegisteredApplications', 'Entrelinhas') is None
-    passed('wizard com seletor inicial de cinco idiomas, boas-vindas traduzidas, identidade visual e cancelamento')
+    passed('wizard com seletor inicial de nove variantes em seis idiomas, boas-vindas traduzidas, identidade visual e cancelamento')
     destination = Path(os.environ['LOCALAPPDATA']) / 'Entrelinhas teste ação'
     installer_run(installer, destination)
     executable = destination / 'entrelinhas.exe'
@@ -186,7 +186,7 @@ def main():
             wait(lambda: urllib.request.urlopen(f'http://127.0.0.1:{port}/status', timeout=1).status == 200, 'Edge WebDriver')
             database = Path(os.environ['APPDATA']) / 'io.github.bitdevy.entrelinhas/library.sqlite3'
             assert not database.exists()
-            for lcid, language in [(1033, 'en'), (1041, 'ja'), (2052, 'zh-CN'), (1031, 'de')]:
+            for lcid, language in [(1033, 'en'), (1041, 'ja'), (2052, 'zh-CN'), (1031, 'de'), (2070, 'pt-PT'), (3082, 'es-419'), (1034, 'es-ES'), (1028, 'zh-TW')]:
                 installer_run(installer, destination, language=lcid)
                 assert read_registry('Software\\Entrelinhas', 'InstallerLanguage') == lcid
                 app.start()
@@ -202,7 +202,7 @@ def main():
                     database.with_name(database.name + suffix).unlink(missing_ok=True)
             installer_run(installer, destination, language=1046)
             assert defaults_snapshot() == baseline
-            passed('idioma do wizard chega à primeira abertura nos cinco idiomas, sem repetir seleção no Windows')
+            passed('idioma do wizard chega à primeira abertura nas nove variantes em seis idiomas, sem repetir seleção no Windows')
             app.start(launch_args=[str(md)])
             import sys
             subprocess.run([sys.executable, '-c', 'import ctypes,sys; k=ctypes.WinDLL("kernel32",use_last_error=True);k.FreeConsole(); attached=k.AttachConsole(int(sys.argv[1]));assert not attached and ctypes.get_last_error()==6,"O aplicativo herdou/criou um console."', str(app.application_process.pid)], check=True)
