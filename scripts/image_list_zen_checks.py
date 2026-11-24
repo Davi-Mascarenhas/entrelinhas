@@ -34,11 +34,14 @@ def exercise(app, output, wait, passed):
 
     settings('behavior'); toggle('autoImmersive', False); close()
     app.call('/window/rect', {'width': 1000, 'height': 780})
+    wait(lambda:app.js('return innerWidth')==1000,'janela pronta para os arrastes')
+    app.stable_element('.editor-scroll:not(.inactive) .writing-paper')
     data_url = app.js('const c=document.createElement("canvas");c.width=640;c.height=400;const x=c.getContext("2d");x.fillStyle="#81937b";x.fillRect(0,0,640,400);x.fillStyle="#cad4b5";x.beginPath();x.arc(430,115,52,0,Math.PI*2);x.fill();x.fillStyle="#4e6c5b";x.beginPath();x.moveTo(0,400);x.lineTo(250,130);x.lineTo(490,400);x.fill();return c.toDataURL()')
     for edge, dx, dy, cursor in [('right',64,0,'ew-resize'),('left',-64,0,'ew-resize'),('top',0,-40,'ns-resize'),('bottom',0,40,'ns-resize'),('top-left',-64,-40,'nwse-resize'),('top-right',64,-40,'nesw-resize'),('bottom-left',-64,40,'nesw-resize'),('bottom-right',64,40,'nwse-resize')]:
         app.editor('editor.commands.setContent({type:"doc",content:[{type:"image",attrs:{src:arguments[0],width:320,height:200}},{type:"paragraph"}]});return true', data_url)
         wait(lambda: app.js('const i=document.querySelector(".editor-scroll:not(.inactive) img");return i?.complete&&i.naturalWidth>0'), 'carregar imagem de teste')
         css = f'.editor-scroll:not(.inactive) [data-resize-handle="{edge}"]'
+        app.stable_element('.editor-scroll:not(.inactive) img')
         app.stable_element(css)
         point = app.js('const h=document.querySelector(arguments[0]),r=h.getBoundingClientRect(),s=getComputedStyle(h);return {x:Math.floor(r.left+r.width/2),y:Math.floor(r.top+r.height/2),cursor:s.cursor,background:s.backgroundColor}', css)
         assert point['cursor'] == cursor and point['background'] == 'rgba(0, 0, 0, 0)', point
@@ -48,7 +51,12 @@ def exercise(app, output, wait, passed):
             {'type':'pointerDown','button':0},
             {'type':'pointerMove','origin':'viewport','x':point['x']+dx,'y':point['y']+dy,'duration':180},
             {'type':'pointerUp','button':0}]}]})
-        wait(lambda: app.editor('return editor.getJSON().content[0].attrs.width') > 350, 'arrastar borda '+edge)
+        try:
+            wait(lambda: app.editor('return editor.getJSON().content[0].attrs.width') > 350, 'arrastar borda '+edge)
+        except Exception:
+            app.screenshot(output/'image-edge-failure.png')
+            print('IMAGE DIAGNOSTIC',edge,point,app.editor('const {width,height}=editor.getJSON().content[0].attrs;return {width,height}'),app.js('const i=document.querySelector(".editor-scroll:not(.inactive) img");return {image:i?.getBoundingClientRect().toJSON(),viewport:[innerWidth,innerHeight],paper:document.querySelector(".editor-scroll:not(.inactive) .writing-paper").getBoundingClientRect().toJSON(),buttons:document.querySelectorAll(".formatting button").length,zoom:getComputedStyle(document.querySelector(".app")).getPropertyValue("--text-zoom"),active:document.activeElement.tagName}'),flush=True)
+            raise
         attrs = app.editor('return editor.getJSON().content[0].attrs')
         assert abs(attrs['width']/attrs['height']-1.6)<.02, {'edge':edge,'width':attrs['width'],'height':attrs['height']}
         metrics['images'].append({'edge':edge,'width':attrs['width'],'height':attrs['height'],'cursor':point['cursor']})
