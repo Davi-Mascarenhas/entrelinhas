@@ -1,5 +1,5 @@
 import { tr } from '../i18n'
-import { useRef, useState, type PointerEvent } from 'react'
+import { useRef, useState, type CSSProperties, type PointerEvent } from 'react'
 import { Check, Palette } from 'lucide-react'
 import { hexToHsv, hsvToHex, normalizeColor, type HsvColor } from '../core/colors'
 import { AnchoredPanel } from './AnchoredPanel'
@@ -73,9 +73,7 @@ export function ColorPicker({ label, value, onChange, onClear, onDone, textTool 
         data-tooltip={label}
         style={
           textTool
-            ? {
-                borderBottomColor: normalizeColor(value) ?? 'var(--accent)',
-              }
+            ? ({ '--color-tool-value': normalizeColor(value) ?? 'var(--accent)' } as CSSProperties)
             : undefined
         }
         onClick={() => {

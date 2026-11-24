@@ -747,10 +747,15 @@ p {
 .formatting > * {
   flex-shrink: 0;
 }
+.formatting-bottom .formatting {
+  padding: 3px 6px;
+}
 .formatting-bottom:not(.immersive) .formatting {
-  background: var(--bg);
+  background: var(--surface);
   border-radius: 8px;
-  box-shadow: 0 -3px 0 3px var(--bg);
+}
+.formatting-bottom .formatting > * {
+  transform: translateY(var(--toolbar-scrollbar-half, 0px));
 }
 .formatting::-webkit-scrollbar {
   width: 5px;
@@ -806,7 +811,9 @@ p {
 .formatting .select-trigger {
   min-width: 0;
   font-size: 10px;
-  padding: 5px;
+  height: 27px;
+  padding: 0 5px;
+  line-height: 1;
   background: transparent;
   border: 0;
   max-width: 80px;
@@ -825,11 +832,22 @@ p {
   justify-content: center;
   align-items: center;
   font-family: serif;
-  border-bottom: 3px solid var(--accent);
+  padding: 0;
+  border: 0;
   font-size: 16px;
   cursor: pointer;
 }
 
+.color-tool::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--color-tool-value, var(--accent));
+  border-radius: 0 0 7px 7px;
+}
 .editor-top-space {
   flex: 0 0 56px;
 }
@@ -1996,6 +2014,9 @@ body,
   width: var(--writing-width);
   max-width: none;
   margin-inline: var(--writing-offset) 0;
+  transition:
+    width 0.2s ease,
+    margin-inline-start 0.2s ease;
 }
 .nav-button > span {
   min-width: 0;
@@ -2771,7 +2792,9 @@ body,
 
 /* O modo Zen libera a altura dos controles e suaviza o texto junto às bordas. */
 .app {
-  transition: grid-template-rows 0.2s ease;
+  transition:
+    grid-template-rows 0.2s ease,
+    grid-template-columns 0.2s ease;
 }
 .document-toolbar,
 .editor-top-space,
@@ -2786,6 +2809,10 @@ body,
 }
 .immersive .titlebar {
   min-height: 0;
+}
+.immersive .sidebar {
+  padding-inline: 0;
+  border-inline: 0;
 }
 .immersive .document-toolbar {
   flex-basis: 0;
@@ -2887,6 +2914,7 @@ body,
   .document-toolbar,
   .editor-top-space,
   .statusbar,
+  .writing-paper,
   .chrome {
     transition: none;
   }

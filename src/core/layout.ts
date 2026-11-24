@@ -4,23 +4,25 @@ type LayoutPreferences = Pick<
   Preferences,
   'sidebarVisible' | 'sidebarWidth' | 'sidebarSide' | 'tabsPosition' | 'editorWidth'
 > &
-  Partial<Pick<Preferences, 'formattingPosition'>>
+  Partial<Pick<Preferences, 'formattingPosition' | 'zenHideFormatting'>>
 
 export function getWritingLayout(
   windowWidth: number,
   preferences: LayoutPreferences,
   tabsVisible = true,
+  immersive = false,
 ) {
   const padding = 32
   const minimumWritingWidth = 320
-  const sidebarWidth = preferences.sidebarVisible
-    ? Math.min(
-        preferences.sidebarWidth,
-        Math.max(160, (windowWidth - minimumWritingWidth) / 2 - padding),
-      )
-    : 0
-  const tabWidth = tabsVisible ? (windowWidth <= 900 ? 120 : 155) : 0
-  let tabsPosition = preferences.tabsPosition
+  const sidebarWidth =
+    preferences.sidebarVisible && !immersive
+      ? Math.min(
+          preferences.sidebarWidth,
+          Math.max(160, (windowWidth - minimumWritingWidth) / 2 - padding),
+        )
+      : 0
+  const tabWidth = tabsVisible && !immersive ? (windowWidth <= 900 ? 120 : 155) : 0
+  let tabsPosition = immersive ? ('top' as const) : preferences.tabsPosition
   const edges = (position: Preferences['tabsPosition']) => ({
     left:
       (preferences.sidebarSide === 'left' ? sidebarWidth : 0) +
@@ -32,7 +34,10 @@ export function getWritingLayout(
 
   const obstacles = (position: Preferences['tabsPosition']) => {
     const edge = edges(position)
-    const dock = preferences.formattingPosition === 'side' ? 72 : 0
+    const dock =
+      preferences.formattingPosition === 'side' && !(immersive && preferences.zenHideFormatting)
+        ? 72
+        : 0
     return {
       left: edge.left + (preferences.sidebarSide === 'right' ? dock : 0),
       right: edge.right + (preferences.sidebarSide === 'left' ? dock : 0),

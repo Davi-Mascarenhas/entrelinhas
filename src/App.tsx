@@ -626,7 +626,7 @@ export default function App() {
   )
     ? preferences.shortcuts.new
     : 'Ctrl+T'
-  const layout = getWritingLayout(windowWidth, preferences, tabsVisible)
+  const layout = getWritingLayout(windowWidth, preferences, tabsVisible, immersive)
   const style = {
     '--sidebar-width': `${layout.sidebarWidth}px`,
     '--writing-width': `${layout.writingWidth}px`,

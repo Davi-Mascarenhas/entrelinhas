@@ -175,8 +175,8 @@ def exercise(app, output, wait, passed):
                     assert abs(r['left']+r['width']/2-width/2) < 1, metrics
                     assert max(metrics['centers'])-min(metrics['centers']) < 1, metrics
                     assert r['height'] <= 40, metrics
-                    assert app.js('const t=getComputedStyle(document.querySelector(".formatting")),s=getComputedStyle(document.querySelector(".statusbar"));return t.backgroundColor===s.backgroundColor&&t.boxShadow!=="none"'), 'A barra inferior deve ter fundo opaco no tema atual para cobrir a lateral sem deslocar os controles.'
-                    assert app.js('const t=document.querySelector(".formatting"),r=t.getBoundingClientRect(),s=getComputedStyle(t).boxShadow.match(/-?[0-9.]+px/g).map(parseFloat),label=document.querySelector(".sidebar-bottom .nav-button span").getBoundingClientRect();return r.bottom+Math.max(0,s[1]+s[2]+s[3])<=label.top+.5'), 'O fundo da barra não deve encobrir o texto de Configurações.'
+                    assert app.js('const t=document.querySelector(".formatting"),s=getComputedStyle(t),r=t.getBoundingClientRect(),probe=document.createElement("span");probe.style.color=getComputedStyle(t).getPropertyValue("--surface").trim();document.body.append(probe);const color=getComputedStyle(probe).color;probe.remove();return s.backgroundColor===color&&s.boxShadow==="none"&&[...t.querySelectorAll(":scope > button, :scope > button .select-label, :scope > button svg")].filter(n=>n.getClientRects().length).every(n=>{const b=n.getBoundingClientRect();return Math.abs(b.top+b.height/2-r.top-r.height/2)<.75})'), 'A barra inferior deve ter fundo opaco no tema atual para cobrir a lateral sem deslocar os controles.'
+                    assert app.js('const r=document.querySelector(".formatting").getBoundingClientRect(),label=document.querySelector(".sidebar-bottom .nav-button span").getBoundingClientRect();return r.bottom<=label.top+.5'), 'O fundo da barra não deve encobrir o texto de Configurações.'
                     app.click('[aria-label="Ocultar navegação"]'); app.paint()
                     assert app.js('const r=document.querySelector(".formatting").getBoundingClientRect();return Math.abs(r.left+r.width/2-innerWidth/2)<1')
                     app.click('[aria-label="Mostrar navegação"]'); app.paint()
@@ -192,6 +192,9 @@ def exercise(app, output, wait, passed):
                 if width == 720:
                     app.screenshot(output/f'regression-toolbar-{theme}-{position}.png')
                 passed(f'barra {position}, {theme}, {width}×{height}, projetos {side}: alinhamento, acesso às pontas e limites da janela')
+
+    from zen_layout_checks import exercise as check_zen_layout
+    check_zen_layout(app, output, wait, passed)
 
     # Restaura preferências e conteúdo para os testes seguintes, sem escrever
     # o documento original. A persistência é esperada antes de cada nova sessão.

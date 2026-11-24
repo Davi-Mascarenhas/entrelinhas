@@ -431,7 +431,8 @@ def main():
             app.keys('.tiptap', secret)
             wait(lambda: app.js('return document.querySelector(".app").classList.contains("immersive")'), 'imersão automática')
             after = app.js('return document.querySelector(".tiptap").getBoundingClientRect().toJSON()')
-            assert abs(before['left'] - after['left']) < 1
+            assert abs(before['left'] + before['width']/2 - after['left'] - after['width']/2) < 1
+            assert after['width'] >= before['width']
             wait(lambda: 52 <= app.js('return document.querySelector(".editor-scroll:not(.inactive)").getBoundingClientRect().top') <= 60, 'liberar altura no Zen com recuo confortável')
             assert abs(after['left'] + after['width'] / 2 - app.js('return innerWidth / 2')) < 1, 'A coluna deve ficar no centro da janela inteira.'
             wait(lambda: app.js('return getComputedStyle(document.querySelector(".titlebar")).visibility==="hidden"'), 'ocultar controles')
@@ -552,7 +553,7 @@ def main():
             app.editor('let range;editor.state.doc.descendants((node,pos)=>{if(node.isText && node.text.startsWith("Algumas")) range={from:pos,to:pos+7}});editor.chain().focus().setTextSelection(range).run();return true')
             app.click('[aria-label="Ferramentas de formatação"]')
             assert app.js('return document.querySelectorAll("[role=toolbar][aria-label=Formatação]").length') == 1
-            assert app.js('const tools=document.querySelector(".formatting"), r=tools.getBoundingClientRect(), editor=document.querySelector(".editor-scroll:not(.inactive)").getBoundingClientRect(),style=getComputedStyle(tools),shadow=style.boxShadow.match(/-?[0-9.]+px/g).map(parseFloat);return r.top>=editor.bottom && r.bottom<=innerHeight-30 && style.borderTopWidth==="0px" && style.backgroundColor===getComputedStyle(document.querySelector(".statusbar")).backgroundColor && shadow[2]===0')
+            assert app.js('const tools=document.querySelector(".formatting"), r=tools.getBoundingClientRect(), editor=document.querySelector(".editor-scroll:not(.inactive)").getBoundingClientRect(),style=getComputedStyle(tools),surface=getComputedStyle(document.querySelector(".modal")||document.querySelector(".app")).getPropertyValue("--surface").trim(),probe=document.createElement("span");probe.style.color=surface;document.body.append(probe);const color=getComputedStyle(probe).color;probe.remove();return r.top>=editor.bottom && r.bottom<=innerHeight-30 && style.borderTopWidth==="0px" && style.backgroundColor===color && style.boxShadow==="none"')
             selection = app.editor('return {from:editor.state.selection.from,to:editor.state.selection.to}')
             app.choose('Tamanho do texto selecionado', '24px')
             assert app.editor('return editor.getAttributes("textStyle").fontSize') == '24px'

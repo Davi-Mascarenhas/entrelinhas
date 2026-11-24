@@ -16,6 +16,8 @@ on:
       - 'scripts/build-update-fixtures.py'
       - 'scripts/language_checks.py'
       - 'scripts/feature_checks.py'
+      - 'scripts/regression_checks.py'
+      - 'scripts/zen_layout_checks.py'
       - 'scripts/update_checks.py'
       - 'scripts/windows_update_checks.py'
       - 'scripts/check-windows-subsystem.py'

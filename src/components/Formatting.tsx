@@ -1,5 +1,5 @@
 import { tr } from '../i18n'
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import type { Editor } from '@tiptap/core'
 import {
   Type,
@@ -39,6 +39,18 @@ export function Formatting({
   compact?: boolean
 }) {
   const [, update] = useState(0)
+  const bar = useRef<HTMLDivElement>(null)
+  useLayoutEffect(() => {
+    const element = bar.current!
+    const align = () => {
+      const scrollbar = element.offsetHeight - element.clientHeight
+      element.style.setProperty('--toolbar-scrollbar-half', `${scrollbar / 2}px`)
+    }
+    const observer = new ResizeObserver(align)
+    observer.observe(element, { box: 'border-box' })
+    align()
+    return () => observer.disconnect()
+  }, [])
   useEffect(() => {
     const refresh = () => update((value) => value + 1)
     editor.on('transaction', refresh)
@@ -87,6 +99,7 @@ export function Formatting({
   ]
   return (
     <div
+      ref={bar}
       className={`formatting ${compact ? 'compact' : ''}`}
       role="toolbar"
       aria-label={tr('Formatação')}

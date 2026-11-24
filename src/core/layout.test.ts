@@ -63,3 +63,41 @@ it.each([720, 900, 1180, 1920])(
       }
   },
 )
+
+it.each([720, 920, 1180, 1920])(
+  'libera projetos e guias no Zen em %i px e restaura a coluna ao sair',
+  (width) => {
+    for (const sidebarSide of ['left', 'right'] as const)
+      for (const tabsPosition of ['top', 'left', 'right'] as const)
+        for (const formattingPosition of ['bottom', 'side'] as const) {
+          const preferences = Object.freeze({
+            ...defaultPreferences,
+            sidebarSide,
+            tabsPosition,
+            formattingPosition,
+          })
+          const normal = getWritingLayout(width, preferences, true)
+          const zen = getWritingLayout(width, preferences, true, true)
+          const withoutProjects = getWritingLayout(
+            width,
+            { ...preferences, sidebarVisible: false, tabsPosition: 'top' },
+            false,
+          )
+          expect(zen).toEqual(withoutProjects)
+          expect(zen.sidebarWidth).toBe(0)
+          expect(zen.writingWidth).toBeGreaterThanOrEqual(normal.writingWidth)
+          expect(zen.writingOffset + zen.writingWidth / 2).toBeCloseTo(width / 2)
+          expect(getWritingLayout(width, preferences, true)).toEqual(normal)
+          expect(preferences.sidebarVisible).toBe(true)
+        }
+  },
+)
+
+it('libera também a reserva da formatação oculta no Zen', () => {
+  const preferences = {
+    ...defaultPreferences,
+    formattingPosition: 'side' as const,
+    zenHideFormatting: true,
+  }
+  expect(getWritingLayout(720, preferences, true, true).writingWidth).toBe(656)
+})
