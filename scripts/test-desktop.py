@@ -557,7 +557,7 @@ def main():
             selection = app.editor('return {from:editor.state.selection.from,to:editor.state.selection.to}')
             app.choose('Tamanho do texto selecionado', '24px')
             assert app.editor('return editor.getAttributes("textStyle").fontSize') == '24px'
-            assert app.editor('return {from:editor.state.selection.from,to:editor.state.selection.to}') == selection
+            wait(lambda: app.editor('return {from:editor.state.selection.from,to:editor.state.selection.to}') == selection, 'restaurar a seleção depois de aplicar o tamanho')
             app.choose('Tamanho do texto selecionado', '')
             assert not app.editor('return editor.getAttributes("textStyle").fontSize')
             app.click('[aria-label="Negrito (Ctrl+B)"]')
