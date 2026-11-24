@@ -122,3 +122,21 @@ it('preserva as preferências antigas e valida posição/visibilidade da formata
     readPreferences({ formattingPosition: 'diagonal', zenHideFormatting: 'yes' }),
   ).toMatchObject({ formattingPosition: 'bottom', zenHideFormatting: false })
 })
+
+it('migra as margens Zen com valores iguais e valida ajustes independentes', () => {
+  const previous = { theme: 'sepia', editorWidth: 600, sidebarSide: 'right' }
+  const migrated = readPreferences(previous)
+  expect(migrated).toMatchObject({ ...previous, zenTopMargin: 56, zenSideMargin: 56 })
+  expect(readPreferences({ ...previous, zenTopMargin: 100, zenSideMargin: 80 })).toMatchObject({
+    zenTopMargin: 100,
+    zenSideMargin: 80,
+  })
+  expect(readPreferences({ zenTopMargin: -1, zenSideMargin: 500 })).toMatchObject({
+    zenTopMargin: 16,
+    zenSideMargin: 200,
+  })
+  expect(readPreferences({ zenTopMargin: NaN, zenSideMargin: '80' })).toMatchObject({
+    zenTopMargin: 56,
+    zenSideMargin: 56,
+  })
+})

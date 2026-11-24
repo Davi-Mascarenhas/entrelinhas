@@ -20,6 +20,12 @@ def exercise(app, output, wait, passed):
         assert app.js('return document.querySelector(".settings-nav [data-section=shortcuts]").textContent') == translations['Atalhos'][index]
         assert app.js('return document.querySelector(".settings-content h3").textContent') == translations['Escolha seu idioma.'][index]
         app.screenshot(output / f'language-{language}.png')
+        app.click('[data-section="editor"]')
+        assert translations['Margens no modo Zen'][index] in app.js('return document.querySelector(".settings-content").innerText')
+        assert app.js('return !!document.querySelector(arguments[0])', '[aria-label="'+translations['Margem superior no modo Zen'][index]+'"]')
+        if language in ['ja','zh-CN','zh-TW']:
+            app.js('document.querySelector("[data-preference=zenTopMargin]").scrollIntoView({block:"center"})')
+            app.screenshot(output/f'zen-settings-{language}.png')
         app.click('[data-section="about"]')
         about = app.js('return document.querySelector(".settings-content").innerText')
         assert translations['Por Davi Mascarenhas · Licença MIT'][index] in about

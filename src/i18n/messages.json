@@ -4759,5 +4759,49 @@
     "Este enlace ya se ha enviado al navegador. Espera un momento antes de abrirlo de nuevo.",
     "Este enlace ya se ha enviado al navegador. Espera un momento antes de abrirlo de nuevo.",
     "此連結已傳送到瀏覽器。請稍候再開啟。"
+  ],
+  [
+    "Margens no modo Zen",
+    "Zen mode margins",
+    "Zenモードの余白",
+    "Zen模式边距",
+    "Ränder im Zen-Modus",
+    "Margens no modo Zen",
+    "Márgenes del modo Zen",
+    "Márgenes del modo Zen",
+    "Zen模式邊距"
+  ],
+  [
+    "Margem superior no modo Zen",
+    "Zen mode top margin",
+    "Zenモードの上余白",
+    "Zen模式上边距",
+    "Oberer Rand im Zen-Modus",
+    "Margem superior no modo Zen",
+    "Margen superior en modo Zen",
+    "Margen superior en modo Zen",
+    "Zen模式上邊距"
+  ],
+  [
+    "Margem lateral no modo Zen",
+    "Zen mode side margin",
+    "Zenモードの左右余白",
+    "Zen模式侧边距",
+    "Seitlicher Rand im Zen-Modus",
+    "Margem lateral no modo Zen",
+    "Margen lateral en modo Zen",
+    "Margen lateral en modo Zen",
+    "Zen模式側邊距"
+  ],
+  [
+    "O recuo lateral vale para os dois lados, respeitando a largura da escrita e as ferramentas.",
+    "The side margin applies to both sides, respecting the writing width and tools.",
+    "左右の余白は、文章の幅とツールのスペースを考慮して適用されます。",
+    "侧边距同时应用于两侧，并保留文本宽度和工具所需的空间。",
+    "Der seitliche Abstand gilt auf beiden Seiten und berücksichtigt die Textbreite und die Werkzeuge.",
+    "O recuo lateral aplica-se aos dois lados, respeitando a largura da escrita e as ferramentas.",
+    "El margen lateral se aplica a ambos lados, respetando el ancho del texto y las herramientas.",
+    "El margen lateral se aplica a ambos lados, respetando el ancho del texto y las herramientas.",
+    "側邊距同時套用至兩側，並保留文字寬度和工具所需的空間。"
   ]
 ]

@@ -29,6 +29,8 @@ export interface Preferences {
   selectionTools: boolean
   formattingPosition: 'bottom' | 'side'
   zenHideFormatting: boolean
+  zenTopMargin: number
+  zenSideMargin: number
   shortcuts: Record<ShortcutAction, string>
 }
 

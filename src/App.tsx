@@ -632,6 +632,7 @@ export default function App() {
     '--writing-width': `${layout.writingWidth}px`,
     '--writing-offset': `${layout.writingOffset}px`,
     '--editor-width': `${preferences.editorWidth}px`,
+    '--zen-top-margin': `${preferences.zenTopMargin}px`,
     '--editor-font-size': `${(preferences.fontSize * preferences.zoom) / 100}px`,
     '--text-zoom': preferences.zoom / 100,
     '--editor-line-height': preferences.lineHeight,

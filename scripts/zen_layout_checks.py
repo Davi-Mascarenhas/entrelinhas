@@ -42,7 +42,11 @@ def exercise(app, output, wait, passed):
                 app.screenshot(output/f'zen-layout-{width}-{side}-{position}-before.png')
                 app.editor('editor.commands.focus("end");return true');app.paint();app.real_key('z')
                 wait(lambda:app.js('return document.querySelector(".app").classList.contains("immersive")'),'digitação entra no Zen em janela reduzida')
-                zen=measure();same(zen,without_projects)
+                dock=72 if position=='side' else 0
+                margin=min(preferences.get('zenSideMargin',56),max(16,(width-320)/2-dock))
+                expected_width=min(preferences.get('editorWidth',740),width-2*(dock+margin))
+                expected_zen={'left':(width-expected_width)/2,'width':expected_width}
+                zen=measure();same(zen,expected_zen)
                 assert zen['width']>normal['width'],(normal,zen)
                 assert abs(zen['left']+zen['width']/2-width/2)<1
                 assert app.js('return document.querySelector(".sidebar").getBoundingClientRect().width')<1
@@ -56,7 +60,7 @@ def exercise(app, output, wait, passed):
                 assert app.editor('return editor.getJSON()')==document
                 app.screenshot(output/f'zen-layout-{width}-{side}-{position}-restored.png')
                 app.real_key('Escape');wait(lambda:app.js('return document.querySelector(".app").classList.contains("immersive")'),'Esc também libera a coluna')
-                same(measure(),without_projects)
+                same(measure(),expected_zen)
                 app.real_key('Escape');wait(lambda:not app.js('return document.querySelector(".app").classList.contains("immersive")'),'restaurar coluna pelo teclado')
                 same(measure(),normal)
     settings('behavior');toggle('autoImmersive',preferences.get('autoImmersive',True));close()

@@ -18,6 +18,7 @@ on:
       - 'scripts/feature_checks.py'
       - 'scripts/regression_checks.py'
       - 'scripts/zen_layout_checks.py'
+      - 'scripts/image_list_zen_checks.py'
       - 'scripts/update_checks.py'
       - 'scripts/windows_update_checks.py'
       - 'scripts/check-windows-subsystem.py'

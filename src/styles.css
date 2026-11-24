@@ -950,6 +950,21 @@ p {
 .tiptap li p {
   margin-bottom: 0.25em;
 }
+.tiptap li {
+  text-align: left;
+}
+/* O marcador nativo participa do mesmo alinhamento que o texto do item. */
+.tiptap
+  li:not([data-type='taskItem']):is([style*='text-align: center'], [style*='text-align: right']) {
+  list-style-position: inside;
+}
+.tiptap
+  li:not([data-type='taskItem']):is([style*='text-align: center'], [style*='text-align: right'])
+  > p:first-child {
+  display: inline-block;
+  max-width: calc(100% - 3em);
+  vertical-align: top;
+}
 .tiptap ul[data-type='taskList'] {
   list-style: none;
   padding-left: 0;
@@ -965,6 +980,17 @@ p {
 }
 .tiptap li[data-type='taskItem'] > label {
   user-select: none;
+}
+.tiptap li[data-type='taskItem'][style*='text-align: center'] {
+  justify-content: center;
+}
+.tiptap li[data-type='taskItem'][style*='text-align: right'] {
+  justify-content: flex-end;
+}
+.tiptap
+  li[data-type='taskItem']:is([style*='text-align: center'], [style*='text-align: right'])
+  > div {
+  flex: 0 1 auto;
 }
 .tiptap li[data-checked='true'] > div > p {
   text-decoration: line-through;
@@ -983,6 +1009,13 @@ p {
 }
 .tiptap .ProseMirror-selectednode {
   outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.tiptap [data-resize-container].ProseMirror-selectednode {
+  outline: none;
+}
+.tiptap [data-resize-container].ProseMirror-selectednode img {
+  outline: 1px solid var(--accent);
   outline-offset: 3px;
 }
 .tiptap .tableWrapper {
@@ -1028,10 +1061,35 @@ p {
   cursor: col-resize;
 }
 [data-resize-handle] {
+  width: 6px;
+  height: 6px;
+  background: transparent;
+  touch-action: none;
+}
+[data-resize-wrapper] {
+  max-width: 100%;
+}
+[data-resize-handle='top'],
+[data-resize-handle='bottom'] {
+  width: auto;
+  cursor: ns-resize;
+}
+[data-resize-handle='left'],
+[data-resize-handle='right'] {
+  height: auto;
+  cursor: ew-resize;
+}
+[data-resize-handle='top-left'],
+[data-resize-handle='bottom-right'] {
   width: 10px;
   height: 10px;
-  background: var(--accent);
-  border-radius: 3px;
+  cursor: nwse-resize;
+}
+[data-resize-handle='top-right'],
+[data-resize-handle='bottom-left'] {
+  width: 10px;
+  height: 10px;
+  cursor: nesw-resize;
 }
 .block-ready,
 [data-cursor='hidden'] .tiptap {
@@ -2821,7 +2879,7 @@ body,
   padding-block: 0;
 }
 .immersive .editor-top-space {
-  flex-basis: 56px;
+  flex-basis: var(--zen-top-margin, 56px);
 }
 .immersive .statusbar {
   flex-basis: 0;

@@ -302,6 +302,35 @@ export function Settings({
                 tr('Ferramentas ao selecionar'),
                 tr('Revela os botões de formatação na parte de baixo.'),
               )}
+              <h4>{tr('Margens no modo Zen')}</h4>
+              <p className="muted small">
+                {tr(
+                  'O recuo lateral vale para os dois lados, respeitando a largura da escrita e as ferramentas.',
+                )}
+              </p>
+              {(
+                [
+                  ['zenTopMargin', 'Margem superior no modo Zen'],
+                  ['zenSideMargin', 'Margem lateral no modo Zen'],
+                ] as const
+              ).map(([key, label]) => (
+                <label className="setting-row" key={key}>
+                  <span>
+                    {tr(label)}
+                    <small>{p[key]} px</small>
+                  </span>
+                  <input
+                    aria-label={tr(label)}
+                    data-preference={key}
+                    type="range"
+                    min="16"
+                    max="200"
+                    step="4"
+                    value={p[key]}
+                    onChange={(event) => onChange({ [key]: Number(event.target.value) })}
+                  />
+                </label>
+              ))}
             </>
           )}
           {section === 'cursor' && (

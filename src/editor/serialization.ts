@@ -40,6 +40,8 @@ converter.addRule('rich-block', {
     ].includes(node.nodeName) &&
     ((node as HTMLElement).hasAttribute('style') ||
       node.nodeName === 'TABLE' ||
+      (['UL', 'OL'].includes(node.nodeName) &&
+        !!(node as HTMLElement).querySelector('li[style]')) ||
       node.nodeName === 'DETAILS' ||
       (node as HTMLElement).getAttribute('data-type') === 'callout' ||
       (node as HTMLElement).getAttribute('data-type') === 'taskList'),

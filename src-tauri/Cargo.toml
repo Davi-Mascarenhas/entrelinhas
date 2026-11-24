@@ -1,6 +1,6 @@
 [package]
 name = "entrelinhas"
-version = "2.4.2"
+version = "2.4.3-rc.1"
 description = "Um espaço tranquilo para escrever"
 authors = ["Davi Mascarenhas"]
 edition = "2021"

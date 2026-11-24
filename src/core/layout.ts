@@ -4,7 +4,7 @@ type LayoutPreferences = Pick<
   Preferences,
   'sidebarVisible' | 'sidebarWidth' | 'sidebarSide' | 'tabsPosition' | 'editorWidth'
 > &
-  Partial<Pick<Preferences, 'formattingPosition' | 'zenHideFormatting'>>
+  Partial<Pick<Preferences, 'formattingPosition' | 'zenHideFormatting' | 'zenSideMargin'>>
 
 export function getWritingLayout(
   windowWidth: number,
@@ -49,9 +49,16 @@ export function getWritingLayout(
     tabsPosition = 'top'
   const occupied = edges(tabsPosition)
   const room = obstacles(tabsPosition)
+  // No Zen, o recuo escolhido é simétrico e cede apenas para manter a escrita utilizável.
+  const writingPadding = immersive
+    ? Math.min(
+        preferences.zenSideMargin ?? 56,
+        Math.max(16, (windowWidth - minimumWritingWidth) / 2 - Math.max(room.left, room.right)),
+      )
+    : padding
   const writingWidth = Math.min(
     preferences.editorWidth,
-    windowWidth - 2 * (Math.max(room.left, room.right) + padding),
+    windowWidth - 2 * (Math.max(room.left, room.right) + writingPadding),
   )
   const writingLeft = (windowWidth - writingWidth) / 2
   return {

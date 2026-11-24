@@ -25,6 +25,8 @@ export const defaultPreferences: Preferences = {
   selectionTools: true,
   formattingPosition: 'bottom',
   zenHideFormatting: false,
+  zenTopMargin: 56,
+  zenSideMargin: 56,
   shortcuts: {
     settings: 'Ctrl+,',
     new: 'Ctrl+N',
@@ -63,6 +65,8 @@ export function readPreferences(value: unknown): Preferences {
     zoom: [50, 200],
     editorWidth: [440, 1100],
     sidebarWidth: [200, 380],
+    zenTopMargin: [16, 200],
+    zenSideMargin: [16, 200],
   }
   for (const [key, [min, max]] of Object.entries(ranges)) {
     const n = input[key]

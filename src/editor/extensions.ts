@@ -1,6 +1,6 @@
 import { tr } from '../i18n'
 import StarterKit from '@tiptap/starter-kit'
-import Image from '@tiptap/extension-image'
+import { EdgeImage } from './image'
 import { TableKit } from '@tiptap/extension-table'
 import TaskList from '@tiptap/extension-task-list'
 import TaskItem from '@tiptap/extension-task-item'
@@ -35,6 +35,30 @@ const ZoomableFontSize = FontSize.extend({
   },
 })
 
+const ListTextAlign = TextAlign.extend({
+  addGlobalAttributes() {
+    return (this.parent?.() ?? []).map((group) => ({
+      ...group,
+      attributes: {
+        ...group.attributes,
+        textAlign: {
+          ...group.attributes.textAlign,
+          parseHTML: (element) => {
+            // Documentos anteriores guardavam o alinhamento apenas no parágrafo.
+            const paragraph = element.matches('li')
+              ? element.querySelector<HTMLElement>(':scope > p, :scope > div > p')
+              : null
+            const alignment = element.style.textAlign || paragraph?.style.textAlign
+            return this.options.alignments.includes(alignment ?? '')
+              ? alignment
+              : this.options.defaultAlignment
+          },
+        },
+      },
+    }))
+  },
+})
+
 export function editorExtensions(placeholder = true) {
   return [
     StarterKit.configure({
@@ -42,13 +66,22 @@ export function editorExtensions(placeholder = true) {
     }),
     TextStyleKit.configure({ fontSize: false }),
     ZoomableFontSize,
-    TextAlign.configure({ types: ['heading', 'paragraph'] }),
+    ListTextAlign.configure({ types: ['heading', 'paragraph', 'listItem', 'taskItem'] }),
     Highlight.configure({ multicolor: true }),
-    Image.configure({
+    EdgeImage.configure({
       allowBase64: true,
       resize: {
         enabled: true,
-        directions: ['bottom-right', 'bottom-left'],
+        directions: [
+          'top',
+          'right',
+          'bottom',
+          'left',
+          'top-left',
+          'top-right',
+          'bottom-left',
+          'bottom-right',
+        ],
         minWidth: 60,
         minHeight: 40,
         alwaysPreserveAspectRatio: true,

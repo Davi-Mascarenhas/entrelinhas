@@ -78,12 +78,8 @@ it.each([720, 920, 1180, 1920])(
           })
           const normal = getWritingLayout(width, preferences, true)
           const zen = getWritingLayout(width, preferences, true, true)
-          const withoutProjects = getWritingLayout(
-            width,
-            { ...preferences, sidebarVisible: false, tabsPosition: 'top' },
-            false,
-          )
-          expect(zen).toEqual(withoutProjects)
+          const dock = formattingPosition === 'side' ? 72 : 0
+          expect(zen.writingWidth).toBe(Math.min(preferences.editorWidth, width - 2 * (dock + 56)))
           expect(zen.sidebarWidth).toBe(0)
           expect(zen.writingWidth).toBeGreaterThanOrEqual(normal.writingWidth)
           expect(zen.writingOffset + zen.writingWidth / 2).toBeCloseTo(width / 2)
@@ -99,5 +95,19 @@ it('libera também a reserva da formatação oculta no Zen', () => {
     formattingPosition: 'side' as const,
     zenHideFormatting: true,
   }
-  expect(getWritingLayout(720, preferences, true, true).writingWidth).toBe(656)
+  expect(getWritingLayout(720, preferences, true, true).writingWidth).toBe(608)
+})
+
+it('respeita o recuo Zen escolhido, preserva a largura mínima e não altera o modo normal', () => {
+  for (const width of [720, 1180])
+    for (const zenSideMargin of [16, 56, 100, 200]) {
+      const p = { ...defaultPreferences, zenSideMargin, formattingPosition: 'side' as const }
+      const normal = getWritingLayout(width, p, true)
+      const zen = getWritingLayout(width, p, true, true)
+      const inset = Math.min(zenSideMargin, (width - 320) / 2 - 72)
+      expect(zen.writingWidth).toBe(Math.min(p.editorWidth, width - 2 * (inset + 72)))
+      expect(zen.writingWidth).toBeGreaterThanOrEqual(320)
+      expect(zen.writingOffset + zen.writingWidth / 2).toBe(width / 2)
+      expect(getWritingLayout(width, { ...p, zenSideMargin: 16 }, true)).toEqual(normal)
+    }
 })
