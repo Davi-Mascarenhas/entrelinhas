@@ -1,5 +1,7 @@
 # Validação do Entrelinhas no Windows
 
+A [prévia 2.4.3-rc.1](validation-2.4.3-rc.1.md) passou em 58 verificações Windows, incluindo as oito bordas/cantos das imagens, alinhamento dos marcadores e margens persistidas do Zen. [Execução validada](https://github.com/Davi-Mascarenhas/entrelinhas/actions/runs/45301977277). A promoção à 2.4.3 estável aguarda o teste do usuário.
+
 O instalador é x64 e ainda não possui assinatura Authenticode. Os pacotes de atualização possuem assinatura criptográfica própria. O workflow `Windows installer` executa testes em Windows Server 2025 com WebView2. Ele publica o instalador somente como artefato validado quando todo o job passa; logs, capturas do wizard e das telas do app ficam em `windows-test-evidence`. O SHA do commit e os checksums acompanham o artefato.
 
 ## Teste automatizado

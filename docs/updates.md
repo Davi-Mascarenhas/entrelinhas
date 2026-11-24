@@ -1,5 +1,7 @@
 # Atualizações manuais
 
+A 2.4.3-rc.1 está no canal de prévias; a 2.4.2 permanece no canal estável. A confirmação de pré-release e a ação principal **Esperar versão estável** foram revalidadas no Linux e no Windows. [Relatório da prévia](validation-2.4.3-rc.1.md).
+
 Em **Configurações → Sobre**, **Procurar atualização** pede autorização para consultar versões estáveis e pré-releases no GitHub. Recusar não faz requisições. Cada nova consulta exige outra autorização; abrir o app ou as configurações não procura versões automaticamente.
 
 A partir da 2.3.0-rc.2, uma atualização estável mais nova tem prioridade. Na ausência dela, uma pré-release mais nova pode ser oferecida, com aviso vermelho, pergunta explícita e **Esperar versão estável** como ação principal. **Atualizar para pré-release** aparece como uma ação de texto secundária. Esperar descarta a oferta e qualquer pacote pendente, inclusive os bytes já baixados após uma instalação cancelada. Não baixa nem instala nesse clique e não agenda consultas.

@@ -6,6 +6,12 @@ Entrelinhas é um editor **desktop de verdade**, feito com Tauri 2, React e Type
 
 ![Entrelinhas — Sépia Noturno](docs/screenshots/stable-2.4.2-toolbar-bottom.png)
 
+## Prévia 2.4.3: imagens, listas e margens Zen
+
+A [2.4.3-rc.1](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.4.3-rc.1) está disponível para teste antes da 2.4.3 estável. Imagens redimensionam pelas bordas e pelos cantos, sem quadrados, com proporção e limites da página respeitados. Números, marcadores e caixas de tarefas acompanham o alinhamento do texto, inclusive após salvar e reabrir Markdown.
+
+Em **Configurações → Editor**, as margens superior e lateral do Zen podem ser ajustadas separadamente; ambas começam em **56 px**. O recuo lateral mínimo é simétrico e respeita a largura de escrita e as ferramentas. As novas opções estão traduzidas nas nove variantes dos seis idiomas. [Capturas, testes e limites da prévia](docs/validation-2.4.3-rc.1.md).
+
 ## Versão 2.4 estável: idiomas agrupados e ajustes de escrita
 
 A [2.4.2 estável](https://github.com/Davi-Mascarenhas/entrelinhas/releases/tag/v2.4.2) está disponível para Windows e Linux. A barra inferior usa uma superfície mais clara, com controles centralizados. Em janelas reduzidas, o Zen libera o espaço dos projetos e restaura a coluna com uma transição suave ao sair.
